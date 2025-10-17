@@ -36,9 +36,9 @@ export default ({ mode }: ConfigEnv) => {
       assetsDir: 'static',
       assetsInlineLimit: 0,
       rollupOptions: {
-        external: ['react', 'react-dom'],
         output: {
           manualChunks: {
+            react: ['react', 'react-dom'],
             vendor: [
               'react-router-dom',
               'axios',

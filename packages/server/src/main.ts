@@ -64,6 +64,30 @@ async function bootstrap() {
     })
   )
 
+  // Frontend static assets
+  app.use(
+    '/static',
+    serveStatic(join(VIEW_DIR, 'static'), {
+      maxAge: '30d',
+      extensions: [
+        'js',
+        'css',
+        'woff2',
+        'woff',
+        'ttf',
+        'eot',
+        'svg',
+        'png',
+        'jpg',
+        'jpeg',
+        'gif',
+        'webp',
+        'ico',
+        'webmanifest'
+      ]
+    })
+  )
+
   // Template rendering
   app.engine('html', hbs.__express)
   app.setBaseViewsDir(VIEW_DIR)

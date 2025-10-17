@@ -35,3 +35,4 @@ dist
 lib
 packages/server/static
 *.tsbuildinfo
+packages/webapp/.npmrc
