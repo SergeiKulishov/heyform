@@ -9,6 +9,7 @@ import en from '@/locales/en.json'
 import fr from '@/locales/fr.json'
 import ja from '@/locales/ja.json'
 import pl from '@/locales/pl.json'
+import ru from '@/locales/ru.json'
 import zhCN from '@/locales/zh-cn.json'
 import zhTW from '@/locales/zh-tw.json'
 
@@ -23,6 +24,12 @@ const resources = {
     translation: {
       ...en,
       ...locales.en.translation
+    }
+  },
+  ru: {
+    translation: {
+      ...ru,
+      ...locales.ru.translation
     }
   },
   fr: {

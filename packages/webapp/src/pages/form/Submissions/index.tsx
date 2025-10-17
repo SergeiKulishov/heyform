@@ -189,7 +189,7 @@ export default function FormSubmissions() {
   }
 
   function handleDownload() {
-    window.open(`/export/submissions?formId=${formId}`)
+    window.open(`/api/export/submissions?formId=${formId}`)
   }
 
   function handleClose() {

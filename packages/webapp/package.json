@@ -15,7 +15,7 @@
     "@apollo/client": "^3.11.8",
     "@fortaine/fetch-event-source": "^3.0.6",
     "@heyform-inc/answer-utils": "^1.2.0",
-    "@heyform-inc/form-renderer": "^0.3.8",
+    "@heyform-inc/form-renderer": "https://nexus.stackbro.tech/repository/npm-hosted/@heyform-inc/form-renderer/-/form-renderer-0.4.0.tgz",
     "@heyform-inc/shared-types-enums": "^1.3.0",
     "@heyform-inc/utils": "^1.2.2",
     "@heyooo-inc/react-router": "^0.0.5",

@@ -1,4 +1,4 @@
-FROM node:18.20.0-alpine3.19 as base
+FROM node:18.20.0-alpine3.19 AS base
 
 ARG APP_PATH=/app
 WORKDIR $APP_PATH
@@ -18,7 +18,7 @@ RUN pnpm build:server
 RUN pnpm build:webapp
 RUN pnpm --filter ./packages/webapp export
 
-FROM node:18.20.0-alpine3.19 as runner
+FROM node:18.20.0-alpine3.19 AS runner
 
 ARG APP_PATH=/app
 WORKDIR $APP_PATH

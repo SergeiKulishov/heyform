@@ -2,6 +2,9 @@
   "name": "@heyform-inc/answer-utils",
   "description": "HeyForm Answer Utils",
   "version": "1.2.0",
+  "publishConfig": {
+    "registry": "https://nexus.stackbro.tech/repository/npm-hosted/"
+  },
   "homepage": "https://heyform.net",
   "author": "Heyooo, Inc.",
   "license": "AGPL-3.0",
