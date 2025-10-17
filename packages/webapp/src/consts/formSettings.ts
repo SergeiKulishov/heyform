@@ -14,6 +14,10 @@ export const LOCALES_OPTIONS = [
     label: 'English',
     value: 'en'
   },
+	{
+		label: 'Русский',
+		value: 'ru'
+	},
   {
     label: 'Polski',
     value: 'pl'
@@ -60,7 +64,11 @@ export const FORM_LOCALES_OPTIONS = [
   {
     label: 'Chinese (traditional)',
     value: 'zh-tw'
-  }
+  },
+	{
+		label: 'Русский',
+		value: 'ru'
+	}
 ]
 
 export const TIME_LIMIT_OPTIONS = [
