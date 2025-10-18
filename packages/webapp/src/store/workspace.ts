@@ -1,11 +1,12 @@
 import { create } from 'zustand'
 import computed from 'zustand-computed'
 
+import ViteConfig from '../../vite.config.mjs'
 import { helper } from '@heyform-inc/utils'
 import { createJSONStorage, persist } from 'zustand/middleware'
 import { immer } from 'zustand/middleware/immer'
 
-import { WEBSITE_URL, WORKSPACE_STORAGE_KEY } from '@/consts'
+import { HOMEPAGE_URL, WEBSITE_URL, WORKSPACE_STORAGE_KEY } from '@/consts'
 import { FormType, MemberType, ProjectType, WorkspaceType } from '@/types'
 
 type WorkspaceStoreType = {
@@ -49,7 +50,7 @@ const computeState = (state: WorkspaceStoreType): ComputedStoreType => {
   let project: ProjectType | undefined
   let members: MemberType[] = []
   let forms: FormType[] = []
-  let sharingURLPrefix = WEBSITE_URL
+  let sharingURLPrefix = window?.location?.origin ?? WEBSITE_URL
 
   const workspace = state.workspaces.find(w => w.id === state.currentWorkspaceId)
 
@@ -60,8 +61,6 @@ const computeState = (state: WorkspaceStoreType): ComputedStoreType => {
     if (project) {
       forms = state._formMap[project.id] || []
     }
-
-    sharingURLPrefix = `http://localhost:3000`
   }
 
   return {

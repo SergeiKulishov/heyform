@@ -1,0 +1,61 @@
+version: '3.8'
+
+services:
+  mongodb:
+    image: mongo:5.0
+    container_name: heyform-mongodb
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+    networks:
+      - heyform-network
+
+  keydb:
+    image: eqalpha/keydb:latest
+    container_name: heyform-keydb
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - keydb_data:/data
+    networks:
+      - heyform-network
+
+  heyform:
+    image: sigurtholegsson/heyform-alpha:{version}
+    container_name: heyform-app
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    depends_on:
+      - mongodb
+      - keydb
+    environment:
+      - APP_HOMEPAGE_URL=http://localhost:8000
+      - APP_LISTEN_HOSTNAME=0.0.0.0
+      - APP_LISTEN_PORT=8000
+      - COOKIE_DOMAIN=localhost
+      - SESSION_KEY=sDlX7OMaLoUvhdZNUhsOUeWIGKIRShDKPHslBDErfCKEnHOIrgqaKuurhULqRjBE
+      - FORM_ENCRYPTION_KEY=HHei9TU6T3eov6sp9PPLFhacpMUSPIdkFVdMQJz6Ug1MiBjz1NazUO8dyITGpH52
+      - MONGO_URI=mongodb://mongodb:27017/heyform
+      - REDIS_HOST=keydb
+      - REDIS_PORT=6379
+      - BULL_JOB_ATTEMPTS=3
+      - BULL_JOB_BACKOFF_DELAY=3000
+      - BULL_JOB_BACKOFF_TYPE=fixed
+      - UPLOAD_FILE_TYPES=.jpg,.png,.bmp,.gif,.txt,.md,.doc,.docx,.xls,.xlsx,.csv,.ppt,.pptx,.pdf,.mp4,.wmv,.zip,.rar,.7z
+      - SMTP_FROM=HeyForm <rewq95_kso@mail.ru>
+      - SMTP_HOST=smtp.mail.ru
+      - SMTP_PORT=465
+      - SMTP_USER=rewq95_kso
+      - SMTP_PASSWORD={password}
+      - SMTP_SECURE=true
+      - SMTP_IGNORE_CERT=true
+    networks:
+      - heyform-network
+
+networks:
+  heyform-network:
+    driver: bridge
