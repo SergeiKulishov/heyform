@@ -387,7 +387,8 @@ export class FormService {
       'languages',
       'enableClosedMessage',
       'closedFormTitle',
-      'closedFormDescription'
+      'closedFormDescription',
+      'removeBranding' // Добавить эту строку
     ])
 
     masked.fields = form.fields.map(field => {
