@@ -162,6 +162,72 @@ export class FormService {
     })
   }
 
+  static async importFromJSON(projectId: string, formJson: string) {
+    try {
+      // Парсим JSON
+      const formData = JSON.parse(formJson)
+
+      // Валидация: проверяем обязательные поля
+      if (!formData.name) {
+        throw new Error('Form name is required in JSON')
+      }
+
+      if (!formData.fields || !Array.isArray(formData.fields)) {
+        throw new Error('Form fields are required in JSON')
+      }
+
+      // Шаг 1: Создаем форму
+      const formId = await this.create({
+        projectId,
+        name: formData.name,
+        nameSchema: formData.nameSchema || [],
+        interactiveMode: formData.interactiveMode || InteractiveModeEnum.GENERAL,
+        kind: formData.kind || FormKindEnum.SURVEY
+      })
+
+      // Шаг 2: Импортируем поля формы
+      if (formData.fields && formData.fields.length > 0) {
+        await this.updateFormSchemas({
+          formId,
+          drafts: formData.fields,
+          version: 0
+        })
+      }
+
+      // Шаг 3: Импортируем настройки темы (если есть)
+      if (formData.themeSettings) {
+        await this.updateTheme({
+          formId,
+          theme: formData.themeSettings.theme || {},
+          logo: formData.themeSettings.logo
+        })
+      }
+
+      // Шаг 4: Импортируем скрытые поля (если есть)
+      if (formData.hiddenFields && formData.hiddenFields.length > 0) {
+        await this.updateHiddenFields(formId, formData.hiddenFields)
+      }
+
+      // Шаг 5: Импортируем логику (если есть)
+      if (formData.logics && formData.logics.length > 0) {
+        await this.updateLogics(formId, formData.logics)
+      }
+
+      // Шаг 6: Импортируем переменные (если есть)
+      if (formData.variables && formData.variables.length > 0) {
+        await this.updateVariables(formId, formData.variables)
+      }
+
+      return formId
+    } catch (error) {
+      // Улучшенная обработка ошибок
+      if (error instanceof SyntaxError) {
+        throw new Error('Invalid JSON format: ' + error.message)
+      }
+      throw error
+    }
+  }
+
   static async analytic(formId: string, range: string) {
     return apollo.query({
       query: FORM_ANALYTIC_GQL,

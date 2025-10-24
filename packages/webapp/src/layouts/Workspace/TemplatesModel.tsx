@@ -204,10 +204,11 @@ export default function TemplatesModel({ onBack }: TemplatesModelProps) {
   async function fetch() {
     const result = await FormService.templates()
 
+    const categories = t('form.template.categories', { returnObjects: true }) as string[]
     setTemplateGroups(
       TEMPLATE_CATEGORIES.map((category, index) => ({
         id: slugify(category),
-        category: t(`form.template.categories.${index}`),
+        category: categories[index] || category,
         templates: result.filter(row => row.category === category)
       }))
     )

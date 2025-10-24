@@ -15,6 +15,9 @@ export class TemplateModel extends Document {
   name: string
 
   @Prop()
+  recordId?: string
+
+  @Prop()
   slug?: string
 
   @Prop()

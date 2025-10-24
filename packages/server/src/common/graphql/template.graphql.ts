@@ -35,6 +35,9 @@ export class TemplateType {
   name: string
 
   @Field({ nullable: true })
+  recordId?: string
+
+  @Field({ nullable: true })
   slug?: string
 
   @Field({ nullable: true })
