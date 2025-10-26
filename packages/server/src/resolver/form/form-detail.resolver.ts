@@ -1,4 +1,4 @@
-import { Auth, FormGuard, Team } from '@decorator'
+import { Auth, FormGuard, Public, Team } from '@decorator'
 import { FormDetailInput, FormType, PublicFormType } from '@graphql'
 import { date } from '@heyform-inc/utils'
 import { FormModel, TeamModel } from '@model'
@@ -34,6 +34,7 @@ export class FormDetailResolver {
   }
 
   @Query(returns => PublicFormType)
+  @Public()
   async publicForm(@Args('input') input: FormDetailInput): Promise<PublicFormType> {
     const form = await this.formService.findPublicForm(input.formId)
 

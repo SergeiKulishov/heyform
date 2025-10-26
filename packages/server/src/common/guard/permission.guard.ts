@@ -1,6 +1,7 @@
 import { BadRequestException, CanActivate, ExecutionContext, Inject } from '@nestjs/common'
 import { Reflector } from '@nestjs/core'
 
+import { IS_PUBLIC_KEY } from '@decorator'
 import { helper, timestamp } from '@heyform-inc/utils'
 import { GqlExecutionContext } from '@nestjs/graphql'
 import { FormService, ProjectService, TeamService } from '@service'
@@ -24,6 +25,15 @@ export class PermissionGuard implements CanActivate {
   }
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
+    const isPublic = this.reflector.getAllAndOverride<boolean>(IS_PUBLIC_KEY, [
+      context.getHandler(),
+      context.getClass()
+    ])
+
+    if (isPublic) {
+      return true
+    }
+
     const ctx = GqlExecutionContext.create(context)
     let { req } = ctx.getContext()
     let args = ctx.getArgs()
