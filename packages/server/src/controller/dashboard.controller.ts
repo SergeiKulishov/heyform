@@ -16,7 +16,6 @@ export class DashboardController {
     '/dashboard',
     '/dashboard/*',
     '/workspace/*',
-    '/form/*',
     '/project/*',
     '/auth/*',
     '/sign-up',
