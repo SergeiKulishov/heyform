@@ -1450,6 +1450,7 @@ export const PUBLIC_FORM_GQL = gql`
       variables
       fieldsUpdatedAt
       themeSettings {
+        logo
         theme
       }
       retentionAt

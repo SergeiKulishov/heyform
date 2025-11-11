@@ -42,6 +42,10 @@ const ModalComponent = () => {
   }, [workspace?.brandKits])
   const [values, setValues] = useState(brandKit)
 
+  useEffect(() => {
+    setValues(brandKit)
+  }, [brandKit])
+
   const options = useMemo(
     () => [
       {
@@ -120,7 +124,12 @@ const ModalComponent = () => {
   return (
     <div className="flex h-full">
       <div className="scrollbar border-accent-light bg-foreground h-full w-full border-r px-4 py-6 sm:w-80">
-        <Form initialValues={brandKit} onValuesChange={handleValuesChange} onFinish={run}>
+        <Form
+          key={brandKit?.id || 'new'}
+          initialValues={brandKit}
+          onValuesChange={handleValuesChange}
+          onFinish={run}
+        >
           <div className="flex items-center justify-between">
             <h2 className="text-base/6 font-semibold">{t('settings.branding.brandKitHeadline')}</h2>
 

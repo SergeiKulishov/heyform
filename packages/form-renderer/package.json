@@ -1,6 +1,6 @@
 {
   "name": "@heyform-inc/form-renderer",
-  "version": "0.4.2",
+  "version": "0.4.3",
   "publishConfig": {
     "registry": "https://nexus.stackbro.tech/repository/npm-hosted/"
   },
