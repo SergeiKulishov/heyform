@@ -7,7 +7,8 @@ import {
   IsObject,
   IsOptional,
   IsUrl,
-  Length
+  Length,
+  ValidateIf
 } from 'class-validator'
 
 import { FormType, ProjectType } from '@graphql'
@@ -124,6 +125,10 @@ export class UpdateTeamInput extends TeamDetailInput {
   removeBranding?: boolean
 
   @Field({ nullable: true })
+  @ValidateIf(
+    o =>
+      o.customSharingURL !== null && o.customSharingURL !== undefined && o.customSharingURL !== ''
+  )
   @IsUrl()
   @IsOptional()
   customSharingURL?: string

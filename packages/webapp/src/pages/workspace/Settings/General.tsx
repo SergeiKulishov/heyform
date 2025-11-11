@@ -47,7 +47,7 @@ export default function WorkspaceGeneral() {
   const { run: handleCustomSharingURLChange } = useRequest(
     async (customSharingURL: string) => {
       const updates = {
-        customSharingURL
+        customSharingURL: customSharingURL.trim() || null
       }
 
       updateWorkspace(workspaceId, updates)
@@ -104,7 +104,7 @@ export default function WorkspaceGeneral() {
           </p>
           <Input
             id="customSharingURL"
-            value={workspace?.customSharingURL}
+            value={workspace?.customSharingURL || ''}
             placeholder={t('settings.general.customSharingURLPlaceholder')}
             onChange={handleCustomSharingURLChange}
           />

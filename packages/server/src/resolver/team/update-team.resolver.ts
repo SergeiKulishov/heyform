@@ -22,14 +22,16 @@ export class UpdateTeamResolver {
       throw new BadRequestException("You don't have permission to change the workspace settings")
     }
 
-    const updates: Record<string, any> = pickValidValues(input as any, [
-      'name',
-      'avatar',
-      'customSharingURL'
-    ])
+    const updates: Record<string, any> = pickValidValues(input as any, ['name', 'avatar'])
 
     if (!helper.isNil(input.removeBranding)) {
       updates.removeBranding = input.removeBranding
+    }
+
+    if (input.customSharingURL !== undefined) {
+      updates.customSharingURL = helper.isEmpty(input.customSharingURL)
+        ? null
+        : input.customSharingURL
     }
 
     return await this.teamService.update(input.teamId, updates)
