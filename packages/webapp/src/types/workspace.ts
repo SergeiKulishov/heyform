@@ -42,6 +42,7 @@ export interface WorkspaceType {
   members: UserType[]
   aiKey?: string
   aiModel?: string
+  customSharingURL?: string
 }
 
 export interface MemberType {

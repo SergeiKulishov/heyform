@@ -625,7 +625,10 @@
       "title": "General",
       "name": "Name",
       "logo": "Logo",
-      "pickLogo": "Pick a logo for your workspace."
+      "pickLogo": "Pick a logo for your workspace.",
+      "customSharingURL": "Custom Sharing URL",
+      "customSharingURLDescription": "Set a custom base URL for sharing your forms. If not set, the current domain will be used.",
+      "customSharingURLPlaceholder": "https://forms.yourdomain.com"
     },
     "branding": {
       "title": "Branding",

@@ -25,6 +25,9 @@ export class TeamModel extends Document {
   @Prop()
   removeBranding?: boolean
 
+  @Prop()
+  customSharingURL?: string
+
   @Prop({ default: () => nanoid(), unique: true })
   inviteCode: string
 

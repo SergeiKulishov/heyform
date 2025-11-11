@@ -44,6 +44,22 @@ export default function WorkspaceGeneral() {
     }
   )
 
+  const { run: handleCustomSharingURLChange } = useRequest(
+    async (customSharingURL: string) => {
+      const updates = {
+        customSharingURL
+      }
+
+      updateWorkspace(workspaceId, updates)
+      await WorkspaceService.update(workspaceId, updates)
+    },
+    {
+      debounceWait: 300,
+      manual: true,
+      refreshDeps: [workspaceId]
+    }
+  )
+
   return (
     <section id="general" className="border-accent-light border-b pb-10">
       <h2 className="text-lg font-semibold">{t('settings.general.title')}</h2>
@@ -73,6 +89,24 @@ export default function WorkspaceGeneral() {
               height: 100
             }}
             onChange={handleAvatarChange}
+          />
+        </div>
+
+        <div className="space-y-2">
+          <label
+            htmlFor="customSharingURL"
+            className="text-primary block text-sm/6 font-medium leading-6"
+          >
+            {t('settings.general.customSharingURL')}
+          </label>
+          <p data-slot="text" className="text-secondary text-base/5 sm:text-sm/5">
+            {t('settings.general.customSharingURLDescription')}
+          </p>
+          <Input
+            id="customSharingURL"
+            value={workspace?.customSharingURL}
+            placeholder={t('settings.general.customSharingURLPlaceholder')}
+            onChange={handleCustomSharingURLChange}
           />
         </div>
       </div>

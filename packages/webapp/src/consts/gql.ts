@@ -78,6 +78,7 @@ export const WORKSPACES_GQL = gql`
       inviteCode
       inviteCodeExpireAt
       removeBranding
+      customSharingURL
       createdAt
       projects {
         id

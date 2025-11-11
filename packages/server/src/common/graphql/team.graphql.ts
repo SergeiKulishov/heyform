@@ -122,6 +122,11 @@ export class UpdateTeamInput extends TeamDetailInput {
   @IsBoolean()
   @IsOptional()
   removeBranding?: boolean
+
+  @Field({ nullable: true })
+  @IsUrl()
+  @IsOptional()
+  customSharingURL?: string
 }
 
 @InputType()
@@ -246,6 +251,9 @@ export class TeamType extends PublicTeamType {
 
   @Field({ nullable: true })
   removeBranding?: boolean
+
+  @Field({ nullable: true })
+  customSharingURL?: string
 
   @Field()
   createdAt: Date

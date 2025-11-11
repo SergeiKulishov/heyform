@@ -22,7 +22,11 @@ export class UpdateTeamResolver {
       throw new BadRequestException("You don't have permission to change the workspace settings")
     }
 
-    const updates: Record<string, any> = pickValidValues(input as any, ['name', 'avatar'])
+    const updates: Record<string, any> = pickValidValues(input as any, [
+      'name',
+      'avatar',
+      'customSharingURL'
+    ])
 
     if (!helper.isNil(input.removeBranding)) {
       updates.removeBranding = input.removeBranding

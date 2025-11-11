@@ -50,9 +50,9 @@ const computeState = (state: WorkspaceStoreType): ComputedStoreType => {
   let project: ProjectType | undefined
   let members: MemberType[] = []
   let forms: FormType[] = []
-  let sharingURLPrefix = window?.location?.origin ?? WEBSITE_URL
 
   const workspace = state.workspaces.find(w => w.id === state.currentWorkspaceId)
+  let sharingURLPrefix = (workspace?.customSharingURL || window?.location?.origin) ?? WEBSITE_URL
 
   if (workspace) {
     members = state._memberMap[workspace.id] || []
