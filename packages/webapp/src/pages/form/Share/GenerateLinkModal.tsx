@@ -1,12 +1,13 @@
-import { IconPlus, IconTrash, IconUpload } from '@tabler/icons-react'
+import { IconCheck, IconCopy, IconPlus, IconTrash, IconUpload } from '@tabler/icons-react'
 import { ChangeEvent, FC, useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import CopyToClipboard from 'react-copy-to-clipboard'
 import { useTranslation } from 'react-i18next'
 
 import { ShortenUrlService } from '@/services'
 import { useParam } from '@/utils'
 
 import { Button, Input, Modal, Switch, Tooltip, useToast } from '@/components'
-import { useModal, useWorkspaceStore } from '@/store'
+import { useFormStore, useModal, useWorkspaceStore } from '@/store'
 
 async function shortenUrl(url: string): Promise<string> {
   try {
@@ -69,7 +70,14 @@ const GenerateLinkComponent: FC<GenerateLinkComponentProps> = ({ onClose }) => {
   const toast = useToast()
   const { formId } = useParam()
   const { sharingURLPrefix } = useWorkspaceStore()
+  const { form } = useFormStore()
   const fileInputRef = useRef<HTMLInputElement>(null)
+
+  // Get hidden field names for autocomplete
+  const hiddenFieldNames = useMemo(
+    () => (form?.hiddenFields || []).map(field => field.name),
+    [form?.hiddenFields]
+  )
 
   const [parameters, setParameters] = useState<UrlParameter[]>([
     { id: crypto.randomUUID(), key: '', value: '' }
@@ -77,6 +85,8 @@ const GenerateLinkComponent: FC<GenerateLinkComponentProps> = ({ onClose }) => {
   const [useUrlShortener, setUseUrlShortener] = useState(false)
   const [shortenedUrl, setShortenedUrl] = useState<string | null>(null)
   const [isShortening, setIsShortening] = useState(false)
+  const [copiedOriginal, setCopiedOriginal] = useState(false)
+  const [copiedShortened, setCopiedShortened] = useState(false)
 
   const baseUrl = useMemo(() => `${sharingURLPrefix}/form/${formId}`, [formId, sharingURLPrefix])
 
@@ -145,6 +155,16 @@ const GenerateLinkComponent: FC<GenerateLinkComponentProps> = ({ onClose }) => {
 
   const handleCsvButtonClick = useCallback(() => {
     fileInputRef.current?.click()
+  }, [])
+
+  const handleCopyOriginal = useCallback(() => {
+    setCopiedOriginal(true)
+    setTimeout(() => setCopiedOriginal(false), 2000)
+  }, [])
+
+  const handleCopyShortened = useCallback(() => {
+    setCopiedShortened(true)
+    setTimeout(() => setCopiedShortened(false), 2000)
   }, [])
 
   const handleCsvFileChange = useCallback(
@@ -238,7 +258,16 @@ const GenerateLinkComponent: FC<GenerateLinkComponentProps> = ({ onClose }) => {
               placeholder={t('form.share.generateLink.parameterKey')}
               value={param.key}
               onChange={(value: string) => handleKeyChange(param.id, value)}
+              list={hiddenFieldNames.length > 0 ? `hidden-fields-datalist-${param.id}` : undefined}
             />
+            {/* Datalist for autocomplete - only render if hidden fields exist */}
+            {hiddenFieldNames.length > 0 && (
+              <datalist id={`hidden-fields-datalist-${param.id}`}>
+                {hiddenFieldNames.map((name, index) => (
+                  <option key={index} value={name} />
+                ))}
+              </datalist>
+            )}
             <Input
               className="flex-1"
               placeholder={t('form.share.generateLink.parameterValue')}
@@ -272,30 +301,64 @@ const GenerateLinkComponent: FC<GenerateLinkComponentProps> = ({ onClose }) => {
         </label>
 
         {/* Original URL - always shown */}
-        <div className="border-input rounded-lg border bg-gray-50 p-3 dark:bg-gray-900">
-          <p className="text-secondary mb-1 text-xs">{t('form.share.generateLink.originalUrl')}</p>
-          <p className="break-all text-sm">{generatedUrl}</p>
+        <div className="border-input flex items-start justify-between gap-3 rounded-lg border bg-gray-50 p-3 dark:bg-gray-900">
+          <div className="min-w-0 flex-1">
+            <p className="text-secondary mb-1 text-xs">
+              {t('form.share.generateLink.originalUrl')}
+            </p>
+            <p className="break-all text-sm">{generatedUrl}</p>
 
-          {/* Shorten button - only when toggle is enabled and not yet shortened */}
-          {useUrlShortener && !shortenedUrl && (
-            <Button.Ghost
-              size="sm"
-              className="mt-2"
-              onClick={handleShortenUrl}
-              loading={isShortening}
+            {/* Shorten button - only when toggle is enabled and not yet shortened */}
+            {useUrlShortener && !shortenedUrl && (
+              <Button.Ghost
+                size="sm"
+                className="mt-2"
+                onClick={handleShortenUrl}
+                loading={isShortening}
+              >
+                {t('form.share.generateLink.shortenButton')}
+              </Button.Ghost>
+            )}
+          </div>
+
+          {/* Copy button */}
+          <CopyToClipboard text={generatedUrl} onCopy={handleCopyOriginal}>
+            <button
+              type="button"
+              className="text-secondary hover:text-primary flex-shrink-0 transition-colors"
             >
-              {t('form.share.generateLink.shortenButton')}
-            </Button.Ghost>
-          )}
+              {copiedOriginal ? (
+                <IconCheck className="h-5 w-5" />
+              ) : (
+                <IconCopy className="h-5 w-5" />
+              )}
+            </button>
+          </CopyToClipboard>
         </div>
 
         {/* Shortened URL - only shown after shortening */}
         {useUrlShortener && shortenedUrl && (
-          <div className="border-input rounded-lg border bg-gray-50 p-3 dark:bg-gray-900">
-            <p className="text-secondary mb-1 text-xs">
-              {t('form.share.generateLink.shortenedUrl')}
-            </p>
-            <p className="break-all text-sm">{shortenedUrl}</p>
+          <div className="border-input flex items-start justify-between gap-3 rounded-lg border bg-gray-50 p-3 dark:bg-gray-900">
+            <div className="min-w-0 flex-1">
+              <p className="text-secondary mb-1 text-xs">
+                {t('form.share.generateLink.shortenedUrl')}
+              </p>
+              <p className="break-all text-sm">{shortenedUrl}</p>
+            </div>
+
+            {/* Copy button */}
+            <CopyToClipboard text={shortenedUrl} onCopy={handleCopyShortened}>
+              <button
+                type="button"
+                className="text-secondary hover:text-primary flex-shrink-0 transition-colors"
+              >
+                {copiedShortened ? (
+                  <IconCheck className="h-5 w-5" />
+                ) : (
+                  <IconCopy className="h-5 w-5" />
+                )}
+              </button>
+            </CopyToClipboard>
           </div>
         )}
       </div>
@@ -313,15 +376,12 @@ const GenerateLinkComponent: FC<GenerateLinkComponentProps> = ({ onClose }) => {
           />
           <Tooltip
             label={
-              <div className="space-y-2">
-                <p>{t('form.share.generateLink.fromCsvTooltip')}</p>
-                <pre className="text-xs opacity-80">
-                  {t('form.share.generateLink.fromCsvExample')}
-                </pre>
+              <div className="whitespace-pre-line text-sm">
+                {t('form.share.generateLink.fromCsvTooltip')}
               </div>
             }
             contentProps={{
-              className: 'max-w-xs',
+              className: 'max-w-md bg-gray-900 text-white dark:bg-gray-100 dark:text-gray-900',
               side: 'top'
             }}
           >
@@ -341,12 +401,11 @@ const GenerateLinkComponent: FC<GenerateLinkComponentProps> = ({ onClose }) => {
           </div>
         </div>
 
-        {/* Second row: Cancel and Copy buttons */}
+        {/* Second row: Cancel button */}
         <div className="flex items-center justify-end gap-x-4">
           <Button.Ghost size="sm" onClick={onClose}>
             {t('components.cancel')}
           </Button.Ghost>
-          <Button.Copy size="sm" text={displayUrl} disabled={isShortening} />
         </div>
       </div>
     </div>

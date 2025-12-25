@@ -16,7 +16,7 @@ export class ShortenUrlController {
       throw new BadRequestException('URL is required')
     }
 
-    input.url = 'https://heyform-i48woow4c00wsccsggksg8gw.stackbro.tech/form/RfKa5iRb?name=Sauron'
+    //  input.url = 'https://heyform-i48woow4c00wsccsggksg8gw.stackbro.tech/form/RfKa5iRb?name=Sauron'
     const KUTT_API_URL =
       process.env.KUTT_API_URL || 'https://kutt-swww4os08c08g8wkskk0sgwo.stackbro.tech/api/v2'
     const KUTT_API_KEY = process.env.KUTT_API_KEY || ''
