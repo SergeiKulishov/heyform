@@ -1,26 +1,16 @@
 import { IconPlus, IconTrash, IconUpload } from '@tabler/icons-react'
-import { Kutt } from 'kutt'
 import { ChangeEvent, FC, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
+import { ShortenUrlService } from '@/services'
 import { useParam } from '@/utils'
 
-import { Button, Input, Modal, Switch, Tooltip } from '@/components'
+import { Button, Input, Modal, Switch, Tooltip, useToast } from '@/components'
 import { useModal, useWorkspaceStore } from '@/store'
-
-// Kutt URL shortener configuration
-const KUTT_API_URL =
-  import.meta.env.VITE_KUTT_API_URL || 'https://kutt-swww4os08c08g8wkskk0sgwo.stackbro.tech/api/v2'
-const KUTT_API_KEY = import.meta.env.VITE_KUTT_API_KEY || ''
-
-// Initialize Kutt client
-const kutt = new Kutt()
-kutt.set('api', KUTT_API_URL).set('key', KUTT_API_KEY)
 
 async function shortenUrl(url: string): Promise<string> {
   try {
-    const link = await kutt.links().create({ target: url })
-    return link.link
+    return await ShortenUrlService.shorten(url)
   } catch (error) {
     console.error('Failed to shorten URL:', error)
     return url // Return original URL on error
@@ -76,6 +66,7 @@ function generateCSV(headers: string[], rows: string[][]): string {
 
 const GenerateLinkComponent: FC<GenerateLinkComponentProps> = ({ onClose }) => {
   const { t } = useTranslation()
+  const toast = useToast()
   const { formId } = useParam()
   const { sharingURLPrefix } = useWorkspaceStore()
   const fileInputRef = useRef<HTMLInputElement>(null)
@@ -170,7 +161,20 @@ const GenerateLinkComponent: FC<GenerateLinkComponentProps> = ({ onClose }) => {
 
           // Shorten URL if toggle is enabled
           if (useUrlShortener) {
-            generatedLink = await shortenUrl(generatedLink)
+            try {
+              const shortened = await shortenUrl(generatedLink)
+              generatedLink = shortened
+            } catch (error: any) {
+              console.error('Error shortening URL:', error)
+              toast({
+                title: t('form.share.generateLink.shorteningFailed'),
+                message:
+                  error.response?.data?.message ||
+                  error.message ||
+                  t('form.share.generateLink.shorteningFailedMessage')
+              })
+              // Continue with original URL if shortening fails
+            }
           }
 
           outputRows.push([...row, generatedLink])
@@ -205,7 +209,7 @@ const GenerateLinkComponent: FC<GenerateLinkComponentProps> = ({ onClose }) => {
     <div className="space-y-6">
       {/* Parameters list */}
       <div className="space-y-3">
-        {parameters.map((param, index) => (
+        {parameters.map((param, _) => (
           <div key={param.id} className="flex items-center gap-2">
             <Input
               className="flex-1"

@@ -1126,7 +1126,9 @@
         "fromCsvTooltip": "Upload a CSV file where the first row contains parameter names (headers) and each subsequent row contains values. A new CSV with generated links will be downloaded.",
         "fromCsvExample": "id,firstname,lastname\n1,Jack,Silver\n2,Nikita,Trofimoff",
         "useUrlShortener": "Use url-shortener",
-        "shortening": "Shortening..."
+        "shortening": "Shortening...",
+        "shorteningFailed": "Failed to shorten URL",
+        "shorteningFailedMessage": "An error occurred while shortening the URL. The original URL will be used."
       },
       "settings": {
         "headline": "Link settings",
