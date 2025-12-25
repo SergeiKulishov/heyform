@@ -385,6 +385,7 @@
     "continue": "Continuer",
     "copy": "Copier",
     "copied": "Copié",
+    "generate": "Générer",
     "delete": "Supprimer",
     "enabled": "Activé",
     "disabled": "Désactivé",
@@ -1053,6 +1054,14 @@
           "body": "Nous vous serions très reconnaissants si vous remplissiez ce formulaire : {{url}}. Merci."
         },
         "useCustomDomain": "Utiliser un domaine personnalisé"
+      },
+      "generateLink": {
+        "title": "Générer un lien",
+        "addParameter": "Ajouter un paramètre",
+        "parameterKey": "Clé",
+        "parameterValue": "Valeur",
+        "preview": "Aperçu",
+        "fromCsv": "Depuis .csv"
       },
       "settings": {
         "headline": "Paramètres du lien",

@@ -16,6 +16,7 @@ import { FORM_EMBED_OPTIONS } from '@/consts'
 import { useAppStore, useFormStore, useWorkspaceStore } from '@/store'
 
 import EmbedModal from './EmbedModal'
+import GenerateLinkModal from './GenerateLinkModal'
 import LinkSettings from './LinkSettings'
 import QRCodeModal from './QRCodeModal'
 
@@ -65,6 +66,10 @@ export default function FormShare() {
     })
   }
 
+  function handleGenerateLink() {
+    openModal('GenerateLinkModal')
+  }
+
   function handleOpenEmbed(embedType: string) {
     selectEmbedType(embedType)
     openModal('EmbedModal')
@@ -88,8 +93,9 @@ export default function FormShare() {
             <div className="flex flex-col gap-2 text-sm/6 sm:flex-row sm:items-center">
               <div className="border-input flex items-center gap-x-4 rounded-lg border">
                 <div className="h-10 flex-1 truncate pl-4 leading-10">{shareLink}</div>
-                <Button.Copy className="rounded-l-none" text={shareLink} />
+                <Button.Copy text={shareLink} />
               </div>
+              <Button onClick={handleGenerateLink}>{t('components.generate')}</Button>
             </div>
 
             <div className="mt-2 flex items-center gap-x-2">
@@ -163,6 +169,7 @@ export default function FormShare() {
 
       <QRCodeModal />
       <EmbedModal />
+      <GenerateLinkModal />
     </>
   )
 }

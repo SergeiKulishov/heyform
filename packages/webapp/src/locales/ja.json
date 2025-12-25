@@ -385,6 +385,7 @@
     "continue": "続行",
     "copy": "コピー",
     "copied": "コピーしました",
+    "generate": "生成",
     "delete": "削除",
     "enabled": "有効化",
     "disabled": "無効化",
@@ -1049,6 +1050,14 @@
           "body": "このフォームにご記入いただけると幸いです：{{url}}。ありがとうございます。"
         },
         "useCustomDomain": "カスタムドメインを使用する"
+      },
+      "generateLink": {
+        "title": "リンクを生成",
+        "addParameter": "パラメータを追加",
+        "parameterKey": "キー",
+        "parameterValue": "値",
+        "preview": "プレビュー",
+        "fromCsv": "CSVから"
       },
       "settings": {
         "headline": "リンク設定",

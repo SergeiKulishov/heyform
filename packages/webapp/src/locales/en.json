@@ -385,6 +385,7 @@
     "continue": "Continue",
     "copy": "Copy",
     "copied": "Copied",
+    "generate": "Generate",
     "delete": "Delete",
     "enabled": "Enabled",
     "disabled": "Disabled",
@@ -1114,6 +1115,14 @@
           "body": "We would really appreciate it if you filled in this form: {{url}}. Thank you."
         },
         "useCustomDomain": "Use custom domain"
+      },
+      "generateLink": {
+        "title": "Generate Link",
+        "addParameter": "Add parameter",
+        "parameterKey": "Key",
+        "parameterValue": "Value",
+        "preview": "Preview",
+        "fromCsv": "From .csv"
       },
       "settings": {
         "headline": "Link settings",

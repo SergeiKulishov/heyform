@@ -385,6 +385,7 @@
     "continue": "Fortsetzen",
     "copy": "Kopieren",
     "copied": "Kopiert",
+    "generate": "Generieren",
     "delete": "Löschen",
     "enabled": "Aktiviert",
     "disabled": "Deaktiviert",
@@ -1049,6 +1050,14 @@
           "body": "Wir würden es sehr schätzen, wenn Sie dieses Formular ausfüllen: {{url}}. Vielen Dank."
         },
         "useCustomDomain": "Benutzerdefinierte Domain verwenden"
+      },
+      "generateLink": {
+        "title": "Link generieren",
+        "addParameter": "Parameter hinzufügen",
+        "parameterKey": "Schlüssel",
+        "parameterValue": "Wert",
+        "preview": "Vorschau",
+        "fromCsv": "Aus .csv"
       },
       "settings": {
         "headline": "Linkeinstellungen",

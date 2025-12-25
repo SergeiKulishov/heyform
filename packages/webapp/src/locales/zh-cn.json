@@ -385,6 +385,7 @@
     "continue": "继续",
     "copy": "复制",
     "copied": "已复制",
+    "generate": "生成",
     "delete": "删除",
     "enabled": "启用",
     "disabled": "禁用",
@@ -1049,6 +1050,14 @@
           "body": "如果您能填写这个表单，我们将不胜感激：{{url}}。谢谢。"
         },
         "useCustomDomain": "使用自定义域名"
+      },
+      "generateLink": {
+        "title": "生成链接",
+        "addParameter": "添加参数",
+        "parameterKey": "键",
+        "parameterValue": "值",
+        "preview": "预览",
+        "fromCsv": "从 .csv"
       },
       "settings": {
         "headline": "链接设置",
