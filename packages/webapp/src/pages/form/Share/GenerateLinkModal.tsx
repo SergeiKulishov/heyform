@@ -94,23 +94,19 @@ const GenerateLinkComponent: FC<GenerateLinkComponentProps> = ({ onClose }) => {
     return `${baseUrl}?${searchParams.toString()}`
   }, [baseUrl, parameters])
 
-  // Shorten URL when toggle is enabled or URL changes
+  const displayUrl = shortenedUrl || generatedUrl
+
+  // Clear shortened URL when toggle is disabled
   useEffect(() => {
-    if (useUrlShortener && generatedUrl) {
-      setIsShortening(true)
-      shortenUrl(generatedUrl)
-        .then(shortened => {
-          setShortenedUrl(shortened)
-        })
-        .finally(() => {
-          setIsShortening(false)
-        })
-    } else {
+    if (!useUrlShortener) {
       setShortenedUrl(null)
     }
-  }, [useUrlShortener, generatedUrl])
+  }, [useUrlShortener])
 
-  const displayUrl = useUrlShortener && shortenedUrl ? shortenedUrl : generatedUrl
+  // Clear shortened URL when parameters change
+  useEffect(() => {
+    setShortenedUrl(null)
+  }, [generatedUrl])
 
   const handleAddParameter = useCallback(() => {
     setParameters(prev => [...prev, { id: crypto.randomUUID(), key: '', value: '' }])
@@ -127,6 +123,25 @@ const GenerateLinkComponent: FC<GenerateLinkComponentProps> = ({ onClose }) => {
   const handleValueChange = useCallback((id: string, value: string) => {
     setParameters(prev => prev.map(p => (p.id === id ? { ...p, value } : p)))
   }, [])
+
+  const handleShortenUrl = useCallback(async () => {
+    setIsShortening(true)
+    try {
+      const shortened = await shortenUrl(generatedUrl)
+      setShortenedUrl(shortened)
+    } catch (error: any) {
+      console.error('Error shortening URL:', error)
+      toast({
+        title: t('form.share.generateLink.shorteningFailed'),
+        message:
+          error.response?.data?.message ||
+          error.message ||
+          t('form.share.generateLink.shorteningFailedMessage')
+      })
+    } finally {
+      setIsShortening(false)
+    }
+  }, [generatedUrl, toast, t])
 
   const handleCsvButtonClick = useCallback(() => {
     fileInputRef.current?.click()
@@ -157,13 +172,13 @@ const GenerateLinkComponent: FC<GenerateLinkComponentProps> = ({ onClose }) => {
               searchParams.append(header, row[index])
             }
           })
-          let generatedLink = `${baseUrl}?${searchParams.toString()}`
+          const generatedLink = `${baseUrl}?${searchParams.toString()}`
+          let shortenedLink = ''
 
           // Shorten URL if toggle is enabled
           if (useUrlShortener) {
             try {
-              const shortened = await shortenUrl(generatedLink)
-              generatedLink = shortened
+              shortenedLink = await shortenUrl(generatedLink)
             } catch (error: any) {
               console.error('Error shortening URL:', error)
               toast({
@@ -173,15 +188,22 @@ const GenerateLinkComponent: FC<GenerateLinkComponentProps> = ({ onClose }) => {
                   error.message ||
                   t('form.share.generateLink.shorteningFailedMessage')
               })
-              // Continue with original URL if shortening fails
+              // shortenedLink stays empty if shortening fails
             }
           }
 
-          outputRows.push([...row, generatedLink])
+          // Add columns based on toggle state
+          if (useUrlShortener) {
+            outputRows.push([...row, generatedLink, shortenedLink])
+          } else {
+            outputRows.push([...row, generatedLink])
+          }
         }
 
         // Create output CSV
-        const outputHeaders = [...headers, 'generated_link']
+        const outputHeaders = useUrlShortener
+          ? [...headers, 'generated_link', 'shortened_link']
+          : [...headers, 'generated_link']
         const csvContent = generateCSV(outputHeaders, outputRows)
 
         // Download the file
@@ -248,11 +270,34 @@ const GenerateLinkComponent: FC<GenerateLinkComponentProps> = ({ onClose }) => {
         <label className="text-secondary text-sm font-medium">
           {t('form.share.generateLink.preview')}
         </label>
+
+        {/* Original URL - always shown */}
         <div className="border-input rounded-lg border bg-gray-50 p-3 dark:bg-gray-900">
-          <p className="break-all text-sm">
-            {isShortening ? t('form.share.generateLink.shortening') : displayUrl}
-          </p>
+          <p className="text-secondary mb-1 text-xs">{t('form.share.generateLink.originalUrl')}</p>
+          <p className="break-all text-sm">{generatedUrl}</p>
+
+          {/* Shorten button - only when toggle is enabled and not yet shortened */}
+          {useUrlShortener && !shortenedUrl && (
+            <Button.Ghost
+              size="sm"
+              className="mt-2"
+              onClick={handleShortenUrl}
+              loading={isShortening}
+            >
+              {t('form.share.generateLink.shortenButton')}
+            </Button.Ghost>
+          )}
         </div>
+
+        {/* Shortened URL - only shown after shortening */}
+        {useUrlShortener && shortenedUrl && (
+          <div className="border-input rounded-lg border bg-gray-50 p-3 dark:bg-gray-900">
+            <p className="text-secondary mb-1 text-xs">
+              {t('form.share.generateLink.shortenedUrl')}
+            </p>
+            <p className="break-all text-sm">{shortenedUrl}</p>
+          </div>
+        )}
       </div>
 
       {/* Actions */}

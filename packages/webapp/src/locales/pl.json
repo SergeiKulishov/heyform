@@ -1061,7 +1061,12 @@
         "fromCsvTooltip": "Prześlij plik CSV, w którym pierwszy wiersz zawiera nazwy parametrów (nagłówki), a każdy kolejny wiersz zawiera wartości. Zostanie pobrany nowy plik CSV z wygenerowanymi linkami.",
         "fromCsvExample": "id,firstname,lastname\n1,Jack,Silver\n2,Nikita,Trofimoff",
         "useUrlShortener": "Użyj skracacza URL",
-        "shortening": "Skracanie..."
+        "shortening": "Skracanie...",
+        "shorteningFailed": "Nie udało się skrócić URL",
+        "shorteningFailedMessage": "Wystąpił błąd podczas skracania URL. Zostanie użyty oryginalny URL.",
+        "shortenButton": "Skróć",
+        "originalUrl": "Oryginalny URL",
+        "shortenedUrl": "Skrócony URL"
       },
       "settings": {
         "headline": "Ustawienia linku",

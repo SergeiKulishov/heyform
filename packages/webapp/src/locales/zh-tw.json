@@ -1061,7 +1061,12 @@
         "fromCsvTooltip": "上傳CSV文件，第一行包含參數名稱（標題），後續每行包含值。將下載包含生成連結的新CSV文件。",
         "fromCsvExample": "id,firstname,lastname\n1,Jack,Silver\n2,Nikita,Trofimoff",
         "useUrlShortener": "使用短網址",
-        "shortening": "正在縮短..."
+        "shortening": "正在縮短...",
+        "shorteningFailed": "縮短URL失敗",
+        "shorteningFailedMessage": "縮短URL時發生錯誤。將使用原始URL。",
+        "shortenButton": "縮短",
+        "originalUrl": "原始URL",
+        "shortenedUrl": "縮短的URL"
       },
       "settings": {
         "headline": "連結設定",

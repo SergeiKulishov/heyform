@@ -1128,7 +1128,10 @@
         "useUrlShortener": "Use url-shortener",
         "shortening": "Shortening...",
         "shorteningFailed": "Failed to shorten URL",
-        "shorteningFailedMessage": "An error occurred while shortening the URL. The original URL will be used."
+        "shorteningFailedMessage": "An error occurred while shortening the URL. The original URL will be used.",
+        "shortenButton": "Shorten",
+        "originalUrl": "Original URL",
+        "shortenedUrl": "Shortened URL"
       },
       "settings": {
         "headline": "Link settings",

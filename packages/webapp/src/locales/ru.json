@@ -1128,7 +1128,10 @@
         "useUrlShortener": "Использовать сокращатель ссылок",
         "shortening": "Сокращение...",
         "shorteningFailed": "Не удалось сократить ссылку",
-        "shorteningFailedMessage": "Произошла ошибка при сокращении ссылки. Будет использована оригинальная ссылка."
+        "shorteningFailedMessage": "Произошла ошибка при сокращении ссылки. Будет использована оригинальная ссылка.",
+        "shortenButton": "Сократить",
+        "originalUrl": "Оригинальный URL",
+        "shortenedUrl": "Сокращенный URL"
       },
       "settings": {
         "headline": "Настройки ссылки",

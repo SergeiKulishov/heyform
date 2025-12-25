@@ -1061,7 +1061,12 @@
         "fromCsvTooltip": "上传CSV文件，第一行包含参数名称（标题），后续每行包含值。将下载包含生成链接的新CSV文件。",
         "fromCsvExample": "id,firstname,lastname\n1,Jack,Silver\n2,Nikita,Trofimoff",
         "useUrlShortener": "使用短链接",
-        "shortening": "正在缩短..."
+        "shortening": "正在缩短...",
+        "shorteningFailed": "缩短URL失败",
+        "shorteningFailedMessage": "缩短URL时发生错误。将使用原始URL。",
+        "shortenButton": "缩短",
+        "originalUrl": "原始URL",
+        "shortenedUrl": "缩短的URL"
       },
       "settings": {
         "headline": "链接设置",
