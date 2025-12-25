@@ -1,11 +1,31 @@
 import { IconPlus, IconTrash, IconUpload } from '@tabler/icons-react'
-import { ChangeEvent, FC, useCallback, useMemo, useRef, useState } from 'react'
+import { Kutt } from 'kutt'
+import { ChangeEvent, FC, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { useParam } from '@/utils'
 
-import { Button, Input, Modal, Tooltip } from '@/components'
+import { Button, Input, Modal, Switch, Tooltip } from '@/components'
 import { useModal, useWorkspaceStore } from '@/store'
+
+// Kutt URL shortener configuration
+const KUTT_API_URL =
+  import.meta.env.VITE_KUTT_API_URL || 'https://kutt-swww4os08c08g8wkskk0sgwo.stackbro.tech/api/v2'
+const KUTT_API_KEY = import.meta.env.VITE_KUTT_API_KEY || ''
+
+// Initialize Kutt client
+const kutt = new Kutt()
+kutt.set('api', KUTT_API_URL).set('key', KUTT_API_KEY)
+
+async function shortenUrl(url: string): Promise<string> {
+  try {
+    const link = await kutt.links().create({ target: url })
+    return link.link
+  } catch (error) {
+    console.error('Failed to shorten URL:', error)
+    return url // Return original URL on error
+  }
+}
 
 interface UrlParameter {
   id: string
@@ -63,6 +83,9 @@ const GenerateLinkComponent: FC<GenerateLinkComponentProps> = ({ onClose }) => {
   const [parameters, setParameters] = useState<UrlParameter[]>([
     { id: crypto.randomUUID(), key: '', value: '' }
   ])
+  const [useUrlShortener, setUseUrlShortener] = useState(false)
+  const [shortenedUrl, setShortenedUrl] = useState<string | null>(null)
+  const [isShortening, setIsShortening] = useState(false)
 
   const baseUrl = useMemo(() => `${sharingURLPrefix}/form/${formId}`, [formId, sharingURLPrefix])
 
@@ -79,6 +102,24 @@ const GenerateLinkComponent: FC<GenerateLinkComponentProps> = ({ onClose }) => {
 
     return `${baseUrl}?${searchParams.toString()}`
   }, [baseUrl, parameters])
+
+  // Shorten URL when toggle is enabled or URL changes
+  useEffect(() => {
+    if (useUrlShortener && generatedUrl) {
+      setIsShortening(true)
+      shortenUrl(generatedUrl)
+        .then(shortened => {
+          setShortenedUrl(shortened)
+        })
+        .finally(() => {
+          setIsShortening(false)
+        })
+    } else {
+      setShortenedUrl(null)
+    }
+  }, [useUrlShortener, generatedUrl])
+
+  const displayUrl = useUrlShortener && shortenedUrl ? shortenedUrl : generatedUrl
 
   const handleAddParameter = useCallback(() => {
     setParameters(prev => [...prev, { id: crypto.randomUUID(), key: '', value: '' }])
@@ -101,12 +142,12 @@ const GenerateLinkComponent: FC<GenerateLinkComponentProps> = ({ onClose }) => {
   }, [])
 
   const handleCsvFileChange = useCallback(
-    (event: ChangeEvent<HTMLInputElement>) => {
+    async (event: ChangeEvent<HTMLInputElement>) => {
       const file = event.target.files?.[0]
       if (!file) return
 
       const reader = new FileReader()
-      reader.onload = e => {
+      reader.onload = async e => {
         const text = e.target?.result as string
         if (!text) return
 
@@ -117,16 +158,23 @@ const GenerateLinkComponent: FC<GenerateLinkComponentProps> = ({ onClose }) => {
         const dataRows = rows.slice(1)
 
         // Generate links for each row
-        const outputRows = dataRows.map(row => {
+        const outputRows: string[][] = []
+        for (const row of dataRows) {
           const searchParams = new URLSearchParams()
           headers.forEach((header, index) => {
             if (header && row[index] !== undefined) {
               searchParams.append(header, row[index])
             }
           })
-          const generatedLink = `${baseUrl}?${searchParams.toString()}`
-          return [...row, generatedLink]
-        })
+          let generatedLink = `${baseUrl}?${searchParams.toString()}`
+
+          // Shorten URL if toggle is enabled
+          if (useUrlShortener) {
+            generatedLink = await shortenUrl(generatedLink)
+          }
+
+          outputRows.push([...row, generatedLink])
+        }
 
         // Create output CSV
         const outputHeaders = [...headers, 'generated_link']
@@ -150,7 +198,7 @@ const GenerateLinkComponent: FC<GenerateLinkComponentProps> = ({ onClose }) => {
       }
       reader.readAsText(file)
     },
-    [baseUrl, formId]
+    [baseUrl, formId, useUrlShortener]
   )
 
   return (
@@ -197,13 +245,15 @@ const GenerateLinkComponent: FC<GenerateLinkComponentProps> = ({ onClose }) => {
           {t('form.share.generateLink.preview')}
         </label>
         <div className="border-input rounded-lg border bg-gray-50 p-3 dark:bg-gray-900">
-          <p className="break-all text-sm">{generatedUrl}</p>
+          <p className="break-all text-sm">
+            {isShortening ? t('form.share.generateLink.shortening') : displayUrl}
+          </p>
         </div>
       </div>
 
       {/* Actions */}
       <div className="flex items-center justify-between">
-        <div>
+        <div className="flex items-center gap-x-4">
           <input
             ref={fileInputRef}
             type="file"
@@ -232,12 +282,19 @@ const GenerateLinkComponent: FC<GenerateLinkComponentProps> = ({ onClose }) => {
               </Button.Ghost>
             </div>
           </Tooltip>
+
+          <div className="flex items-center gap-x-2">
+            <Switch value={useUrlShortener} onChange={setUseUrlShortener} />
+            <span className="text-secondary text-sm">
+              {t('form.share.generateLink.useUrlShortener')}
+            </span>
+          </div>
         </div>
         <div className="flex items-center gap-x-4">
           <Button.Ghost size="sm" onClick={onClose}>
             {t('components.cancel')}
           </Button.Ghost>
-          <Button.Copy size="sm" text={generatedUrl} />
+          <Button.Copy size="sm" text={displayUrl} disabled={isShortening} />
         </div>
       </div>
     </div>

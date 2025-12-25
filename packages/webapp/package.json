@@ -46,6 +46,7 @@
     "immer": "^10.1.1",
     "input-otp": "^1.2.4",
     "js-cookie": "^3.0.5",
+    "kutt": "^3.0.2",
     "libphonenumber-js": "^1.12.10",
     "lodash": "^4.17.21",
     "mobx-react-lite": "^4.1.0",

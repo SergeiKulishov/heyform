@@ -1059,7 +1059,9 @@
         "preview": "プレビュー",
         "fromCsv": "CSVから",
         "fromCsvTooltip": "最初の行にパラメータ名（ヘッダー）が含まれ、その後の各行に値が含まれるCSVファイルをアップロードします。生成されたリンクを含む新しいCSVがダウンロードされます。",
-        "fromCsvExample": "id,firstname,lastname\n1,Jack,Silver\n2,Nikita,Trofimoff"
+        "fromCsvExample": "id,firstname,lastname\n1,Jack,Silver\n2,Nikita,Trofimoff",
+        "useUrlShortener": "URL短縮を使用",
+        "shortening": "短縮中..."
       },
       "settings": {
         "headline": "リンク設定",

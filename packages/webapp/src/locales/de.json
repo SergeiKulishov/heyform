@@ -1059,7 +1059,9 @@
         "preview": "Vorschau",
         "fromCsv": "Aus .csv",
         "fromCsvTooltip": "Laden Sie eine CSV-Datei hoch, wobei die erste Zeile Parameternamen (Kopfzeilen) enthält und jede nachfolgende Zeile Werte enthält. Eine neue CSV mit generierten Links wird heruntergeladen.",
-        "fromCsvExample": "id,firstname,lastname\n1,Jack,Silver\n2,Nikita,Trofimoff"
+        "fromCsvExample": "id,firstname,lastname\n1,Jack,Silver\n2,Nikita,Trofimoff",
+        "useUrlShortener": "URL-Verkürzer verwenden",
+        "shortening": "Verkürzen..."
       },
       "settings": {
         "headline": "Linkeinstellungen",
