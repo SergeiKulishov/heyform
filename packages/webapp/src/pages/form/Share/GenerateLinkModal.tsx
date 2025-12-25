@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next'
 
 import { useParam } from '@/utils'
 
-import { Button, Input, Modal } from '@/components'
+import { Button, Input, Modal, Tooltip } from '@/components'
 import { useModal, useWorkspaceStore } from '@/store'
 
 interface UrlParameter {
@@ -211,10 +211,27 @@ const GenerateLinkComponent: FC<GenerateLinkComponentProps> = ({ onClose }) => {
             className="hidden"
             onChange={handleCsvFileChange}
           />
-          <Button.Ghost size="sm" className="gap-x-1" onClick={handleCsvButtonClick}>
-            <IconUpload className="h-4 w-4" />
-            {t('form.share.generateLink.fromCsv')}
-          </Button.Ghost>
+          <Tooltip
+            label={
+              <div className="space-y-2">
+                <p>{t('form.share.generateLink.fromCsvTooltip')}</p>
+                <pre className="text-xs opacity-80">
+                  {t('form.share.generateLink.fromCsvExample')}
+                </pre>
+              </div>
+            }
+            contentProps={{
+              className: 'max-w-xs',
+              side: 'top'
+            }}
+          >
+            <div>
+              <Button.Ghost size="sm" className="gap-x-1" onClick={handleCsvButtonClick}>
+                <IconUpload className="h-4 w-4" />
+                {t('form.share.generateLink.fromCsv')}
+              </Button.Ghost>
+            </div>
+          </Tooltip>
         </div>
         <div className="flex items-center gap-x-4">
           <Button.Ghost size="sm" onClick={onClose}>

@@ -1057,7 +1057,9 @@
         "parameterKey": "キー",
         "parameterValue": "値",
         "preview": "プレビュー",
-        "fromCsv": "CSVから"
+        "fromCsv": "CSVから",
+        "fromCsvTooltip": "最初の行にパラメータ名（ヘッダー）が含まれ、その後の各行に値が含まれるCSVファイルをアップロードします。生成されたリンクを含む新しいCSVがダウンロードされます。",
+        "fromCsvExample": "id,firstname,lastname\n1,Jack,Silver\n2,Nikita,Trofimoff"
       },
       "settings": {
         "headline": "リンク設定",

@@ -1122,7 +1122,9 @@
         "parameterKey": "Ключ",
         "parameterValue": "Значение",
         "preview": "Предпросмотр",
-        "fromCsv": "Из .csv"
+        "fromCsv": "Из .csv",
+        "fromCsvTooltip": "Загрузите CSV файл, где первая строка содержит имена параметров (заголовки), а каждая последующая строка содержит значения. Будет загружен новый CSV с сгенерированными ссылками.",
+        "fromCsvExample": "id,firstname,lastname\n1,Jack,Silver\n2,Nikita,Trofimoff"
       },
       "settings": {
         "headline": "Настройки ссылки",

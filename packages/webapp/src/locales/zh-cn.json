@@ -1057,7 +1057,9 @@
         "parameterKey": "键",
         "parameterValue": "值",
         "preview": "预览",
-        "fromCsv": "从 .csv"
+        "fromCsv": "从 .csv",
+        "fromCsvTooltip": "上传CSV文件，第一行包含参数名称（标题），后续每行包含值。将下载包含生成链接的新CSV文件。",
+        "fromCsvExample": "id,firstname,lastname\n1,Jack,Silver\n2,Nikita,Trofimoff"
       },
       "settings": {
         "headline": "链接设置",
