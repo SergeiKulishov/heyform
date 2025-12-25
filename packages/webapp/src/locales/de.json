@@ -1060,7 +1060,7 @@
         "fromCsv": "Aus .csv",
         "fromCsvTooltip": "Laden Sie eine CSV-Datei hoch, wobei die erste Zeile Parameternamen (Kopfzeilen) enthält und jede nachfolgende Zeile Werte enthält. Eine neue CSV mit generierten Links wird heruntergeladen.",
         "fromCsvExample": "id,firstname,lastname\n1,Jack,Silver\n2,Nikita,Trofimoff",
-        "useUrlShortener": "URL-Verkürzer verwenden",
+        "useUrlShortener": "URLs kürzen",
         "shortening": "Verkürzen...",
         "shorteningFailed": "URL konnte nicht verkürzt werden",
         "shorteningFailedMessage": "Beim Verkürzen der URL ist ein Fehler aufgetreten. Die Original-URL wird verwendet.",

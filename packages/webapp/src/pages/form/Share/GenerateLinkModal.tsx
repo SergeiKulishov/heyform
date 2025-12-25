@@ -301,7 +301,8 @@ const GenerateLinkComponent: FC<GenerateLinkComponentProps> = ({ onClose }) => {
       </div>
 
       {/* Actions */}
-      <div className="flex items-center justify-between">
+      <div className="space-y-3">
+        {/* First row: CSV upload and toggle */}
         <div className="flex items-center gap-x-4">
           <input
             ref={fileInputRef}
@@ -339,7 +340,9 @@ const GenerateLinkComponent: FC<GenerateLinkComponentProps> = ({ onClose }) => {
             </span>
           </div>
         </div>
-        <div className="flex items-center gap-x-4">
+
+        {/* Second row: Cancel and Copy buttons */}
+        <div className="flex items-center justify-end gap-x-4">
           <Button.Ghost size="sm" onClick={onClose}>
             {t('components.cancel')}
           </Button.Ghost>
