@@ -1065,7 +1065,19 @@
         "shorteningFailedMessage": "URLの短縮中にエラーが発生しました。元のURLが使用されます。",
         "shortenButton": "短縮",
         "originalUrl": "元のURL",
-        "shortenedUrl": "短縮URL"
+        "shortenedUrl": "短縮URL",
+        "processingStarted": "処理を開始しました",
+        "willNotifyWhenReady": "ファイルのダウンロード準備ができたら通知します",
+        "uploadFailed": "アップロードに失敗しました",
+        "processingComplete": "処理が完了しました",
+        "readyToDownload": "ファイルのダウンロード準備ができました",
+        "processingFailed": "処理に失敗しました",
+        "unknownError": "不明なエラーが発生しました",
+        "processingCsv": "処理中: {{fileName}}",
+        "rowsProcessed": "行を処理しました",
+        "failed": "失敗",
+        "downloadCsv": "CSVをダウンロード",
+        "jobCancelled": "ジョブがキャンセルされました"
       },
       "settings": {
         "headline": "リンク設定",

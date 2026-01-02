@@ -9,6 +9,8 @@ import {
   AppTokenSchema,
   BrandKitModel,
   BrandKitSchema,
+  CsvShortenJobModel,
+  CsvShortenJobSchema,
   EmailTemplateModel,
   EmailTemplateSchema,
   FormAnalyticModel,
@@ -78,5 +80,6 @@ export const ModelModule = MongooseModule.forFeature([
   { name: ProjectModel.name, schema: ProjectSchema },
   { name: ProjectGroupModel.name, schema: ProjectGroupSchema },
   { name: ProjectMemberModel.name, schema: ProjectMemberSchema },
-  { name: BrandKitModel.name, schema: BrandKitSchema }
+  { name: BrandKitModel.name, schema: BrandKitSchema },
+  { name: CsvShortenJobModel.name, schema: CsvShortenJobSchema }
 ])

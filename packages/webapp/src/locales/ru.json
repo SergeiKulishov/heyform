@@ -1130,7 +1130,19 @@
         "shorteningFailedMessage": "Произошла ошибка при сокращении ссылки. Будет использована оригинальная ссылка.",
         "shortenButton": "Сократить",
         "originalUrl": "Оригинальный URL",
-        "shortenedUrl": "Сокращенный URL"
+        "shortenedUrl": "Сокращенный URL",
+        "processingStarted": "Обработка начата",
+        "willNotifyWhenReady": "Мы уведомим вас, когда файл будет готов к загрузке",
+        "uploadFailed": "Ошибка загрузки",
+        "processingComplete": "Обработка завершена",
+        "readyToDownload": "Ваш файл готов к загрузке",
+        "processingFailed": "Ошибка обработки",
+        "unknownError": "Произошла неизвестная ошибка",
+        "processingCsv": "Обработка: {{fileName}}",
+        "rowsProcessed": "строк обработано",
+        "failed": "ошибок",
+        "downloadCsv": "Скачать CSV",
+        "jobCancelled": "Задача отменена"
       },
       "settings": {
         "headline": "Настройки ссылки",

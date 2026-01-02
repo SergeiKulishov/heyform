@@ -24,7 +24,7 @@ import { QueueModules, QueueProviders } from './queue'
     ...Object.values(ScheduleProviders),
     ...Object.values(Services)
   ],
-  exports: [...Object.values(Services)]
+  exports: [...QueueModules, ModelModule, ...Object.values(Services)]
 })
 class ServiceModule {}
 

@@ -1,4 +1,13 @@
-import { IconCheck, IconCopy, IconPlus, IconTrash, IconUpload } from '@tabler/icons-react'
+import {
+  IconCheck,
+  IconCopy,
+  IconDownload,
+  IconPlus,
+  IconTrash,
+  IconUpload,
+  IconX
+} from '@tabler/icons-react'
+import axios from 'axios'
 import { ChangeEvent, FC, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import CopyToClipboard from 'react-copy-to-clipboard'
 import { useTranslation } from 'react-i18next'
@@ -7,7 +16,7 @@ import { ShortenUrlService } from '@/services'
 import { useParam } from '@/utils'
 
 import { Button, Input, Modal, Switch, Tooltip, useToast } from '@/components'
-import { useFormStore, useModal, useWorkspaceStore } from '@/store'
+import { useCsvJobStore, useFormStore, useModal, useWorkspaceStore } from '@/store'
 
 async function shortenUrl(url: string): Promise<string> {
   try {
@@ -26,43 +35,6 @@ interface UrlParameter {
 
 interface GenerateLinkComponentProps {
   onClose: () => void
-}
-
-function parseCSV(text: string): string[][] {
-  const lines = text.trim().split('\n')
-  return lines.map(line => {
-    const result: string[] = []
-    let current = ''
-    let inQuotes = false
-
-    for (let i = 0; i < line.length; i++) {
-      const char = line[i]
-      if (char === '"') {
-        inQuotes = !inQuotes
-      } else if (char === ',' && !inQuotes) {
-        result.push(current.trim())
-        current = ''
-      } else {
-        current += char
-      }
-    }
-    result.push(current.trim())
-    return result
-  })
-}
-
-function generateCSV(headers: string[], rows: string[][]): string {
-  const escapeField = (field: string) => {
-    if (field.includes(',') || field.includes('"') || field.includes('\n')) {
-      return `"${field.replace(/"/g, '""')}"`
-    }
-    return field
-  }
-
-  const headerLine = headers.map(escapeField).join(',')
-  const dataLines = rows.map(row => row.map(escapeField).join(','))
-
-  return [headerLine, ...dataLines].join('\n')
 }
 
 const GenerateLinkComponent: FC<GenerateLinkComponentProps> = ({ onClose }) => {
@@ -87,6 +59,16 @@ const GenerateLinkComponent: FC<GenerateLinkComponentProps> = ({ onClose }) => {
   const [isShortening, setIsShortening] = useState(false)
   const [copiedOriginal, setCopiedOriginal] = useState(false)
   const [copiedShortened, setCopiedShortened] = useState(false)
+  const [notifiedStatuses, setNotifiedStatuses] = useState<Set<string>>(new Set())
+
+  // Используем глобальный store для CSV задач
+  const { jobs, addJob, removeJob } = useCsvJobStore()
+
+  // Получаем ВСЕ задачи для этой формы (сортируем по времени создания - новые сверху)
+  const csvJobs = useMemo(() => {
+    const jobsArray = Array.from(jobs.values())
+    return jobsArray.filter(job => job.formId === formId)
+  }, [jobs, formId])
 
   const baseUrl = useMemo(() => `${sharingURLPrefix}/form/${formId}`, [formId, sharingURLPrefix])
 
@@ -103,8 +85,6 @@ const GenerateLinkComponent: FC<GenerateLinkComponentProps> = ({ onClose }) => {
 
     return `${baseUrl}?${searchParams.toString()}`
   }, [baseUrl, parameters])
-
-  const displayUrl = shortenedUrl || generatedUrl
 
   // Clear shortened URL when toggle is disabled
   useEffect(() => {
@@ -167,84 +147,100 @@ const GenerateLinkComponent: FC<GenerateLinkComponentProps> = ({ onClose }) => {
     setTimeout(() => setCopiedShortened(false), 2000)
   }, [])
 
+  // Показываем уведомления при изменении статуса задач (только один раз для каждой)
+  useEffect(() => {
+    csvJobs.forEach(job => {
+      const statusKey = `${job.jobId}-${job.status}`
+
+      // Проверяем, показывали ли мы уже уведомление для этого статуса
+      if (notifiedStatuses.has(statusKey)) return
+
+      if (job.status === 'completed') {
+        toast({
+          title: t('form.share.generateLink.processingComplete'),
+          message: t('form.share.generateLink.readyToDownload')
+        })
+        setNotifiedStatuses(prev => new Set(prev).add(statusKey))
+      } else if (job.status === 'failed') {
+        toast({
+          title: t('form.share.generateLink.processingFailed'),
+          message: t('form.share.generateLink.unknownError')
+        })
+        setNotifiedStatuses(prev => new Set(prev).add(statusKey))
+      }
+    })
+  }, [csvJobs, notifiedStatuses, toast, t])
+
+  const handleDownloadCsv = useCallback((jobId: string) => {
+    window.open(`/api/csv-shorten-job/${jobId}/download`, '_blank')
+  }, [])
+
+  const handleCancelJob = useCallback(
+    async (jobId: string) => {
+      try {
+        await axios.post(`/api/csv-shorten-job/${jobId}/cancel`)
+        removeJob(jobId)
+        toast({ title: t('form.share.generateLink.jobCancelled') })
+      } catch (error: any) {
+        console.error('Failed to cancel job:', error)
+      }
+    },
+    [removeJob, toast, t]
+  )
+
+  const handleRemoveJob = useCallback(
+    (jobId: string) => {
+      removeJob(jobId)
+    },
+    [removeJob]
+  )
+
   const handleCsvFileChange = useCallback(
     async (event: ChangeEvent<HTMLInputElement>) => {
       const file = event.target.files?.[0]
       if (!file) return
 
-      const reader = new FileReader()
-      reader.onload = async e => {
-        const text = e.target?.result as string
-        if (!text) return
+      const formData = new FormData()
+      formData.append('file', file)
+      formData.append('formId', formId)
+      formData.append('baseUrl', baseUrl)
+      formData.append('useUrlShortener', String(useUrlShortener))
 
-        const rows = parseCSV(text)
-        if (rows.length < 2) return // Need at least header + 1 data row
+      try {
+        const response = await axios.post('/api/csv-shorten-job', formData, {
+          headers: { 'Content-Type': 'multipart/form-data' }
+        })
 
-        const headers = rows[0]
-        const dataRows = rows.slice(1)
+        // Добавляем задачу в глобальный store
+        addJob({
+          jobId: response.data.jobId,
+          status: 'pending',
+          progress: 0,
+          totalRows: 0,
+          processedRows: 0,
+          failedRows: 0,
+          formId,
+          fileName: file.name
+        })
 
-        // Generate links for each row
-        const outputRows: string[][] = []
-        for (const row of dataRows) {
-          const searchParams = new URLSearchParams()
-          headers.forEach((header, index) => {
-            if (header && row[index] !== undefined) {
-              searchParams.append(header, row[index])
-            }
-          })
-          const generatedLink = `${baseUrl}?${searchParams.toString()}`
-          let shortenedLink = ''
-
-          // Shorten URL if toggle is enabled
-          if (useUrlShortener) {
-            try {
-              shortenedLink = await shortenUrl(generatedLink)
-            } catch (error: any) {
-              console.error('Error shortening URL:', error)
-              toast({
-                title: t('form.share.generateLink.shorteningFailed'),
-                message:
-                  error.response?.data?.message ||
-                  error.message ||
-                  t('form.share.generateLink.shorteningFailedMessage')
-              })
-              // shortenedLink stays empty if shortening fails
-            }
-          }
-
-          // Add columns based on toggle state
-          if (useUrlShortener) {
-            outputRows.push([...row, generatedLink, shortenedLink])
-          } else {
-            outputRows.push([...row, generatedLink])
-          }
-        }
-
-        // Create output CSV
-        const outputHeaders = useUrlShortener
-          ? [...headers, 'generated_link', 'shortened_link']
-          : [...headers, 'generated_link']
-        const csvContent = generateCSV(outputHeaders, outputRows)
-
-        // Download the file
-        const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' })
-        const url = URL.createObjectURL(blob)
-        const link = document.createElement('a')
-        link.href = url
-        link.download = `generated_links_${formId}.csv`
-        document.body.appendChild(link)
-        link.click()
-        document.body.removeChild(link)
-        URL.revokeObjectURL(url)
-
-        // Reset file input
-        if (fileInputRef.current) {
-          fileInputRef.current.value = ''
-        }
+        toast({
+          title: t('form.share.generateLink.processingStarted'),
+          message: t('form.share.generateLink.willNotifyWhenReady')
+        })
+      } catch (error: any) {
+        console.error('Failed to upload CSV:', error)
+        toast({
+          title: t('form.share.generateLink.uploadFailed'),
+          message: error.response?.data?.message || error.message
+        })
       }
-      reader.readAsText(file)
+
+      // Reset file input
+      if (fileInputRef.current) {
+        fileInputRef.current.value = ''
+      }
     },
-    [baseUrl, formId, useUrlShortener]
+    [formId, baseUrl, useUrlShortener, addJob, toast, t]
   )
 
   return (
@@ -362,6 +358,77 @@ const GenerateLinkComponent: FC<GenerateLinkComponentProps> = ({ onClose }) => {
           </div>
         )}
       </div>
+
+      {/* CSV Jobs Status - показываем все задачи */}
+      {csvJobs.length > 0 && (
+        <div className="space-y-3">
+          {csvJobs.map(job => (
+            <div key={job.jobId} className="border-input rounded-lg border p-4">
+              <div className="mb-2 flex items-center justify-between">
+                <span className="text-sm font-medium">
+                  {t('form.share.generateLink.processingCsv', { fileName: job.fileName })}
+                  {job.status === 'completed' && (
+                    <span className="ml-2 text-xs text-green-600">✓</span>
+                  )}
+                  {job.status === 'failed' && <span className="ml-2 text-xs text-red-500">✗</span>}
+                </span>
+                <div className="flex items-center gap-1">
+                  {/* Cancel button - only for active jobs */}
+                  {job.status !== 'completed' && job.status !== 'failed' && (
+                    <Button.Ghost size="sm" onClick={() => handleCancelJob(job.jobId)}>
+                      <IconX className="h-4 w-4" />
+                    </Button.Ghost>
+                  )}
+                  {/* Remove button - for completed/failed jobs */}
+                  {(job.status === 'completed' || job.status === 'failed') && (
+                    <Button.Ghost
+                      size="sm"
+                      className="text-secondary hover:text-error"
+                      onClick={() => handleRemoveJob(job.jobId)}
+                    >
+                      <IconTrash className="h-4 w-4" />
+                    </Button.Ghost>
+                  )}
+                </div>
+              </div>
+
+              {/* Progress bar */}
+              <div className="bg-muted mb-2 h-2 overflow-hidden rounded-full">
+                <div
+                  className={`h-full transition-all duration-300 ${
+                    job.status === 'failed' ? 'bg-red-500' : 'bg-primary'
+                  }`}
+                  style={{ width: `${job.progress}%` }}
+                />
+              </div>
+
+              <div className="text-secondary flex items-center justify-between text-xs">
+                <span>
+                  {job.processedRows} / {job.totalRows} {t('form.share.generateLink.rowsProcessed')}
+                </span>
+                {job.failedRows > 0 && (
+                  <span className="text-red-500">
+                    {job.failedRows} {t('form.share.generateLink.failed')}
+                  </span>
+                )}
+              </div>
+
+              {job.status === 'completed' && (
+                <Button className="mt-3 w-full" onClick={() => handleDownloadCsv(job.jobId)}>
+                  <IconDownload className="mr-2 h-4 w-4" />
+                  {t('form.share.generateLink.downloadCsv')}
+                </Button>
+              )}
+
+              {job.status === 'failed' && (
+                <p className="mt-2 text-xs text-red-500">
+                  {t('form.share.generateLink.unknownError')}
+                </p>
+              )}
+            </div>
+          ))}
+        </div>
+      )}
 
       {/* Actions */}
       <div className="space-y-3">

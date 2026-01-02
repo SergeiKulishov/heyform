@@ -1065,7 +1065,19 @@
         "shorteningFailedMessage": "縮短URL時發生錯誤。將使用原始URL。",
         "shortenButton": "縮短",
         "originalUrl": "原始URL",
-        "shortenedUrl": "縮短的URL"
+        "shortenedUrl": "縮短的URL",
+        "processingStarted": "處理已開始",
+        "willNotifyWhenReady": "文件準備好下載時我們會通知您",
+        "uploadFailed": "上傳失敗",
+        "processingComplete": "處理完成",
+        "readyToDownload": "您的文件已準備好下載",
+        "processingFailed": "處理失敗",
+        "unknownError": "發生未知錯誤",
+        "processingCsv": "正在處理: {{fileName}}",
+        "rowsProcessed": "行已處理",
+        "failed": "失敗",
+        "downloadCsv": "下載CSV",
+        "jobCancelled": "任務已取消"
       },
       "settings": {
         "headline": "連結設定",

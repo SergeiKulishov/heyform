@@ -1065,7 +1065,19 @@
         "shorteningFailedMessage": "Wystąpił błąd podczas skracania URL. Zostanie użyty oryginalny URL.",
         "shortenButton": "Skróć",
         "originalUrl": "Oryginalny URL",
-        "shortenedUrl": "Skrócony URL"
+        "shortenedUrl": "Skrócony URL",
+        "processingStarted": "Przetwarzanie rozpoczęte",
+        "willNotifyWhenReady": "Powiadomimy Cię, gdy plik będzie gotowy do pobrania",
+        "uploadFailed": "Przesyłanie nie powiodło się",
+        "processingComplete": "Przetwarzanie zakończone",
+        "readyToDownload": "Twój plik jest gotowy do pobrania",
+        "processingFailed": "Przetwarzanie nie powiodło się",
+        "unknownError": "Wystąpił nieznany błąd",
+        "processingCsv": "Przetwarzanie: {{fileName}}",
+        "rowsProcessed": "wierszy przetworzonych",
+        "failed": "nieudane",
+        "downloadCsv": "Pobierz CSV",
+        "jobCancelled": "Zadanie anulowane"
       },
       "settings": {
         "headline": "Ustawienia linku",

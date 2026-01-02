@@ -23,3 +23,8 @@ export * from './user.model'
 export * from './user-activity.model'
 export * from './user-social-account.model'
 export * from './brand-kit.model'
+export {
+  CsvShortenJobModel,
+  CsvShortenJobSchema,
+  CsvShortenJobStatus
+} from './csv-shorten-job.model'

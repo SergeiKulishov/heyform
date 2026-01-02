@@ -1069,7 +1069,19 @@
         "shorteningFailedMessage": "Une erreur s'est produite lors du raccourcissement de l'URL. L'URL d'origine sera utilisée.",
         "shortenButton": "Raccourcir",
         "originalUrl": "URL d'origine",
-        "shortenedUrl": "URL raccourcie"
+        "shortenedUrl": "URL raccourcie",
+        "processingStarted": "Traitement commencé",
+        "willNotifyWhenReady": "Nous vous informerons lorsque le fichier sera prêt à télécharger",
+        "uploadFailed": "Échec du téléchargement",
+        "processingComplete": "Traitement terminé",
+        "readyToDownload": "Votre fichier est prêt à télécharger",
+        "processingFailed": "Échec du traitement",
+        "unknownError": "Une erreur inconnue s'est produite",
+        "processingCsv": "Traitement: {{fileName}}",
+        "rowsProcessed": "lignes traitées",
+        "failed": "échoué",
+        "downloadCsv": "Télécharger le CSV",
+        "jobCancelled": "Tâche annulée"
       },
       "settings": {
         "headline": "Paramètres du lien",

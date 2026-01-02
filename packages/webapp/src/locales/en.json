@@ -1130,7 +1130,19 @@
         "shorteningFailedMessage": "An error occurred while shortening the URL. The original URL will be used.",
         "shortenButton": "Shorten",
         "originalUrl": "Original URL",
-        "shortenedUrl": "Shortened URL"
+        "shortenedUrl": "Shortened URL",
+        "processingStarted": "Processing started",
+        "willNotifyWhenReady": "We'll notify you when the file is ready to download",
+        "uploadFailed": "Upload failed",
+        "processingComplete": "Processing complete",
+        "readyToDownload": "Your file is ready to download",
+        "processingFailed": "Processing failed",
+        "unknownError": "An unknown error occurred",
+        "processingCsv": "Processing: {{fileName}}",
+        "rowsProcessed": "rows processed",
+        "failed": "failed",
+        "downloadCsv": "Download CSV",
+        "jobCancelled": "Job cancelled"
       },
       "settings": {
         "headline": "Link settings",

@@ -1065,7 +1065,19 @@
         "shorteningFailedMessage": "Beim Verkürzen der URL ist ein Fehler aufgetreten. Die Original-URL wird verwendet.",
         "shortenButton": "Verkürzen",
         "originalUrl": "Original-URL",
-        "shortenedUrl": "Verkürzte URL"
+        "shortenedUrl": "Verkürzte URL",
+        "processingStarted": "Verarbeitung gestartet",
+        "willNotifyWhenReady": "Wir benachrichtigen Sie, wenn die Datei zum Download bereit ist",
+        "uploadFailed": "Upload fehlgeschlagen",
+        "processingComplete": "Verarbeitung abgeschlossen",
+        "readyToDownload": "Ihre Datei ist zum Download bereit",
+        "processingFailed": "Verarbeitung fehlgeschlagen",
+        "unknownError": "Ein unbekannter Fehler ist aufgetreten",
+        "processingCsv": "Verarbeitung: {{fileName}}",
+        "rowsProcessed": "Zeilen verarbeitet",
+        "failed": "fehlgeschlagen",
+        "downloadCsv": "CSV herunterladen",
+        "jobCancelled": "Auftrag abgebrochen"
       },
       "settings": {
         "headline": "Linkeinstellungen",
