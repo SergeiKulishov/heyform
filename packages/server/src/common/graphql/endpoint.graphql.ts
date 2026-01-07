@@ -1,5 +1,5 @@
 import { HiddenFieldAnswer } from '@heyform-inc/shared-types-enums'
-import { IsOptional, IsString } from 'class-validator'
+import { IsNumber, IsOptional, IsString } from 'class-validator'
 
 import { CdnTokenInput } from './user.graphql'
 import { Field, InputType, ObjectType } from '@nestjs/graphql'
@@ -93,6 +93,21 @@ export class CompleteSubmissionInput {
   @IsString()
   @IsOptional()
   genTime?: string
+
+  @Field({ nullable: true })
+  @IsString()
+  @IsOptional()
+  sessionId?: string
+
+  @Field({ nullable: true })
+  @IsString()
+  @IsOptional()
+  lastFieldId?: string
+
+  @Field({ nullable: true })
+  @IsNumber()
+  @IsOptional()
+  lastFieldIndex?: number
 }
 
 @ObjectType()

@@ -83,6 +83,10 @@ export class SubmissionsInput extends FormDetailInput {
   @IsOptional()
   keyword?: string
 
+  @Field({ nullable: true })
+  @IsOptional()
+  isCompleted?: boolean
+
   @Field({ nullable: true, defaultValue: 1 })
   @IsOptional()
   page?: number
@@ -162,6 +166,15 @@ export class SubmissionType {
 
   @Field()
   endAt: number
+
+  @Field({ nullable: true })
+  isCompleted?: boolean
+
+  @Field({ nullable: true })
+  lastFieldId?: string
+
+  @Field({ nullable: true })
+  lastFieldIndex?: number
 }
 
 @ObjectType()

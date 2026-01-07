@@ -45,6 +45,10 @@ export interface FormSettings {
   enableQuestionList?: boolean
   enableNavigationArrows?: boolean
 
+  // Partial submission persistence
+  enablePartialSubmission?: boolean
+  partialSubmissionTTL?: number
+
   // Metadata
   metaTitle?: string
   metaDescription?: string

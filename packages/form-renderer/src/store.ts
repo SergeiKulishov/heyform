@@ -40,24 +40,23 @@ export function getLRU(): LRU {
   return LRU_CACHE
 }
 
-export function getStorage(formId: string, autoSave?: boolean) {
-  const values: any = {}
+export interface StoredFormData {
+  sessionId?: string
+  values: AnyMap
+  scrollIndex?: number
+}
 
-  if (autoSave) {
-    const cache = getLRU().get(formId)
+export function getStorage(formId: string, enabled?: boolean): StoredFormData | null {
+  if (!enabled) return null
 
-    if (helper.isValid(cache)) {
-      Object.keys(values).forEach(key => {
-        const value = values[key]
+  const cache = getLRU().get<StoredFormData>(formId)
+  if (!cache || !helper.isValid(cache)) return null
 
-        if (helper.isValid(value)) {
-          values[key] = value
-        }
-      })
-    }
-  }
+  return cache
+}
 
-  return values
+export function saveStorage(formId: string, data: StoredFormData): void {
+  getLRU().put(formId, data)
 }
 
 export function removeStorage(formId: string) {
@@ -80,6 +79,7 @@ export interface IStripe {
 export interface IState {
   formId: string
   instanceId: string
+  sessionId: string
   welcomeField?: IFormField
   thankYouFieldId?: string
   thankYouFields: IFormField[]
@@ -103,6 +103,7 @@ export interface IState {
   errorFieldId?: string
   isSubmitTouched?: boolean
   isStarted?: boolean
+  isSubmitting?: boolean
   isSubmitted?: boolean
   isSidebarOpen?: boolean
   reportAbuseURL?: string
@@ -114,7 +115,12 @@ export interface IState {
   logo?: string
   theme: FormTheme
   stripe?: IStripe
-  onSubmit?: (values: Record<string, any>, isPartial?: boolean, stripe?: IStripe) => Promise<void>
+  onSubmit?: (
+    values: Record<string, any>,
+    isPartial?: boolean,
+    stripe?: IStripe,
+    meta?: { sessionId: string; lastFieldId?: string; lastFieldIndex?: number }
+  ) => Promise<void>
 }
 
 const actions: any = {
@@ -124,18 +130,23 @@ const actions: any = {
       ...values
     }
 
-    if (state.autoSave) {
-      const cache: AnyMap = {}
+    // Save to localStorage if partial submission is enabled (default: true)
+    if (state.settings?.enablePartialSubmission !== false) {
+      const filteredValues: AnyMap = {}
 
       Object.keys(newValues).forEach(key => {
         const value = newValues[key]
 
         if (helper.isValid(value) && !isFile(value)) {
-          cache[key] = value
+          filteredValues[key] = value
         }
       })
 
-      getLRU().put(state.formId, cache)
+      saveStorage(state.formId, {
+        sessionId: state.sessionId,
+        values: filteredValues,
+        scrollIndex: state.scrollIndex || 0
+      })
     }
 
     const { fields, variables } = applyLogicToFields(
@@ -178,12 +189,20 @@ const actions: any = {
 
   setIsSubmitTouched: (state: IState, { isSubmitTouched }: any) => ({ ...state, isSubmitTouched }),
 
-  setIsSubmitted: (state: IState, { isSubmitted, thankYouFieldId }: any) => ({
-    ...state,
-    isSubmitted,
-    isSidebarOpen: false,
-    thankYouFieldId
-  }),
+  setIsSubmitting: (state: IState, { isSubmitting }: any) => ({ ...state, isSubmitting }),
+
+  setIsSubmitted: (state: IState, { isSubmitted, thankYouFieldId }: any) => {
+    // Clear localStorage on successful submission
+    if (isSubmitted) {
+      removeStorage(state.formId)
+    }
+    return {
+      ...state,
+      isSubmitted,
+      isSidebarOpen: false,
+      thankYouFieldId
+    }
+  },
 
   setIsSidebarOpen: (state: IState, { isSidebarOpen }: any) => ({ ...state, isSidebarOpen }),
 
@@ -261,6 +280,7 @@ const actions: any = {
 export const StoreContext = createStoreContext<IState>({
   instanceId: '',
   formId: '',
+  sessionId: '',
   allFields: [],
   fields: [],
   thankYouFields: [],

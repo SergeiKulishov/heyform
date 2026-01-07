@@ -18,7 +18,8 @@ export class SubmissionsResolver {
     const total = await this.submissionService.count({
       formId: input.formId,
       category: input.category,
-      labelId: input.labelId
+      labelId: input.labelId,
+      isCompleted: input.isCompleted
     })
 
     let submissions: any[] = []
@@ -28,6 +29,7 @@ export class SubmissionsResolver {
         formId: input.formId,
         category: input.category,
         labelId: input.labelId,
+        isCompleted: input.isCompleted,
         page: input.page,
         limit: input.limit
       })

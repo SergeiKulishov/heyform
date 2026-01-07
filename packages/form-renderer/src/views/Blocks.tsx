@@ -1,8 +1,9 @@
 import { FieldKindEnum, FormField } from '@heyform-inc/shared-types-enums'
 import type { FC } from 'react'
-import { useEffect, useMemo } from 'react'
+import { useCallback, useEffect, useMemo } from 'react'
 
 import { useTranslation } from '../utils'
+import { helper } from '@heyform-inc/utils'
 
 import { Address } from '../blocks/Address'
 import { Country } from '../blocks/Country'
@@ -138,13 +139,73 @@ export const Blocks = () => {
     }
   }
 
+  // Send partial submission when user leaves the page
+  const handleBeforeUnload = useCallback(() => {
+    // Skip if already submitted or submitting
+    if (state.isSubmitted || state.isSubmitting) {
+      return
+    }
+
+    // Skip if partial submission is disabled
+    if (state.settings?.enablePartialSubmission === false) {
+      return
+    }
+
+    // Skip if no answers
+    if (!helper.isValid(state.values) || Object.keys(state.values).length === 0) {
+      return
+    }
+
+    // Get hidden field values
+    const hiddenFieldValues =
+      state.hiddenFields?.map(hf => ({
+        id: hf.id,
+        name: hf.name,
+        value: state.query[hf.name]
+      })) || []
+
+    // Get current field info
+    const currentField = state.fields[state.scrollIndex!]
+    const lastFieldId = currentField?.id
+    const lastFieldIndex = state.scrollIndex
+
+    // Prepare partial submission data
+    const partialData = {
+      formId: state.formId,
+      sessionId: state.sessionId,
+      answers: state.values,
+      hiddenFields: hiddenFieldValues,
+      lastFieldId,
+      lastFieldIndex
+    }
+
+    // Use sendBeacon for reliable transmission during page unload
+    if (navigator.sendBeacon) {
+      const blob = new Blob([JSON.stringify(partialData)], { type: 'application/json' })
+      navigator.sendBeacon('/api/partial-submission', blob)
+    }
+  }, [
+    state.isSubmitted,
+    state.isSubmitting,
+    state.values,
+    state.formId,
+    state.sessionId,
+    state.scrollIndex,
+    state.fields,
+    state.hiddenFields,
+    state.query,
+    state.settings
+  ])
+
   useEffect(() => {
     window.addEventListener('resize', handleResize, false)
+    window.addEventListener('beforeunload', handleBeforeUnload)
 
     return () => {
       window.removeEventListener('resize', handleResize, false)
+      window.removeEventListener('beforeunload', handleBeforeUnload)
     }
-  }, [])
+  }, [handleBeforeUnload])
 
   if (!state.isStarted && state.welcomeField) {
     return <Welcome field={state.welcomeField} />

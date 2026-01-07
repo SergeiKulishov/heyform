@@ -15,7 +15,8 @@ import { SubmissionType } from '@/types'
 export class SubmissionService {
   static submissions(input: {
     formId: string
-    category: string
+    category?: string
+    isCompleted?: boolean
     page: number
     limit: number
   }): Promise<{ total: number; submissions: SubmissionType[] }> {

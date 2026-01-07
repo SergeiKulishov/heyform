@@ -40,3 +40,4 @@ packages/server/static
 .npmrc
 /.npmrc
 packages/webapp/.npmrc
+/CLAUDE.md

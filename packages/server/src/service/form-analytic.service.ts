@@ -132,4 +132,23 @@ export class FormAnalyticService {
 
     return result?.n > 0
   }
+
+  /**
+   * Get total visits for a form (all time)
+   */
+  public async getTotalVisits(formId: string): Promise<number> {
+    const result = await this.formAnalyticModel.aggregate([
+      {
+        $match: { formId }
+      },
+      {
+        $group: {
+          _id: null,
+          totalVisits: { $sum: '$totalVisits' }
+        }
+      }
+    ])
+
+    return result[0]?.totalVisits || 0
+  }
 }

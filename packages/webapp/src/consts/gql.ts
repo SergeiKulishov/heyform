@@ -835,6 +835,9 @@ export const SUBMISSIONS_GQL = gql`
         }
         variables
         endAt
+        isCompleted
+        lastFieldId
+        lastFieldIndex
       }
     }
   }
@@ -886,6 +889,23 @@ export const USER_CDN_TOKEN_GQL = gql`
       urlPrefix
       token
       key
+    }
+  }
+`
+
+export const FUNNEL_ANALYTICS_GQL = gql`
+  query funnelAnalytics($input: FormDetailInput!) {
+    funnelAnalytics(input: $input) {
+      totalViews
+      totalCompleted
+      totalPartial
+      completionRate
+      dropOffByField {
+        fieldId
+        fieldTitle
+        count
+        percentage
+      }
     }
   }
 `

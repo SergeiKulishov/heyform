@@ -37,7 +37,12 @@ export interface FormRendererProps {
   enableQuestionList?: boolean
   enableNavigationArrows?: boolean
   ssr?: boolean
-  onSubmit?: (values: Record<string, any>, isPartial?: boolean, stripe?: IStripe) => Promise<void>
+  onSubmit?: (
+    values: Record<string, any>,
+    isPartial?: boolean,
+    stripe?: IStripe,
+    meta?: { sessionId: string; lastFieldId?: string; lastFieldIndex?: number }
+  ) => Promise<void>
 }
 
 function initStore(
@@ -62,7 +67,15 @@ function initStore(
     .filter(l => l.payloads.some(p => p.action.kind === ActionEnum.NAVIGATE))
     .map(l => l.fieldId)
 
-  const values = getStorage(form.id, autoSave)
+  // Load stored data from localStorage if partial submission is enabled
+  const enablePartial = form.settings?.enablePartialSubmission !== false
+  const stored = getStorage(form.id, enablePartial)
+
+  // Restore sessionId, values, and scrollIndex from storage
+  const sessionId = stored?.sessionId || (ssr ? '' : nanoid(16))
+  const values = stored?.values || {}
+  const storedScrollIndex = stored?.scrollIndex || 0
+
   const { fields, variables } = applyLogicToFields(
     [...allFields, ...thankYouFields].filter(Boolean) as FormField[],
     form.logics,
@@ -73,9 +86,13 @@ function initStore(
   const questionCount = fields.filter(f => QUESTION_FIELD_KINDS.includes(f.kind)).length
   const percentage = progressPercentage(Object.keys(values).length, questionCount)
 
+  // Ensure scrollIndex is within valid range
+  const scrollIndex = Math.min(storedScrollIndex, Math.max(0, fields.length - 1))
+
   return {
     // Preventing hydration mismatch errors
     instanceId: ssr ? '' : nanoid(8),
+    sessionId,
     welcomeField,
     thankYouFields,
     allFields,
@@ -91,7 +108,7 @@ function initStore(
     percentage,
     questionCount,
     formId: form.id,
-    scrollIndex: 0,
+    scrollIndex,
     scrollTo: 'next',
     settings: form.settings,
     autoSave,

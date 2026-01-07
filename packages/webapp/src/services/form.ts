@@ -29,6 +29,7 @@ import {
   FORM_INTEGRATIONS_GQL,
   FORM_REPORT_GQL,
   FORM_SUMMARY_GQL,
+  FUNNEL_ANALYTICS_GQL,
   IMPORT_FORM_GQL,
   MOVE_FORM_TO_PROJECT_GQL,
   MOVE_FORM_TO_TRASH_GQL,
@@ -238,6 +239,18 @@ export class FormService {
         }
       },
       fetchPolicy: 'cache-first'
+    })
+  }
+
+  static async funnelAnalytics(formId: string) {
+    return apollo.query({
+      query: FUNNEL_ANALYTICS_GQL,
+      variables: {
+        input: {
+          formId
+        }
+      },
+      fetchPolicy: 'network-only'
     })
   }
 

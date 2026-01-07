@@ -54,7 +54,6 @@ export class SubmissionModel extends Document {
   @Prop()
   userAgent: UserAgent
 
-  @Prop()
   @Prop({
     type: Number,
     required: true,
@@ -62,6 +61,18 @@ export class SubmissionModel extends Document {
     default: SubmissionStatusEnum.PUBLIC
   })
   status: SubmissionStatusEnum
+
+  @Prop({ index: true })
+  sessionId?: string
+
+  @Prop()
+  lastFieldId?: string
+
+  @Prop()
+  lastFieldIndex?: number
+
+  @Prop({ default: true })
+  isCompleted: boolean
 }
 
 export const SubmissionSchema = SchemaFactory.createForClass(SubmissionModel)

@@ -118,6 +118,12 @@ export const Form: FC<FormProps> = ({
         validateFields(fields, values)
         setLoading(true)
 
+        // Mark as submitting to prevent partial submission on page unload
+        dispatch({
+          type: 'setIsSubmitting',
+          payload: { isSubmitting: true }
+        })
+
         if (state.stripe) {
           const paymentField = state.fields.find(f => f.kind === FieldKindEnum.PAYMENT)
 
@@ -181,6 +187,12 @@ export const Form: FC<FormProps> = ({
       } catch (err: any) {
         console.error(err, err?.response)
         setLoading(false)
+
+        // Reset submitting state on error
+        dispatch({
+          type: 'setIsSubmitting',
+          payload: { isSubmitting: false }
+        })
 
         if (helper.isValid(err?.response?.id)) {
           dispatch({

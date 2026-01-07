@@ -824,6 +824,15 @@
         "submission2_zero": "暫無提交 · 平均 {{average}}",
         "submission2_one": "{{count}} 次提交 · 平均 {{average}}",
         "submission2_other": "{{count}} 次提交 · 平均 {{average}}"
+      },
+      "funnel": {
+        "title": "完成漏斗",
+        "completed": "已完成",
+        "partial": "未完成",
+        "views": "總瀏覽量",
+        "completionRate": "完成率",
+        "dropOffByField": "按問題的放棄率",
+        "noDropOff": "暫無未完成的提交"
       }
     },
     "submissions": {
@@ -832,6 +841,7 @@
       "subHeadline": "在線分享表單以吸引更多受眾。",
       "inbox": "收件箱",
       "spam": "垃圾郵件",
+      "partial": "未完成",
       "view": "查看",
       "downloadCSV": "下載 CSV",
       "maximize": "最大化表格",
@@ -1155,6 +1165,10 @@
         "navigationArrows": {
           "headline": "導航箭頭",
           "subHeadline": "您可以啟用此功能，讓受訪者在問題之間導航。"
+        },
+        "partialSubmission": {
+          "headline": "保存部分回答",
+          "subHeadline": "允許用戶在返回時繼續填寫未完成的表單。"
         }
       },
       "access": {

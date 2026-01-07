@@ -828,6 +828,15 @@
         "submission2_zero": "Pas encore de soumissions · {{average}} moyenne",
         "submission2_one": "{{count}} soumission · {{average}} moyenne",
         "submission2_other": "{{count}} soumissions · {{average}} moyenne"
+      },
+      "funnel": {
+        "title": "Entonnoir de complétion",
+        "completed": "Complétées",
+        "partial": "Partielles",
+        "views": "Vues totales",
+        "completionRate": "Taux de complétion",
+        "dropOffByField": "Abandon par question",
+        "noDropOff": "Pas encore de soumissions partielles"
       }
     },
     "submissions": {
@@ -836,6 +845,7 @@
       "subHeadline": "Partagez le formulaire en ligne pour atteindre un public plus large.",
       "inbox": "Boîte de réception",
       "spam": "Spam",
+      "partial": "Partielles",
       "view": "Voir",
       "downloadCSV": "Télécharger CSV",
       "maximize": "Agrandir le tableau",
@@ -1159,6 +1169,10 @@
         "navigationArrows": {
           "headline": "Flèches de navigation",
           "subHeadline": "Vous pouvez l'activer pour permettre aux répondants de naviguer entre les questions."
+        },
+        "partialSubmission": {
+          "headline": "Enregistrer les réponses partielles",
+          "subHeadline": "Permet aux utilisateurs de reprendre les formulaires incomplets à leur retour."
         }
       },
       "access": {

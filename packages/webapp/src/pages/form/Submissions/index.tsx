@@ -47,6 +47,10 @@ const SUBMISSION_CATEGORIES = [
   {
     label: 'form.submissions.spam',
     value: 'spam'
+  },
+  {
+    label: 'form.submissions.partial',
+    value: 'partial'
   }
 ]
 
@@ -128,9 +132,11 @@ export default function FormSubmissions() {
   }, [form?.drafts, form?.hiddenFields, form?.variables, t])
 
   async function fetch({ current, pageSize }: TableFetchParams) {
+    const isPartialCategory = category === 'partial'
     const { total, submissions } = await SubmissionService.submissions({
       formId,
-      category,
+      category: isPartialCategory ? undefined : category,
+      isCompleted: isPartialCategory ? false : undefined,
       page: current,
       limit: pageSize
     })

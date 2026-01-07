@@ -120,11 +120,23 @@ export class CompleteSubmissionResolver {
       throw new BadRequestException(err.response)
     }
 
+    const isPartial = input.partialSubmission === true
     let category = SubmissionCategoryEnum.INBOX
-    let status = SubmissionStatusEnum.PUBLIC
+    let status: SubmissionStatusEnum
 
-    // Spam check
-    if (form.settings?.filterSpam) {
+    // Determine submission status
+    if (isPartial) {
+      status = SubmissionStatusEnum.PARTIAL
+    } else if (!form.settings?.allowArchive) {
+      // Notification and Webhook still need the submission data
+      // even archive settings have been disabled
+      status = SubmissionStatusEnum.PRIVATE
+    } else {
+      status = SubmissionStatusEnum.PUBLIC
+    }
+
+    // Spam check (only for completed submissions)
+    if (!isPartial && form.settings?.filterSpam) {
       const isSpam = await this.endpointService.verifySpam({
         answers,
         ip: client.ip
@@ -135,34 +147,59 @@ export class CompleteSubmissionResolver {
       }
     }
 
-    // Notification and Webhook still need the submission data
-    // even archive settings have been disabled
-    if (!form.settings?.allowArchive) {
-      status = SubmissionStatusEnum.PRIVATE
+    const endAt = timestamp()
+    let submissionId: string
+
+    // Check for existing partial submission with same session
+    let existingSubmission = null
+    if (input.sessionId) {
+      existingSubmission = await this.submissionService.findBySessionId(
+        input.formId,
+        input.sessionId
+      )
     }
 
-    const endAt = timestamp()
+    if (existingSubmission && !existingSubmission.isCompleted) {
+      // Update existing partial submission
+      await this.submissionService.updatePartial(existingSubmission.id, {
+        answers,
+        hiddenFields: input.hiddenFields,
+        variables,
+        lastFieldId: input.lastFieldId,
+        lastFieldIndex: input.lastFieldIndex,
+        endAt,
+        status,
+        isCompleted: !isPartial,
+        category
+      })
+      submissionId = existingSubmission.id
+    } else {
+      // Create new submission
+      submissionId = await this.submissionService.create({
+        teamId: form.teamId,
+        formId: form.id,
+        category,
+        title: form.name,
+        answers,
+        hiddenFields: input.hiddenFields,
+        variables,
+        startAt,
+        endAt,
+        ip: client.ip,
+        userAgent: client.userAgent,
+        status,
+        sessionId: input.sessionId,
+        lastFieldId: input.lastFieldId,
+        lastFieldIndex: input.lastFieldIndex,
+        isCompleted: !isPartial
+      })
+    }
 
-    const submissionId = await this.submissionService.create({
-      teamId: form.teamId,
-      formId: form.id,
-      category,
-      title: form.name,
-      answers,
-      hiddenFields: input.hiddenFields,
-      variables,
-      startAt,
-      endAt,
-      ip: client.ip,
-      userAgent: client.userAgent,
-      status
-    })
-
-    // Payment
+    // Payment (only for completed submissions)
     const answer = answers.find(a => a.kind === FieldKindEnum.PAYMENT)
     const result: CompleteSubmissionType = {}
 
-    if (helper.isValid(answer) && helper.isValid(form.stripeAccount)) {
+    if (!isPartial && helper.isValid(answer) && helper.isValid(form.stripeAccount)) {
       result.clientSecret = await this.paymentService.createPaymentIntent({
         amount: answer.value.amount,
         currency: answer.value.currency,
@@ -182,11 +219,14 @@ export class CompleteSubmissionResolver {
       })
     }
 
-    // Form report Queue
-    this.formReportService.addQueue(form.id)
+    // Only trigger integrations for completed submissions
+    if (!isPartial) {
+      // Form report Queue
+      this.formReportService.addQueue(form.id)
 
-    // Integration Queue
-    this.integrationService.addQueue(form, submissionId)
+      // Integration Queue
+      this.integrationService.addQueue(form, submissionId)
+    }
 
     return result
   }

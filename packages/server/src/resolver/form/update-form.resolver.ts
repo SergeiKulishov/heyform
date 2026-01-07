@@ -38,6 +38,8 @@ export class UpdateFormResolver {
       ['enableProgress', 'settings.enableProgress'],
       ['enableQuestionList', 'settings.enableQuestionList'],
       ['enableNavigationArrows', 'settings.enableNavigationArrows'],
+      ['enablePartialSubmission', 'settings.enablePartialSubmission'],
+      ['partialSubmissionTTL', 'settings.partialSubmissionTTL'],
       ['locale', 'settings.locale'],
       ['languages', 'settings.languages'],
       ['enableClosedMessage', 'settings.enableClosedMessage'],

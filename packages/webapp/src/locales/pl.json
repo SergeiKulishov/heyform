@@ -824,6 +824,15 @@
         "submission2_zero": "Brak zgłoszeń · Średnia: {{average}}",
         "submission2_one": "{{count}} zgłoszenie · Średnia: {{average}}",
         "submission2_other": "{{count}} zgłoszeń · Średnia: {{average}}"
+      },
+      "funnel": {
+        "title": "Lejek ukończenia",
+        "completed": "Ukończone",
+        "partial": "Częściowe",
+        "views": "Całkowita liczba wyświetleń",
+        "completionRate": "Wskaźnik ukończenia",
+        "dropOffByField": "Porzucenia według pytania",
+        "noDropOff": "Brak częściowych zgłoszeń"
       }
     },
     "submissions": {
@@ -832,6 +841,7 @@
       "subHeadline": "Udostępnij formularz online, aby dotrzeć do szerszej publiczności.",
       "inbox": "Skrzynka odbiorcza",
       "spam": "Spam",
+      "partial": "Częściowe",
       "view": "Zobacz",
       "downloadCSV": "Pobierz CSV",
       "maximize": "Maksymalizuj tabelę",
@@ -1155,6 +1165,10 @@
         "navigationArrows": {
           "headline": "Strzałki nawigacyjne",
           "subHeadline": "Możesz to włączyć, aby pozwolić respondentom nawigować między pytaniami."
+        },
+        "partialSubmission": {
+          "headline": "Zapisz częściowe odpowiedzi",
+          "subHeadline": "Umożliwia użytkownikom kontynuowanie wypełniania niekompletnych formularzy po powrocie."
         }
       },
       "access": {

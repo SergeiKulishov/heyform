@@ -824,6 +824,15 @@
         "submission2_zero": "Noch keine Einsendungen · {{average}} Durchschnitt",
         "submission2_one": "{{count}} Einsendung · {{average}} Durchschnitt",
         "submission2_other": "{{count}} Einsendungen · {{average}} Durchschnitt"
+      },
+      "funnel": {
+        "title": "Abschluss-Trichter",
+        "completed": "Abgeschlossen",
+        "partial": "Teilweise",
+        "views": "Gesamtaufrufe",
+        "completionRate": "Abschlussrate",
+        "dropOffByField": "Abbruch nach Frage",
+        "noDropOff": "Noch keine teilweisen Einsendungen"
       }
     },
     "submissions": {
@@ -832,6 +841,7 @@
       "subHeadline": "Teilen Sie das Formular online, um ein breiteres Publikum zu erreichen.",
       "inbox": "Posteingang",
       "spam": "Spam",
+      "partial": "Teilweise",
       "view": "Ansehen",
       "downloadCSV": "CSV herunterladen",
       "maximize": "Tabelle maximieren",
@@ -1155,6 +1165,10 @@
         "navigationArrows": {
           "headline": "Navigationspfeile",
           "subHeadline": "Sie können es aktivieren, um den Befragten die Navigation zwischen den Fragen zu ermöglichen."
+        },
+        "partialSubmission": {
+          "headline": "Teilantworten speichern",
+          "subHeadline": "Ermöglicht Benutzern, unvollständige Formulare bei ihrer Rückkehr fortzusetzen."
         }
       },
       "access": {

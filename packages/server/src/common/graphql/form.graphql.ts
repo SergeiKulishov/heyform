@@ -534,6 +534,16 @@ export class UpdateFormInput extends FormDetailInput {
 
   @Field({ nullable: true })
   @IsOptional()
+  enablePartialSubmission?: boolean
+
+  @Field({ nullable: true })
+  @IsOptional()
+  @Min(1)
+  @Max(365)
+  partialSubmissionTTL?: number
+
+  @Field({ nullable: true })
+  @IsOptional()
   emailNotification?: string
 
   @Field({ nullable: true })
@@ -959,6 +969,12 @@ export class FormSettingType {
   enableNavigationArrows?: boolean
 
   @Field({ nullable: true })
+  enablePartialSubmission?: boolean
+
+  @Field({ nullable: true })
+  partialSubmissionTTL?: number
+
+  @Field({ nullable: true })
   locale?: string
 
   @Field(type => [String], { nullable: true, defaultValue: [] })
@@ -1287,4 +1303,38 @@ export class ImportFormFromJSONInput {
 
   @Field()
   formJson: string
+}
+
+// Funnel Analytics Types
+@ObjectType()
+export class DropOffFieldType {
+  @Field()
+  fieldId: string
+
+  @Field()
+  fieldTitle: string
+
+  @Field()
+  count: number
+
+  @Field()
+  percentage: number
+}
+
+@ObjectType()
+export class FunnelAnalyticsType {
+  @Field()
+  totalViews: number
+
+  @Field()
+  totalCompleted: number
+
+  @Field()
+  totalPartial: number
+
+  @Field()
+  completionRate: number
+
+  @Field(type => [DropOffFieldType])
+  dropOffByField: DropOffFieldType[]
 }

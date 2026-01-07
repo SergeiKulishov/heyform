@@ -107,6 +107,10 @@ export class EndpointService {
     geetestValidate?: string
     geetestSeccode?: string
     partialSubmission?: boolean
+    // Partial submission tracking
+    sessionId?: string
+    lastFieldId?: string
+    lastFieldIndex?: number
   }): Promise<{ clientSecret?: string }> {
     const result = await axios({
       query: COMPLETE_SUBMISSION_GQL,

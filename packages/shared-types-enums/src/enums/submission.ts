@@ -8,5 +8,6 @@ export enum SubmissionCategoryEnum {
 export enum SubmissionStatusEnum {
   PUBLIC = 1,
   PRIVATE = 2,
-  DELETED = 3
+  DELETED = 3,
+  PARTIAL = 4
 }

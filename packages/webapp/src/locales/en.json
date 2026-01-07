@@ -874,6 +874,15 @@
         "submission2_zero": "No submissions yet · {{average}} average",
         "submission2_one": "{{count}} submission · {{average}} average",
         "submission2_other": "{{count}} submissions · {{average}} average"
+      },
+      "funnel": {
+        "title": "Completion Funnel",
+        "completed": "Completed",
+        "partial": "Partial",
+        "views": "Total Views",
+        "completionRate": "Completion Rate",
+        "dropOffByField": "Drop-off by Question",
+        "noDropOff": "No partial submissions yet"
       }
     },
     "customReport": {
@@ -897,6 +906,7 @@
       "subHeadline": "Share the form online to reach a wider audience.",
       "inbox": "Inbox",
       "spam": "Spam",
+      "partial": "Partial",
       "view": "View",
       "downloadCSV": "Download CSV",
       "maximize": "Maximize table",
@@ -1220,6 +1230,10 @@
         "navigationArrows": {
           "headline": "Navigation arrows",
           "subHeadline": "You can enable it to let respondents navigate between questions."
+        },
+        "partialSubmission": {
+          "headline": "Save partial responses",
+          "subHeadline": "Allow users to resume incomplete forms when they return."
         }
       },
       "access": {

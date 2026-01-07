@@ -45,7 +45,12 @@ export const Renderer: FC<RendererProps> = ({ form, query, locale, contactId }) 
     setIsPasswordChecked(true)
   }
 
-  async function handleSubmit(values: Any, partialSubmission?: boolean, stripe?: Any) {
+  async function handleSubmit(
+    values: Any,
+    partialSubmission?: boolean,
+    stripe?: Any,
+    meta?: { sessionId: string; lastFieldId?: string; lastFieldIndex?: number }
+  ) {
     try {
       let token: Record<string, Any> = {}
 
@@ -86,6 +91,9 @@ export const Renderer: FC<RendererProps> = ({ form, query, locale, contactId }) 
         openToken: openTokenRef.current,
         passwordToken: passwordTokenRef.current,
         partialSubmission,
+        sessionId: meta?.sessionId,
+        lastFieldId: meta?.lastFieldId,
+        lastFieldIndex: meta?.lastFieldIndex,
         ...(token || {})
       })
 

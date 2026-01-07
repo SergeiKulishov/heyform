@@ -42,6 +42,7 @@ export { UpdateIntegrationStatusResolver } from './integration/update-integratio
 export { FormsResolver } from './form/forms.resolver'
 export { SearchFormsResolver } from './form/search-forms.resolver'
 export { FormAnalyticResolver } from './form/form-analytic.resolver'
+export { FunnelAnalyticsResolver } from './form/funnel-analytics.resolver'
 export { CreateFormResolver } from './form/create-form.resolver'
 export { DuplicateFormResolver } from './form/duplicate-form.resolver'
 export { DeleteFormResolver } from './form/delete-form.resolver'

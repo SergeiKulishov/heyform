@@ -18,6 +18,7 @@ interface FindSubmissionOptions {
   formId: string
   category?: SubmissionCategoryEnum
   labelId?: string
+  isCompleted?: boolean
   page?: number
   limit?: number
 }
@@ -51,12 +52,22 @@ export class SubmissionService {
     formId,
     category,
     labelId,
+    isCompleted,
     page = 1,
     limit = 30
   }: FindSubmissionOptions): Promise<SubmissionModel[]> {
     const conditions: Record<string, any> = {
-      formId,
-      status: SubmissionStatusEnum.PUBLIC
+      formId
+    }
+
+    // Filter by completion status
+    if (isCompleted === false) {
+      conditions.status = SubmissionStatusEnum.PARTIAL
+    } else if (isCompleted === true) {
+      conditions.status = { $in: [SubmissionStatusEnum.PUBLIC, SubmissionStatusEnum.PRIVATE] }
+      conditions.isCompleted = true
+    } else {
+      conditions.status = SubmissionStatusEnum.PUBLIC
     }
 
     if (helper.isValid(category)) {
@@ -160,10 +171,24 @@ export class SubmissionService {
     ])
   }
 
-  public async count({ formId, category, labelId }: FindSubmissionOptions): Promise<number> {
+  public async count({
+    formId,
+    category,
+    labelId,
+    isCompleted
+  }: FindSubmissionOptions): Promise<number> {
     const conditions: Record<string, any> = {
-      formId,
-      status: SubmissionStatusEnum.PUBLIC
+      formId
+    }
+
+    // Filter by completion status
+    if (isCompleted === false) {
+      conditions.status = SubmissionStatusEnum.PARTIAL
+    } else if (isCompleted === true) {
+      conditions.status = { $in: [SubmissionStatusEnum.PUBLIC, SubmissionStatusEnum.PRIVATE] }
+      conditions.isCompleted = true
+    } else {
+      conditions.status = SubmissionStatusEnum.PUBLIC
     }
 
     if (helper.isValid(category)) {
@@ -431,5 +456,80 @@ export class SubmissionService {
         }
       }
     ])
+  }
+
+  /**
+   * Find a partial submission by sessionId
+   */
+  async findBySessionId(formId: string, sessionId: string): Promise<SubmissionModel | null> {
+    return this.submissionModel.findOne({
+      formId,
+      sessionId,
+      isCompleted: false
+    })
+  }
+
+  /**
+   * Update a partial submission
+   */
+  async updatePartial(
+    submissionId: string,
+    updates: Partial<
+      Pick<
+        SubmissionModel,
+        | 'answers'
+        | 'hiddenFields'
+        | 'variables'
+        | 'lastFieldId'
+        | 'lastFieldIndex'
+        | 'endAt'
+        | 'status'
+        | 'isCompleted'
+        | 'category'
+      >
+    >
+  ): Promise<boolean> {
+    const result = await this.submissionModel.updateOne({ _id: submissionId }, { $set: updates })
+    return !!result?.ok
+  }
+
+  /**
+   * Get drop-off analytics - which fields users abandon the form at
+   */
+  async getDropOffAnalytics(formId: string): Promise<{ _id: string; count: number }[]> {
+    return this.submissionModel.aggregate([
+      {
+        $match: {
+          formId,
+          status: SubmissionStatusEnum.PARTIAL,
+          lastFieldId: { $exists: true, $ne: null }
+        }
+      },
+      {
+        $group: {
+          _id: '$lastFieldId',
+          count: { $sum: 1 }
+        }
+      },
+      { $sort: { count: -1 } }
+    ])
+  }
+
+  /**
+   * Count completed vs partial submissions
+   */
+  async countByCompletion(formId: string): Promise<{ completed: number; partial: number }> {
+    const [completed, partial] = await Promise.all([
+      this.submissionModel.countDocuments({
+        formId,
+        isCompleted: true,
+        status: { $in: [SubmissionStatusEnum.PUBLIC, SubmissionStatusEnum.PRIVATE] }
+      }),
+      this.submissionModel.countDocuments({
+        formId,
+        status: SubmissionStatusEnum.PARTIAL
+      })
+    ])
+    return { completed, partial }
   }
 }

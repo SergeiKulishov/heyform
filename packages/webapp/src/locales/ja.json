@@ -824,6 +824,15 @@
         "submission2_zero": "提出はありません · 平均 {{average}}",
         "submission2_one": "{{count}} 回の提出 · 平均 {{average}}",
         "submission2_other": "{{count}} 回の提出 · 平均 {{average}}"
+      },
+      "funnel": {
+        "title": "完了ファネル",
+        "completed": "完了",
+        "partial": "部分的",
+        "views": "総閲覧数",
+        "completionRate": "完了率",
+        "dropOffByField": "質問別の離脱",
+        "noDropOff": "部分的な提出はまだありません"
       }
     },
     "submissions": {
@@ -832,6 +841,7 @@
       "subHeadline": "オンラインでフォームを共有して、より多くのオーディエンスを引き付けましょう。",
       "inbox": "受信箱",
       "spam": "スパム",
+      "partial": "部分的",
       "view": "表示",
       "downloadCSV": "CSV をダウンロード",
       "maximize": "表を最大化",
@@ -1155,6 +1165,10 @@
         "navigationArrows": {
           "headline": "ナビゲーション矢印",
           "subHeadline": "この機能を有効にすると、回答者は質問間を移動できます。"
+        },
+        "partialSubmission": {
+          "headline": "部分回答を保存",
+          "subHeadline": "ユーザーが戻ったときに未完成のフォームを続けて入力できるようにします。"
         }
       },
       "access": {
