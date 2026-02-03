@@ -1,0 +1,8 @@
+export { defaultLight } from './default-light'
+export { defaultDark } from './default-dark'
+export { catppuccinLatte } from './catppuccin-latte'
+export { catppuccinMocha } from './catppuccin-mocha'
+export { dracula } from './dracula'
+export { nord } from './nord'
+export { gruvboxDark } from './gruvbox-dark'
+export { tokyoNight } from './tokyo-night'

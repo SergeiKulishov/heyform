@@ -519,9 +519,19 @@
     "backHome": "Retour à HeyForm",
     "appearance": {
       "title": "Apparence",
-      "system": "Préférence du système",
+      "system": "Système",
       "light": "Clair",
-      "dark": "Sombre"
+      "dark": "Sombre",
+      "themes": {
+        "defaultLight": "Clair",
+        "defaultDark": "Sombre",
+        "catppuccinLatte": "Catppuccin Latte",
+        "catppuccinMocha": "Catppuccin Mocha",
+        "dracula": "Dracula",
+        "nord": "Nord",
+        "gruvboxDark": "Gruvbox",
+        "tokyoNight": "Tokyo Night"
+      }
     },
     "sidebar": {
       "workspaces": "Espaces de travail",

@@ -28,12 +28,10 @@ export default function FormAnalyticsFunnel() {
   )
 
   return (
-    <>
-      <div className="mt-10">
-        <h2 className="text-base/6 font-semibold">{t('form.analytics.funnel.title')}</h2>
-      </div>
+    <div className="bg-foreground ring-accent-light mt-6 rounded-xl p-6 ring-1">
+      <h2 className="text-base/6 font-semibold">{t('form.analytics.funnel.title')}</h2>
 
-      <div className="mt-4 grid gap-8 sm:grid-cols-2 xl:grid-cols-4">
+      <div className="mt-6 grid gap-8 sm:grid-cols-2 xl:grid-cols-4">
         <div>
           <div className="text-base/6 font-medium sm:text-sm/6">
             {t('form.analytics.funnel.completed')}
@@ -126,6 +124,6 @@ export default function FormAnalyticsFunnel() {
           )}
         </Skeleton>
       </div>
-    </>
+    </div>
   )
 }

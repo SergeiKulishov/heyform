@@ -519,9 +519,19 @@
     "backHome": "返回 HeyForm",
     "appearance": {
       "title": "外觀",
-      "system": "系統偏好",
+      "system": "跟隨系統",
       "light": "明亮模式",
-      "dark": "黑暗模式"
+      "dark": "黑暗模式",
+      "themes": {
+        "defaultLight": "明亮",
+        "defaultDark": "黑暗",
+        "catppuccinLatte": "Catppuccin Latte",
+        "catppuccinMocha": "Catppuccin Mocha",
+        "dracula": "Dracula",
+        "nord": "Nord",
+        "gruvboxDark": "Gruvbox",
+        "tokyoNight": "Tokyo Night"
+      }
     },
     "sidebar": {
       "workspaces": "工作區",

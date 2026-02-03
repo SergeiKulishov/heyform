@@ -129,14 +129,14 @@ export default function FormAnalyticsReport() {
   const { t } = useTranslation()
 
   return (
-    <>
-      <div className="mt-14 flex items-center justify-between">
+    <div className="bg-foreground ring-accent-light mt-6 rounded-xl p-6 ring-1">
+      <div className="flex items-center justify-between">
         <h2 className="text-base/6 font-semibold">{t('form.analytics.report.headline')}</h2>
       </div>
 
       <div className="heyform-report">
         <ReportList />
       </div>
-    </>
+    </div>
   )
 }

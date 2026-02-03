@@ -154,6 +154,7 @@ const routes = [
     component: FormAnalytics,
     options: {
       loginRequired: true,
+      className: '[&_[data-slot=layout-inner]]:max-w-full',
       title: 'form.analytics.title'
     }
   },
@@ -173,6 +174,7 @@ const routes = [
     component: FormIntegrations,
     options: {
       loginRequired: true,
+      className: '[&_[data-slot=layout-inner]]:max-w-full',
       title: 'form.integrations.title'
     }
   },
@@ -182,6 +184,7 @@ const routes = [
     component: FormShare,
     options: {
       loginRequired: true,
+      className: '[&_[data-slot=layout-inner]]:max-w-full',
       title: 'form.share.title'
     }
   },
@@ -192,7 +195,7 @@ const routes = [
     options: {
       loginRequired: true,
       title: 'form.settings.title',
-      className: '[&_[data-slot=layout-container]]:!pb-0'
+      className: '[&_[data-slot=layout-inner]]:max-w-full [&_[data-slot=layout-container]]:!pb-0'
     }
   },
   {

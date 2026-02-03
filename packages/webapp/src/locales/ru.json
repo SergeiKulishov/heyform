@@ -519,9 +519,19 @@
     "backHome": "Вернуться к HeyForm",
     "appearance": {
       "title": "Внешний вид",
-      "system": "Системные настройки",
+      "system": "Система",
       "light": "Светлая",
-      "dark": "Темная"
+      "dark": "Темная",
+      "themes": {
+        "defaultLight": "Светлая",
+        "defaultDark": "Темная",
+        "catppuccinLatte": "Catppuccin Latte",
+        "catppuccinMocha": "Catppuccin Mocha",
+        "dracula": "Dracula",
+        "nord": "Nord",
+        "gruvboxDark": "Gruvbox",
+        "tokyoNight": "Tokyo Night"
+      }
     },
     "sidebar": {
       "workspaces": "Рабочие пространства",
