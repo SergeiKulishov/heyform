@@ -768,6 +768,7 @@
     "suspended": "Ausgesetzt",
     "closed": "Geschlossen",
     "duplicate": "{{name}} (Kopie)",
+    "saveAsTemplate": "Als Vorlage speichern",
     "moveToTrash": "In den Papierkorb verschieben",
     "copyLinkToShare": "Link zum Teilen kopieren",
     "creation": {
@@ -1600,6 +1601,29 @@
       "project": "Projekt",
       "createProject": "Erstelle ein Projekt",
       "submit": "Mit dieser Vorlage starten"
+    },
+    "save": {
+      "title": "Als Vorlage speichern",
+      "subHeadline": "Speichern Sie dieses Formular als Vorlage für Ihre Arbeitsbereichsmitglieder zur Wiederverwendung.",
+      "name": "Vorlagenname",
+      "nameRequired": "Vorlagenname ist erforderlich",
+      "category": "Kategorie",
+      "categoryRequired": "Kategorie ist erforderlich",
+      "description": "Beschreibung (optional)",
+      "success": "Vorlage erfolgreich gespeichert"
+    },
+    "tabs": {
+      "all": "Alle Vorlagen",
+      "workspace": "Arbeitsbereich-Vorlagen"
+    },
+    "workspace": {
+      "empty": "Noch keine Arbeitsbereich-Vorlagen",
+      "emptyHint": "Speichern Sie ein Formular als Vorlage, um es hier zu sehen."
+    },
+    "delete": {
+      "title": "Vorlage löschen",
+      "description": "Möchten Sie «{{name}}» wirklich löschen? Diese Aktion kann nicht rückgängig gemacht werden.",
+      "success": "Vorlage erfolgreich gelöscht"
     }
   }
 }

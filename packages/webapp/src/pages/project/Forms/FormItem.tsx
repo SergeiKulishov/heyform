@@ -5,6 +5,7 @@ import {
   IconRestore,
   IconShare,
   IconTag,
+  IconTemplate,
   IconTrash
 } from '@tabler/icons-react'
 import { useRequest } from 'ahooks'
@@ -18,7 +19,7 @@ import { timeFromNow, timeToNow, useRouter } from '@/utils'
 import IconLink from '@/assets/link.svg?react'
 import IconMoveTo from '@/assets/move-to.svg?react'
 import { Badge, Button, Dropdown, Tooltip, useAlert, usePrompt } from '@/components'
-import { useWorkspaceStore } from '@/store'
+import { useAppStore, useWorkspaceStore } from '@/store'
 import { FormType } from '@/types'
 
 interface FormItemLinkProps extends ComponentProps {
@@ -96,6 +97,7 @@ const FormItem: FC<FormItemProps> = ({ form, isInTrash, onChange }) => {
   const prompt = usePrompt()
   const router = useRouter()
   const { workspace, sharingURLPrefix } = useWorkspaceStore()
+  const { openModal } = useAppStore()
 
   const options = useMemo(
     () =>
@@ -137,6 +139,11 @@ const FormItem: FC<FormItemProps> = ({ form, isInTrash, onChange }) => {
               value: 'moveto',
               icon: <IconMoveTo className="h-4 w-4" />,
               label: 'components.moveto'
+            },
+            {
+              value: 'saveAsTemplate',
+              icon: <IconTemplate className="h-4 w-4" />,
+              label: 'form.saveAsTemplate'
             },
             {
               value: 'trash',
@@ -291,6 +298,12 @@ const FormItem: FC<FormItemProps> = ({ form, isInTrash, onChange }) => {
 
       case 'moveto':
         return handleMoveTo()
+
+      case 'saveAsTemplate':
+        return openModal('SaveAsTemplateModal', {
+          formId: form.id,
+          formName: form.name
+        })
 
       case 'trash':
       case 'restore':

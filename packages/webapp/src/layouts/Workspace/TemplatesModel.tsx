@@ -1,18 +1,16 @@
 import { FormRenderer, insertWebFont } from '@heyform-inc/form-renderer'
-import { IconChevronLeft, IconUpload } from '@tabler/icons-react'
+import { IconChevronLeft, IconTrash, IconUpload } from '@tabler/icons-react'
 import { useRequest } from 'ahooks'
 import { FC, useEffect, useMemo, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { insertThemeStyle } from '@/pages/form/Builder/utils'
 import { FormService } from '@/services'
-import { cn, scrollIntoViewIfNeeded, useParam, useRouter } from '@/utils'
-import { slugify } from '@heyform-inc/utils'
+import { cn, useParam, useRouter } from '@/utils'
 
-import { Async, Button, Image, Loader, Tabs, useToast } from '@/components'
-import { TEMPLATE_CATEGORIES } from '@/consts'
+import { Async, Button, Loader, Tabs, useAlert, useToast } from '@/components'
 import { useAppStore } from '@/store'
-import { TemplateGroupType, TemplateType } from '@/types'
+import { TemplateType } from '@/types'
 
 export interface TemplatesModelProps {
   onBack: () => void
@@ -70,7 +68,8 @@ const TemplatePreview: FC<TemplatePreviewProps> = ({ template: rawTemplate, onBa
       ...rawTemplate,
       ...result,
       settings: {
-        active: true
+        active: true,
+        removeBranding: true
       }
     })
 
@@ -85,7 +84,7 @@ const TemplatePreview: FC<TemplatePreviewProps> = ({ template: rawTemplate, onBa
   return (
     <div className="h-[calc(90vh-3.125rem)] w-[90vw]">
       <div className="flex h-full w-full flex-col">
-        <div className="flex w-full items-center justify-between pb-4">
+        <div className="relative flex w-full items-center justify-between pb-4 pr-8">
           <button
             type="button"
             className="-ml-[0.15rem] inline-flex items-center gap-1 text-sm/6"
@@ -96,13 +95,13 @@ const TemplatePreview: FC<TemplatePreviewProps> = ({ template: rawTemplate, onBa
           </button>
 
           <Tabs.SegmentedControl
-            className="hidden sm:flex [&_[data-slot=nav]]:h-9 [&_[data-slot=tablist]_button]:py-0.5"
+            className="absolute left-1/2 hidden -translate-x-1/2 sm:flex [&_[data-slot=nav]]:h-9 [&_[data-slot=tablist]_button]:whitespace-nowrap [&_[data-slot=tablist]_button]:px-4 [&_[data-slot=tablist]_button]:py-0.5"
             tabs={tabs}
             defaultTab={platform}
             onChange={setPlatform}
           />
 
-          <Button className="mr-8" size="md" loading={loading} onClick={run}>
+          <Button size="md" loading={loading} onClick={run}>
             {t('form.template.use')}
           </Button>
         </div>
@@ -149,8 +148,9 @@ export default function TemplatesModel({ onBack }: TemplatesModelProps) {
   const { closeModal } = useAppStore()
   const fileInputRef = useRef<HTMLInputElement>(null)
   const toast = useToast()
+  const alert = useAlert()
 
-  const [templateGroups, setTemplateGroups] = useState<TemplateGroupType[]>([])
+  const [templates, setTemplates] = useState<TemplateType[]>([])
   const [template, setTemplate] = useState<TemplateType>()
 
   const { loading: importLoading, run: importForm } = useRequest(
@@ -202,25 +202,32 @@ export default function TemplatesModel({ onBack }: TemplatesModelProps) {
   }
 
   async function fetch() {
-    const result = await FormService.templates()
-
-    const categories = t('form.template.categories', { returnObjects: true }) as string[]
-    setTemplateGroups(
-      TEMPLATE_CATEGORIES.map((category, index) => ({
-        id: slugify(category),
-        category: categories[index] || category,
-        templates: result.filter(row => row.category === category)
-      }))
-    )
-
+    const result = await FormService.teamTemplates(workspaceId)
+    setTemplates(result)
     return true
   }
 
-  function handleScrollIntoView(id: string) {
-    scrollIntoViewIfNeeded(
-      document.getElementById('create-form-modal')!,
-      document.getElementById(id)!
-    )
+  async function handleDelete(tmpl: TemplateType, e: React.MouseEvent) {
+    e.stopPropagation()
+
+    alert({
+      title: t('template.delete.title'),
+      description: t('template.delete.description', { name: tmpl.name }),
+      cancelProps: {
+        label: t('components.cancel')
+      },
+      confirmProps: {
+        label: t('components.delete'),
+        className: 'bg-error text-primary-light dark:text-primary hover:bg-error'
+      },
+      fetch: async () => {
+        await FormService.deleteTeamTemplate(tmpl.id, workspaceId)
+        setTemplates(prev => prev.filter(t => t.id !== tmpl.id))
+        toast({
+          title: t('template.delete.success')
+        })
+      }
+    })
   }
 
   if (template) {
@@ -229,24 +236,17 @@ export default function TemplatesModel({ onBack }: TemplatesModelProps) {
 
   return (
     <div className="min-h-[calc(90vh-3.125rem)] w-[90vw]">
-      <div className="flex items-center gap-4">
-        <div className="flex items-center justify-between">
-          <button
-            type="button"
-            className="-ml-[0.15rem] inline-flex items-center gap-1 text-sm/6"
-            onClick={onBack}
-          >
-            <IconChevronLeft className="h-5 w-5" />
-            <span className="font-semibold">{t('form.template.headline')}</span>
-          </button>
-        </div>
+      <div className="flex items-center justify-between">
+        <button
+          type="button"
+          className="-ml-[0.15rem] inline-flex items-center gap-1 text-sm/6"
+          onClick={onBack}
+        >
+          <IconChevronLeft className="h-5 w-5" />
+          <span className="font-semibold">{t('form.template.headline')}</span>
+        </button>
 
-        <div className="border-accent-light flex flex-wrap items-center gap-x-2 gap-y-2 border-b">
-          {templateGroups.map(row => (
-            <Button.Ghost key={row.id} size="sm" onClick={() => handleScrollIntoView(row.id)}>
-              {row.category}
-            </Button.Ghost>
-          ))}
+        <div>
           <input
             type="file"
             ref={fileInputRef}
@@ -269,39 +269,48 @@ export default function TemplatesModel({ onBack }: TemplatesModelProps) {
 
       <Async
         fetch={fetch}
+        refreshDeps={[workspaceId]}
         loader={
           <div className="flex h-[calc(90vh-15rem)] items-center justify-center">
             <Loader />
           </div>
         }
       >
-        <div className="[&>div:first-of-type]:pt-0">
-          {templateGroups.map(row => (
-            <div key={row.id} id={row.id} className="pt-10">
-              <h3 className="text-primary text-balance text-sm/6 font-semibold">{row.category}</h3>
-              <ul className="min-w-[1500px]:bg-red mt-2 grid grid-cols-5 gap-5">
-                {row.templates.map(template => (
-                  <li
-                    key={template.id}
-                    className="border-input cursor-pointer rounded-lg border"
-                    onClick={() => setTemplate(template)}
-                  >
-                    <Image
-                      className="aspect-video w-full rounded-t-lg"
-                      src={(template as Any).thumbnail}
-                      resize={{
-                        width: 480,
-                        height: 280
-                      }}
-                      loading="lazy"
-                    />
-                    <div className="p-2 text-sm/6 font-semibold">{template.name}</div>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
-        </div>
+        {templates.length === 0 ? (
+          <div className="flex h-[calc(90vh-15rem)] flex-col items-center justify-center text-center">
+            <p className="text-secondary text-sm">{t('template.workspace.empty')}</p>
+            <p className="text-secondary mt-1 text-sm">{t('template.workspace.emptyHint')}</p>
+          </div>
+        ) : (
+          <ul className="mt-6 grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
+            {templates.map(tmpl => (
+              <li
+                key={tmpl.id}
+                className="border-input group relative cursor-pointer rounded-lg border transition-shadow hover:shadow-md"
+                onClick={() => setTemplate(tmpl)}
+              >
+                <div className="bg-secondary-light flex h-16 w-full items-center justify-center rounded-t-lg">
+                  <span className="text-secondary text-xs">{tmpl.category}</span>
+                </div>
+                <div className="p-2">
+                  <div className="flex items-center justify-between">
+                    <span className="flex-1 truncate text-sm font-semibold">{tmpl.name}</span>
+                    <button
+                      type="button"
+                      className="text-secondary hover:text-error ml-1 flex-shrink-0 opacity-0 transition-opacity group-hover:opacity-100"
+                      onClick={e => handleDelete(tmpl, e)}
+                    >
+                      <IconTrash className="h-3.5 w-3.5" />
+                    </button>
+                  </div>
+                  {tmpl.description && (
+                    <p className="text-secondary mt-1 line-clamp-2 text-xs">{tmpl.description}</p>
+                  )}
+                </div>
+              </li>
+            ))}
+          </ul>
+        )}
       </Async>
     </div>
   )

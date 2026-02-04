@@ -11,8 +11,14 @@ import { Document } from 'mongoose'
   timestamps: true
 })
 export class TemplateModel extends Document {
-  @Prop({ required: true, unique: true })
+  @Prop({ required: true })
   name: string
+
+  @Prop({ required: false, index: true })
+  teamId?: string
+
+  @Prop({ required: false })
+  memberId?: string
 
   @Prop()
   recordId?: string

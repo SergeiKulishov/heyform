@@ -90,6 +90,8 @@ export { CancelUserDeletionResolver } from './user/cancel-user-deletion.resolver
 export { TemplatesResolver } from './template/templates.resolver'
 export { TemplateDetailResolver } from './template/template-detail.resolver'
 export { UseTemplateResolver } from './template/use-template.resolver'
+export { SaveAsTemplateResolver } from './template/save-as-template.resolver'
+export { TeamTemplatesResolver } from './template/team-templates.resolver'
 
 export { UnsplashSearchResolver } from './unsplash/unsplash-search.resolver'
 export { UnsplashTrackDownloadResolver } from './unsplash/unsplash-track-download.resolver'

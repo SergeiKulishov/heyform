@@ -1,5 +1,5 @@
 import { FormField, FormKindEnum, InteractiveModeEnum } from '@heyform-inc/shared-types-enums'
-import { IsOptional, Max } from 'class-validator'
+import { IsNotEmpty, IsOptional, Max } from 'class-validator'
 
 import { FormFieldType, ThemeSettingsType } from './form.graphql'
 import { ProjectDetailInput } from './project.graphql'
@@ -33,6 +33,12 @@ export class TemplateType {
 
   @Field()
   name: string
+
+  @Field({ nullable: true })
+  teamId?: string
+
+  @Field({ nullable: true })
+  memberId?: string
 
   @Field({ nullable: true })
   recordId?: string
@@ -84,4 +90,45 @@ export class TemplateDetailType extends TemplateType {
 export class UseTemplateInput extends ProjectDetailInput {
   @Field()
   templateId: string
+}
+
+@InputType()
+export class SaveAsTemplateInput {
+  @Field()
+  @IsNotEmpty()
+  formId: string
+
+  @Field()
+  @IsNotEmpty()
+  name: string
+
+  @Field()
+  @IsNotEmpty()
+  category: string
+
+  @Field({ nullable: true })
+  @IsOptional()
+  description?: string
+}
+
+@InputType()
+export class TeamTemplatesInput {
+  @Field()
+  @IsNotEmpty()
+  teamId: string
+
+  @Field({ nullable: true })
+  @IsOptional()
+  keyword?: string
+}
+
+@InputType()
+export class DeleteTeamTemplateInput {
+  @Field()
+  @IsNotEmpty()
+  templateId: string
+
+  @Field()
+  @IsNotEmpty()
+  teamId: string
 }

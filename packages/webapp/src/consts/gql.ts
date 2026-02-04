@@ -325,6 +325,32 @@ export const USE_TEMPLATE_GQL = gql`
   }
 `
 
+export const SAVE_AS_TEMPLATE_GQL = gql`
+  mutation saveFormAsTemplate($input: SaveAsTemplateInput!) {
+    saveFormAsTemplate(input: $input)
+  }
+`
+
+export const TEAM_TEMPLATES_GQL = gql`
+  query teamTemplates($input: TeamTemplatesInput!) {
+    teamTemplates(input: $input) {
+      id
+      teamId
+      memberId
+      category
+      name
+      description
+      thumbnail
+    }
+  }
+`
+
+export const DELETE_TEAM_TEMPLATE_GQL = gql`
+  mutation deleteTeamTemplate($input: DeleteTeamTemplateInput!) {
+    deleteTeamTemplate(input: $input)
+  }
+`
+
 export const CREATE_PROJECT_GQL = gql`
   mutation createProject($input: CreateProjectInput!) {
     createProject(input: $input)

@@ -768,6 +768,7 @@
     "suspended": "已暂停",
     "closed": "已关闭",
     "duplicate": "{{name}} (副本)",
+    "saveAsTemplate": "保存为模板",
     "moveToTrash": "移至回收站",
     "copyLinkToShare": "复制链接以分享",
     "creation": {
@@ -1600,6 +1601,29 @@
       "project": "项目",
       "createProject": "创建一个项目",
       "submit": "从这个模板开始"
+    },
+    "save": {
+      "title": "保存为模板",
+      "subHeadline": "将此表单保存为模板，供工作区成员重复使用。",
+      "name": "模板名称",
+      "nameRequired": "模板名称为必填项",
+      "category": "类别",
+      "categoryRequired": "类别为必填项",
+      "description": "描述（可选）",
+      "success": "模板保存成功"
+    },
+    "tabs": {
+      "all": "所有模板",
+      "workspace": "工作区模板"
+    },
+    "workspace": {
+      "empty": "暂无工作区模板",
+      "emptyHint": "将表单保存为模板后会显示在这里。"
+    },
+    "delete": {
+      "title": "删除模板",
+      "description": "确定要删除「{{name}}」吗？此操作无法撤销。",
+      "success": "模板删除成功"
     }
   }
 }

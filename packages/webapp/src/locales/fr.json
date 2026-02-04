@@ -768,6 +768,7 @@
     "suspended": "Suspendu",
     "closed": "Fermé",
     "duplicate": "{{name}} (Copie)",
+    "saveAsTemplate": "Enregistrer comme modèle",
     "moveToTrash": "Mettre à la corbeille",
     "copyLinkToShare": "Copier le lien pour partager",
     "creation": {
@@ -1604,6 +1605,29 @@
       "project": "Projet",
       "createProject": "Créer un projet",
       "submit": "Commencer avec ce modèle"
+    },
+    "save": {
+      "title": "Enregistrer comme modèle",
+      "subHeadline": "Enregistrez ce formulaire comme modèle pour que les membres de votre espace de travail puissent le réutiliser.",
+      "name": "Nom du modèle",
+      "nameRequired": "Le nom du modèle est requis",
+      "category": "Catégorie",
+      "categoryRequired": "La catégorie est requise",
+      "description": "Description (facultatif)",
+      "success": "Modèle enregistré avec succès"
+    },
+    "tabs": {
+      "all": "Tous les modèles",
+      "workspace": "Modèles d'espace de travail"
+    },
+    "workspace": {
+      "empty": "Aucun modèle d'espace de travail pour le moment",
+      "emptyHint": "Enregistrez un formulaire comme modèle pour le voir ici."
+    },
+    "delete": {
+      "title": "Supprimer le modèle",
+      "description": "Êtes-vous sûr de vouloir supprimer «{{name}}» ? Cette action ne peut pas être annulée.",
+      "success": "Modèle supprimé avec succès"
     }
   }
 }

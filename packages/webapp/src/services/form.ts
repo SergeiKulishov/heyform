@@ -22,6 +22,7 @@ import {
   CREATE_FORM_WITH_AI_GQL,
   DELETE_FORM_FIELD_GQL,
   DELETE_FORM_GQL,
+  DELETE_TEAM_TEMPLATE_GQL,
   DUPLICATE_FORM_GQL,
   FORMS_GQL,
   FORM_ANALYTIC_GQL,
@@ -37,7 +38,9 @@ import {
   PUBLIC_FORM_GQL,
   PUBLISH_FORM_SQL,
   RESTORE_FORM_GQL,
+  SAVE_AS_TEMPLATE_GQL,
   SEARCH_FORM_GQL,
+  TEAM_TEMPLATES_GQL,
   TEMPLATES_GQL,
   TEMPLATE_DETAILS_GQL,
   UPDATE_FORM_ARCHIVE_GQL,
@@ -538,6 +541,45 @@ export class FormService {
       mutation: USE_TEMPLATE_GQL,
       variables: {
         input
+      }
+    })
+  }
+
+  static saveAsTemplate(input: {
+    formId: string
+    name: string
+    category: string
+    description?: string
+  }) {
+    return apollo.mutate({
+      mutation: SAVE_AS_TEMPLATE_GQL,
+      variables: {
+        input
+      }
+    })
+  }
+
+  static teamTemplates(teamId: string, keyword?: string): Promise<TemplateType[]> {
+    return apollo.query({
+      query: TEAM_TEMPLATES_GQL,
+      fetchPolicy: 'network-only',
+      variables: {
+        input: {
+          teamId,
+          keyword
+        }
+      }
+    })
+  }
+
+  static deleteTeamTemplate(templateId: string, teamId: string) {
+    return apollo.mutate({
+      mutation: DELETE_TEAM_TEMPLATE_GQL,
+      variables: {
+        input: {
+          templateId,
+          teamId
+        }
       }
     })
   }

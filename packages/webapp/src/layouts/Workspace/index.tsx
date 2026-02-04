@@ -20,6 +20,7 @@ import CreateFormModal from './CreateFormModal'
 import CreateProjectModal from './CreateProjectModal'
 import CreateWorkspaceModal from './CreateWorkspaceModal'
 import DeleteProjectModal from './DeleteProjectModal'
+import SaveAsTemplateModal from './SaveAsTemplateModal'
 import SearchModal from './SearchModal'
 import UserAccountModal from './UserAccountModal'
 import UserDeletionModal from './UserDeletionModal'
@@ -303,6 +304,7 @@ const LayoutComponent: FC<LayoutProps> = ({ options, children }) => {
       <CreateProjectModal />
       <CreateFormModal />
       <DeleteProjectModal />
+      <SaveAsTemplateModal />
       <ChangelogsModal />
     </>
   )

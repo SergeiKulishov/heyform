@@ -23,7 +23,7 @@ const PreviewComponent: FC<PreviewComponentProps> = () => {
       fields: rawForm?.drafts || [],
       settings: {
         ...rawForm?.settings,
-        whitelabelBranding: true
+        removeBranding: true
       }
     }),
     [rawForm]
@@ -47,7 +47,7 @@ const PreviewComponent: FC<PreviewComponentProps> = () => {
     <div className="flex h-screen w-screen flex-col overflow-hidden px-2 pb-2">
       <div className="flex h-14 items-center justify-center">
         <Tabs.SegmentedControl
-          className="hidden sm:flex [&_[data-slot=nav]]:h-9 [&_[data-slot=tablist]_button]:py-0.5"
+          className="hidden sm:flex [&_[data-slot=nav]]:h-9 [&_[data-slot=tablist]_button]:whitespace-nowrap [&_[data-slot=tablist]_button]:px-4 [&_[data-slot=tablist]_button]:py-0.5"
           tabs={tabs}
           defaultTab={platform}
           onChange={setPlatform}

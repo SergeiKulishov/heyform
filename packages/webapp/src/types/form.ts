@@ -42,6 +42,7 @@ export interface FormFieldType extends FormField {
 export interface TemplateType extends FormModel {
   category: string
   recordId?: string
+  description?: string
 }
 
 export interface TemplateGroupType {

@@ -1,9 +1,27 @@
+import {
+  FormField,
+  FormKindEnum,
+  InteractiveModeEnum,
+  ThemeSettings
+} from '@heyform-inc/shared-types-enums'
 import { Injectable } from '@nestjs/common'
 import { InjectModel } from '@nestjs/mongoose'
 import { Model } from 'mongoose'
 
 import { helper } from '@heyform-inc/utils'
 import { TemplateModel } from '@model'
+
+interface CreateTemplateData {
+  teamId: string
+  memberId: string
+  name: string
+  category: string
+  description?: string
+  fields: FormField[]
+  themeSettings?: ThemeSettings
+  kind: FormKindEnum
+  interactiveMode: InteractiveModeEnum
+}
 
 @Injectable()
 export class TemplateService {
@@ -22,7 +40,8 @@ export class TemplateService {
 
   async findAll(keyword?: string, limit?: number): Promise<TemplateModel[]> {
     const conditions: any = {
-      published: true
+      published: true,
+      teamId: { $exists: false }
     }
 
     if (keyword) {
@@ -41,6 +60,36 @@ export class TemplateService {
     return this.templateModel.find(conditions).sort({
       _id: -1
     })
+  }
+
+  async findByTeam(teamId: string, keyword?: string): Promise<TemplateModel[]> {
+    const conditions: any = {
+      teamId,
+      published: true
+    }
+
+    if (keyword) {
+      conditions.name = new RegExp(keyword, 'i')
+    }
+
+    return this.templateModel.find(conditions).sort({ _id: -1 })
+  }
+
+  async create(data: CreateTemplateData): Promise<string> {
+    const template = await this.templateModel.create({
+      ...data,
+      published: true,
+      usedCount: 0
+    })
+    return template._id.toString()
+  }
+
+  async delete(templateId: string, teamId: string): Promise<boolean> {
+    const result = await this.templateModel.deleteOne({
+      _id: templateId,
+      teamId
+    })
+    return result.deletedCount > 0
   }
 
   public async updateUsedCount(templateId: string): Promise<any> {

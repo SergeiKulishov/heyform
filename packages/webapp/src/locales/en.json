@@ -777,6 +777,7 @@
     "suspended": "Suspended",
     "closed": "Closed",
     "duplicate": "{{name}} (Copy)",
+    "saveAsTemplate": "Save as Template",
     "moveToTrash": "Move to trash",
     "copyLinkToShare": "Copy link to share",
     "creation": {
@@ -1557,6 +1558,29 @@
       "project": "Project",
       "createProject": "Create a project",
       "submit": "Start with this template"
+    },
+    "save": {
+      "title": "Save as Template",
+      "subHeadline": "Save this form as a template for your workspace members to reuse.",
+      "name": "Template name",
+      "nameRequired": "Template name is required",
+      "category": "Category",
+      "categoryRequired": "Category is required",
+      "description": "Description (optional)",
+      "success": "Template saved successfully"
+    },
+    "tabs": {
+      "all": "All Templates",
+      "workspace": "Workspace Templates"
+    },
+    "workspace": {
+      "empty": "No workspace templates yet",
+      "emptyHint": "Save a form as a template to see it here."
+    },
+    "delete": {
+      "title": "Delete template",
+      "description": "Are you sure you want to delete \"{{name}}\"? This action cannot be undone.",
+      "success": "Template deleted successfully"
     }
   },
   "user": {

@@ -768,6 +768,7 @@
     "suspended": "Zawieszony",
     "closed": "Zamknięty",
     "duplicate": "{{name}} (Kopia)",
+    "saveAsTemplate": "Zapisz jako szablon",
     "moveToTrash": "Przenieś do kosza",
     "copyLinkToShare": "Skopiuj link do udostępnienia",
     "creation": {
@@ -1600,6 +1601,29 @@
       "project": "Projekt",
       "createProject": "Utwórz projekt",
       "submit": "Rozpocznij od tego szablonu"
+    },
+    "save": {
+      "title": "Zapisz jako szablon",
+      "subHeadline": "Zapisz ten formularz jako szablon do ponownego wykorzystania przez członków przestrzeni roboczej.",
+      "name": "Nazwa szablonu",
+      "nameRequired": "Nazwa szablonu jest wymagana",
+      "category": "Kategoria",
+      "categoryRequired": "Kategoria jest wymagana",
+      "description": "Opis (opcjonalnie)",
+      "success": "Szablon zapisany pomyślnie"
+    },
+    "tabs": {
+      "all": "Wszystkie szablony",
+      "workspace": "Szablony przestrzeni roboczej"
+    },
+    "workspace": {
+      "empty": "Brak szablonów przestrzeni roboczej",
+      "emptyHint": "Zapisz formularz jako szablon, aby zobaczyć go tutaj."
+    },
+    "delete": {
+      "title": "Usuń szablon",
+      "description": "Czy na pewno chcesz usunąć '{{name}}'? Tej akcji nie można cofnąć.",
+      "success": "Szablon usunięty pomyślnie"
     }
   }
 }

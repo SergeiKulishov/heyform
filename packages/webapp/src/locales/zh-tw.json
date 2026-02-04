@@ -768,6 +768,7 @@
     "suspended": "已暫停",
     "closed": "已關閉",
     "duplicate": "{{name}} (副本)",
+    "saveAsTemplate": "儲存為範本",
     "moveToTrash": "移至回收站",
     "copyLinkToShare": "複製連結以分享",
     "creation": {
@@ -1600,6 +1601,29 @@
       "project": "專案",
       "createProject": "建立專案",
       "submit": "從此範本開始使用"
+    },
+    "save": {
+      "title": "儲存為範本",
+      "subHeadline": "將此表單儲存為範本，供工作區成員重複使用。",
+      "name": "範本名稱",
+      "nameRequired": "範本名稱為必填項",
+      "category": "類別",
+      "categoryRequired": "類別為必填項",
+      "description": "描述（選填）",
+      "success": "範本儲存成功"
+    },
+    "tabs": {
+      "all": "所有範本",
+      "workspace": "工作區範本"
+    },
+    "workspace": {
+      "empty": "尚無工作區範本",
+      "emptyHint": "將表單儲存為範本後會顯示在這裡。"
+    },
+    "delete": {
+      "title": "刪除範本",
+      "description": "確定要刪除「{{name}}」嗎？此操作無法撤銷。",
+      "success": "範本刪除成功"
     }
   }
 }

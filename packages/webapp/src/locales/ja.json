@@ -768,6 +768,7 @@
     "suspended": "一時停止中",
     "closed": "終了済み",
     "duplicate": "{{name}} (コピー)",
+    "saveAsTemplate": "テンプレートとして保存",
     "moveToTrash": "ゴミ箱に移動",
     "copyLinkToShare": "共有リンクをコピー",
     "creation": {
@@ -1600,6 +1601,29 @@
       "project": "プロジェクト",
       "createProject": "プロジェクトを作成",
       "submit": "このテンプレートで開始"
+    },
+    "save": {
+      "title": "テンプレートとして保存",
+      "subHeadline": "このフォームをワークスペースメンバーが再利用できるテンプレートとして保存します。",
+      "name": "テンプレート名",
+      "nameRequired": "テンプレート名は必須です",
+      "category": "カテゴリ",
+      "categoryRequired": "カテゴリは必須です",
+      "description": "説明（任意）",
+      "success": "テンプレートを保存しました"
+    },
+    "tabs": {
+      "all": "すべてのテンプレート",
+      "workspace": "ワークスペーステンプレート"
+    },
+    "workspace": {
+      "empty": "ワークスペーステンプレートはまだありません",
+      "emptyHint": "フォームをテンプレートとして保存すると、ここに表示されます。"
+    },
+    "delete": {
+      "title": "テンプレートを削除",
+      "description": "「{{name}}」を削除してもよろしいですか？この操作は元に戻せません。",
+      "success": "テンプレートを削除しました"
     }
   }
 }
