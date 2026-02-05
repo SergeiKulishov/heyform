@@ -1,11 +1,11 @@
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose'
 import {
   Answer,
   HiddenFieldAnswer,
   SubmissionCategoryEnum,
   SubmissionStatusEnum,
   Variable
-} from '@heyform-inc/shared-types-enums'
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose'
+} from '@voxly/shared-types-enums'
 import { Document } from 'mongoose'
 
 import { UserAgent } from '@utils'

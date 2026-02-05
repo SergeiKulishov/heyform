@@ -4,7 +4,7 @@ import { Trans, useTranslation } from 'react-i18next'
 
 import { WorkspaceService } from '@/services'
 import { clearCookie, getCookie, useRouter } from '@/utils'
-import { helper } from '@heyform-inc/utils'
+import { helper } from '@voxly/utils'
 
 import { Form, ImageFormPicker, Input, Modal, SimpleFormProps } from '@/components'
 import { DEFAULT_PROJECT_NAMES, REDIRECT_COOKIE_NAME } from '@/consts'

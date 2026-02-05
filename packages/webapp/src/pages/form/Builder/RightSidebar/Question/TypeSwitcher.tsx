@@ -1,4 +1,4 @@
-import { FieldKindEnum } from '@heyform-inc/shared-types-enums'
+import { FieldKindEnum } from '@voxly/shared-types-enums'
 import { useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 

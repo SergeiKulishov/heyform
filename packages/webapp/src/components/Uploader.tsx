@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next'
 
 import { UploadService } from '@/services'
 import { cn } from '@/utils'
-import { formatBytes, parseBytes } from '@heyform-inc/utils'
+import { formatBytes, parseBytes } from '@voxly/utils'
 
 import { Loader } from './Loader'
 

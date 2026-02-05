@@ -1,5 +1,5 @@
-import { COUNTRIES, FlagIcon } from '@heyform-inc/form-renderer'
 import { IconChevronDown, IconChevronRight } from '@tabler/icons-react'
+import { COUNTRIES, FlagIcon } from '@voxly/form-renderer'
 import type { FC } from 'react'
 import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'

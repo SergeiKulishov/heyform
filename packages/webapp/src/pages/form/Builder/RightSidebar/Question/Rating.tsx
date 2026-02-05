@@ -1,4 +1,4 @@
-import { RATING_SHAPE_ICONS } from '@heyform-inc/form-renderer'
+import { RATING_SHAPE_ICONS } from '@voxly/form-renderer'
 import { startTransition, useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 

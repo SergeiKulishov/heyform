@@ -1,8 +1,8 @@
 import { Auth, TeamGuard } from '@decorator'
 import { UpdateBrandKitInput } from '@graphql'
-import { pickObject } from '@heyform-inc/utils'
 import { Args, Mutation, Resolver } from '@nestjs/graphql'
 import { BrandKitService } from '@service'
+import { pickObject } from '@voxly/utils'
 
 @Resolver()
 @Auth()

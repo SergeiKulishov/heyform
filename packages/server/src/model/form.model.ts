@@ -1,3 +1,4 @@
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose'
 import {
   FormField,
   FormKindEnum,
@@ -8,12 +9,11 @@ import {
   InteractiveModeEnum,
   StripeAccount,
   ThemeSettings
-} from '@heyform-inc/shared-types-enums'
-import { Logic, Variable } from '@heyform-inc/shared-types-enums'
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose'
+} from '@voxly/shared-types-enums'
+import { Logic, Variable } from '@voxly/shared-types-enums'
 import { Document } from 'mongoose'
 
-import { helper, nanoid, parseJson } from '@heyform-inc/utils'
+import { helper, nanoid, parseJson } from '@voxly/utils'
 
 @Schema({
   timestamps: true,

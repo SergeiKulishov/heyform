@@ -2,7 +2,7 @@ import throttle from 'lodash/throttle'
 import { FC, HTMLAttributes, useCallback, useEffect, useState } from 'react'
 
 import { cn } from '@/utils'
-import { helper } from '@heyform-inc/utils'
+import { helper } from '@voxly/utils'
 
 type ComponentProps<E = HTMLElement> = HTMLAttributes<E>
 interface AnchorNavigationProps extends ComponentProps {

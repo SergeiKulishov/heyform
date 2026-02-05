@@ -1,4 +1,4 @@
-import { Answer } from '@heyform-inc/shared-types-enums'
+import { Answer } from '@voxly/shared-types-enums'
 
 import { parsePlainAnswer } from './answer-to-plain'
 

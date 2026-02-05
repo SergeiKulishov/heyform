@@ -1,9 +1,9 @@
-import { SocialLoginTypeEnum } from '@heyform-inc/shared-types-enums'
 import { Controller, Get, Param, Post, Query, Req, Res } from '@nestjs/common'
+import { SocialLoginTypeEnum } from '@voxly/shared-types-enums'
 
-import { helper } from '@heyform-inc/utils'
 import { AuthService, RedisService, SocialLoginService } from '@service'
 import { Logger } from '@utils'
+import { helper } from '@voxly/utils'
 
 const { isValid } = helper
 

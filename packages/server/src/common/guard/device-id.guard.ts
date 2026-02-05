@@ -1,8 +1,8 @@
 import { CanActivate, ExecutionContext, ForbiddenException, Injectable } from '@nestjs/common'
 
 import { COOKIE_DEVICE_ID_NAME } from '@config'
-import { helper } from '@heyform-inc/utils'
 import { GqlExecutionContext } from '@nestjs/graphql'
+import { helper } from '@voxly/utils'
 
 @Injectable()
 export class DeviceIdGuard implements CanActivate {

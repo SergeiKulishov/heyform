@@ -1,4 +1,4 @@
-import { CaptchaKindEnum } from '@heyform-inc/shared-types-enums'
+import { CaptchaKindEnum } from '@voxly/shared-types-enums'
 import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 

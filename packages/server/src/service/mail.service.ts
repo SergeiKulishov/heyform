@@ -5,7 +5,7 @@ import { readFileSync, readdirSync } from 'fs'
 import { basename, extname, join } from 'path'
 
 import { EMAIL_TEMPLATES_DIR, SMTP_FROM } from '@environments'
-import { helper } from '@heyform-inc/utils'
+import { helper } from '@voxly/utils'
 
 interface JoinWorkspaceAlertOptions {
   teamName: string

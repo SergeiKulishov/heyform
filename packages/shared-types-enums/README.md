@@ -1,6 +1,6 @@
 # Shared Types and Enums
 
-**Package**: `@heyform-inc/shared-types-enums`
+**Package**: `@voxly/shared-types-enums`
 
 This package contains shared TypeScript types and enums that are used by both the `server` and `webapp` packages. This helps to keep the data structures consistent between the frontend and backend, reducing the risk of errors and making the code more maintainable.
 

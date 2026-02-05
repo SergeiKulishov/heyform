@@ -2,7 +2,7 @@ import { FC, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { cn } from '@/utils'
-import { helper } from '@heyform-inc/utils'
+import { helper } from '@voxly/utils'
 
 import { Tooltip } from '@/components'
 

@@ -1,4 +1,4 @@
-import { helper, hs, timestamp } from '@heyform-inc/utils'
+import { helper, hs, timestamp } from '@voxly/utils'
 
 export interface LRUStore {
   setItem(key: string, data: any): any

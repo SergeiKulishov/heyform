@@ -4,7 +4,7 @@ import type { FieldProps } from 'rc-field-form/es/Field'
 import { FC, ReactElement, ReactNode, cloneElement, useEffect, useState } from 'react'
 
 import { cn } from '@/utils'
-import { deepEqual, helper } from '@heyform-inc/utils'
+import { deepEqual, helper } from '@voxly/utils'
 
 import { Button, ButtonProps } from './Button'
 

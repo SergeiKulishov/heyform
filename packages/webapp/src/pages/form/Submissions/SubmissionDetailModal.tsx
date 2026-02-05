@@ -1,5 +1,5 @@
-import { FieldKindEnum, FormField } from '@heyform-inc/shared-types-enums'
 import { IconCalendar, IconDots, IconPrinter } from '@tabler/icons-react'
+import { FieldKindEnum, FormField } from '@voxly/shared-types-enums'
 import { FC, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 

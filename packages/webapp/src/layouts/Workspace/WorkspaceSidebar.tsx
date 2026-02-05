@@ -15,7 +15,7 @@ import { useTranslation } from 'react-i18next'
 import { NavLink } from 'react-router-dom'
 
 import { cn, useParam } from '@/utils'
-import { helper } from '@heyform-inc/utils'
+import { helper } from '@voxly/utils'
 
 import { Button, Tooltip } from '@/components'
 import { HELP_CENTER_URL, TEMPLATES_URL } from '@/consts'

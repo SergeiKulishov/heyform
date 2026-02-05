@@ -1,4 +1,4 @@
-import { FieldKindEnum, FormField, FormModel } from '@heyform-inc/shared-types-enums'
+import { FieldKindEnum, FormField, FormModel } from '@voxly/shared-types-enums'
 import type { HTMLAttributes } from 'react'
 
 export interface IFormField extends FormField {

@@ -1,7 +1,7 @@
 import { FC, useMemo, useState } from 'react'
 
 import { initialValue, useTranslation } from '../utils'
-import { helper } from '@heyform-inc/utils'
+import { helper } from '@voxly/utils'
 
 import { CountrySelect, FormField, Input } from '../components'
 import { useStore } from '../store'

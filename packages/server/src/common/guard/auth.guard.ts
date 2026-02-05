@@ -10,9 +10,9 @@ import { Reflector } from '@nestjs/core'
 import { COOKIE_DEVICE_ID_NAME } from '@config'
 import { IS_PUBLIC_KEY } from '@decorator'
 import { SESSION_MAX_AGE } from '@environments'
-import { helper, hs, timestamp } from '@heyform-inc/utils'
 import { GqlExecutionContext } from '@nestjs/graphql'
 import { AuthService, UserService } from '@service'
+import { helper, hs, timestamp } from '@voxly/utils'
 
 @Injectable()
 export class AuthGuard implements CanActivate {

@@ -1,19 +1,19 @@
+import { IconX } from '@tabler/icons-react'
 import {
   AutoResizeTextarea,
   Button,
   InputRef,
   getChoiceKeyName,
   preventDefault
-} from '@heyform-inc/form-renderer'
-import { Choice, ChoiceBadgeEnum } from '@heyform-inc/shared-types-enums'
-import { IconX } from '@tabler/icons-react'
+} from '@voxly/form-renderer'
+import { Choice, ChoiceBadgeEnum } from '@voxly/shared-types-enums'
 import { clsx } from 'clsx'
 import { FC, KeyboardEvent, Ref, useCallback, useMemo, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ReactSortable } from 'react-sortablejs'
 
 import { cn, nextTick } from '@/utils'
-import { clone, excludeObject, helper, nanoid } from '@heyform-inc/utils'
+import { clone, excludeObject, helper, nanoid } from '@voxly/utils'
 
 import { useStoreContext } from '../../store'
 import type { BlockProps } from './Block'

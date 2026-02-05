@@ -1,16 +1,16 @@
-import { CaptchaKindEnum, FormField, FormStatusEnum } from '@heyform-inc/shared-types-enums'
 import { InjectQueue } from '@nestjs/bull'
 import { BadRequestException, Injectable } from '@nestjs/common'
 import { InjectModel } from '@nestjs/mongoose'
+import { CaptchaKindEnum, FormField, FormStatusEnum } from '@voxly/shared-types-enums'
 import { Queue } from 'bull'
 import { Model } from 'mongoose'
 
 import { TeamService } from './team.service'
 import { GOOGLE_RECAPTCHA_KEY } from '@environments'
-import { helper, pickObject, timestamp } from '@heyform-inc/utils'
 import { FormModel } from '@model'
 import { mapToObject } from '@utils'
 import { getUpdateQuery } from '@utils'
+import { helper, pickObject, timestamp } from '@voxly/utils'
 
 interface UpdateFiledOptions {
   formId: string
@@ -133,7 +133,7 @@ export class FormService {
   async findAllByFieldLength(maxLength = 2) {
     return this.formModel.find({
       $where: `this.fields.length <= ${maxLength}`
-    })
+    } as any)
   }
 
   public async countMaps(projectIds: string[]): Promise<any> {

@@ -1,6 +1,6 @@
-import { FieldKindEnum, FormField } from '@heyform-inc/shared-types-enums'
+import { FieldKindEnum, FormField } from '@voxly/shared-types-enums'
 
-import { helper } from '@heyform-inc/utils'
+import { helper } from '@voxly/utils'
 
 export function flattenFields(fields?: FormField[], withGroup = false): FormField[] {
   if (helper.isEmpty(fields)) {

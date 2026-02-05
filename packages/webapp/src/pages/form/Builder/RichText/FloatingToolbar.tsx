@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next'
 
 import { getStyleFromRect } from './utils'
 import { nextTick } from '@/utils'
-import { helper } from '@heyform-inc/utils'
+import { helper } from '@voxly/utils'
 
 import { Button, Form, Input, Portal } from '@/components'
 

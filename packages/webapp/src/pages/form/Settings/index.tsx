@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next'
 
 import { FormService } from '@/services'
 import { useParam } from '@/utils'
-import { helper, toSecond } from '@heyform-inc/utils'
+import { helper, toSecond } from '@voxly/utils'
 
 import { AnchorNavigation, Button, Form } from '@/components'
 import { useFormStore } from '@/store'

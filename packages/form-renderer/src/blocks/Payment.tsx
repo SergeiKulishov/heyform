@@ -1,11 +1,11 @@
-import { NumberPrice } from '@heyform-inc/shared-types-enums'
+import { NumberPrice } from '@voxly/shared-types-enums'
 import clsx from 'clsx'
 import { RuleObject, StoreValue } from 'rc-field-form/es/interface'
 import type { FC } from 'react'
 import { useEffect, useMemo, useState } from 'react'
 
 import { useTranslation } from '../utils'
-import { helper } from '@heyform-inc/utils'
+import { helper } from '@voxly/utils'
 
 import { FormField, Input } from '../components'
 import { CURRENCY_SYMBOLS } from '../consts'

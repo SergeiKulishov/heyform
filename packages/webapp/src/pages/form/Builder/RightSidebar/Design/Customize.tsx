@@ -1,5 +1,5 @@
-import { GOOGLE_FONTS, SYSTEM_FONTS, insertWebFont } from '@heyform-inc/form-renderer'
-import { FormTheme } from '@heyform-inc/shared-types-enums'
+import { GOOGLE_FONTS, SYSTEM_FONTS, insertWebFont } from '@voxly/form-renderer'
+import { FormTheme } from '@voxly/shared-types-enums'
 import { useRequest } from 'ahooks'
 import { useForm as useRCForm } from 'rc-field-form'
 import { FC, useEffect, useMemo } from 'react'
@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next'
 
 import { FormService } from '@/services'
 import { nextTick, useParam } from '@/utils'
-import { helper } from '@heyform-inc/utils'
+import { helper } from '@voxly/utils'
 
 import { Button, ColorPicker, Form, ImagePicker, Input, Select, useToast } from '@/components'
 import { useFormStore } from '@/store'

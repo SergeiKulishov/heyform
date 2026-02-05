@@ -4,12 +4,12 @@ import {
   type Logic,
   QUESTION_FIELD_KINDS,
   type Variable
-} from '@heyform-inc/shared-types-enums'
+} from '@voxly/shared-types-enums'
 
 import { getValidLogics, serializeFields } from '../utils'
 import { FormService } from '@/services'
-import { htmlUtils } from '@heyform-inc/answer-utils'
-import { clone, helper, nanoid } from '@heyform-inc/utils'
+import { htmlUtils } from '@voxly/answer-utils'
+import { clone, helper, nanoid } from '@voxly/utils'
 
 import { FormFieldType } from '@/types'
 

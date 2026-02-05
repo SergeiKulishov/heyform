@@ -1,5 +1,5 @@
-import { getTheme, getThemeStyle } from '@heyform-inc/form-renderer'
-import { FormTheme } from '@heyform-inc/shared-types-enums'
+import { getTheme, getThemeStyle } from '@voxly/form-renderer'
+import { FormTheme } from '@voxly/shared-types-enums'
 
 export function insertThemeStyle(customTheme?: FormTheme) {
   const theme = getTheme(customTheme)

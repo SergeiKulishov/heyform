@@ -1,7 +1,7 @@
 import { FC, ImgHTMLAttributes, SyntheticEvent, useMemo, useState } from 'react'
 
 import { cn, getDecoratedURL } from '@/utils'
-import { helper, removeObjectNil } from '@heyform-inc/utils'
+import { helper, removeObjectNil } from '@voxly/utils'
 
 export interface ImageProps extends ImgHTMLAttributes<HTMLImageElement> {
   resize?: {

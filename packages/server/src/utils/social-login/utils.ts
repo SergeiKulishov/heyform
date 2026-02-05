@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-import { qs } from '@heyform-inc/utils'
+import { qs } from '@voxly/utils'
 
 export const request = axios.create({
   withCredentials: true,

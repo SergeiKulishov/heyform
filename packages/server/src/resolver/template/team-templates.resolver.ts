@@ -2,10 +2,10 @@ import { BadRequestException } from '@nestjs/common'
 
 import { Auth, User } from '@decorator'
 import { DeleteTeamTemplateInput, TeamTemplatesInput, TemplateType } from '@graphql'
-import { helper } from '@heyform-inc/utils'
 import { UserModel } from '@model'
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql'
 import { TeamService, TemplateService } from '@service'
+import { helper } from '@voxly/utils'
 
 @Resolver()
 @Auth()

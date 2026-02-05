@@ -1,15 +1,11 @@
-import {
-  CHOICES_FIELD_KINDS,
-  FieldKindEnum,
-  QUESTION_FIELD_KINDS
-} from '@heyform-inc/shared-types-enums'
+import { CHOICES_FIELD_KINDS, FieldKindEnum, QUESTION_FIELD_KINDS } from '@voxly/shared-types-enums'
 import { FC, useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { FormService } from '@/services'
 import { useParam } from '@/utils'
-import { flattenFields, htmlUtils } from '@heyform-inc/answer-utils'
-import { helper, pickValidValues } from '@heyform-inc/utils'
+import { flattenFields, htmlUtils } from '@voxly/answer-utils'
+import { helper, pickValidValues } from '@voxly/utils'
 
 import { Async, Repeat } from '@/components'
 import { useFormStore } from '@/store'

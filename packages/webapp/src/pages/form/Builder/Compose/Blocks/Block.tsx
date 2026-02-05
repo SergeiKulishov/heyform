@@ -1,11 +1,11 @@
-import { questionNumber } from '@heyform-inc/form-renderer'
-import { FieldLayoutAlignEnum, QUESTION_FIELD_KINDS } from '@heyform-inc/shared-types-enums'
+import { questionNumber } from '@voxly/form-renderer'
+import { FieldLayoutAlignEnum, QUESTION_FIELD_KINDS } from '@voxly/shared-types-enums'
 import type { FC } from 'react'
 import { RefObject, useCallback, useEffect, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { cn } from '@/utils'
-import { helper } from '@heyform-inc/utils'
+import { helper } from '@voxly/utils'
 
 import { FormFieldType } from '@/types'
 

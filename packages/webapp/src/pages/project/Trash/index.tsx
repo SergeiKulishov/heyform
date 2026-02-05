@@ -1,11 +1,11 @@
-import { FormStatusEnum } from '@heyform-inc/shared-types-enums'
 import { IconArrowUpRight } from '@tabler/icons-react'
+import { FormStatusEnum } from '@voxly/shared-types-enums'
 import { useState } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
 
 import { FormService } from '@/services'
 import { useParam } from '@/utils'
-import { helper } from '@heyform-inc/utils'
+import { helper } from '@voxly/utils'
 
 import { Async, EmptyState, Repeat } from '@/components'
 import { FormType } from '@/types'

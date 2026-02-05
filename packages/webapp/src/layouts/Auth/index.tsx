@@ -2,7 +2,7 @@ import { LayoutProps } from '@heyooo-inc/react-router'
 import { FC, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { helper } from '@heyform-inc/utils'
+import { helper } from '@voxly/utils'
 
 import Logo from '@/assets/logo.svg?react'
 

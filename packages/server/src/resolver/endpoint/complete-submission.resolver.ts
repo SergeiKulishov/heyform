@@ -1,3 +1,4 @@
+import { BadRequestException, UseGuards } from '@nestjs/common'
 import {
   Answer,
   CaptchaKindEnum,
@@ -5,13 +6,10 @@ import {
   SubmissionCategoryEnum,
   SubmissionStatusEnum,
   Variable
-} from '@heyform-inc/shared-types-enums'
-import { BadRequestException, UseGuards } from '@nestjs/common'
+} from '@voxly/shared-types-enums'
 
 import { CompleteSubmissionInput, CompleteSubmissionType } from '@graphql'
 import { EndpointAnonymousIdGuard } from '@guard'
-import { applyLogicToFields, fieldValuesToAnswers, flattenFields } from '@heyform-inc/answer-utils'
-import { helper, timestamp } from '@heyform-inc/utils'
 import { Args, Mutation, Resolver } from '@nestjs/graphql'
 import {
   EndpointService,
@@ -23,6 +21,8 @@ import {
   SubmissionService
 } from '@service'
 import { ClientInfo, GqlClient } from '@utils'
+import { applyLogicToFields, fieldValuesToAnswers, flattenFields } from '@voxly/answer-utils'
+import { helper, timestamp } from '@voxly/utils'
 
 @Resolver()
 @UseGuards(EndpointAnonymousIdGuard)

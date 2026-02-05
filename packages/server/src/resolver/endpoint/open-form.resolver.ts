@@ -3,10 +3,10 @@ import { BadRequestException, UseGuards } from '@nestjs/common'
 import { FORM_ENCRYPTION_KEY } from '@environments'
 import { OpenFormInput } from '@graphql'
 import { EndpointAnonymousIdGuard } from '@guard'
-import { timestamp } from '@heyform-inc/utils'
 import { Args, Query, Resolver } from '@nestjs/graphql'
 import { FormAnalyticService, FormService } from '@service'
 import { aesEncryptObject } from '@utils'
+import { timestamp } from '@voxly/utils'
 
 @Resolver()
 @UseGuards(EndpointAnonymousIdGuard)

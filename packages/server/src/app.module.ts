@@ -9,11 +9,11 @@ import * as Resolvers from './resolver'
 import { ScheduleModules, ScheduleProviders } from './schedule'
 import * as Services from './service'
 import { GraphqlService, MongoService, RedisService } from '@config'
-import { hs } from '@heyform-inc/utils'
 import { FormBodyMiddleware, JsonBodyMiddleware, RawBodyMiddleware } from '@middleware'
 import { GraphQLModule } from '@nestjs/graphql'
 import { ScheduleModule } from '@nestjs/schedule'
 import { LowerCaseScalar } from '@utils'
+import { hs } from '@voxly/utils'
 
 import { QueueModules, QueueProviders } from './queue'
 

@@ -1,8 +1,8 @@
-import { CHOICE_FIELD_KINDS, RATING_FIELD_KINDS } from '@heyform-inc/shared-types-enums'
+import { CHOICE_FIELD_KINDS, RATING_FIELD_KINDS } from '@voxly/shared-types-enums'
 import { FC, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { helper, toFixed } from '@heyform-inc/utils'
+import { helper, toFixed } from '@voxly/utils'
 
 import { useFormStore } from '@/store'
 

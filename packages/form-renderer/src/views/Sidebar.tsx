@@ -4,7 +4,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { useTransition } from 'react-transition-state'
 
 import { questionNumber, sliceFieldsByLogics, treeFields, useTranslation } from '../utils'
-import { helper } from '@heyform-inc/utils'
+import { helper } from '@voxly/utils'
 
 import { Button, CollapseIcon, XIcon } from '../components'
 import { TRANSITION_UNMOUNTED_STATES } from '../consts'

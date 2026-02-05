@@ -1,7 +1,7 @@
 import { CookieOptions } from 'express'
 
 import { COOKIE_DOMAIN, COOKIE_MAX_AGE, NODE_ENV, SESSION_MAX_AGE } from '@environments'
-import { ms } from '@heyform-inc/utils'
+import { ms } from '@voxly/utils'
 
 const commonOptions = {
   domain: COOKIE_DOMAIN,

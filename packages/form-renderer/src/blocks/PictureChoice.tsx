@@ -1,7 +1,7 @@
 import { FC, useEffect, useState } from 'react'
 
 import { useTranslation } from '../utils'
-import { helper } from '@heyform-inc/utils'
+import { helper } from '@voxly/utils'
 
 import { ChoiceRadioGroup, FormField, SelectHelper } from '../components'
 import { useStore } from '../store'

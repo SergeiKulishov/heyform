@@ -1,6 +1,6 @@
-import { FieldKindEnum, FormField, FormModel } from '@heyform-inc/shared-types-enums'
+import { FieldKindEnum, FormField, FormModel } from '@voxly/shared-types-enums'
 
-import { helper } from '@heyform-inc/utils'
+import { helper } from '@voxly/utils'
 
 export function isStripeEnabled(form: Any): boolean {
   return helper.isValid(form.stripe?.accountId) && !!getPaymentField(form)

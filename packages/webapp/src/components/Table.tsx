@@ -41,8 +41,7 @@ export interface TableState {
 }
 
 interface TableProps<T, K>
-  extends Omit<AsyncProps, 'fetch' | 'children'>,
-    TableHTMLAttributes<HTMLTableElement> {
+  extends Omit<AsyncProps, 'fetch' | 'children'>, TableHTMLAttributes<HTMLTableElement> {
   ref?: Ref<TableRef<K>>
   classNames?: {
     tablePanel?: string
@@ -305,15 +304,7 @@ export function Table<T, K>({
         loading: !isRefreshing && loading
       })
     }
-  }, [
-    onExpandedChange,
-    expandedIndex,
-    isRefreshing,
-    list,
-    loading,
-    pagination.current,
-    pagination.total
-  ])
+  }, [onExpandedChange, expandedIndex, isRefreshing, list, loading, pagination.total])
 
   return (
     <div className={className}>

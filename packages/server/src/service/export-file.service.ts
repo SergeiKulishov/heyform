@@ -1,16 +1,16 @@
+import { Injectable } from '@nestjs/common'
 import {
   Answer,
   FieldKindEnum,
   FormField,
   HiddenField,
   STATEMENT_FIELD_KINDS
-} from '@heyform-inc/shared-types-enums'
-import { Injectable } from '@nestjs/common'
+} from '@voxly/shared-types-enums'
 import { parseAsync } from 'json2csv'
 
-import { htmlUtils, parsePlainAnswer } from '@heyform-inc/answer-utils'
-import { helper, unixDate } from '@heyform-inc/utils'
 import { SubmissionModel } from '@model'
+import { htmlUtils, parsePlainAnswer } from '@voxly/answer-utils'
+import { helper, unixDate } from '@voxly/utils'
 
 const FIELD_ID_KEY = '#'
 const START_DATE_KEY = 'Start Date (UTC)'

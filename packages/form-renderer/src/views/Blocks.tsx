@@ -1,9 +1,9 @@
-import { FieldKindEnum, FormField } from '@heyform-inc/shared-types-enums'
+import { FieldKindEnum, FormField } from '@voxly/shared-types-enums'
 import type { FC } from 'react'
 import { useCallback, useEffect, useMemo } from 'react'
 
 import { useTranslation } from '../utils'
-import { helper } from '@heyform-inc/utils'
+import { helper } from '@voxly/utils'
 
 import { Address } from '../blocks/Address'
 import { Country } from '../blocks/Country'

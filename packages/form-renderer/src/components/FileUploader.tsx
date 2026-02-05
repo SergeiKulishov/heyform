@@ -4,7 +4,7 @@ import type { FC } from 'react'
 import { useState } from 'react'
 
 import { isFile, stopPropagation, useTranslation } from '../utils'
-import { formatBytes, parseBytes } from '@heyform-inc/utils'
+import { formatBytes, parseBytes } from '@voxly/utils'
 
 import { ACCEPTED_FILE_MIMES, MAX_FILE_SIZE } from '../consts'
 import { IComponentProps } from '../typings'

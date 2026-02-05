@@ -3,11 +3,11 @@ import { BadRequestException, UseGuards } from '@nestjs/common'
 import { BCRYPT_SALT } from '@environments'
 import { ResetPasswordInput } from '@graphql'
 import { DeviceIdGuard } from '@guard'
-import { helper } from '@heyform-inc/utils'
 import { UserLangEnum } from '@model'
 import { Args, Mutation, Resolver } from '@nestjs/graphql'
 import { AuthService, MailService, UserService } from '@service'
 import { GqlLang, passwordHash } from '@utils'
+import { helper } from '@voxly/utils'
 
 @Resolver()
 @UseGuards(DeviceIdGuard)

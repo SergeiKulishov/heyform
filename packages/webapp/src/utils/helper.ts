@@ -1,8 +1,8 @@
-import { getTheme, getThemeStyle } from '@heyform-inc/form-renderer'
-import { FormTheme } from '@heyform-inc/shared-types-enums'
+import { getTheme, getThemeStyle } from '@voxly/form-renderer'
+import { FormTheme } from '@voxly/shared-types-enums'
 
-import { isMobilePhone } from '@heyform-inc/answer-utils'
-import { helper, qs, removeObjectNil } from '@heyform-inc/utils'
+import { isMobilePhone } from '@voxly/answer-utils'
+import { helper, qs, removeObjectNil } from '@voxly/utils'
 
 import { STRIPE_PUBLISHABLE_KEY } from '@/consts'
 

@@ -1,8 +1,8 @@
 import { ExecutionContext, createParamDecorator } from '@nestjs/common'
 import 'reflect-metadata'
 
-import { helper } from '@heyform-inc/utils'
 import { GqlExecutionContext } from '@nestjs/graphql'
+import { helper } from '@voxly/utils'
 
 export function ip(req: any, headerName = 'x-forwarded-for'): string {
   const val = req.get(headerName)

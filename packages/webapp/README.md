@@ -13,7 +13,7 @@ This is the frontend of the HeyForm application. It is a single-page application
 - **Component-Based Architecture**: Built with a component-based architecture, with reusable components that make the code more maintainable.
 - **Styling**: Uses `Tailwind CSS` for styling, allowing for rapid UI development.
 - **Internationalization**: Uses `i18next` to support multiple languages.
-- **Form Rendering**: Uses the `@heyform-inc/form-renderer` package to render the forms.
+- **Form Rendering**: Uses the `@voxly/form-renderer` package to render the forms.
 
 ## Core Components
 

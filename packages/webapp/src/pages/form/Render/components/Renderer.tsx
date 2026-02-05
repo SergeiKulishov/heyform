@@ -4,20 +4,20 @@ import {
   getThemeStyle,
   getWebFontURL,
   sendMessageToParent
-} from '@heyform-inc/form-renderer/src'
+} from '@voxly/form-renderer/src'
 import {
   CaptchaKindEnum,
   FieldKindEnum,
   FormModel,
   HiddenFieldAnswer
-} from '@heyform-inc/shared-types-enums'
+} from '@voxly/shared-types-enums'
 import { FC, useEffect, useRef, useState } from 'react'
 
 import { EndpointService } from '../service/endpoint'
 import { geeTestToken, initGeeTest, recaptchaToken } from '../utils/captcha'
 import { isStripeEnabled } from '../utils/payment'
 import { Uploader } from '../utils/uploader'
-import { helper } from '@heyform-inc/utils'
+import { helper } from '@voxly/utils'
 
 import { PasswordCheck } from './PasswordCheck'
 

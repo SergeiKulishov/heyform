@@ -1,9 +1,9 @@
-import type { Layout as FormLayout } from '@heyform-inc/shared-types-enums'
+import type { Layout as FormLayout } from '@voxly/shared-types-enums'
 import type { FC } from 'react'
 import { memo } from 'react'
 
 import { isURL } from '../utils'
-import { deepEqual, helper } from '@heyform-inc/utils'
+import { deepEqual, helper } from '@voxly/utils'
 
 function filterStyle(brightness?: number) {
   if (!brightness) {

@@ -1,7 +1,7 @@
-import type { HiddenField, Logic, Variable } from '@heyform-inc/shared-types-enums'
+import type { HiddenField, Logic, Variable } from '@voxly/shared-types-enums'
 import { createContext } from 'react'
 
-import { deepEqual } from '@heyform-inc/utils'
+import { deepEqual } from '@voxly/utils'
 
 import { FormFieldType } from '@/types'
 

@@ -1,16 +1,12 @@
-import { getTheme } from '@heyform-inc/form-renderer'
-import {
-  FormSettings,
-  ThemeSettings,
-  UNSELECTABLE_FIELD_KINDS
-} from '@heyform-inc/shared-types-enums'
+import { getTheme } from '@voxly/form-renderer'
+import { FormSettings, ThemeSettings, UNSELECTABLE_FIELD_KINDS } from '@voxly/shared-types-enums'
 import { type Dayjs } from 'dayjs'
 import { create } from 'zustand'
 import computed from 'zustand-computed'
 
 import { getTimeZone, parseDuration, unixToDayjs } from '@/utils'
-import { htmlUtils } from '@heyform-inc/answer-utils'
-import { helper } from '@heyform-inc/utils'
+import { htmlUtils } from '@voxly/answer-utils'
+import { helper } from '@voxly/utils'
 import { immer } from 'zustand/middleware/immer'
 
 import { TypeNumberValue } from '@/components'

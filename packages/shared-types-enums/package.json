@@ -1,7 +1,7 @@
 {
-  "name": "@heyform-inc/shared-types-enums",
+  "name": "@voxly/shared-types-enums",
   "description": "HeyForm shared types and enums",
-  "version": "1.3.2",
+  "version": "1.3.3",
   "publishConfig": {
     "registry": "https://nexus.stackbro.tech/repository/npm-hosted/"
   },

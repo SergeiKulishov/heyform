@@ -1,4 +1,4 @@
-import { useTranslation } from '@heyform-inc/form-renderer/src'
+import { useTranslation } from '@voxly/form-renderer/src'
 import clsx from 'clsx'
 import type { FC } from 'react'
 import { useMemo } from 'react'

@@ -1,7 +1,7 @@
 import type { ChangeEvent, CompositionEvent, FC, KeyboardEvent, Ref } from 'react'
 import { useEffect, useImperativeHandle, useRef, useState } from 'react'
 
-import { helper } from '@heyform-inc/utils'
+import { helper } from '@voxly/utils'
 
 import { IComponentProps } from '../typings'
 

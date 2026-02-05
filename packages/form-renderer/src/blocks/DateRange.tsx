@@ -2,8 +2,8 @@ import type { FC } from 'react'
 import { useState } from 'react'
 
 import { useTranslation } from '../utils'
-import { isDate } from '@heyform-inc/answer-utils'
-import { date, helper } from '@heyform-inc/utils'
+import { isDate } from '@voxly/answer-utils'
+import { date, helper } from '@voxly/utils'
 
 import { DateRangeInput, FormField, TemporaryError } from '../components'
 import { TIME_FORMAT } from '../consts'

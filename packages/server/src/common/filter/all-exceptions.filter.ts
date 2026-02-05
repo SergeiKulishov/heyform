@@ -6,9 +6,9 @@ import {
   InternalServerErrorException
 } from '@nestjs/common'
 
-import { helper } from '@heyform-inc/utils'
 import { GqlExecutionContext } from '@nestjs/graphql'
 import { Logger } from '@utils'
+import { helper } from '@voxly/utils'
 
 @Catch()
 export class AllExceptionsFilter implements ExceptionFilter {

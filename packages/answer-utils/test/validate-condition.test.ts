@@ -1,4 +1,4 @@
-import { ComparisonEnum, FieldKindEnum, FormField } from '@heyform-inc/shared-types-enums'
+import { ComparisonEnum, FieldKindEnum, FormField } from '@voxly/shared-types-enums'
 import { expect, test } from 'vitest'
 
 import { validateCondition } from '../src'

@@ -5,7 +5,7 @@ import type { CSSProperties, FC, MouseEvent } from 'react'
 import { startTransition, useCallback, useEffect, useMemo, useState } from 'react'
 
 import { stopEvent, useKey, useTranslation } from '../utils'
-import { helper } from '@heyform-inc/utils'
+import { helper } from '@voxly/utils'
 
 import { COUNTRIES } from '../consts'
 import { AnyMap, IComponentProps } from '../typings'

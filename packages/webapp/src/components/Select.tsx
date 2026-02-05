@@ -28,7 +28,7 @@ import {
 import { useTranslation } from 'react-i18next'
 
 import { cn } from '@/utils'
-import { helper, toBool } from '@heyform-inc/utils'
+import { helper, toBool } from '@voxly/utils'
 
 import { Button } from './Button'
 import { Loader } from './Loader'

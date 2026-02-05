@@ -1,6 +1,6 @@
 # Utils
 
-**Package**: `@heyform-inc/utils`
+**Package**: `@voxly/utils`
 
 This package is a utility library that provides a collection of helper functions for various tasks. It is used by other packages in the monorepo to avoid code duplication and to have a consistent way of performing common operations.
 

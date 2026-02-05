@@ -52,7 +52,7 @@ A React library for rendering forms.
 A utility library for handling form answers.
 
 - **Testing**: `vitest`
-- **Dependencies**: `@heyform-inc/shared-types-enums`, `@heyform-inc/utils`, `big.js`, `dayjs`, `html5parser`, `libphonenumber-js`, `validator`.
+- **Dependencies**: `@voxly/shared-types-enums`, `@voxly/utils`, `big.js`, `dayjs`, `html5parser`, `libphonenumber-js`, `validator`.
 
 ### `embed`
 

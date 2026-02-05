@@ -1,6 +1,6 @@
 import store2 from 'store2'
 
-import { helper, timestamp, toSecond } from '@heyform-inc/utils'
+import { helper, timestamp, toSecond } from '@voxly/utils'
 
 import { HEYFORM_DATA_KEY } from '../consts'
 

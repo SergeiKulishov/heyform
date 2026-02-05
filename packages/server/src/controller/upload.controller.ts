@@ -10,7 +10,7 @@ import { extname } from 'path'
 
 import { getMulterStorage } from '@config'
 import { APP_HOMEPAGE_URL, S3_PUBLIC_URL, UPLOAD_FILE_SIZE, UPLOAD_FILE_TYPES } from '@environments'
-import { helper } from '@heyform-inc/utils'
+import { helper } from '@voxly/utils'
 
 @Controller()
 export class UploadController {

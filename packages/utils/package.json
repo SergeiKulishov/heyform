@@ -1,7 +1,7 @@
 {
-  "name": "@heyform-inc/utils",
+  "name": "@voxly/utils",
   "description": "HeyForm utils",
-  "version": "1.2.4",
+  "version": "1.2.5",
   "publishConfig": {
     "registry": "https://nexus.stackbro.tech/repository/npm-hosted/"
   },

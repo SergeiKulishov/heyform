@@ -1,4 +1,4 @@
-import { FieldKindEnum, NumberPrice } from '@heyform-inc/shared-types-enums'
+import { FieldKindEnum, NumberPrice } from '@voxly/shared-types-enums'
 import { expect, test } from 'vitest'
 
 import { fieldsToValidateRules, validate } from '../src'

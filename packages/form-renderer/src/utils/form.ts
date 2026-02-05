@@ -7,15 +7,15 @@ import {
   Logic,
   NavigateAction,
   Variable
-} from '@heyform-inc/shared-types-enums'
+} from '@voxly/shared-types-enums'
 
 import {
   htmlUtils,
   parsePlainAnswer,
   validateCondition,
   validateRequiredField
-} from '@heyform-inc/answer-utils'
-import { helper, type } from '@heyform-inc/utils'
+} from '@voxly/answer-utils'
+import { helper, type } from '@voxly/utils'
 
 import { CHAR_A_KEY_CODE } from '../consts'
 import type { AnyMap, IFormField, IPartialFormField } from '../typings'

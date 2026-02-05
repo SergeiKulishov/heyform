@@ -10,7 +10,7 @@ import {
   REDIS_PASSWORD,
   REDIS_PORT
 } from '@environments'
-import { ms } from '@heyform-inc/utils'
+import { ms } from '@voxly/utils'
 
 export const BullOptionsFactory = (): BullModuleOptions | Promise<BullModuleOptions> => ({
   redis: {

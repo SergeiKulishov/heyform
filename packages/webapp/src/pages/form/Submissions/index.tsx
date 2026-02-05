@@ -1,24 +1,24 @@
 import {
-  Answer,
-  FieldKindEnum,
-  FormField,
-  QUESTION_FIELD_KINDS,
-  SubmissionCategoryEnum
-} from '@heyform-inc/shared-types-enums'
-import {
   IconAdjustmentsHorizontal,
   IconDownload,
   IconMaximize,
   IconMinimize,
   IconTrash
 } from '@tabler/icons-react'
+import {
+  Answer,
+  FieldKindEnum,
+  FormField,
+  QUESTION_FIELD_KINDS,
+  SubmissionCategoryEnum
+} from '@voxly/shared-types-enums'
 import { useBoolean, useRequest } from 'ahooks'
 import { useCallback, useMemo, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { SubmissionService } from '@/services'
 import { cn, useParam } from '@/utils'
-import { flattenFields } from '@heyform-inc/answer-utils'
+import { flattenFields } from '@voxly/answer-utils'
 
 import IconMove from '@/assets/move.svg?react'
 import {

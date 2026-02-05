@@ -1,9 +1,9 @@
 import { Auth, User } from '@decorator'
 import { TeamType } from '@graphql'
-import { helper } from '@heyform-inc/utils'
 import { TeamModel, UserModel } from '@model'
 import { Query, Resolver } from '@nestjs/graphql'
 import { BrandKitService, FormService, ProjectService, TeamService } from '@service'
+import { helper } from '@voxly/utils'
 
 @Resolver()
 @Auth()

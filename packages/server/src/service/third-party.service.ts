@@ -2,8 +2,8 @@ import { Injectable } from '@nestjs/common'
 import { InjectModel } from '@nestjs/mongoose'
 import { Model } from 'mongoose'
 
-import { hs, timestamp } from '@heyform-inc/utils'
 import { ThirdPartyOauthModel } from '@model'
+import { hs, timestamp } from '@voxly/utils'
 
 @Injectable()
 export class ThirdPartyService {

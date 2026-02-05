@@ -1,4 +1,4 @@
-import { RATING_SHAPE_ICONS, Rate } from '@heyform-inc/form-renderer'
+import { RATING_SHAPE_ICONS, Rate } from '@voxly/form-renderer'
 import type { FC } from 'react'
 
 import type { BlockProps } from './Block'

@@ -1,5 +1,5 @@
-import { FieldKindEnum, FieldLayoutAlignEnum } from '@heyform-inc/shared-types-enums'
 import { IconCalendar, IconEyeOff, IconVariable } from '@tabler/icons-react'
+import { FieldKindEnum, FieldLayoutAlignEnum } from '@voxly/shared-types-enums'
 
 import IconAddress from '@/assets/address.svg?react'
 import IconCountry from '@/assets/country.svg?react'

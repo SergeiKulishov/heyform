@@ -1,4 +1,4 @@
-import { FormModel } from '@heyform-inc/shared-types-enums'
+import { FormModel } from '@voxly/shared-types-enums'
 import { useState } from 'react'
 
 import { getPreferredLanguage } from './utils/brower-language'

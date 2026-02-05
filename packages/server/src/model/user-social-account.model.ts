@@ -1,5 +1,5 @@
-import { SocialLoginTypeEnum } from '@heyform-inc/shared-types-enums'
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose'
+import { SocialLoginTypeEnum } from '@voxly/shared-types-enums'
 import { Document } from 'mongoose'
 
 @Schema({

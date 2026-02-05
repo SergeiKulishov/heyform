@@ -4,12 +4,12 @@ import { GraphqlResponse } from '@decorator'
 import { BCRYPT_SALT } from '@environments'
 import { SignUpInput } from '@graphql'
 import { DeviceIdGuard } from '@guard'
-import { helper } from '@heyform-inc/utils'
 import { UserActivityKindEnum } from '@model'
 import { Args, Query, Resolver } from '@nestjs/graphql'
 import { AuthService, UserService } from '@service'
 import { ClientInfo, GqlClient, gravatar, passwordHash } from '@utils'
 import { isDisposableEmail } from '@utils'
+import { helper } from '@voxly/utils'
 
 @Resolver()
 @UseGuards(DeviceIdGuard)

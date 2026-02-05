@@ -1,4 +1,4 @@
-import { FormField, FormKindEnum, InteractiveModeEnum } from '@heyform-inc/shared-types-enums'
+import { FormField, FormKindEnum, InteractiveModeEnum } from '@voxly/shared-types-enums'
 import { IsNotEmpty, IsOptional, Max } from 'class-validator'
 
 import { FormFieldType, ThemeSettingsType } from './form.graphql'

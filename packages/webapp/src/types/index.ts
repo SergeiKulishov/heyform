@@ -1,6 +1,6 @@
-import { FormField, FormModel } from '@heyform-inc/shared-types-enums'
+import { FormField, FormModel } from '@voxly/shared-types-enums'
 
-export type { SubmissionModel as SubmissionType } from '@heyform-inc/shared-types-enums'
+export type { SubmissionModel as SubmissionType } from '@voxly/shared-types-enums'
 
 export interface FormType extends Omit<FormModel, 'fields'> {
   drafts?: FormField[]

@@ -1,6 +1,6 @@
-import type { FormField } from '@heyform-inc/shared-types-enums'
-import { FieldKindEnum, NumberPrice } from '@heyform-inc/shared-types-enums'
 import { IconChevronRight } from '@tabler/icons-react'
+import type { FormField } from '@voxly/shared-types-enums'
+import { FieldKindEnum, NumberPrice } from '@voxly/shared-types-enums'
 import Big from 'big.js'
 import clsx from 'clsx'
 import type { FormProps as RCFormProps } from 'rc-field-form'
@@ -15,8 +15,8 @@ import {
   useTranslation,
   validateLogicField
 } from '../utils'
-import { applyLogicToFields, validateFields } from '@heyform-inc/answer-utils'
-import { clone, helper } from '@heyform-inc/utils'
+import { applyLogicToFields, validateFields } from '@voxly/answer-utils'
+import { clone, helper } from '@voxly/utils'
 
 import { Submit } from '../components'
 import { removeStorage, useStore } from '../store'

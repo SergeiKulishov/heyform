@@ -3,8 +3,8 @@ import { InjectModel } from '@nestjs/mongoose'
 import { Model } from 'mongoose'
 
 import { INVITE_CODE_EXPIRE_DAYS } from '@environments'
-import { date, hs, nanoid, timestamp } from '@heyform-inc/utils'
 import { FormModel, TeamInvitationModel, TeamMemberModel, TeamModel } from '@model'
+import { date, hs, nanoid, timestamp } from '@voxly/utils'
 
 @Injectable()
 export class TeamService {

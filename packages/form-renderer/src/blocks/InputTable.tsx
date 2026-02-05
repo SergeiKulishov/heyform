@@ -1,7 +1,7 @@
 import type { FC } from 'react'
 
 import { useTranslation } from '../utils'
-import { helper } from '@heyform-inc/utils'
+import { helper } from '@voxly/utils'
 
 import { FormField, TableInput } from '../components'
 import { useStore } from '../store'

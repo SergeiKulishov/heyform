@@ -63,9 +63,9 @@ export default ({ mode }: ConfigEnv) => {
             ],
             heyform: [
               '@heyooo-inc/react-router',
-              '@heyform-inc/answer-utils',
-              '@heyform-inc/shared-types-enums',
-              '@heyform-inc/utils'
+              '@voxly/answer-utils',
+              '@voxly/shared-types-enums',
+              '@voxly/utils'
             ]
           }
         }

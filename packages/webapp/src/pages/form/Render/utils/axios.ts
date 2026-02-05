@@ -2,7 +2,7 @@ import axiosStatic, { AxiosInstance, AxiosRequestConfig } from 'axios'
 import cookies from 'js-cookie'
 import store2 from 'store2'
 
-import { helper, nanoid } from '@heyform-inc/utils'
+import { helper, nanoid } from '@voxly/utils'
 
 import { HEYFORM_ID_KEY } from '../consts'
 

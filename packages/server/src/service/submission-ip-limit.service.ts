@@ -2,8 +2,8 @@ import { BadRequestException, Injectable } from '@nestjs/common'
 import { InjectModel } from '@nestjs/mongoose'
 import { Model } from 'mongoose'
 
-import { helper, timestamp } from '@heyform-inc/utils'
 import { FormModel, SubmissionIpLimitModel } from '@model'
+import { helper, timestamp } from '@voxly/utils'
 
 @Injectable()
 export class SubmissionIpLimitService {

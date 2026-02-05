@@ -5,8 +5,8 @@ import {
 import * as mongoose from 'mongoose'
 
 import { MONGO_PASSWORD, MONGO_SSL_CA_PATH, MONGO_URI, MONGO_USER } from '@environments'
-import { clone } from '@heyform-inc/utils'
 import { Logger } from '@utils'
+import { clone } from '@voxly/utils'
 
 // Setup migrations logger
 const logger = new Logger('MongooseModule')

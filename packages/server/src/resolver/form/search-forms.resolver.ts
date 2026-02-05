@@ -1,11 +1,11 @@
-import { FormStatusEnum } from '@heyform-inc/shared-types-enums'
+import { FormStatusEnum } from '@voxly/shared-types-enums'
 
 import { Auth, TeamGuard, User } from '@decorator'
 import { SearchFormInput, SearchFormType } from '@graphql'
-import { helper } from '@heyform-inc/utils'
 import { UserModel } from '@model'
 import { Args, Query, Resolver } from '@nestjs/graphql'
 import { FormService, TeamService, TemplateService } from '@service'
+import { helper } from '@voxly/utils'
 
 @Resolver()
 @Auth()

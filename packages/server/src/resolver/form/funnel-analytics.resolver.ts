@@ -1,9 +1,9 @@
 import { Auth, FormGuard } from '@decorator'
 import { DropOffFieldType, FormDetailInput, FunnelAnalyticsType } from '@graphql'
-import { flattenFields, htmlUtils } from '@heyform-inc/answer-utils'
-import { helper, parseJson } from '@heyform-inc/utils'
 import { Args, Query, Resolver } from '@nestjs/graphql'
 import { FormAnalyticService, FormService, RedisService, SubmissionService } from '@service'
+import { flattenFields, htmlUtils } from '@voxly/answer-utils'
+import { helper, parseJson } from '@voxly/utils'
 
 const stripHtml = (html: string) => html.replace(/<[^>]*>/g, '').trim()
 

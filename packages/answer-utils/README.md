@@ -1,6 +1,6 @@
 # Answer Utils
 
-**Package**: `@heyform-inc/answer-utils`
+**Package**: `@voxly/answer-utils`
 
 This package provides a set of utility functions for working with form answers. It is used by both the `server` and `webapp` packages to handle answer parsing, validation, and logic.
 

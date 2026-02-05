@@ -2,7 +2,7 @@ import { ServiceUnavailableException } from '@nestjs/common'
 import * as jwt from 'jsonwebtoken'
 
 import { formatLocale, generateUrl, request } from './utils'
-import { qs, timestamp } from '@heyform-inc/utils'
+import { qs, timestamp } from '@voxly/utils'
 
 import { gravatar } from '../gravatar'
 

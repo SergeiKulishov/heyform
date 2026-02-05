@@ -1,5 +1,5 @@
-import { UnsplashImage } from '@heyform-inc/shared-types-enums'
 import { IconSearch } from '@tabler/icons-react'
+import { UnsplashImage } from '@voxly/shared-types-enums'
 import { FC, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 

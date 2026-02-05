@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next'
 
 import { WorkspaceService } from '@/services'
 import { useFormState, useParam } from '@/utils'
-import { helper } from '@heyform-inc/utils'
+import { helper } from '@voxly/utils'
 
 import { Button, Form, Input, Modal, useToast } from '@/components'
 import { useModal } from '@/store'

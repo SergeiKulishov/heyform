@@ -1,16 +1,12 @@
-import {
-  Answer,
-  SubmissionCategoryEnum,
-  SubmissionStatusEnum
-} from '@heyform-inc/shared-types-enums'
 import { Injectable } from '@nestjs/common'
 import { InjectModel } from '@nestjs/mongoose'
+import { Answer, SubmissionCategoryEnum, SubmissionStatusEnum } from '@voxly/shared-types-enums'
 import { Model } from 'mongoose'
 
 import { FormService } from './form.service'
-import { date, helper } from '@heyform-inc/utils'
 import { SubmissionModel } from '@model'
 import { getUpdateQuery } from '@utils'
+import { date, helper } from '@voxly/utils'
 
 const { isValid } = helper
 

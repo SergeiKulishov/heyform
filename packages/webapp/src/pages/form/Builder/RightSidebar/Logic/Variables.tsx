@@ -1,9 +1,9 @@
-import { FieldKindEnum, Variable } from '@heyform-inc/shared-types-enums'
 import { IconArrowUpRight, IconDots, IconPlus } from '@tabler/icons-react'
+import { FieldKindEnum, Variable } from '@voxly/shared-types-enums'
 import { FC, startTransition } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
 
-import { helper } from '@heyform-inc/utils'
+import { helper } from '@voxly/utils'
 
 import { Button, Dropdown, Tooltip } from '@/components'
 import { VARIABLE_KIND_CONFIGS } from '@/consts'

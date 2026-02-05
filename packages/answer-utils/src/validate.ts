@@ -1,7 +1,7 @@
-import { AnswerValue, FieldKindEnum, FormField } from '@heyform-inc/shared-types-enums'
+import { AnswerValue, FieldKindEnum, FormField } from '@voxly/shared-types-enums'
 import dayjs from 'dayjs'
 
-import { helper } from '@heyform-inc/utils'
+import { helper } from '@voxly/utils'
 
 import { FieldsToValidateRules, fieldsToValidateRules } from './fields-to-validate-rules'
 import { isDate, isMobilePhone } from './helper'

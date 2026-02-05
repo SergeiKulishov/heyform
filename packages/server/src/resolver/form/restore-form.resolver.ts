@@ -1,4 +1,4 @@
-import { FormStatusEnum } from '@heyform-inc/shared-types-enums'
+import { FormStatusEnum } from '@voxly/shared-types-enums'
 
 import { Auth, Form, FormGuard } from '@decorator'
 import { FormDetailInput } from '@graphql'

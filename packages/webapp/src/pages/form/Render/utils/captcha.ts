@@ -1,4 +1,4 @@
-import { pickObject } from '@heyform-inc/utils'
+import { pickObject } from '@voxly/utils'
 
 export function initGeeTest(): Promise<Any> {
   return new Promise(resolve => {

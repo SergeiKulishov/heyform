@@ -2,10 +2,10 @@ import { Promise } from 'mongoose'
 
 import { Auth, FormGuard } from '@decorator'
 import { FormAnalyticInput, FormAnalyticResult, FormAnalyticType } from '@graphql'
-import { date, helper, parseJson } from '@heyform-inc/utils'
 import { FormAnalyticRangeEnum } from '@model'
 import { Args, Query, Resolver } from '@nestjs/graphql'
 import { FormAnalyticService, RedisService } from '@service'
+import { date, helper, parseJson } from '@voxly/utils'
 
 function getChanges(prev: number, next: number, isInteger = true) {
   const result: FormAnalyticResult = {

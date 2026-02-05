@@ -4,7 +4,7 @@ import { Trans, useTranslation } from 'react-i18next'
 
 import { WorkspaceService } from '@/services'
 import { useParam, useRouter } from '@/utils'
-import { helper } from '@heyform-inc/utils'
+import { helper } from '@voxly/utils'
 
 import { Async, Avatar, Button, Loader } from '@/components'
 import { useWorkspaceStore } from '@/store'

@@ -1,13 +1,13 @@
-import { UNSELECTABLE_FIELD_KINDS } from '@heyform-inc/shared-types-enums'
 import { IconTrash, IconUpload } from '@tabler/icons-react'
+import { UNSELECTABLE_FIELD_KINDS } from '@voxly/shared-types-enums'
 import { useRequest } from 'ahooks'
 import { useMemo, useRef } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
 
 import { FormService } from '@/services'
 import { useParam } from '@/utils'
-import { flattenFields } from '@heyform-inc/answer-utils'
-import { helper } from '@heyform-inc/utils'
+import { flattenFields } from '@voxly/answer-utils'
+import { helper } from '@voxly/utils'
 
 import OgIcon from '@/assets/og.svg?react'
 import { Button, Image, ImagePicker, ImagePickerRef, Input, Tooltip } from '@/components'

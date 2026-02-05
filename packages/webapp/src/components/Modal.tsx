@@ -1,4 +1,3 @@
-import { preventDefault } from '@heyform-inc/form-renderer'
 import {
   Close,
   Content,
@@ -12,12 +11,13 @@ import {
 } from '@radix-ui/react-dialog'
 import { VisuallyHidden } from '@radix-ui/react-visually-hidden'
 import { IconX } from '@tabler/icons-react'
+import { preventDefault } from '@voxly/form-renderer'
 import { Rule } from 'rc-field-form/es/interface'
 import { FC, ReactNode, useCallback, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { cn, useFormState } from '@/utils'
-import { deepEqual, excludeObject, helper, pickObject } from '@heyform-inc/utils'
+import { deepEqual, excludeObject, helper, pickObject } from '@voxly/utils'
 
 import { Button, ButtonProps } from './Button'
 import { Form } from './Form'

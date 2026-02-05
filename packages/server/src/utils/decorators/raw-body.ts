@@ -1,7 +1,7 @@
 import { ExecutionContext, createParamDecorator } from '@nestjs/common'
 import * as rawBody from 'raw-body'
 
-import { helper } from '@heyform-inc/utils'
+import { helper } from '@voxly/utils'
 
 export const HttpRawBody = createParamDecorator(
   async (_: any, ctx: ExecutionContext): Promise<string> => {

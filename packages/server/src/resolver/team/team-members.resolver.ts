@@ -1,9 +1,9 @@
 import { Auth, Team, TeamGuard, User } from '@decorator'
 import { TeamDetailInput, TeamMemberType } from '@graphql'
-import { helper } from '@heyform-inc/utils'
 import { TeamModel, UserModel } from '@model'
 import { Args, Query, Resolver } from '@nestjs/graphql'
 import { TeamService, UserService } from '@service'
+import { helper } from '@voxly/utils'
 
 @Resolver()
 @Auth()

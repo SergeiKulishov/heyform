@@ -1,10 +1,10 @@
-import { FormStatusEnum } from '@heyform-inc/shared-types-enums'
+import { FormStatusEnum } from '@voxly/shared-types-enums'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { FormService } from '@/services'
 import { useParam } from '@/utils'
-import { helper } from '@heyform-inc/utils'
+import { helper } from '@voxly/utils'
 
 import { Async, EmptyState, Repeat } from '@/components'
 import { useAppStore } from '@/store'

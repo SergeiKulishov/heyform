@@ -7,7 +7,7 @@ import { Link, useLocation } from 'react-router-dom'
 
 import { UserService, WorkspaceService } from '@/services'
 import { clearCookie, cn, getCookie, useParam, useRouter } from '@/utils'
-import { helper, timestamp } from '@heyform-inc/utils'
+import { helper, timestamp } from '@voxly/utils'
 
 import Logo from '@/assets/logo.svg?react'
 import { Button, useAlert } from '@/components'

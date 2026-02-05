@@ -1,4 +1,4 @@
-import { COUNTRIES } from '@heyform-inc/form-renderer'
+import { COUNTRIES } from '@voxly/form-renderer'
 import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 

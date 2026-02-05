@@ -1,10 +1,10 @@
 import { Auth } from '@decorator'
 import { UNSPLASH_CLIENT_ID } from '@environments'
 import { UnsplashImageType, UnsplashSearchInput } from '@graphql'
-import { helper } from '@heyform-inc/utils'
 import { Args, Query, Resolver } from '@nestjs/graphql'
 import { Unsplash } from '@utils'
 import { randomNumber } from '@utils'
+import { helper } from '@voxly/utils'
 
 @Resolver()
 @Auth()

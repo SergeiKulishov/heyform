@@ -1,11 +1,11 @@
-import { Button } from '@heyform-inc/form-renderer'
-import type { Choice } from '@heyform-inc/shared-types-enums'
 import { IconChevronRight, IconX } from '@tabler/icons-react'
+import { Button } from '@voxly/form-renderer'
+import type { Choice } from '@voxly/shared-types-enums'
 import type { FC } from 'react'
 import { startTransition, useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { clone, nanoid } from '@heyform-inc/utils'
+import { clone, nanoid } from '@voxly/utils'
 
 import { useStoreContext } from '../../store'
 import { FakeSubmit } from '../FakeSubmit'

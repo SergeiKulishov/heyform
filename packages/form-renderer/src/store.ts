@@ -5,8 +5,8 @@ import type {
   HiddenField,
   Logic,
   Variable
-} from '@heyform-inc/shared-types-enums'
-import { QUESTION_FIELD_KINDS } from '@heyform-inc/shared-types-enums'
+} from '@voxly/shared-types-enums'
+import { QUESTION_FIELD_KINDS } from '@voxly/shared-types-enums'
 import { useContext } from 'react'
 import store2 from 'store2'
 
@@ -19,8 +19,8 @@ import {
   replaceHTML,
   validateLogicField
 } from './utils'
-import { applyLogicToFields } from '@heyform-inc/answer-utils'
-import { helper } from '@heyform-inc/utils'
+import { applyLogicToFields } from '@voxly/answer-utils'
+import { helper } from '@voxly/utils'
 
 import type { AnyMap, IFormField } from './typings'
 

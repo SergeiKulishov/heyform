@@ -1,14 +1,10 @@
-import { flattenFieldsWithGroups } from '@heyform-inc/form-renderer'
-import {
-  Logic,
-  QUESTION_FIELD_KINDS,
-  UNSELECTABLE_FIELD_KINDS
-} from '@heyform-inc/shared-types-enums'
+import { flattenFieldsWithGroups } from '@voxly/form-renderer'
+import { Logic, QUESTION_FIELD_KINDS, UNSELECTABLE_FIELD_KINDS } from '@voxly/shared-types-enums'
 import { useEffect, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { htmlUtils } from '@heyform-inc/answer-utils'
-import { helper } from '@heyform-inc/utils'
+import { htmlUtils } from '@voxly/answer-utils'
+import { helper } from '@voxly/utils'
 
 import { Button, Form, Modal } from '@/components'
 import { useAppStore, useModal } from '@/store'

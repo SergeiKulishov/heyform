@@ -8,8 +8,8 @@ import { join } from 'path'
 import * as serveStatic from 'serve-static'
 
 import { APP_LISTEN_HOSTNAME, APP_LISTEN_PORT, STATIC_DIR, VIEW_DIR } from '@environments'
-import { helper, ms } from '@heyform-inc/utils'
 import { Logger, hbs } from '@utils'
+import { helper, ms } from '@voxly/utils'
 
 import { AppModule } from './app.module'
 import { AllExceptionsFilter } from './common/filter'

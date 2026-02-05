@@ -2,7 +2,7 @@ import clsx from 'clsx'
 import type { FC } from 'react'
 import { useCallback, useMemo, useState } from 'react'
 
-import { helper } from '@heyform-inc/utils'
+import { helper } from '@voxly/utils'
 
 import { IComponentProps } from '../typings'
 import type { RadioOption } from './Radio'

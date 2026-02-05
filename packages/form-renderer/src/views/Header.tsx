@@ -2,7 +2,7 @@ import type { FC } from 'react'
 import { useCallback } from 'react'
 
 import { sendMessageToParent } from '../utils'
-import { helper } from '@heyform-inc/utils'
+import { helper } from '@voxly/utils'
 
 import { Countdown } from '../components/Countdown'
 import { useStore } from '../store'

@@ -3,7 +3,7 @@ import { useEffect, useMemo, useState } from 'react'
 import Signature_pad from 'signature_pad'
 
 import { useTranslation } from '../utils'
-import { helper } from '@heyform-inc/utils'
+import { helper } from '@voxly/utils'
 
 import { IComponentProps } from '../typings'
 import { Button } from './Button'

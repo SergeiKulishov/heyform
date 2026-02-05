@@ -1,10 +1,10 @@
-import { flattenFieldsWithGroups } from '@heyform-inc/form-renderer'
+import { flattenFieldsWithGroups } from '@voxly/form-renderer'
 import {
   ActionEnum,
   FieldKindEnum,
   Logic,
   UNSELECTABLE_FIELD_KINDS
-} from '@heyform-inc/shared-types-enums'
+} from '@voxly/shared-types-enums'
 import * as dagre from 'dagre'
 import { Edge, Node } from 'react-flow-renderer'
 

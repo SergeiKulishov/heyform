@@ -1,9 +1,9 @@
 import { Auth, User } from '@decorator'
 import { UserDetailType } from '@graphql'
-import { helper } from '@heyform-inc/utils'
 import { UserModel } from '@model'
 import { Query, Resolver } from '@nestjs/graphql'
 import { SocialLoginService } from '@service'
+import { helper } from '@voxly/utils'
 
 const { isValid } = helper
 

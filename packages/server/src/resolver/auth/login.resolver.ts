@@ -3,11 +3,11 @@ import { BadRequestException, UseGuards } from '@nestjs/common'
 import { GraphqlRequest, GraphqlResponse } from '@decorator'
 import { LoginInput } from '@graphql'
 import { DeviceIdGuard } from '@guard'
-import { date, helper } from '@heyform-inc/utils'
 import { UserActivityKindEnum } from '@model'
 import { Args, Query, Resolver } from '@nestjs/graphql'
 import { AuthService, MailService, UserService } from '@service'
 import { ClientInfo, GqlClient, comparePassword } from '@utils'
+import { date, helper } from '@voxly/utils'
 
 @Resolver()
 @UseGuards(DeviceIdGuard)

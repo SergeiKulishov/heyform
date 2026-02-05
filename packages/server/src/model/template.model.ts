@@ -1,10 +1,10 @@
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose'
 import {
   FormField,
   FormKindEnum,
   InteractiveModeEnum,
   ThemeSettings
-} from '@heyform-inc/shared-types-enums'
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose'
+} from '@voxly/shared-types-enums'
 import { Document } from 'mongoose'
 
 @Schema({

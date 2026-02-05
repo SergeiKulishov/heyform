@@ -1,9 +1,9 @@
-import { FieldKindEnum } from '@heyform-inc/shared-types-enums'
+import { FieldKindEnum } from '@voxly/shared-types-enums'
 import type { FC } from 'react'
 import { memo, useMemo } from 'react'
 import { Handle, Node, Position } from 'react-flow-renderer'
 
-import { htmlUtils } from '@heyform-inc/answer-utils'
+import { htmlUtils } from '@voxly/answer-utils'
 
 import { FormFieldType } from '@/types'
 

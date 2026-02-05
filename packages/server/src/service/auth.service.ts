@@ -18,18 +18,10 @@ import {
   VERIFICATION_CODE_EXPIRE,
   VERIFICATION_CODE_LIMIT
 } from '@environments'
-import {
-  RandomType,
-  helper,
-  hs,
-  isDateExpired,
-  parseNumber,
-  random,
-  timestamp
-} from '@heyform-inc/utils'
 import { UserActivityKindEnum, UserActivityModel } from '@model'
 import { aesDecryptObject, aesEncryptObject } from '@utils'
 import { UserAgent } from '@utils'
+import { RandomType, helper, hs, isDateExpired, parseNumber, random, timestamp } from '@voxly/utils'
 
 interface UserActivity {
   kind: UserActivityKindEnum

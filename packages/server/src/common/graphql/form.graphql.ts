@@ -21,7 +21,7 @@ import {
   Property,
   Validation,
   Variable
-} from '@heyform-inc/shared-types-enums'
+} from '@voxly/shared-types-enums'
 import {
   IsArray,
   IsBoolean,

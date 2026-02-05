@@ -2,8 +2,8 @@ import type { FC } from 'react'
 import { startTransition, useState } from 'react'
 
 import { useTranslation } from '../utils'
-import { getDateFormat } from '@heyform-inc/answer-utils'
-import { helper, date as vdate } from '@heyform-inc/utils'
+import { getDateFormat } from '@voxly/answer-utils'
+import { helper, date as vdate } from '@voxly/utils'
 
 import { Input } from '../components'
 import { DATE_FORMATS, DATE_MAPS, FILTER_NUMBER_REGEX, NUMERIC_REGEX, TIME_FORMAT } from '../consts'

@@ -4,7 +4,7 @@ import { Document } from 'mongoose'
 import { BrandKitModel } from './brand-kit.model'
 import { ProjectModel } from './project.model'
 import { INVITE_CODE_EXPIRE_DAYS } from '@environments'
-import { date, nanoid } from '@heyform-inc/utils'
+import { date, nanoid } from '@voxly/utils'
 
 @Schema({
   timestamps: true

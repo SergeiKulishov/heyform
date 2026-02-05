@@ -1,8 +1,8 @@
-import { FormModel } from '@heyform-inc/shared-types-enums'
+import { FormModel } from '@voxly/shared-types-enums'
 import { FC } from 'react'
 
 import { useTranslation } from '../utils'
-import { helper } from '@heyform-inc/utils'
+import { helper } from '@voxly/utils'
 
 import { ThankYou } from './ThankYou'
 

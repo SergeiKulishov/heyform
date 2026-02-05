@@ -1,9 +1,9 @@
 import dayjs from 'dayjs'
 import { parsePhoneNumberFromString } from 'libphonenumber-js'
 
-import { helper } from '@heyform-inc/utils'
+import { helper } from '@voxly/utils'
 
-export { htmlToText } from '@heyform-inc/utils'
+export { htmlToText } from '@voxly/utils'
 
 export function isNumber(arg: any): boolean {
   return Number.isFinite(arg)

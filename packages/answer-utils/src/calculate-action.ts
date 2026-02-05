@@ -4,9 +4,9 @@ import {
   NumberCalculateAction,
   StringCalculateAction,
   Variable
-} from '@heyform-inc/shared-types-enums'
+} from '@voxly/shared-types-enums'
 
-import { helper } from '@heyform-inc/utils'
+import { helper } from '@voxly/utils'
 
 import { isNumber } from './helper'
 

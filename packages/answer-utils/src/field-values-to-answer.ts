@@ -1,6 +1,6 @@
-import { Answer, CHOICES_FIELD_KINDS, FormField } from '@heyform-inc/shared-types-enums'
+import { Answer, CHOICES_FIELD_KINDS, FormField } from '@voxly/shared-types-enums'
 
-import { helper } from '@heyform-inc/utils'
+import { helper } from '@voxly/utils'
 
 import { fieldsToValidateRules } from './fields-to-validate-rules'
 import { validate } from './validate'

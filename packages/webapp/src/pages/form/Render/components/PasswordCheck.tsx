@@ -1,5 +1,5 @@
-import { useTranslation } from '@heyform-inc/form-renderer/src'
-import { FormModel } from '@heyform-inc/shared-types-enums'
+import { useTranslation } from '@voxly/form-renderer/src'
+import { FormModel } from '@voxly/shared-types-enums'
 import clsx from 'clsx'
 import Form, { Field } from 'rc-field-form'
 import { useState } from 'react'

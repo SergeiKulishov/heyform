@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { UserService } from '@/services'
-import { helper } from '@heyform-inc/utils'
+import { helper } from '@voxly/utils'
 
 import { Form, Input, Modal, PasswordStrength } from '@/components'
 import { useModal } from '@/store'

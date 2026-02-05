@@ -1,5 +1,5 @@
-import { FormKindEnum, InteractiveModeEnum } from '@heyform-inc/shared-types-enums'
 import { IconPlus, IconStack2 } from '@tabler/icons-react'
+import { FormKindEnum, InteractiveModeEnum } from '@voxly/shared-types-enums'
 import { useRequest } from 'ahooks'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'

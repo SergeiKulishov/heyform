@@ -1,4 +1,4 @@
-import { FormField } from '@heyform-inc/shared-types-enums'
+import { FormField } from '@voxly/shared-types-enums'
 import { FC, useMemo } from 'react'
 
 import { SubmissionType } from '@/types'

@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 
 import { AuthService } from '@/services'
 import { useRouter } from '@/utils'
-import { helper } from '@heyform-inc/utils'
+import { helper } from '@voxly/utils'
 
 import { Form, Input, PasswordStrength } from '@/components'
 import { useUserStore } from '@/store'

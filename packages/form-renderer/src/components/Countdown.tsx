@@ -1,4 +1,4 @@
-import type { FormSettings } from '@heyform-inc/shared-types-enums'
+import type { FormSettings } from '@voxly/shared-types-enums'
 import type { FC } from 'react'
 import { useEffect, useRef, useState } from 'react'
 

@@ -1,6 +1,6 @@
 # Form Renderer
 
-**Package**: `@heyform-inc/form-renderer`
+**Package**: `@voxly/form-renderer`
 
 This package is a React library responsible for rendering the forms. It is built with TypeScript and Vite, and uses `tsup` to create a distributable package.
 

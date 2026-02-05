@@ -1,10 +1,6 @@
-import { numberToChar, questionNumber } from '@heyform-inc/form-renderer'
-import {
-  FieldKindEnum,
-  OTHER_FIELD_KINDS,
-  QUESTION_FIELD_KINDS
-} from '@heyform-inc/shared-types-enums'
 import { IconCaretDownFilled, IconDotsVertical, IconPlus } from '@tabler/icons-react'
+import { numberToChar, questionNumber } from '@voxly/form-renderer'
+import { FieldKindEnum, OTHER_FIELD_KINDS, QUESTION_FIELD_KINDS } from '@voxly/shared-types-enums'
 import { FC, MouseEvent, useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Panel, PanelGroup, PanelResizeHandle } from 'react-resizable-panels'
@@ -12,8 +8,8 @@ import { ReactSortable } from 'react-sortablejs'
 
 import { getFieldFromKind } from '../utils'
 import { cn, nextTick } from '@/utils'
-import { htmlUtils } from '@heyform-inc/answer-utils'
-import { helper } from '@heyform-inc/utils'
+import { htmlUtils } from '@voxly/answer-utils'
+import { helper } from '@voxly/utils'
 
 import { Button, Dropdown, Tooltip } from '@/components'
 import { ALL_FIELD_CONFIGS } from '@/consts'

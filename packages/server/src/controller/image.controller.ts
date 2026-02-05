@@ -7,8 +7,8 @@ import { Readable } from 'stream'
 
 import { ImageResizingDto } from '@dto'
 import { UPLOAD_DIR } from '@environments'
-import { qs } from '@heyform-inc/utils'
 import { md5 } from '@utils'
+import { qs } from '@voxly/utils'
 
 @Controller()
 export class ImageController {

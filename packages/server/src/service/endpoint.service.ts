@@ -1,5 +1,5 @@
-import { CaptchaKindEnum, FieldKindEnum } from '@heyform-inc/shared-types-enums'
 import { BadRequestException, Injectable } from '@nestjs/common'
+import { CaptchaKindEnum, FieldKindEnum } from '@voxly/shared-types-enums'
 
 import { AuthService } from './auth.service'
 import {
@@ -8,9 +8,9 @@ import {
   FORM_ENCRYPTION_KEY,
   GOOGLE_RECAPTCHA_SECRET
 } from '@environments'
-import { helper } from '@heyform-inc/utils'
 import { aesDecryptObject, akismet, recaptcha } from '@utils'
 import { Logger } from '@utils'
+import { helper } from '@voxly/utils'
 
 interface VerifySpamOptions {
   answers: any[]

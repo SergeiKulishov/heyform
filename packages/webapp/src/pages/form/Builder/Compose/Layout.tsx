@@ -1,8 +1,8 @@
-import type { Layout as FormLayout } from '@heyform-inc/shared-types-enums'
+import type { Layout as FormLayout } from '@voxly/shared-types-enums'
 import type { FC } from 'react'
 
 import { cn } from '@/utils'
-import { helper } from '@heyform-inc/utils'
+import { helper } from '@voxly/utils'
 
 interface LayoutProps extends ComponentProps {
   layout?: FormLayout

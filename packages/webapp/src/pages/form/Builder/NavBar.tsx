@@ -16,7 +16,7 @@ import { Link } from 'react-router-dom'
 import { getFilteredFields } from './utils'
 import { FormService } from '@/services'
 import { useParam, useRouter } from '@/utils'
-import { helper } from '@heyform-inc/utils'
+import { helper } from '@voxly/utils'
 
 import { Button, Loader, Tooltip, usePrompt, useToast } from '@/components'
 import { useAppStore, useFormStore, useWorkspaceStore } from '@/store'

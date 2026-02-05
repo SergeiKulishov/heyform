@@ -1,4 +1,3 @@
-import { preventDefault } from '@heyform-inc/form-renderer'
 import {
   Close,
   Content,
@@ -11,6 +10,7 @@ import {
 } from '@radix-ui/react-dialog'
 import { VisuallyHidden } from '@radix-ui/react-visually-hidden'
 import { IconX } from '@tabler/icons-react'
+import { preventDefault } from '@voxly/form-renderer'
 import { FC, Ref, useCallback, useEffect, useImperativeHandle, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 

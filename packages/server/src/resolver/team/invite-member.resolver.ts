@@ -3,10 +3,10 @@ import { BadRequestException } from '@nestjs/common'
 import { Auth, Team, TeamGuard, User } from '@decorator'
 import { APP_HOMEPAGE_URL } from '@environments'
 import { InviteMemberInput } from '@graphql'
-import { helper } from '@heyform-inc/utils'
 import { TeamModel, UserModel } from '@model'
 import { Args, Mutation, Resolver } from '@nestjs/graphql'
 import { MailService, TeamService, UserService } from '@service'
+import { helper } from '@voxly/utils'
 
 @Resolver()
 @Auth()

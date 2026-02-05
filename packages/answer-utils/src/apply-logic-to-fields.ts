@@ -9,9 +9,9 @@ import {
   QUESTION_FIELD_KINDS,
   StringCalculateAction,
   Variable
-} from '@heyform-inc/shared-types-enums'
+} from '@voxly/shared-types-enums'
 
-import { helper } from '@heyform-inc/utils'
+import { helper } from '@voxly/utils'
 
 import { calculateAction } from './calculate-action'
 import { validateRequiredField } from './validate'

@@ -1,6 +1,6 @@
-import { SocialLoginTypeEnum } from '@heyform-inc/shared-types-enums'
 import { BadRequestException, Injectable } from '@nestjs/common'
 import { InjectModel } from '@nestjs/mongoose'
+import { SocialLoginTypeEnum } from '@voxly/shared-types-enums'
 import { Model } from 'mongoose'
 
 import { UserService } from './user.service'
@@ -14,9 +14,9 @@ import {
   GOOGLE_LOGIN_CLIENT_ID,
   GOOGLE_LOGIN_CLIENT_SECRET
 } from '@environments'
-import { helper } from '@heyform-inc/utils'
 import { UserSocialAccountModel } from '@model'
 import { UserInfo, appleLoginUrl, appleUserInfo, googleLoginUrl, googleUserInfo } from '@utils'
+import { helper } from '@voxly/utils'
 
 const appleOptions = {
   webClientId: APPLE_LOGIN_WEB_CLIENT_ID,

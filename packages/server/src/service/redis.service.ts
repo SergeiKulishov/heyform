@@ -2,7 +2,7 @@ import { ConflictException, Injectable } from '@nestjs/common'
 import { InjectRedis } from '@svtslv/nestjs-ioredis'
 import { Redis } from 'ioredis'
 
-import { hs } from '@heyform-inc/utils'
+import { hs } from '@voxly/utils'
 
 interface BaseOptions {
   key: string

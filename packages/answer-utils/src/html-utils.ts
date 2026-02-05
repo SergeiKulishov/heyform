@@ -1,7 +1,7 @@
 import { parse as html5Parse } from 'html5parser'
 import { IAttribute } from 'html5parser/src/types'
 
-import { helper, htmlToText } from '@heyform-inc/utils'
+import { helper, htmlToText } from '@voxly/utils'
 
 interface HTMLWalkOptions {
   allowedTags?: string[]

@@ -1,6 +1,6 @@
-import { ActionEnum, ComparisonEnum, LogicPayload } from '@heyform-inc/shared-types-enums'
+import { ActionEnum, ComparisonEnum, LogicPayload } from '@voxly/shared-types-enums'
 
-import { helper } from '@heyform-inc/utils'
+import { helper } from '@voxly/utils'
 
 const OTHER_COMPARISONS = [ComparisonEnum.IS_EMPTY, ComparisonEnum.IS_NOT_EMPTY]
 

@@ -13,7 +13,7 @@ import { onError } from '@apollo/client/link/error'
 import { RetryLink } from 'apollo-link-retry'
 import ApolloLinkTimeout from 'apollo-link-timeout'
 
-import { helper } from '@heyform-inc/utils'
+import { helper } from '@voxly/utils'
 
 import { GRAPHQL_API_URL, IS_PROD } from '@/consts'
 

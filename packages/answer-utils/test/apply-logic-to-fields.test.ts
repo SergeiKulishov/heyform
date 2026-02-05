@@ -6,7 +6,7 @@ import {
   FormField,
   Logic,
   Variable
-} from '@heyform-inc/shared-types-enums'
+} from '@voxly/shared-types-enums'
 import { expect, test } from 'vitest'
 
 import { applyLogicToFields } from '../src'

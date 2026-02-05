@@ -2,10 +2,10 @@ import { BadRequestException } from '@nestjs/common'
 
 import { Auth, Team, TeamGuard } from '@decorator'
 import { UpdateTeamInput } from '@graphql'
-import { helper, pickValidValues } from '@heyform-inc/utils'
 import { TeamModel } from '@model'
 import { Args, Mutation, Resolver } from '@nestjs/graphql'
 import { TeamService } from '@service'
+import { helper, pickValidValues } from '@voxly/utils'
 
 @Resolver()
 @Auth()

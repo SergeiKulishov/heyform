@@ -1,7 +1,7 @@
 import cookies from 'js-cookie'
 import store from 'store2'
 
-import { helper, nanoid } from '@heyform-inc/utils'
+import { helper, nanoid } from '@voxly/utils'
 
 import { COOKIE_OPTIONS, DEVICEID_COOKIE_NAME, LOGGED_COOKIE_NAME } from '@/consts'
 

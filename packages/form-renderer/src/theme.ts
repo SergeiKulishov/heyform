@@ -1,6 +1,6 @@
-import type { FormTheme } from '@heyform-inc/shared-types-enums'
+import type { FormTheme } from '@voxly/shared-types-enums'
 
-import { alpha, helper, hexToRgb, isDarkColor } from '@heyform-inc/utils'
+import { alpha, helper, hexToRgb, isDarkColor } from '@voxly/utils'
 
 export const SYSTEM_FONTS =
   '-apple-system, BlinkMacSystemFont, Helvetica, Roboto, Tahoma, Arial, "PingFang SC", "Hiragino Sans GB", "Heiti SC", STXihei, "Microsoft YaHei", SimHei, "WenQuanYi Micro Hei", serif'

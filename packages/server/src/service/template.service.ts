@@ -1,15 +1,15 @@
+import { Injectable } from '@nestjs/common'
+import { InjectModel } from '@nestjs/mongoose'
 import {
   FormField,
   FormKindEnum,
   InteractiveModeEnum,
   ThemeSettings
-} from '@heyform-inc/shared-types-enums'
-import { Injectable } from '@nestjs/common'
-import { InjectModel } from '@nestjs/mongoose'
+} from '@voxly/shared-types-enums'
 import { Model } from 'mongoose'
 
-import { helper } from '@heyform-inc/utils'
 import { TemplateModel } from '@model'
+import { helper } from '@voxly/utils'
 
 interface CreateTemplateData {
   teamId: string

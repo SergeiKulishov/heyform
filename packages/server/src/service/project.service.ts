@@ -2,8 +2,8 @@ import { Injectable } from '@nestjs/common'
 import { InjectModel } from '@nestjs/mongoose'
 import { Model } from 'mongoose'
 
-import { helper } from '@heyform-inc/utils'
 import { ProjectMemberModel, ProjectModel } from '@model'
+import { helper } from '@voxly/utils'
 
 @Injectable()
 export class ProjectService {

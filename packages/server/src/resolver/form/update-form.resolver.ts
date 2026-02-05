@@ -1,9 +1,9 @@
 import { Auth, Form, FormGuard } from '@decorator'
 import { UpdateFormInput } from '@graphql'
-import { helper, pickValidValues } from '@heyform-inc/utils'
 import { FormModel } from '@model'
 import { Args, Mutation, Resolver } from '@nestjs/graphql'
 import { FormService, SubmissionService } from '@service'
+import { helper, pickValidValues } from '@voxly/utils'
 
 @Resolver()
 @Auth()

@@ -1,9 +1,9 @@
-import { type Choice, ChoiceBadgeEnum } from '@heyform-inc/shared-types-enums'
+import { type Choice, ChoiceBadgeEnum } from '@voxly/shared-types-enums'
 import type { WheelEvent } from 'react'
 import { useCallback, useMemo, useState } from 'react'
 
 import { GlobalTimeout, getChoiceKeyName } from '../utils'
-import { helper } from '@heyform-inc/utils'
+import { helper } from '@voxly/utils'
 
 interface SelectionRange {
   allowMultiple: boolean

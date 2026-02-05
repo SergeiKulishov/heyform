@@ -1,6 +1,6 @@
-import { preventDefault } from '@heyform-inc/form-renderer'
 import { LayoutProps } from '@heyooo-inc/react-router'
 import { IconChevronLeft, IconCopy, IconDots, IconTag, IconTrash } from '@tabler/icons-react'
+import { preventDefault } from '@voxly/form-renderer'
 import { useRequest } from 'ahooks'
 import { FC, useEffect, useMemo } from 'react'
 import { Trans, useTranslation } from 'react-i18next'

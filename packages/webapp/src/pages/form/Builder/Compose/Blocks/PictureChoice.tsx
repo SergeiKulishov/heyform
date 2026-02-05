@@ -1,5 +1,3 @@
-import { Button, Input, getChoiceKeyName } from '@heyform-inc/form-renderer'
-import { Choice, ChoiceBadgeEnum } from '@heyform-inc/shared-types-enums'
 import {
   IconPencil,
   IconPhoto,
@@ -8,12 +6,14 @@ import {
   IconTrash,
   IconX
 } from '@tabler/icons-react'
+import { Button, Input, getChoiceKeyName } from '@voxly/form-renderer'
+import { Choice, ChoiceBadgeEnum } from '@voxly/shared-types-enums'
 import { FC, useCallback, useMemo, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ReactSortable } from 'react-sortablejs'
 
 import { cn } from '@/utils'
-import { clone, excludeObject, helper, nanoid } from '@heyform-inc/utils'
+import { clone, excludeObject, helper, nanoid } from '@voxly/utils'
 
 import { ImagePicker, ImagePickerRef } from '@/components'
 

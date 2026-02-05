@@ -1,5 +1,5 @@
-import { Answer } from '@heyform-inc/shared-types-enums'
 import { BadRequestException } from '@nestjs/common'
+import { Answer } from '@voxly/shared-types-enums'
 
 import { Auth, FormGuard } from '@decorator'
 import { UpdateSubmissionAnswerInput } from '@graphql'

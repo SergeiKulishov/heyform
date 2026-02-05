@@ -1,4 +1,4 @@
-import type { FormField } from '@heyform-inc/shared-types-enums'
+import type { FormField } from '@voxly/shared-types-enums'
 import type { FC } from 'react'
 
 import { replaceHTML } from '../utils'

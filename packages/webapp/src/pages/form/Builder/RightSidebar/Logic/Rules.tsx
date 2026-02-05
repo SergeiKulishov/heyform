@@ -1,11 +1,11 @@
-import { Logic } from '@heyform-inc/shared-types-enums'
 import { IconArrowUpRight, IconChevronRight, IconDots } from '@tabler/icons-react'
+import { Logic } from '@voxly/shared-types-enums'
 import type { FC } from 'react'
 import { useMemo } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
 
-import { htmlUtils } from '@heyform-inc/answer-utils'
-import { helper } from '@heyform-inc/utils'
+import { htmlUtils } from '@voxly/answer-utils'
+import { helper } from '@voxly/utils'
 
 import { Button, Dropdown } from '@/components'
 import { useAppStore } from '@/store'

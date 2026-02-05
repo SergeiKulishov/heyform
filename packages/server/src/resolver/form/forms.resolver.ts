@@ -1,9 +1,9 @@
 import { Auth, ProjectGuard } from '@decorator'
 import { FormType, FormsInput } from '@graphql'
-import { date, helper } from '@heyform-inc/utils'
 import { FormModel } from '@model'
 import { Args, Query, Resolver } from '@nestjs/graphql'
 import { FormService, SubmissionService } from '@service'
+import { date, helper } from '@voxly/utils'
 
 @Resolver()
 @Auth()

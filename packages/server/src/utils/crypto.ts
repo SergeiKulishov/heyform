@@ -1,7 +1,7 @@
 import * as bcrypt from 'bcrypt'
 import * as crypto from 'crypto'
 
-import { helper } from '@heyform-inc/utils'
+import { helper } from '@voxly/utils'
 
 const AES_KEY_SIZE = 32
 

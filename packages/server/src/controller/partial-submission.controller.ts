@@ -1,11 +1,11 @@
-import { SubmissionStatusEnum } from '@heyform-inc/shared-types-enums'
 import { Body, Controller, Post, Req } from '@nestjs/common'
+import { SubmissionStatusEnum } from '@voxly/shared-types-enums'
 import { Request } from 'express'
 
-import { applyLogicToFields, fieldValuesToAnswers, flattenFields } from '@heyform-inc/answer-utils'
-import { timestamp } from '@heyform-inc/utils'
 import { FormService, SubmissionService } from '@service'
 import { parseUserAgent } from '@utils'
+import { applyLogicToFields, fieldValuesToAnswers, flattenFields } from '@voxly/answer-utils'
+import { timestamp } from '@voxly/utils'
 
 interface PartialSubmissionDto {
   formId: string

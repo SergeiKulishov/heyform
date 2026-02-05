@@ -1,11 +1,11 @@
-import { Column, FieldKindEnum } from '@heyform-inc/shared-types-enums'
+import { Column, FieldKindEnum } from '@voxly/shared-types-enums'
 import { useBoolean } from 'ahooks'
 import { FC, useCallback, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { SubmissionService } from '@/services'
 import { timeFromNow, useParam } from '@/utils'
-import { helper } from '@heyform-inc/utils'
+import { helper } from '@voxly/utils'
 
 import { Pagination, useToast } from '@/components'
 

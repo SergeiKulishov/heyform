@@ -1,4 +1,4 @@
-import { HiddenFieldAnswer } from '@heyform-inc/shared-types-enums'
+import { HiddenFieldAnswer } from '@voxly/shared-types-enums'
 
 import { axios } from '../utils/axios'
 

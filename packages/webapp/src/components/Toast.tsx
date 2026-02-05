@@ -4,7 +4,7 @@ import { ReactNode, useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import { create } from 'zustand'
 
-import { nanoid } from '@heyform-inc/utils'
+import { nanoid } from '@voxly/utils'
 import { immer } from 'zustand/middleware/immer'
 
 import { Button } from './Button'

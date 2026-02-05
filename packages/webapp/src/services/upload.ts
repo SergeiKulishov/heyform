@@ -1,4 +1,4 @@
-import { FileUploadValue } from '@heyform-inc/shared-types-enums'
+import { FileUploadValue } from '@voxly/shared-types-enums'
 import axios from 'axios'
 
 export class UploadService {

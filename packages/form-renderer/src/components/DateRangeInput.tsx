@@ -1,4 +1,4 @@
-import type { DateRangeValue } from '@heyform-inc/shared-types-enums'
+import type { DateRangeValue } from '@voxly/shared-types-enums'
 import clsx from 'clsx'
 import type { FC } from 'react'
 import { useState } from 'react'

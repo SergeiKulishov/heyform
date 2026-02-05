@@ -1,18 +1,18 @@
+import * as Tooltip from '@radix-ui/react-tooltip'
 import {
   ActionEnum,
   FieldKindEnum,
   FormField,
   OTHER_FIELD_KINDS,
   QUESTION_FIELD_KINDS
-} from '@heyform-inc/shared-types-enums'
-import * as Tooltip from '@radix-ui/react-tooltip'
+} from '@voxly/shared-types-enums'
 import clsx from 'clsx'
 import type { FC } from 'react'
 import { useEffect, useMemo, useReducer, useState } from 'react'
 
 import { flattenFieldsWithGroups, parseFields, progressPercentage } from './utils'
-import { applyLogicToFields } from '@heyform-inc/answer-utils'
-import { helper, nanoid } from '@heyform-inc/utils'
+import { applyLogicToFields } from '@voxly/answer-utils'
+import { helper, nanoid } from '@voxly/utils'
 
 import { ClosedMessage } from './blocks/ClosedMessage'
 import { SuspendedMessage } from './blocks/SuspendedMessage'

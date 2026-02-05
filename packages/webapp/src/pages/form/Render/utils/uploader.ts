@@ -1,7 +1,7 @@
-import { FieldKindEnum, FileUploadValue, FormModel } from '@heyform-inc/shared-types-enums'
+import { FieldKindEnum, FileUploadValue, FormModel } from '@voxly/shared-types-enums'
 
 import { UploadService } from '@/services'
-import { helper } from '@heyform-inc/utils'
+import { helper } from '@voxly/utils'
 
 interface UploaderField {
   id: string

@@ -15,7 +15,7 @@ import {
 import { HexAlphaColorPicker } from 'react-colorful'
 
 import { cn } from '@/utils'
-import { helper } from '@heyform-inc/utils'
+import { helper } from '@voxly/utils'
 
 interface HexColorInputProps {
   value?: string

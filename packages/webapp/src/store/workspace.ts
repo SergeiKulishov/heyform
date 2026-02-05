@@ -2,7 +2,7 @@ import { create } from 'zustand'
 import computed from 'zustand-computed'
 
 import ViteConfig from '../../vite.config.mjs'
-import { helper } from '@heyform-inc/utils'
+import { helper } from '@voxly/utils'
 import { createJSONStorage, persist } from 'zustand/middleware'
 import { immer } from 'zustand/middleware/immer'
 

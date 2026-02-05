@@ -4,7 +4,7 @@ import { Observable } from 'rxjs'
 import { map } from 'rxjs/operators'
 
 import { DATA_MASK_OPTIONS } from '@decorator'
-import { helper } from '@heyform-inc/utils'
+import { helper } from '@voxly/utils'
 
 const REFLECTOR = 'Reflector'
 

@@ -1,4 +1,4 @@
-import { helper } from '@heyform-inc/utils'
+import { helper } from '@voxly/utils'
 
 export const DEVICEID_COOKIE_NAME = 'HEYFORM_DEVICE_ID'
 export const LOGGED_COOKIE_NAME = 'HEYFORM_LOGGED_IN'

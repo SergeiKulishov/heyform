@@ -1,8 +1,8 @@
-import type { Column, InputTableValue } from '@heyform-inc/shared-types-enums'
+import type { Column, InputTableValue } from '@voxly/shared-types-enums'
 import type { FC } from 'react'
 import { startTransition, useMemo, useState } from 'react'
 
-import { helper } from '@heyform-inc/utils'
+import { helper } from '@voxly/utils'
 
 import { Input } from '../components'
 import { IComponentProps } from '../typings'

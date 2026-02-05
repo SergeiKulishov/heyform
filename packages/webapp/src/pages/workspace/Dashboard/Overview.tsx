@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next'
 
 import { WorkspaceService } from '@/services'
 import { useParam } from '@/utils'
-import { formatBytes } from '@heyform-inc/utils'
+import { formatBytes } from '@voxly/utils'
 
 import { Skeleton } from '@/components'
 

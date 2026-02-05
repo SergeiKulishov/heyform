@@ -4,17 +4,15 @@ import {
   Property,
   QUESTION_FIELD_KINDS,
   Validation
-} from '@heyform-inc/shared-types-enums'
+} from '@voxly/shared-types-enums'
 
 import { htmlUtils } from './html-utils'
-import { helper } from '@heyform-inc/utils'
+import { helper } from '@voxly/utils'
 
 import { getDateFormat } from './helper'
 
 export interface FieldsToValidateRules
-  extends FormField,
-    Validation,
-    Partial<Omit<Property, 'choices' | 'tableColumns'>> {
+  extends FormField, Validation, Partial<Omit<Property, 'choices' | 'tableColumns'>> {
   title: string
   description: string
   choices?: string[]

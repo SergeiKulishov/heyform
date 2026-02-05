@@ -1,7 +1,7 @@
-import { Answer, FullNameValue, ServerSidePaymentValue } from '@heyform-inc/shared-types-enums'
+import { Answer, FullNameValue, ServerSidePaymentValue } from '@voxly/shared-types-enums'
 import Big from 'big.js'
 
-import { helper } from '@heyform-inc/utils'
+import { helper } from '@voxly/utils'
 
 import { CURRENCY_SYMBOLS } from './consts'
 

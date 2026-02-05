@@ -1,12 +1,12 @@
-import { getTheme } from '@heyform-inc/form-renderer'
-import { FormTheme } from '@heyform-inc/shared-types-enums'
+import { getTheme } from '@voxly/form-renderer'
+import { FormTheme } from '@voxly/shared-types-enums'
 import { useBoolean } from 'ahooks'
 import { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { FormService } from '@/services'
 import { useParam } from '@/utils'
-import { helper } from '@heyform-inc/utils'
+import { helper } from '@voxly/utils'
 
 import { Image, Loader, useToast } from '@/components'
 import { FORM_THEMES } from '@/consts'

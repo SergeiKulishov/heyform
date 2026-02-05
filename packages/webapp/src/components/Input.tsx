@@ -17,12 +17,14 @@ import {
 } from 'react'
 
 import { cn } from '@/utils'
-import { helper } from '@heyform-inc/utils'
+import { helper } from '@voxly/utils'
 
 import { Select } from './Select'
 
-export interface TextAreaProps
-  extends Omit<TextareaHTMLAttributes<HTMLTextAreaElement>, 'onChange'> {
+export interface TextAreaProps extends Omit<
+  TextareaHTMLAttributes<HTMLTextAreaElement>,
+  'onChange'
+> {
   autoFocus?: boolean
   hasError?: boolean
   maxLength?: number
@@ -63,8 +65,10 @@ export interface TypeNumberValue {
   type: string
 }
 
-interface TypeNumberProps
-  extends Omit<InputHTMLAttributes<HTMLInputElement>, 'value' | 'onChange'> {
+interface TypeNumberProps extends Omit<
+  InputHTMLAttributes<HTMLInputElement>,
+  'value' | 'onChange'
+> {
   value?: TypeNumberValue
   options: TypeNumberOption[]
   onChange?: (value: TypeNumberValue) => void

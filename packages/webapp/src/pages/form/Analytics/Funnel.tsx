@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next'
 
 import { FormService } from '@/services'
 import { useParam } from '@/utils'
-import { toFixed } from '@heyform-inc/utils'
+import { toFixed } from '@voxly/utils'
 
 import { Skeleton } from '@/components'
 

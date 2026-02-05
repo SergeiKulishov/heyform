@@ -1,4 +1,4 @@
-import { HiddenField, Variable } from '@heyform-inc/shared-types-enums'
+import { HiddenField, Variable } from '@voxly/shared-types-enums'
 import debounce from 'lodash/debounce'
 import type { CSSProperties, ClipboardEvent, FC, KeyboardEvent, RefObject } from 'react'
 import { useCallback, useEffect, useMemo, useState } from 'react'
@@ -12,7 +12,7 @@ import {
   replaceTriggerText
 } from './utils'
 import { cn } from '@/utils'
-import { helper } from '@heyform-inc/utils'
+import { helper } from '@voxly/utils'
 
 import { FormFieldType } from '@/types'
 

@@ -1,5 +1,5 @@
-import { FormRenderer, insertWebFont } from '@heyform-inc/form-renderer'
 import { IconChevronLeft, IconTrash, IconUpload } from '@tabler/icons-react'
+import { FormRenderer, insertWebFont } from '@voxly/form-renderer'
 import { useRequest } from 'ahooks'
 import { FC, useEffect, useMemo, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'

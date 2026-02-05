@@ -1,4 +1,4 @@
-import { UNSELECTABLE_FIELD_KINDS } from '@heyform-inc/shared-types-enums'
+import { UNSELECTABLE_FIELD_KINDS } from '@voxly/shared-types-enums'
 import { useEffect } from 'react'
 import ReactFlow, {
   ConnectionLineType,

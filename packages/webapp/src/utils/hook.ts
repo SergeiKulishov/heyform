@@ -2,7 +2,7 @@ import { useBoolean } from 'ahooks'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
 
-import { excludeObject, qs, toURLQuery } from '@heyform-inc/utils'
+import { excludeObject, qs, toURLQuery } from '@voxly/utils'
 
 export function useQuery(): AnyMap {
   const location = useLocation()

@@ -1,5 +1,5 @@
-import { TIME_FORMAT } from '@heyform-inc/form-renderer'
 import { IconChevronRight } from '@tabler/icons-react'
+import { TIME_FORMAT } from '@voxly/form-renderer'
 import type { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 

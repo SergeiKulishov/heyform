@@ -2,10 +2,15 @@ FROM node:18.20.0-alpine3.19 AS base
 
 ARG APP_PATH=/app
 WORKDIR $APP_PATH
+#ARG NPM_TOKEN
 
 RUN npm install -g pnpm
 RUN apk add --no-cache python3 make g++
 
+# npm auth (ВАЖНО: до pnpm install)
+#RUN echo "//nexus.stackbro.tech/repository/npm-hosted/:_authToken=${NPM_TOKEN}" > /root/.npmrc
+
+COPY .npmrc /root/.npmrc
 COPY package.json $APP_PATH/package.json
 COPY pnpm-lock.yaml $APP_PATH/pnpm-lock.yaml
 COPY pnpm-workspace.yaml $APP_PATH/pnpm-workspace.yaml
@@ -22,9 +27,12 @@ FROM node:18.20.0-alpine3.19 AS runner
 
 ARG APP_PATH=/app
 WORKDIR $APP_PATH
+#ARG NPM_TOKEN
 
 RUN npm install -g pnpm
 RUN apk add --no-cache python3 make g++
+
+COPY .npmrc /root/.npmrc
 
 COPY --from=base $APP_PATH/packages/server/dist ./dist
 COPY --from=base $APP_PATH/packages/server/resources ./resources

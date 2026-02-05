@@ -1,3 +1,4 @@
+import { IconPlus, IconTrash } from '@tabler/icons-react'
 import {
   ActionEnum,
   Choice,
@@ -7,13 +8,12 @@ import {
   LogicCondition,
   LogicPayload,
   Variable
-} from '@heyform-inc/shared-types-enums'
-import { IconPlus, IconTrash } from '@tabler/icons-react'
+} from '@voxly/shared-types-enums'
 import { type FC, type ReactNode, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { validatePayload } from '@heyform-inc/answer-utils'
-import { nanoid } from '@heyform-inc/utils'
+import { validatePayload } from '@voxly/answer-utils'
+import { nanoid } from '@voxly/utils'
 
 import { Button, Form, Tooltip } from '@/components'
 import { FormFieldType } from '@/types'

@@ -1,4 +1,4 @@
-import { Answer, FieldKindEnum } from '@heyform-inc/shared-types-enums'
+import { Answer, FieldKindEnum } from '@voxly/shared-types-enums'
 
 import parser from './answer-parser'
 

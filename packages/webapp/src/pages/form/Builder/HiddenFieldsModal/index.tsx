@@ -1,8 +1,8 @@
-import { HiddenField } from '@heyform-inc/shared-types-enums'
+import { HiddenField } from '@voxly/shared-types-enums'
 import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { helper, nanoid } from '@heyform-inc/utils'
+import { helper, nanoid } from '@voxly/utils'
 
 import { Form, Input, Modal } from '@/components'
 import { useAppStore, useModal } from '@/store'

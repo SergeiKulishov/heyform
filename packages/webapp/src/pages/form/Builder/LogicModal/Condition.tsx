@@ -1,8 +1,8 @@
-import { FieldKindEnum, LogicCondition } from '@heyform-inc/shared-types-enums'
+import { FieldKindEnum, LogicCondition } from '@voxly/shared-types-enums'
 import { type FC, useCallback, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { helper } from '@heyform-inc/utils'
+import { helper } from '@voxly/utils'
 
 import { Input, Select } from '@/components'
 import {

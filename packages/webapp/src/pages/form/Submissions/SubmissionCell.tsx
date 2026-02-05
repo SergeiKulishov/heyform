@@ -1,12 +1,12 @@
-import { Answer, Choice, Column, FieldKindEnum } from '@heyform-inc/shared-types-enums'
 import { IconArrowUpRight, IconCheck, IconClock, IconFile } from '@tabler/icons-react'
+import { Answer, Choice, Column, FieldKindEnum } from '@voxly/shared-types-enums'
 import Big from 'big.js'
 import { FC, Fragment } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { cn, formatDay, unixDate } from '@/utils'
-import { CURRENCY_SYMBOLS, htmlUtils } from '@heyform-inc/answer-utils'
-import { helper } from '@heyform-inc/utils'
+import { CURRENCY_SYMBOLS, htmlUtils } from '@voxly/answer-utils'
+import { helper } from '@voxly/utils'
 
 import { Badge, Checkbox, Image } from '@/components'
 import { ALL_FIELD_CONFIGS, CUSTOM_FIELDS_CONFIGS } from '@/consts'

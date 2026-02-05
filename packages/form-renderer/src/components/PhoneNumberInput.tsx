@@ -7,7 +7,7 @@ import {
 import type { FC } from 'react'
 import { startTransition, useCallback, useEffect, useMemo, useState } from 'react'
 
-import { helper } from '@heyform-inc/utils'
+import { helper } from '@voxly/utils'
 
 import { COUNTRIES } from '../consts'
 import { CountrySelect } from './CountrySelect'

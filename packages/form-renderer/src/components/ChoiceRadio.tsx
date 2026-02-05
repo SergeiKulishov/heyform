@@ -3,7 +3,7 @@ import clsx from 'clsx'
 import { FC, ReactNode, useCallback, useMemo } from 'react'
 
 import { isURL, stopEvent, useKey, useTranslation } from '../utils'
-import { helper } from '@heyform-inc/utils'
+import { helper } from '@voxly/utils'
 
 import { IComponentProps } from '../typings'
 import { Input } from './Input'

@@ -1,9 +1,9 @@
 import { Auth, FormGuard, User } from '@decorator'
 import { FormDetailInput } from '@graphql'
-import { nanoid } from '@heyform-inc/utils'
 import { UserModel } from '@model'
 import { Args, Query, Resolver } from '@nestjs/graphql'
 import { PaymentService, RedisService } from '@service'
+import { nanoid } from '@voxly/utils'
 
 @Resolver()
 @Auth()

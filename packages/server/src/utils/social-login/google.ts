@@ -3,7 +3,7 @@ import { Credentials } from 'google-auth-library'
 import { google } from 'googleapis'
 
 import { formatLocale } from './utils'
-import { helper } from '@heyform-inc/utils'
+import { helper } from '@voxly/utils'
 
 import { UserInfo } from './apple'
 

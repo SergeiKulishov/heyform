@@ -11,7 +11,7 @@ import {
   S3_SECRET_ACCESS_KEY,
   UPLOAD_DIR
 } from '@environments'
-import { helper, nanoid } from '@heyform-inc/utils'
+import { helper, nanoid } from '@voxly/utils'
 
 export function getMulterStorage() {
   if (

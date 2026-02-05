@@ -3,7 +3,7 @@ import { FC, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { useParam } from '@/utils'
-import { helper } from '@heyform-inc/utils'
+import { helper } from '@voxly/utils'
 
 import { Button, ColorPicker, Input, Modal, Select, Switch } from '@/components'
 import { FORM_EMBED_OPTIONS } from '@/consts'

@@ -1,5 +1,5 @@
-import { insertWebFont } from '@heyform-inc/form-renderer'
-import { FieldKindEnum } from '@heyform-inc/shared-types-enums'
+import { insertWebFont } from '@voxly/form-renderer'
+import { FieldKindEnum } from '@voxly/shared-types-enums'
 import { FC, useCallback, useEffect, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 

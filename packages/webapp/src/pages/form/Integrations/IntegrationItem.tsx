@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next'
 
 import { IntegrationService } from '@/services'
 import { useParam } from '@/utils'
-import { helper } from '@heyform-inc/utils'
+import { helper } from '@voxly/utils'
 
 import { Button, Image, Switch, Tooltip } from '@/components'
 import { APP_STATUS_ENUM, INTEGRATION_STATUS_ENUM } from '@/consts'

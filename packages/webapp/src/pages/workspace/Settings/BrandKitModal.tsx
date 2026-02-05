@@ -1,10 +1,5 @@
-import {
-  DEFAULT_THEME,
-  GOOGLE_FONTS,
-  SYSTEM_FONTS,
-  insertWebFont
-} from '@heyform-inc/form-renderer'
 import { IconChevronRight } from '@tabler/icons-react'
+import { DEFAULT_THEME, GOOGLE_FONTS, SYSTEM_FONTS, insertWebFont } from '@voxly/form-renderer'
 import { useRequest } from 'ahooks'
 import { useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -12,7 +7,7 @@ import { useTranslation } from 'react-i18next'
 import { insertThemeStyle } from '@/pages/form/Builder/utils'
 import { WorkspaceService } from '@/services'
 import { useParam } from '@/utils'
-import { helper, pickObject } from '@heyform-inc/utils'
+import { helper, pickObject } from '@voxly/utils'
 
 import { Button, ColorPicker, Form, ImageFormPicker, Modal, Select } from '@/components'
 import { useAppStore, useModal, useWorkspaceStore } from '@/store'
