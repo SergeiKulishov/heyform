@@ -920,12 +920,15 @@ export const USER_CDN_TOKEN_GQL = gql`
 `
 
 export const FUNNEL_ANALYTICS_GQL = gql`
-  query funnelAnalytics($input: FormDetailInput!) {
+  query funnelAnalytics($input: FormAnalyticInput!) {
     funnelAnalytics(input: $input) {
       totalViews
+      totalStarted
       totalCompleted
       totalPartial
+      startRate
       completionRate
+      averageCompletionTime
       dropOffByField {
         fieldId
         fieldTitle

@@ -838,10 +838,14 @@
       },
       "funnel": {
         "title": "Lejek ukończenia",
+        "opened": "Otwarte",
+        "started": "Rozpoczęte",
         "completed": "Ukończone",
         "partial": "Częściowe",
         "views": "Całkowita liczba wyświetleń",
         "completionRate": "Wskaźnik ukończenia",
+        "averageTime": "Średni czas",
+        "seconds": "sek.",
         "dropOffByField": "Porzucenia według pytania",
         "noDropOff": "Brak częściowych zgłoszeń"
       }

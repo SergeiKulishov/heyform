@@ -838,10 +838,14 @@
       },
       "funnel": {
         "title": "Abschluss-Trichter",
+        "opened": "Geöffnet",
+        "started": "Gestartet",
         "completed": "Abgeschlossen",
         "partial": "Teilweise",
         "views": "Gesamtaufrufe",
         "completionRate": "Abschlussrate",
+        "averageTime": "Durchschnittliche Zeit",
+        "seconds": "Sek.",
         "dropOffByField": "Abbruch nach Frage",
         "noDropOff": "Noch keine teilweisen Einsendungen"
       }

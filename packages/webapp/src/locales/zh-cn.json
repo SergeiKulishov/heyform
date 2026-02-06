@@ -838,10 +838,14 @@
       },
       "funnel": {
         "title": "完成漏斗",
+        "opened": "已打开",
+        "started": "已开始",
         "completed": "已完成",
         "partial": "未完成",
         "views": "总浏览量",
         "completionRate": "完成率",
+        "averageTime": "平均时间",
+        "seconds": "秒",
         "dropOffByField": "按问题的放弃率",
         "noDropOff": "暂无未完成的提交"
       }

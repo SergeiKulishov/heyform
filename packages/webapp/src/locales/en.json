@@ -888,10 +888,14 @@
       },
       "funnel": {
         "title": "Completion Funnel",
+        "opened": "Opened",
+        "started": "Started",
         "completed": "Completed",
         "partial": "Partial",
         "views": "Total Views",
         "completionRate": "Completion Rate",
+        "averageTime": "Average Time",
+        "seconds": "sec.",
         "dropOffByField": "Drop-off by Question",
         "noDropOff": "No partial submissions yet"
       }

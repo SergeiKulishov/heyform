@@ -2,7 +2,7 @@ import { Body, Controller, Post, Req } from '@nestjs/common'
 import { SubmissionStatusEnum } from '@voxly/shared-types-enums'
 import { Request } from 'express'
 
-import { FormService, SubmissionService } from '@service'
+import { FormService, RedisService, SubmissionService } from '@service'
 import { parseUserAgent } from '@utils'
 import { applyLogicToFields, fieldValuesToAnswers, flattenFields } from '@voxly/answer-utils'
 import { timestamp } from '@voxly/utils'
@@ -20,7 +20,8 @@ interface PartialSubmissionDto {
 export class PartialSubmissionController {
   constructor(
     private readonly submissionService: SubmissionService,
-    private readonly formService: FormService
+    private readonly formService: FormService,
+    private readonly redisService: RedisService
   ) {}
 
   /**
@@ -119,6 +120,17 @@ export class PartialSubmissionController {
         isCompleted: false
       })
     }
+
+    // Invalidate analytics caches to show updated data immediately
+    const ranges = ['7d', '1m', '3m', '6m', '1y']
+    await Promise.all([
+      // Invalidate funnel analytics cache for all time ranges
+      ...ranges.map(range =>
+        this.redisService.del(`form:${body.formId}:funnel-analytics:${range}`)
+      ),
+      // Invalidate form analytic cache for all time ranges
+      ...ranges.map(range => this.redisService.del(`form:${body.formId}:analytic:${range}`))
+    ])
 
     return { success: true }
   }

@@ -838,10 +838,14 @@
       },
       "funnel": {
         "title": "完了ファネル",
+        "opened": "開いた",
+        "started": "開始",
         "completed": "完了",
         "partial": "部分的",
         "views": "総閲覧数",
         "completionRate": "完了率",
+        "averageTime": "平均時間",
+        "seconds": "秒",
         "dropOffByField": "質問別の離脱",
         "noDropOff": "部分的な提出はまだありません"
       }

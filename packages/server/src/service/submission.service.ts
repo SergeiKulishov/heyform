@@ -478,6 +478,7 @@ export class SubmissionService {
         | 'variables'
         | 'lastFieldId'
         | 'lastFieldIndex'
+        | 'startAt'
         | 'endAt'
         | 'status'
         | 'isCompleted'
@@ -527,5 +528,106 @@ export class SubmissionService {
       })
     ])
     return { completed, partial }
+  }
+
+  /**
+   * Get average completion time in seconds for completed submissions
+   */
+  async getAverageCompletionTime(formId: string): Promise<number> {
+    const result = await this.submissionModel.aggregate([
+      {
+        $match: {
+          formId,
+          isCompleted: true,
+          status: { $in: [SubmissionStatusEnum.PUBLIC, SubmissionStatusEnum.PRIVATE] }
+        }
+      },
+      {
+        $group: {
+          _id: null,
+          avgTime: { $avg: { $subtract: ['$endAt', '$startAt'] } }
+        }
+      }
+    ])
+    // Result is in seconds (timestamps are stored in seconds)
+    return result[0]?.avgTime ? Math.round(result[0].avgTime) : 0
+  }
+
+  /**
+   * Count completed vs partial submissions within a date range
+   */
+  async countByCompletionInRange(
+    formId: string,
+    startAt: number,
+    endAt: number
+  ): Promise<{ completed: number; partial: number }> {
+    const [completed, partial] = await Promise.all([
+      this.submissionModel.countDocuments({
+        formId,
+        isCompleted: true,
+        status: { $in: [SubmissionStatusEnum.PUBLIC, SubmissionStatusEnum.PRIVATE] },
+        endAt: { $gte: startAt, $lte: endAt }
+      }),
+      this.submissionModel.countDocuments({
+        formId,
+        status: SubmissionStatusEnum.PARTIAL,
+        endAt: { $gte: startAt, $lte: endAt }
+      })
+    ])
+    return { completed, partial }
+  }
+
+  /**
+   * Get drop-off analytics within a date range
+   */
+  async getDropOffAnalyticsInRange(
+    formId: string,
+    startAt: number,
+    endAt: number
+  ): Promise<{ _id: string; count: number }[]> {
+    return this.submissionModel.aggregate([
+      {
+        $match: {
+          formId,
+          status: SubmissionStatusEnum.PARTIAL,
+          lastFieldId: { $exists: true, $ne: null },
+          endAt: { $gte: startAt, $lte: endAt }
+        }
+      },
+      {
+        $group: {
+          _id: '$lastFieldId',
+          count: { $sum: 1 }
+        }
+      },
+      { $sort: { count: -1 } }
+    ])
+  }
+
+  /**
+   * Get average completion time in seconds within a date range
+   */
+  async getAverageCompletionTimeInRange(
+    formId: string,
+    startAt: number,
+    endAt: number
+  ): Promise<number> {
+    const result = await this.submissionModel.aggregate([
+      {
+        $match: {
+          formId,
+          isCompleted: true,
+          status: { $in: [SubmissionStatusEnum.PUBLIC, SubmissionStatusEnum.PRIVATE] },
+          endAt: { $gte: startAt, $lte: endAt }
+        }
+      },
+      {
+        $group: {
+          _id: null,
+          avgTime: { $avg: { $subtract: ['$endAt', '$startAt'] } }
+        }
+      }
+    ])
+    return result[0]?.avgTime ? Math.round(result[0].avgTime) : 0
   }
 }

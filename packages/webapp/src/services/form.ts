@@ -245,12 +245,13 @@ export class FormService {
     })
   }
 
-  static async funnelAnalytics(formId: string) {
+  static async funnelAnalytics(formId: string, range: string) {
     return apollo.query({
       query: FUNNEL_ANALYTICS_GQL,
       variables: {
         input: {
-          formId
+          formId,
+          range
         }
       },
       fetchPolicy: 'network-only'

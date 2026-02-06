@@ -1,3 +1,8 @@
+/**
+ * NOTE: This resolver is currently not used on the frontend.
+ * The "Overview" card was replaced by "Funnel Analytics" which now includes period filtering.
+ * Keeping this code for potential future use or API compatibility.
+ */
 import { Promise } from 'mongoose'
 
 import { Auth, FormGuard } from '@decorator'

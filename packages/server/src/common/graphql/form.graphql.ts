@@ -1327,13 +1327,22 @@ export class FunnelAnalyticsType {
   totalViews: number
 
   @Field()
+  totalStarted: number
+
+  @Field()
   totalCompleted: number
 
   @Field()
   totalPartial: number
 
   @Field()
+  startRate: number
+
+  @Field()
   completionRate: number
+
+  @Field()
+  averageCompletionTime: number
 
   @Field(type => [DropOffFieldType])
   dropOffByField: DropOffFieldType[]

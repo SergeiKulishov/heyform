@@ -151,4 +151,29 @@ export class FormAnalyticService {
 
     return result[0]?.totalVisits || 0
   }
+
+  /**
+   * Get total visits for a form within a date range
+   */
+  public async getTotalVisitsInRange(formId: string, startAt: Date, endAt: Date): Promise<number> {
+    const result = await this.formAnalyticModel.aggregate([
+      {
+        $match: {
+          formId,
+          createdAt: {
+            $gte: startAt,
+            $lte: endAt
+          }
+        }
+      },
+      {
+        $group: {
+          _id: null,
+          totalVisits: { $sum: '$totalVisits' }
+        }
+      }
+    ])
+
+    return result[0]?.totalVisits || 0
+  }
 }

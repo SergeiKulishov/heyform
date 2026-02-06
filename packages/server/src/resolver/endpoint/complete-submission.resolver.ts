@@ -17,6 +17,7 @@ import {
   FormService,
   IntegrationService,
   PaymentService,
+  RedisService,
   SubmissionIpLimitService,
   SubmissionService
 } from '@service'
@@ -34,7 +35,8 @@ export class CompleteSubmissionResolver {
     private readonly submissionIpLimitService: SubmissionIpLimitService,
     private readonly formReportService: FormReportService,
     private readonly integrationService: IntegrationService,
-    private readonly paymentService: PaymentService
+    private readonly paymentService: PaymentService,
+    private readonly redisService: RedisService
   ) {}
 
   @Mutation(returns => CompleteSubmissionType)
@@ -161,12 +163,14 @@ export class CompleteSubmissionResolver {
 
     if (existingSubmission && !existingSubmission.isCompleted) {
       // Update existing partial submission
+      // Use startAt from openToken for accurate completion time calculation
       await this.submissionService.updatePartial(existingSubmission.id, {
         answers,
         hiddenFields: input.hiddenFields,
         variables,
         lastFieldId: input.lastFieldId,
         lastFieldIndex: input.lastFieldIndex,
+        startAt,
         endAt,
         status,
         isCompleted: !isPartial,
@@ -227,6 +231,17 @@ export class CompleteSubmissionResolver {
       // Integration Queue
       this.integrationService.addQueue(form, submissionId)
     }
+
+    // Invalidate analytics caches to show updated data immediately
+    const ranges = ['7d', '1m', '3m', '6m', '1y']
+    await Promise.all([
+      // Invalidate funnel analytics cache for all time ranges
+      ...ranges.map(range =>
+        this.redisService.del(`form:${input.formId}:funnel-analytics:${range}`)
+      ),
+      // Invalidate form analytic cache for all time ranges
+      ...ranges.map(range => this.redisService.del(`form:${input.formId}:analytic:${range}`))
+    ])
 
     return result
   }

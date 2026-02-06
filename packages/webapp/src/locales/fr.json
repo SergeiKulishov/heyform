@@ -842,10 +842,14 @@
       },
       "funnel": {
         "title": "Entonnoir de complétion",
+        "opened": "Ouvertes",
+        "started": "Commencées",
         "completed": "Complétées",
         "partial": "Partielles",
         "views": "Vues totales",
         "completionRate": "Taux de complétion",
+        "averageTime": "Temps moyen",
+        "seconds": "sec.",
         "dropOffByField": "Abandon par question",
         "noDropOff": "Pas encore de soumissions partielles"
       }

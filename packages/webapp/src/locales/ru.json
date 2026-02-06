@@ -888,10 +888,14 @@
       },
       "funnel": {
         "title": "Воронка заполнения",
-        "completed": "Завершённые",
+        "opened": "Открыли",
+        "started": "Начали",
+        "completed": "Завершили",
         "partial": "Частичные",
         "views": "Всего просмотров",
         "completionRate": "Процент завершения",
+        "averageTime": "Среднее время",
+        "seconds": "сек.",
         "dropOffByField": "Отказы по вопросам",
         "noDropOff": "Пока нет частичных ответов"
       }
