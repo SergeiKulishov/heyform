@@ -40,4 +40,5 @@ packages/server/static
 .npmrc
 /.npmrc
 packages/webapp/.npmrc
+packages/form-renderer/.npmrc
 /CLAUDE.md
