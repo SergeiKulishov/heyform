@@ -530,7 +530,16 @@
         "dracula": "Dracula",
         "nord": "Nord",
         "gruvboxDark": "Gruvbox",
-        "tokyoNight": "Tokyo Night"
+        "tokyoNight": "Tokyo Night",
+        "renaissance": "Renaissance",
+        "renaissanceDark": "Renaissance Dark",
+        "material": "Material",
+        "materialOcean": "Material Ocean",
+        "github": "GitHub",
+        "githubDark": "GitHub Dark",
+        "monokaiPro": "Monokai Pro",
+        "solarized": "Solarized",
+        "solarizedDark": "Solarized Dark"
       }
     },
     "sidebar": {

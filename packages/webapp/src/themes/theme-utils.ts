@@ -4,8 +4,17 @@ import {
   defaultDark,
   defaultLight,
   dracula,
+  githubDark,
+  githubLight,
   gruvboxDark,
+  materialLight,
+  materialOcean,
+  monokaiPro,
   nord,
+  renaissanceDark,
+  renaissanceLight,
+  solarizedDark,
+  solarizedLight,
   tokyoNight
 } from './presets'
 import type { ThemeColors, ThemeDefinition, ThemeId } from './types'
@@ -18,7 +27,16 @@ export const themes: Record<Exclude<ThemeId, 'system'>, ThemeDefinition> = {
   dracula: dracula,
   nord: nord,
   'gruvbox-dark': gruvboxDark,
-  'tokyo-night': tokyoNight
+  'tokyo-night': tokyoNight,
+  'renaissance-light': renaissanceLight,
+  'renaissance-dark': renaissanceDark,
+  'material-light': materialLight,
+  'material-ocean': materialOcean,
+  'github-light': githubLight,
+  'github-dark': githubDark,
+  'monokai-pro': monokaiPro,
+  'solarized-light': solarizedLight,
+  'solarized-dark': solarizedDark
 }
 
 const CSS_VAR_MAP: Record<keyof ThemeColors, string> = {

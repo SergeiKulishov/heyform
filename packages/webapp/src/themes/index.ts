@@ -6,7 +6,16 @@ export {
   defaultDark,
   defaultLight,
   dracula,
+  githubDark,
+  githubLight,
   gruvboxDark,
+  materialLight,
+  materialOcean,
+  monokaiPro,
   nord,
+  renaissanceDark,
+  renaissanceLight,
+  solarizedDark,
+  solarizedLight,
   tokyoNight
 } from './presets'

@@ -107,6 +107,96 @@ export const THEME_OPTIONS: ThemeOption[] = [
       primary: '#c0caf5',
       accent: '#7aa2f7'
     }
+  },
+  {
+    id: 'renaissance-light',
+    label: 'workspace.appearance.themes.renaissance',
+    preview: {
+      background: '#f9f9f9',
+      foreground: '#ffffff',
+      primary: '#ff007c',
+      accent: '#ffe5f0'
+    }
+  },
+  {
+    id: 'renaissance-dark',
+    label: 'workspace.appearance.themes.renaissanceDark',
+    preview: {
+      background: '#1c1c1c',
+      foreground: '#2d2d2d',
+      primary: '#ff007a',
+      accent: '#ff007a'
+    }
+  },
+  {
+    id: 'material-light',
+    label: 'workspace.appearance.themes.material',
+    preview: {
+      background: '#fafafa',
+      foreground: '#ffffff',
+      primary: '#2196f3',
+      accent: '#bbdefb'
+    }
+  },
+  {
+    id: 'material-ocean',
+    label: 'workspace.appearance.themes.materialOcean',
+    preview: {
+      background: '#010103',
+      foreground: '#111115',
+      primary: '#3498db',
+      accent: '#3498db'
+    }
+  },
+  {
+    id: 'github-light',
+    label: 'workspace.appearance.themes.github',
+    preview: {
+      background: '#f6f8fa',
+      foreground: '#ffffff',
+      primary: '#24292f',
+      accent: '#0969da'
+    }
+  },
+  {
+    id: 'github-dark',
+    label: 'workspace.appearance.themes.githubDark',
+    preview: {
+      background: '#0d1117',
+      foreground: '#161b22',
+      primary: '#94959c',
+      accent: '#3a8af9'
+    }
+  },
+  {
+    id: 'monokai-pro',
+    label: 'workspace.appearance.themes.monokaiPro',
+    preview: {
+      background: '#272822',
+      foreground: '#31322c',
+      primary: '#f9e8a1',
+      accent: '#fd971f'
+    }
+  },
+  {
+    id: 'solarized-light',
+    label: 'workspace.appearance.themes.solarized',
+    preview: {
+      background: '#fdf6e3',
+      foreground: '#fdf6e3',
+      primary: '#002b36',
+      accent: '#268bd2'
+    }
+  },
+  {
+    id: 'solarized-dark',
+    label: 'workspace.appearance.themes.solarizedDark',
+    preview: {
+      background: '#002b36',
+      foreground: '#073642',
+      primary: '#eee8d5',
+      accent: '#268bd2'
+    }
   }
 ]
 

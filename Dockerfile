@@ -8,7 +8,7 @@ RUN npm install -g pnpm
 RUN apk add --no-cache python3 make g++
 
 # npm auth (ВАЖНО: до pnpm install)
-#RUN echo "//nexus.stackbro.tech/repository/npm-hosted/:_authToken=${NPM_TOKEN}" > /root/.npmrc
+#RUN echo "//nexus.nlnano.ru/repository/npm-hosted/:_authToken=${NPM_TOKEN}" > /root/.npmrc
 
 COPY .npmrc /root/.npmrc
 COPY package.json $APP_PATH/package.json

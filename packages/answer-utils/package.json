@@ -3,7 +3,7 @@
   "description": "HeyForm Answer Utils",
   "version": "1.3.1",
   "publishConfig": {
-    "registry": "https://nexus.stackbro.tech/repository/npm-hosted/"
+    "registry": "https://nexus.nlnano.ru/repository/npm-hosted/"
   },
   "homepage": "https://heyform.net",
   "author": "Heyooo, Inc.",
