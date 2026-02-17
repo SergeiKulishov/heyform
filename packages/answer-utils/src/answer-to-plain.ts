@@ -61,6 +61,10 @@ export function parsePlainAnswer(answer: Answer, livePreview = false): string {
       value = parser.matrix(answer)
       break
 
+    case FieldKindEnum.RANKING:
+      value = parser.ranking(answer)
+      break
+
     case FieldKindEnum.PAYMENT:
       value = parser.payment(answer)
       break

@@ -947,6 +947,33 @@
 
   
   
+  .heyform-ranking-builder-item {
+    @apply flex items-center gap-2 rounded-lg border px-3 py-2;
+    border-color: var(--heyform-answer-opacity-20-color);
+    background: var(--heyform-background-color, #fff);
+  }
+
+  .heyform-ranking-builder-handle {
+    @apply cursor-move text-lg;
+    color: var(--heyform-answer-opacity-40-color);
+  }
+
+  .heyform-ranking-builder-badge {
+    @apply flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full text-xs font-semibold;
+    background: var(--heyform-answer-opacity-10-color);
+    color: var(--heyform-answer-color);
+  }
+
+  .heyform-ranking-builder-input {
+    @apply flex-1 text-sm outline-none;
+    color: var(--heyform-question-color);
+    background: transparent;
+
+    &::placeholder {
+      color: var(--heyform-answer-opacity-40-color);
+    }
+  }
+
   .heyform-payment-header,
   .heyform-payment-label {
     @apply text-base;

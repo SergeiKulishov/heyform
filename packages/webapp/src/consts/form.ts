@@ -29,6 +29,7 @@ import IconPayment from '@/assets/payment.svg?react'
 import IconPhoneNumber from '@/assets/phone-number.svg?react'
 import IconPictureChoice from '@/assets/picture-choice.svg?react'
 import IconQuestionGroup from '@/assets/question-group.svg?react'
+import IconRanking from '@/assets/ranking.svg?react'
 import IconRating from '@/assets/rating.svg?react'
 import IconShortText from '@/assets/short-text.svg?react'
 import IconSignature from '@/assets/signature.svg?react'
@@ -224,6 +225,13 @@ export const STANDARD_FIELD_CONFIGS = [
     label: 'form.builder.question.matrix',
     textColor: '#c2410c',
     backgroundColor: '#ffedd5'
+  },
+  {
+    kind: FieldKindEnum.RANKING,
+    icon: IconRanking,
+    label: 'form.builder.question.ranking',
+    textColor: '#0369a1',
+    backgroundColor: '#e0f2fe'
   }
 ]
 
@@ -296,7 +304,12 @@ export const BLOCK_GROUPS = [
   [
     {
       name: 'form.builder.question.choices',
-      list: [FieldKindEnum.MULTIPLE_CHOICE, FieldKindEnum.PICTURE_CHOICE, FieldKindEnum.YES_NO]
+      list: [
+        FieldKindEnum.MULTIPLE_CHOICE,
+        FieldKindEnum.PICTURE_CHOICE,
+        FieldKindEnum.YES_NO,
+        FieldKindEnum.RANKING
+      ]
     },
     {
       name: 'form.builder.question.rating',

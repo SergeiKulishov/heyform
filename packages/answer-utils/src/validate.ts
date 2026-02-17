@@ -113,6 +113,10 @@ export function validate(rule: FieldsToValidateRules, value: AnswerValue): void 
       validateMatrix(rule, value)
       break
 
+    case FieldKindEnum.RANKING:
+      validateRanking(rule, value)
+      break
+
     case FieldKindEnum.SIGNATURE:
       validateSignature(rule, value)
       break
@@ -597,6 +601,29 @@ function validateMatrix(rule: FieldsToValidateRules, value: AnswerValue): void {
         })
       }
     }
+  }
+}
+
+function validateRanking(rule: FieldsToValidateRules, value: AnswerValue): void {
+  if (!helper.isObject(value) || !helper.isValidArray(value?.value)) {
+    if (rule.required) {
+      throw new ValidateError({
+        id: rule.id,
+        kind: rule.kind,
+        title: rule.title,
+        message: 'This field is required'
+      })
+    }
+    return
+  }
+
+  if (rule.required && value.value.length < 1) {
+    throw new ValidateError({
+      id: rule.id,
+      kind: rule.kind,
+      title: rule.title,
+      message: 'This field is required'
+    })
   }
 }
 

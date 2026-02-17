@@ -834,7 +834,8 @@
         "submission_other": "{{count}} 次提交",
         "submission2_zero": "暫無提交 · 平均 {{average}}",
         "submission2_one": "{{count}} 次提交 · 平均 {{average}}",
-        "submission2_other": "{{count}} 次提交 · 平均 {{average}}"
+        "submission2_other": "{{count}} 次提交 · 平均 {{average}}",
+        "averageRank": "平均排名: {{rank}}"
       },
       "funnel": {
         "title": "完成漏斗",
@@ -1291,6 +1292,7 @@
         "website": "網站",
         "inputTable": "輸入表",
         "matrix": "矩陣",
+        "ranking": "排序",
         "submitDate": "提交日期",
         "hiddenFields": "隱藏字段",
         "contactInfo": "聯繫信息",
@@ -1324,7 +1326,9 @@
         "addColumn": "新增欄位",
         "columnPlaceholder": "欄 {{index}}",
         "addRow": "新增行",
-        "rowPlaceholder": "行 {{index}}"
+        "rowPlaceholder": "行 {{index}}",
+        "addRankingItem": "新增項目",
+        "rankingItemPlaceholder": "項目{{index}}"
       },
       "settings": {
         "title": "設定",

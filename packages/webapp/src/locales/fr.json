@@ -838,7 +838,8 @@
         "submission_other": "{{count}} soumissions",
         "submission2_zero": "Pas encore de soumissions · {{average}} moyenne",
         "submission2_one": "{{count}} soumission · {{average}} moyenne",
-        "submission2_other": "{{count}} soumissions · {{average}} moyenne"
+        "submission2_other": "{{count}} soumissions · {{average}} moyenne",
+        "averageRank": "Rang moy. : {{rank}}"
       },
       "funnel": {
         "title": "Entonnoir de complétion",
@@ -1295,6 +1296,7 @@
         "website": "Site web",
         "inputTable": "Tableau d'entrée",
         "matrix": "Matrice",
+        "ranking": "Classement",
         "submitDate": "Date de soumission",
         "hiddenFields": "Champs cachés",
         "contactInfo": "Informations de contact",
@@ -1328,7 +1330,9 @@
         "addColumn": "Ajouter une colonne",
         "columnPlaceholder": "Colonne {{index}}",
         "addRow": "Ajouter une ligne",
-        "rowPlaceholder": "Ligne {{index}}"
+        "rowPlaceholder": "Ligne {{index}}",
+        "addRankingItem": "Ajouter un élément",
+        "rankingItemPlaceholder": "Élément {{index}}"
       },
       "settings": {
         "title": "Paramètres",

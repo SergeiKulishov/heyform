@@ -324,6 +324,10 @@ export type InputTableValue = Array<Record<string, string>>
 
 export type MatrixValue = Record<string, string | string[]>
 
+export interface RankingValue {
+  value: string[]
+}
+
 export type AnswerValue =
   | ChoiceValue
   | FileUploadValue
@@ -332,6 +336,7 @@ export type AnswerValue =
   | DateRangeValue
   | InputTableValue
   | MatrixValue
+  | RankingValue
   | ServerSidePaymentValue
   | ClientSidePaymentValue
   | any

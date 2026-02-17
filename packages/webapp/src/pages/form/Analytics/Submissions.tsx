@@ -129,6 +129,57 @@ const MatrixAnalyticsItem: FC<MatrixItemProps> = ({ rows, columns, answers: rawA
   )
 }
 
+interface RankingItemProps extends SubmissionItemProps {
+  choices: Choice[]
+}
+
+const RankingAnalyticsItem: FC<RankingItemProps> = ({ choices, answers: rawAnswers = [] }) => {
+  const { i18n } = useTranslation()
+
+  return (
+    <table className="w-full">
+      <thead>
+        <tr>
+          <th className="heyform-report-border text-secondary border-b py-2 text-sm/6 font-medium">
+            #
+          </th>
+          {choices.map((_, index) => (
+            <th
+              key={index}
+              className="heyform-report-border text-secondary border-b py-2 text-center text-sm/6 font-medium"
+            >
+              {index + 1}
+            </th>
+          ))}
+          <th className="heyform-report-border border-b" />
+        </tr>
+      </thead>
+      <tbody className="heyform-report-divide divide-y">
+        {rawAnswers.map((answer: any, answerIndex: number) => {
+          const ranked: string[] = answer.value?.value || []
+
+          return (
+            <tr key={answerIndex}>
+              <td className="heyform-report-input-value font-medium">{answerIndex + 1}</td>
+              {ranked.map((id, pos) => {
+                const choice = choices.find(c => c.id === id)
+                return (
+                  <td key={pos} className="heyform-report-input-value text-center">
+                    {choice?.label ?? id}
+                  </td>
+                )
+              })}
+              <td className="heyform-report-input-datetime">
+                {timeFromNow(answer.endAt, i18n.language)}
+              </td>
+            </tr>
+          )
+        })}
+      </tbody>
+    </table>
+  )
+}
+
 const AnswerValue: FC<{ answer: AnyMap }> = ({ answer }) => {
   const { t } = useTranslation()
 
@@ -225,6 +276,8 @@ export default function FormReportSubmissions({ response }: any) {
           rows={response.properties?.rows || []}
           columns={response.properties?.matrixColumns || []}
         />
+      ) : response.kind === FieldKindEnum.RANKING || response.kind === 'ranking' ? (
+        <RankingAnalyticsItem answers={answers} choices={response.properties?.choices || []} />
       ) : (
         <SubmissionItem answers={answers} />
       )}

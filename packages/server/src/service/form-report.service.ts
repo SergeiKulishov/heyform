@@ -137,6 +137,23 @@ export class FormReportService {
               }
             }
             break
+
+          case FieldKindEnum.RANKING:
+            if (helper.isObject(answer.value) && helper.isValidArray(answer.value.value)) {
+              if (Array.isArray(response.chooses) && response.chooses.length === 0) {
+                ;(response as any).chooses = {}
+              }
+              const ranked: string[] = answer.value.value
+              ranked.forEach((choiceId: string, index: number) => {
+                const rank = index + 1
+                if (!(response as any).chooses[choiceId]) {
+                  ;(response as any).chooses[choiceId] = { totalRank: 0, count: 0 }
+                }
+                ;(response as any).chooses[choiceId].totalRank += rank
+                ;(response as any).chooses[choiceId].count += 1
+              })
+            }
+            break
         }
       }
 
@@ -144,6 +161,32 @@ export class FormReportService {
 
       if (isNaN(response.average)) {
         response.average = 0
+      }
+
+      // For ranking: convert { choiceId: { totalRank, count } } → sorted array with averageRank
+      if (
+        (field.kind as any) === FieldKindEnum.RANKING &&
+        !Array.isArray((response as any).chooses)
+      ) {
+        const rankMap = (response as any).chooses as Record<
+          string,
+          { totalRank: number; count: number }
+        >
+        const choices = field.properties?.choices || []
+        const rankingChooses = choices
+          .map((choice: any) => {
+            const data = rankMap[choice.id]
+            const avgRank = data ? parseFloat((data.totalRank / data.count).toFixed(2)) : 0
+            return {
+              id: choice.id,
+              label: choice.label,
+              count: data?.count ?? 0,
+              averageRank: avgRank
+            }
+          })
+          .filter((c: any) => c.count > 0)
+          .sort((a: any, b: any) => a.averageRank - b.averageRank)
+        ;(response as any).chooses = rankingChooses
       }
 
       responses.push(response)

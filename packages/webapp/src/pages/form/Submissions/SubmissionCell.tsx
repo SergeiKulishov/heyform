@@ -392,6 +392,39 @@ const MatrixItem: FC<SubmissionCellProps> = ({ answer, field, isTableCell }) => 
   )
 }
 
+const RankingItem: FC<SubmissionCellProps> = ({ answer, field, isTableCell }) => {
+  const choices = (field.properties?.choices || (answer as any).properties?.choices) as Choice[]
+  const ranked = answer.value?.value as string[]
+
+  if (answer.kind !== field.kind || !helper.isValidArray(choices) || !helper.isValidArray(ranked)) {
+    return null
+  }
+
+  if (isTableCell) {
+    const parts = ranked.map((id, index) => {
+      const choice = choices.find(c => c.id === id)
+      return `${index + 1}. ${choice?.label ?? id}`
+    })
+    return <div className="truncate">{parts.join(' · ')}</div>
+  }
+
+  return (
+    <div className="space-y-1">
+      {ranked.map((id, index) => {
+        const choice = choices.find(c => c.id === id)
+        return (
+          <div key={id} className="flex items-center gap-2 text-sm">
+            <span className="text-secondary flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full bg-zinc-600/10 text-xs font-semibold">
+              {index + 1}
+            </span>
+            <span>{choice?.label ?? id}</span>
+          </div>
+        )
+      })}
+    </div>
+  )
+}
+
 const SubmitDateItem: FC<SubmissionCellProps> = ({ answer }) => {
   const { i18n } = useTranslation()
 
@@ -447,6 +480,10 @@ export default function SubmissionCell(props: SubmissionCellProps) {
     case FieldKindEnum.MATRIX:
     case 'matrix':
       return <MatrixItem {...props} />
+
+    case FieldKindEnum.RANKING:
+    case 'ranking':
+      return <RankingItem {...props} />
 
     case FieldKindEnum.PAYMENT:
       return <PaymentItem {...props} />

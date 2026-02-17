@@ -893,7 +893,8 @@
         "submission_other": "{{count}} submissions",
         "submission2_zero": "No submissions yet · {{average}} average",
         "submission2_one": "{{count}} submission · {{average}} average",
-        "submission2_other": "{{count}} submissions · {{average}} average"
+        "submission2_other": "{{count}} submissions · {{average}} average",
+        "averageRank": "Avg. rank: {{rank}}"
       },
       "funnel": {
         "title": "Completion Funnel",
@@ -1370,6 +1371,7 @@
         "website": "Website",
         "inputTable": "Input table",
         "matrix": "Matrix",
+        "ranking": "Ranking",
         "submitDate": "Submit date",
         "hiddenFields": "Hidden fields",
         "contactInfo": "Contact info",
@@ -1407,7 +1409,9 @@
         "addColumn": "Add column",
         "columnPlaceholder": "Col {{index}}",
         "addRow": "Add row",
-        "rowPlaceholder": "Row {{index}}"
+        "rowPlaceholder": "Row {{index}}",
+        "addRankingItem": "Add item",
+        "rankingItemPlaceholder": "Item {{index}}"
       },
       "settings": {
         "title": "Settings",

@@ -834,7 +834,8 @@
         "submission_other": "{{count}} 回の提出",
         "submission2_zero": "提出はありません · 平均 {{average}}",
         "submission2_one": "{{count}} 回の提出 · 平均 {{average}}",
-        "submission2_other": "{{count}} 回の提出 · 平均 {{average}}"
+        "submission2_other": "{{count}} 回の提出 · 平均 {{average}}",
+        "averageRank": "平均順位: {{rank}}"
       },
       "funnel": {
         "title": "完了ファネル",
@@ -1291,6 +1292,7 @@
         "website": "ウェブサイト",
         "inputTable": "入力テーブル",
         "matrix": "マトリクス",
+        "ranking": "ランキング",
         "submitDate": "提出日",
         "hiddenFields": "非表示フィールド",
         "contactInfo": "連絡先情報",
@@ -1324,7 +1326,9 @@
         "addColumn": "列を追加",
         "columnPlaceholder": "列 {{index}}",
         "addRow": "行を追加",
-        "rowPlaceholder": "行 {{index}}"
+        "rowPlaceholder": "行 {{index}}",
+        "addRankingItem": "項目を追加",
+        "rankingItemPlaceholder": "項目{{index}}"
       },
       "settings": {
         "title": "設定",

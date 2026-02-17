@@ -838,7 +838,8 @@
         "submission2_one": "{{count}} zgłoszenie · Średnia: {{average}}",
         "submission2_few": "{{count}} zgłoszenia · Średnia: {{average}}",
         "submission2_many": "{{count}} zgłoszeń · Średnia: {{average}}",
-        "submission2_other": "{{count}} zgłoszeń · Średnia: {{average}}"
+        "submission2_other": "{{count}} zgłoszeń · Średnia: {{average}}",
+        "averageRank": "Śr. miejsce: {{rank}}"
       },
       "funnel": {
         "title": "Lejek ukończenia",
@@ -1295,6 +1296,7 @@
         "website": "Strona internetowa",
         "inputTable": "Tabela wejściowa",
         "matrix": "Macierz",
+        "ranking": "Ranking",
         "submitDate": "Data zgłoszenia",
         "hiddenFields": "Ukryte pola",
         "contactInfo": "Informacje kontaktowe",
@@ -1328,7 +1330,9 @@
         "addColumn": "Dodaj kolumnę",
         "columnPlaceholder": "Kolumna {{index}}",
         "addRow": "Dodaj wiersz",
-        "rowPlaceholder": "Wiersz {{index}}"
+        "rowPlaceholder": "Wiersz {{index}}",
+        "addRankingItem": "Dodaj element",
+        "rankingItemPlaceholder": "Element {{index}}"
       },
       "settings": {
         "title": "Ustawienia",

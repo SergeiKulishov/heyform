@@ -7,7 +7,7 @@ import { Flow } from './Flow'
 export default function LogicFlow() {
   return (
     <div className="logic-flow">
-      <IconEdgeArrow className="absolute opacity-0" />
+      <IconEdgeArrow className="text-secondary absolute opacity-0" />
       <ReactFlowProvider>
         <Flow />
       </ReactFlowProvider>

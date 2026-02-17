@@ -72,6 +72,7 @@ export const ReportList: FC<ReportListProps> = ({ isHideFieldEnabled }) => {
           'tableColumns',
           'rows',
           'matrixColumns',
+          'choices',
           'total',
           'average',
           'leftLabel',

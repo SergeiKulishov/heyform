@@ -33,6 +33,7 @@ export const QUESTION_FIELD_KINDS = [
   // Data
   FieldKindEnum.INPUT_TABLE,
   FieldKindEnum.MATRIX,
+  FieldKindEnum.RANKING,
 
   // Fieldset
   FieldKindEnum.PAYMENT,

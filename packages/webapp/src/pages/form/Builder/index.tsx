@@ -1,4 +1,4 @@
-import { FC, useMemo, useReducer } from 'react'
+import { FC, useMemo, useReducer, useState } from 'react'
 
 import { initFields } from './utils'
 import { FormService } from '@/services'
@@ -10,6 +10,7 @@ import { useFormStore } from '@/store'
 import '@/styles/builder.scss'
 import { FormType } from '@/types'
 
+import AiAssistantPanel from './AiAssistant'
 import BuilderCompose from './Compose'
 import HiddenFieldsModal from './HiddenFieldsModal'
 import BuilderLeftSidebar, { BuilderLeftSidebarModal } from './LeftSidebar'
@@ -47,11 +48,12 @@ const Builder: FC<IBuilderProps> = ({ form }) => {
   }
   const [state, dispatch] = useReducer(storeReducer, initialState)
   const store = useMemo(() => ({ state, dispatch }), [state])
+  const [isAiOpen, setIsAiOpen] = useState(false)
 
   return (
     <StoreContext.Provider value={store}>
       <div className="bg-background flex h-screen flex-col">
-        <BuilderNavBar />
+        <BuilderNavBar isAiOpen={isAiOpen} onToggleAi={() => setIsAiOpen(v => !v)} />
 
         <main className="flex h-[calc(100vh-3.5rem)] flex-1 sm:gap-2 sm:px-2 sm:pb-2">
           {state.activeTabName === 'logic' ? (
@@ -63,6 +65,11 @@ const Builder: FC<IBuilderProps> = ({ form }) => {
             </>
           )}
           <BuilderRightSidebar />
+          {isAiOpen && (
+            <div className="hidden w-80 flex-shrink-0 sm:block">
+              <AiAssistantPanel onClose={() => setIsAiOpen(false)} />
+            </div>
+          )}
         </main>
       </div>
 

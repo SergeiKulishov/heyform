@@ -1483,6 +1483,84 @@ button.button-icon-only {
 }
 
 // ----------------------------------------------------------------------------
+// Ranking
+.heyform-ranking-root {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  user-select: none;
+}
+
+.heyform-ranking-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  border-radius: 8px;
+  cursor: grab;
+  box-shadow: var(--heyform-answer-opacity-30-color) 0 0 0 1px inset;
+  background: var(--heyform-background-color, #fff);
+  transition: border-color 0.15s ease, opacity 0.15s ease;
+
+  &:active {
+    cursor: grabbing;
+  }
+
+  &.heyform-ranking-item-dragging {
+    opacity: 0.4;
+  }
+
+  &.heyform-ranking-item-over {
+    box-shadow: var(--heyform-answer-color) 0 0 0 2px inset;
+    background: var(--heyform-answer-opacity-10-color);
+  }
+}
+
+.heyform-ranking-badge {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  background: var(--heyform-answer-opacity-10-color);
+  color: var(--heyform-answer-color);
+  font-size: 13px;
+  flex-shrink: 0;
+}
+
+.heyform-ranking-label {
+  flex: 1;
+  font-size: 15px;
+  color: var(--heyform-question-color);
+}
+
+.heyform-ranking-arrows {
+  display: none;
+  gap: 4px;
+}
+
+.heyform-ranking-arrow-btn {
+  @apply flex h-7 w-7 cursor-pointer items-center justify-center rounded;
+  background: var(--heyform-answer-opacity-10-color);
+  color: var(--heyform-answer-color);
+  border: none;
+  font-size: 14px;
+
+  &:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+  }
+}
+
+@media (pointer: coarse) {
+  .heyform-ranking-arrows {
+    display: flex;
+  }
+}
+
+// ----------------------------------------------------------------------------
 // Payment
 .heyform-payment-header {
 }

@@ -888,7 +888,8 @@
         "submission2_one": "{{count}} ответ · {{average}} среднее",
         "submission2_few": "{{count}} ответа · {{average}} среднее",
         "submission2_many": "{{count}} ответов · {{average}} среднее",
-        "submission2_other": "{{count}} ответов · {{average}} среднее"
+        "submission2_other": "{{count}} ответов · {{average}} среднее",
+        "averageRank": "Ср. ранг: {{rank}}"
       },
       "funnel": {
         "title": "Воронка заполнения",
@@ -1365,6 +1366,7 @@
         "website": "Веб-сайт",
         "inputTable": "Таблица ввода",
         "matrix": "Матрица",
+        "ranking": "Ранжирование",
         "submitDate": "Дата отправки",
         "hiddenFields": "Скрытые поля",
         "contactInfo": "Контактная информация",
@@ -1402,7 +1404,9 @@
         "addColumn": "Добавить колонку",
         "columnPlaceholder": "Кол {{index}}",
         "addRow": "Добавить строку",
-        "rowPlaceholder": "Строка {{index}}"
+        "rowPlaceholder": "Строка {{index}}",
+        "addRankingItem": "Добавить элемент",
+        "rankingItemPlaceholder": "Элемент {{index}}"
       },
       "settings": {
         "title": "Настройки",

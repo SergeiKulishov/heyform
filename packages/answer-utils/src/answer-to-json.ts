@@ -83,6 +83,13 @@ function parseJsonAnswer(answer: Answer, plain = false): any {
       }
       break
 
+    case FieldKindEnum.RANKING:
+      value = answer.value
+      if (plain) {
+        value = parser.ranking(answer)
+      }
+      break
+
     case FieldKindEnum.PAYMENT:
       value = answer.value
       if (plain) {

@@ -10,6 +10,7 @@ import MultipleChoiceSettings from './MultipleChoice'
 import OpinionScaleSettings from './OpinionScale'
 import PaymentSettings from './Payment'
 import PhoneNumberSettings from './PhoneNumber'
+import RankingSettings from './Ranking'
 import RatingSettings from './Rating'
 import RequiredSettings, { RequiredSettingsProps } from './Required'
 import StatementSettings from './Statement'
@@ -47,6 +48,10 @@ const Settings = ({ field }: RequiredSettingsProps) => {
       case FieldKindEnum.MATRIX:
       case 'matrix':
         return <MatrixSettings field={field} />
+
+      case FieldKindEnum.RANKING:
+      case 'ranking':
+        return <RankingSettings field={field} />
 
       case FieldKindEnum.PAYMENT:
         return <PaymentSettings field={field} />

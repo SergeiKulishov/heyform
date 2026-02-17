@@ -166,6 +166,17 @@ export function getPropertiesFromKind(properties: Property, newKind: FieldKindEn
       }
       break
 
+    case FieldKindEnum.RANKING:
+    case 'ranking':
+      if (!helper.isArray(props.choices)) {
+        props.choices = [
+          { id: nanoid(12), label: '' },
+          { id: nanoid(12), label: '' },
+          { id: nanoid(12), label: '' }
+        ]
+      }
+      break
+
     case FieldKindEnum.MATRIX:
     case 'matrix':
       if (!helper.isArray(props.rows)) {

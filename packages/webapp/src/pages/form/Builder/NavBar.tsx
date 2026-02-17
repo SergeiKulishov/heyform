@@ -22,9 +22,15 @@ import { Button, Loader, Tooltip, usePrompt, useToast } from '@/components'
 import { useAppStore, useFormStore, useWorkspaceStore } from '@/store'
 
 import WorkspaceAccount from '../../../layouts/Workspace/WorkspaceAccount'
+import { AiAssistantButton } from './AiAssistant'
 import { useStoreContext } from './store'
 
-export default function BuilderNavBar() {
+interface BuilderNavBarProps {
+  isAiOpen: boolean
+  onToggleAi: () => void
+}
+
+export default function BuilderNavBar({ isAiOpen, onToggleAi }: BuilderNavBarProps) {
   const { t } = useTranslation()
 
   const router = useRouter()
@@ -175,6 +181,8 @@ export default function BuilderNavBar() {
               <Loader className="h-5 w-5" />
             </Tooltip>
           )}
+
+          <AiAssistantButton isOpen={isAiOpen} onClick={onToggleAi} />
 
           <Tooltip label={t('form.builder.preview.title')}>
             <Button.Link size="md" iconOnly onClick={handlePreview}>

@@ -117,13 +117,18 @@ export class FormService {
     })
   }
 
-  static createFieldsWithAI(formId: string, prompt: string) {
+  static createFieldsWithAI(
+    formId: string,
+    prompt: string,
+    history?: Array<{ role: string; content: string }>
+  ) {
     return apollo.mutate({
       mutation: CREATE_FIELDS_WITH_AI_GQL,
       variables: {
         input: {
           formId,
-          prompt
+          prompt,
+          history
         }
       }
     })

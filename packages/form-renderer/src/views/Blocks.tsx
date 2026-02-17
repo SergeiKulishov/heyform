@@ -22,6 +22,7 @@ import { OpinionScale } from '../blocks/OpinionScale'
 import { Payment } from '../blocks/Payment'
 import { PhoneNumber } from '../blocks/PhoneNumber'
 import { PictureChoice } from '../blocks/PictureChoice'
+import { Ranking } from '../blocks/Ranking'
 import { Rating } from '../blocks/Rating'
 import { ShortText } from '../blocks/ShortText'
 import { Signature } from '../blocks/Signature'
@@ -95,6 +96,9 @@ function getBlock(field: FormField, blockIndex?: number) {
 
     case FieldKindEnum.MATRIX:
       return <Matrix key={field.id} field={field} />
+
+    case FieldKindEnum.RANKING:
+      return <Ranking key={field.id} field={field} />
 
     case FieldKindEnum.SHORT_TEXT:
       return <ShortText key={field.id} field={field} />

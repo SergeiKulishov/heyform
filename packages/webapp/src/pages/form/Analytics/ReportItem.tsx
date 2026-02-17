@@ -138,6 +138,41 @@ const MatrixChart: FC<MatrixChartProps> = ({ rows, columns, chooses }) => {
   )
 }
 
+interface RankingChartProps {
+  chooses: Array<{ id: string; label: string; count: number; averageRank: number }>
+}
+
+const RankingChart: FC<RankingChartProps> = ({ chooses }) => {
+  const { t } = useTranslation()
+  const sorted = useMemo(
+    () => [...(chooses || [])].sort((a, b) => a.averageRank - b.averageRank),
+    [chooses]
+  )
+  const maxRank = useMemo(() => Math.max(...sorted.map(c => c.averageRank), 1), [sorted])
+
+  return (
+    <div className="heyform-report-chart">
+      {sorted.map((row, index) => {
+        const percent = `${toFixed(((maxRank - row.averageRank + 1) / maxRank) * 100)}%`
+
+        return (
+          <div key={index} className="heyform-report-chart-item">
+            <div className="heyform-report-chart-background" style={{ width: percent }} />
+            <div className="heyform-report-chart-content">
+              <span className="heyform-report-chart-percent">
+                {row.label} · {t('form.analytics.report.averageRank', { rank: row.averageRank })}
+              </span>
+              <span className="heyform-report-chart-count">
+                {t('form.analytics.report.submission', { count: row.count })}
+              </span>
+            </div>
+          </div>
+        )
+      })}
+    </div>
+  )
+}
+
 const FormReportItem: FC<FormReportItemProps> = ({ index, response, isHideFieldEnabled }) => {
   const { t } = useTranslation()
 
@@ -145,7 +180,14 @@ const FormReportItem: FC<FormReportItemProps> = ({ index, response, isHideFieldE
 
   const isChoices = useMemo(() => CHOICE_FIELD_KINDS.includes(response.kind), [response.kind])
   const isRating = useMemo(() => RATING_FIELD_KINDS.includes(response.kind), [response.kind])
-  const isMatrix = useMemo(() => response.kind === FieldKindEnum.MATRIX, [response.kind])
+  const isMatrix = useMemo(
+    () => response.kind === FieldKindEnum.MATRIX || response.kind === 'matrix',
+    [response.kind]
+  )
+  const isRanking = useMemo(
+    () => response.kind === FieldKindEnum.RANKING || response.kind === 'ranking',
+    [response.kind]
+  )
 
   const isHided = useMemo(
     () => isHideFieldEnabled && form?.customReport?.hiddenFields?.includes(response.id),
@@ -165,10 +207,12 @@ const FormReportItem: FC<FormReportItemProps> = ({ index, response, isHideFieldE
           chooses={response.chooses || {}}
         />
       )
+    } else if (isRanking) {
+      return <RankingChart chooses={response.chooses || []} />
     } else {
       return <FormReportSubmissions response={response} />
     }
-  }, [isChoices, isRating, isMatrix, response])
+  }, [isChoices, isRating, isMatrix, isRanking, response])
 
   return (
     <li className="heyform-report-item">

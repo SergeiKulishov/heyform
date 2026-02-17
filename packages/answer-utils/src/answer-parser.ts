@@ -113,6 +113,21 @@ function matrix(answer: Answer): string {
   return ''
 }
 
+function ranking(answer: Answer): string {
+  const choices = answer.properties?.choices
+
+  if (!helper.isValidArray(choices) || !helper.isValidArray(answer.value?.value)) {
+    return ''
+  }
+
+  return answer.value.value
+    .map((id: string, index: number) => {
+      const choice = choices!.find(c => c.id === id)
+      return `${index + 1}. ${choice?.label ?? id}`
+    })
+    .join('\n')
+}
+
 function payment(answer: Answer): string {
   const value = answer.value as ServerSidePaymentValue
   const price = Big(value.amount).div(100).toFixed(2)
@@ -138,5 +153,6 @@ export default {
   dateRange,
   inputTable,
   matrix,
+  ranking,
   payment
 }

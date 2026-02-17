@@ -834,7 +834,8 @@
         "submission_other": "{{count}} Einsendungen",
         "submission2_zero": "Noch keine Einsendungen · {{average}} Durchschnitt",
         "submission2_one": "{{count}} Einsendung · {{average}} Durchschnitt",
-        "submission2_other": "{{count}} Einsendungen · {{average}} Durchschnitt"
+        "submission2_other": "{{count}} Einsendungen · {{average}} Durchschnitt",
+        "averageRank": "Ø Rang: {{rank}}"
       },
       "funnel": {
         "title": "Abschluss-Trichter",
@@ -1291,6 +1292,7 @@
         "website": "Webseite",
         "inputTable": "Eingabetabelle",
         "matrix": "Matrix",
+        "ranking": "Ranking",
         "submitDate": "Einreichungsdatum",
         "hiddenFields": "Versteckte Felder",
         "contactInfo": "Kontaktinformationen",
@@ -1324,7 +1326,9 @@
         "addColumn": "Spalte hinzufügen",
         "columnPlaceholder": "Spalte {{index}}",
         "addRow": "Zeile hinzufügen",
-        "rowPlaceholder": "Zeile {{index}}"
+        "rowPlaceholder": "Zeile {{index}}",
+        "addRankingItem": "Element hinzufügen",
+        "rankingItemPlaceholder": "Element {{index}}"
       },
       "settings": {
         "title": "Einstellungen",

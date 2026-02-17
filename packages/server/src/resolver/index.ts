@@ -61,6 +61,10 @@ export { UpdateFormHiddenFieldsResolver } from './form/update-form-hidden-fields
 export { PublishFormResolver } from './form/publish-form.resolver'
 export { MoveFormResolver } from './form/move-form.resolver'
 export { FormIntegrationsResolver } from './form/form-integrations.resolver'
+export { CreateFormWithAIResolver } from './form/create-form-with-ai.resolver'
+export { CreateFieldsWithAIResolver } from './form/create-fields-with-ai.resolver'
+export { CreateFormLogicsWithAIResolver } from './form/create-form-logics-with-ai.resolver'
+export { CreateFormThemeWithAIResolver } from './form/create-form-theme-with-ai.resolver'
 
 export { OpenFormResolver } from './endpoint/open-form.resolver'
 export { CompleteSubmissionResolver } from './endpoint/complete-submission.resolver'

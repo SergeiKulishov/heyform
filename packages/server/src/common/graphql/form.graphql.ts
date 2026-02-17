@@ -663,9 +663,22 @@ export class UpdateFormLogicsInput extends FormDetailInput {
 }
 
 @InputType()
+class ChatMessageInput {
+  @Field()
+  role: string
+
+  @Field()
+  content: string
+}
+
+@InputType()
 export class CreateFieldsWithAIInput extends FormDetailInput {
   @Field()
   prompt: string
+
+  @Field(type => [ChatMessageInput], { nullable: true })
+  @IsOptional()
+  history?: ChatMessageInput[]
 }
 
 @InputType()

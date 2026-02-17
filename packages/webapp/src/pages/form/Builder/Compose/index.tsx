@@ -30,6 +30,7 @@ import {
   Payment,
   PhoneNumber,
   PictureChoice,
+  Ranking,
   Rating,
   ShortText,
   Signature,
@@ -90,6 +91,12 @@ const Fields: FC = () => {
     case FieldKindEnum.MATRIX:
     case 'matrix':
       return <Matrix key={field.id} field={field} locale={state.locale} parentField={parentField} />
+
+    case FieldKindEnum.RANKING:
+    case 'ranking':
+      return (
+        <Ranking key={field.id} field={field} locale={state.locale} parentField={parentField} />
+      )
 
     case FieldKindEnum.LEGAL_TERMS:
       return (
