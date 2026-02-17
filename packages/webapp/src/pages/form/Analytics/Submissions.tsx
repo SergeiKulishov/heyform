@@ -91,15 +91,26 @@ const MatrixAnalyticsItem: FC<MatrixItemProps> = ({ rows, columns, answers: rawA
         </tr>
       </thead>
       <tbody className="heyform-report-divide divide-y">
-        {rawAnswers.map((answer: any, index: number) => {
+        {rawAnswers.map((answer: any, answerIndex: number) => {
           const value = answer.value || {}
 
-          return rows.map(row => {
+          return rows.map((row, rowIndex) => {
             const selected = value[row.id]
             const selectedIds = Array.isArray(selected) ? selected : selected ? [selected] : []
+            const isGroupStart = answerIndex > 0 && rowIndex === 0
 
             return (
-              <tr key={`${index}-${row.id}`}>
+              <tr
+                key={`${answerIndex}-${row.id}`}
+                style={
+                  isGroupStart
+                    ? {
+                        borderTopWidth: '2px',
+                        borderTopColor: 'var(--heyform-report-question-a60)'
+                      }
+                    : undefined
+                }
+              >
                 <td className="heyform-report-input-value font-medium">{row.label}</td>
                 {columns.map(c => (
                   <td key={c.id} className="heyform-report-input-value text-center">
@@ -107,7 +118,7 @@ const MatrixAnalyticsItem: FC<MatrixItemProps> = ({ rows, columns, answers: rawA
                   </td>
                 ))}
                 <td className="heyform-report-input-datetime">
-                  {index === 0 ? timeFromNow(answer.endAt, i18n.language) : ''}
+                  {rowIndex === 0 ? timeFromNow(answer.endAt, i18n.language) : ''}
                 </td>
               </tr>
             )

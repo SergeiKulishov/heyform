@@ -1,4 +1,9 @@
-import { CHOICE_FIELD_KINDS, RATING_FIELD_KINDS } from '@voxly/shared-types-enums'
+import {
+  CHOICE_FIELD_KINDS,
+  Choice,
+  FieldKindEnum,
+  RATING_FIELD_KINDS
+} from '@voxly/shared-types-enums'
 import { FC, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 
@@ -88,6 +93,51 @@ const Ratings: FC<RatingsProps> = ({ length, chooses }) => {
   )
 }
 
+interface MatrixChartProps {
+  rows: Choice[]
+  columns: Choice[]
+  chooses: Record<string, Record<string, number>>
+}
+
+const MatrixChart: FC<MatrixChartProps> = ({ rows, columns, chooses }) => {
+  const { t } = useTranslation()
+
+  return (
+    <div className="space-y-4">
+      {rows.map(row => {
+        const rowChooses = chooses[row.id] || {}
+        const rowTotal = Object.values(rowChooses).reduce((a, b) => a + b, 0) || 1
+
+        return (
+          <div key={row.id}>
+            <div className="heyform-report-meta mb-1 text-sm font-medium">{row.label}</div>
+            <div className="heyform-report-chart">
+              {columns.map(col => {
+                const count = rowChooses[col.id] || 0
+                const percent = `${toFixed((count * 100) / rowTotal)}%`
+
+                return (
+                  <div key={col.id} className="heyform-report-chart-item">
+                    <div className="heyform-report-chart-background" style={{ width: percent }} />
+                    <div className="heyform-report-chart-content">
+                      <span className="heyform-report-chart-percent">
+                        {col.label} · {percent}
+                      </span>
+                      <span className="heyform-report-chart-count">
+                        {t('form.analytics.report.submission', { count })}
+                      </span>
+                    </div>
+                  </div>
+                )
+              })}
+            </div>
+          </div>
+        )
+      })}
+    </div>
+  )
+}
+
 const FormReportItem: FC<FormReportItemProps> = ({ index, response, isHideFieldEnabled }) => {
   const { t } = useTranslation()
 
@@ -95,6 +145,7 @@ const FormReportItem: FC<FormReportItemProps> = ({ index, response, isHideFieldE
 
   const isChoices = useMemo(() => CHOICE_FIELD_KINDS.includes(response.kind), [response.kind])
   const isRating = useMemo(() => RATING_FIELD_KINDS.includes(response.kind), [response.kind])
+  const isMatrix = useMemo(() => response.kind === FieldKindEnum.MATRIX, [response.kind])
 
   const isHided = useMemo(
     () => isHideFieldEnabled && form?.customReport?.hiddenFields?.includes(response.id),
@@ -106,10 +157,18 @@ const FormReportItem: FC<FormReportItemProps> = ({ index, response, isHideFieldE
       return <Choices chooses={response.chooses} />
     } else if (isRating) {
       return <Ratings length={response.properties?.total} chooses={response.chooses} />
+    } else if (isMatrix) {
+      return (
+        <MatrixChart
+          rows={response.properties?.rows || []}
+          columns={response.properties?.matrixColumns || []}
+          chooses={response.chooses || {}}
+        />
+      )
     } else {
       return <FormReportSubmissions response={response} />
     }
-  }, [isChoices, isRating, response])
+  }, [isChoices, isRating, isMatrix, response])
 
   return (
     <li className="heyform-report-item">

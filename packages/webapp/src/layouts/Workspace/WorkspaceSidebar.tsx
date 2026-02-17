@@ -42,12 +42,12 @@ const RESOURCE_LINKS = [
     icon: IconHelp,
     title: 'workspace.sidebar.help',
     href: HELP_CENTER_URL
-  },
-  {
-    icon: IconStack2,
-    title: 'workspace.sidebar.template',
-    href: TEMPLATES_URL
   }
+  // {
+  //   icon: IconStack2,
+  //   title: 'workspace.sidebar.template',
+  //   href: TEMPLATES_URL
+  // }
 ]
 
 const Link: FC<LinkProps> = ({ to, icon: Icon, label }) => {
@@ -172,7 +172,7 @@ const WorkspaceSidebarComponent = () => {
           ))}
 
           {/* Changelog */}
-          <ChangelogButton />
+          {/* <ChangelogButton /> */}
         </nav>
       </div>
 

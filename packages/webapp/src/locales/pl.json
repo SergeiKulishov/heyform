@@ -831,9 +831,13 @@
         "headline": "Raport",
         "submission_zero": "Brak zgłoszeń",
         "submission_one": "{{count}} zgłoszenie",
+        "submission_few": "{{count}} zgłoszenia",
+        "submission_many": "{{count}} zgłoszeń",
         "submission_other": "{{count}} zgłoszeń",
         "submission2_zero": "Brak zgłoszeń · Średnia: {{average}}",
         "submission2_one": "{{count}} zgłoszenie · Średnia: {{average}}",
+        "submission2_few": "{{count}} zgłoszenia · Średnia: {{average}}",
+        "submission2_many": "{{count}} zgłoszeń · Średnia: {{average}}",
         "submission2_other": "{{count}} zgłoszeń · Średnia: {{average}}"
       },
       "funnel": {

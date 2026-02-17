@@ -119,6 +119,24 @@ export class FormReportService {
             response.average += value
             response.chooses[value] = (response.chooses[value] || 0) + 1
             break
+
+          case FieldKindEnum.MATRIX:
+            if (helper.isObject(answer.value)) {
+              if (Array.isArray(response.chooses) && response.chooses.length === 0) {
+                ;(response as any).chooses = {}
+              }
+              for (const [rowId, colVal] of Object.entries(answer.value as Record<string, any>)) {
+                const colIds = Array.isArray(colVal) ? colVal : colVal ? [colVal] : []
+                for (const colId of colIds) {
+                  if (!(response as any).chooses[rowId]) {
+                    ;(response as any).chooses[rowId] = {}
+                  }
+                  ;(response as any).chooses[rowId][colId] =
+                    ((response as any).chooses[rowId][colId] || 0) + 1
+                }
+              }
+            }
+            break
         }
       }
 
