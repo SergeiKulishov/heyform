@@ -21,6 +21,7 @@ import IconLayoutSplitLeft from '@/assets/layout-split-left.svg?react'
 import IconLayoutSplitRight from '@/assets/layout-split-right.svg?react'
 import IconLegalTerms from '@/assets/legal-terms.svg?react'
 import IconLongText from '@/assets/long-text.svg?react'
+import IconMatrix from '@/assets/matrix.svg?react'
 import IconMultipleIcon from '@/assets/multiple-choice.svg?react'
 import IconNumber from '@/assets/number.svg?react'
 import IconOpinionScale from '@/assets/opinion-scale.svg?react'
@@ -216,6 +217,13 @@ export const STANDARD_FIELD_CONFIGS = [
     label: 'form.builder.question.inputTable',
     textColor: '#c2410c',
     backgroundColor: '#ffedd5'
+  },
+  {
+    kind: FieldKindEnum.MATRIX,
+    icon: IconMatrix,
+    label: 'form.builder.question.matrix',
+    textColor: '#c2410c',
+    backgroundColor: '#ffedd5'
   }
 ]
 
@@ -319,7 +327,7 @@ export const BLOCK_GROUPS = [
     },
     {
       name: 'form.builder.question.data',
-      list: [FieldKindEnum.INPUT_TABLE]
+      list: [FieldKindEnum.INPUT_TABLE, FieldKindEnum.MATRIX]
     },
     {
       name: 'form.builder.question.legalConsent',

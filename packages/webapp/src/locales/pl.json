@@ -1290,6 +1290,7 @@
         "signature": "Podpis",
         "website": "Strona internetowa",
         "inputTable": "Tabela wejściowa",
+        "matrix": "Macierz",
         "submitDate": "Data zgłoszenia",
         "hiddenFields": "Ukryte pola",
         "contactInfo": "Informacje kontaktowe",
@@ -1321,7 +1322,9 @@
         "addChoice": "Dodaj wybór",
         "dateRangeTo": "do",
         "addColumn": "Dodaj kolumnę",
-        "columnPlaceholder": "Kolumna {{index}}"
+        "columnPlaceholder": "Kolumna {{index}}",
+        "addRow": "Dodaj wiersz",
+        "rowPlaceholder": "Wiersz {{index}}"
       },
       "settings": {
         "title": "Ustawienia",

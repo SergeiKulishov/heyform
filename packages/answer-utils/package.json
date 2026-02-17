@@ -1,7 +1,7 @@
 {
   "name": "@voxly/answer-utils",
   "description": "HeyForm Answer Utils",
-  "version": "1.3.1",
+  "version": "1.3.3",
   "publishConfig": {
     "registry": "https://nexus.nlnano.ru/repository/npm-hosted/"
   },
@@ -23,7 +23,7 @@
     "prebuild": "npm run clean"
   },
   "peerDependencies": {
-    "@voxly/shared-types-enums": "^1.1.8",
+    "@voxly/shared-types-enums": "^1.3.5",
     "@voxly/utils": "^1.2.0",
     "big.js": "^6.2.1",
     "dayjs": "^1.11.3",
@@ -32,7 +32,7 @@
     "validator": "^13.7.0"
   },
   "dependencies": {
-    "@voxly/shared-types-enums": "^1.1.8",
+    "@voxly/shared-types-enums": "^1.3.5",
     "@voxly/utils": "^1.2.0",
     "big.js": "^6.2.1",
     "dayjs": "^1.11.3",

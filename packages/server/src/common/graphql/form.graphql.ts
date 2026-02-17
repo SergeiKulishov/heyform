@@ -165,6 +165,15 @@ class SharedPropertyInput {
   @Field(type => [ColumnInput], { nullable: true })
   tableColumns?: Column[]
 
+  @Field(type => [ChoiceInput], { nullable: true })
+  rows?: Choice[]
+
+  @Field(type => [ChoiceInput], { nullable: true })
+  matrixColumns?: Choice[]
+
+  @Field({ nullable: true })
+  matrixType?: string
+
   @Field({ nullable: true })
   score?: number
 
@@ -876,6 +885,15 @@ export class PropertyType {
 
   @Field({ nullable: true })
   use12Hours?: boolean
+
+  @Field(type => [ChoiceType], { nullable: true })
+  rows?: Choice[]
+
+  @Field(type => [ChoiceType], { nullable: true })
+  matrixColumns?: Choice[]
+
+  @Field({ nullable: true })
+  matrixType?: string
 
   @Field({ nullable: true })
   score?: number

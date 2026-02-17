@@ -1290,6 +1290,7 @@
         "signature": "Unterschrift",
         "website": "Webseite",
         "inputTable": "Eingabetabelle",
+        "matrix": "Matrix",
         "submitDate": "Einreichungsdatum",
         "hiddenFields": "Versteckte Felder",
         "contactInfo": "Kontaktinformationen",
@@ -1321,7 +1322,9 @@
         "addChoice": "Auswahl hinzufügen",
         "dateRangeTo": "bis",
         "addColumn": "Spalte hinzufügen",
-        "columnPlaceholder": "Spalte {{index}}"
+        "columnPlaceholder": "Spalte {{index}}",
+        "addRow": "Zeile hinzufügen",
+        "rowPlaceholder": "Zeile {{index}}"
       },
       "settings": {
         "title": "Einstellungen",

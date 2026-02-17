@@ -1,0 +1,47 @@
+import type { FC } from 'react'
+
+import { useTranslation } from '../utils'
+import { helper } from '@voxly/utils'
+
+import { FormField, MatrixInput } from '../components'
+import { useStore } from '../store'
+import type { BlockProps } from './Block'
+import { Block } from './Block'
+import { Form } from './Form'
+
+export const Matrix: FC<BlockProps> = ({ field, ...restProps }) => {
+  const { state } = useStore()
+  const { t } = useTranslation()
+
+  function getValues(values: any) {
+    return helper.isValid(values.input) ? values.input : undefined
+  }
+
+  return (
+    <Block className="heyform-matrix" field={field} {...restProps}>
+      <Form
+        initialValues={{
+          input: state.values[field.id]
+        }}
+        field={field}
+        getValues={getValues}
+      >
+        <FormField
+          name="input"
+          rules={[
+            {
+              required: field.validations?.required,
+              message: t('This field is required')
+            }
+          ]}
+        >
+          <MatrixInput
+            rows={field.properties?.rows}
+            columns={field.properties?.matrixColumns}
+            matrixType={field.properties?.matrixType}
+          />
+        </FormField>
+      </Form>
+    </Block>
+  )
+}

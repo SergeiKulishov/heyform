@@ -331,6 +331,67 @@ const URLItem: FC<SubmissionCellProps> = ({ answer, field, isTableCell }) => {
   )
 }
 
+const MatrixItem: FC<SubmissionCellProps> = ({ answer, field, isTableCell }) => {
+  const answerProps = (answer as any).properties
+  const rows = (field.properties?.rows || answerProps?.rows) as Choice[]
+  const columns = (field.properties?.matrixColumns || answerProps?.matrixColumns) as Choice[]
+
+  if (
+    answer.kind !== field.kind ||
+    !helper.isValidArray(rows) ||
+    !helper.isValidArray(columns) ||
+    !helper.isObject(answer.value)
+  ) {
+    return null
+  }
+
+  if (isTableCell) {
+    const parts = rows.map(row => {
+      const selected = answer.value[row.id]
+      const selectedIds = Array.isArray(selected) ? selected : selected ? [selected] : []
+      const labels = columns.filter(c => selectedIds.includes(c.id)).map(c => c.label)
+      return `${row.label}: ${labels.join(', ') || '-'}`
+    })
+    return <div className="truncate">{parts.join(' | ')}</div>
+  }
+
+  return (
+    <div className="scrollbar overflow-x-auto">
+      <table className="min-w-full text-left text-sm">
+        <thead className="text-secondary">
+          <tr className="border-accent border-b">
+            <th className="text-nowrap py-2 text-left font-normal" />
+            {columns.map(c => (
+              <th key={c.id} className="text-nowrap py-2 text-center font-normal">
+                {c.label}
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {rows.map(row => {
+            const selected = answer.value[row.id]
+            const selectedIds = Array.isArray(selected) ? selected : selected ? [selected] : []
+            return (
+              <tr
+                key={row.id}
+                className="border-accent hover:bg-primary/[2.5%] border-b last:border-b-0"
+              >
+                <td className="h-10 text-nowrap py-2 text-left font-medium">{row.label}</td>
+                {columns.map(c => (
+                  <td key={c.id} className="h-10 py-2 text-center">
+                    {selectedIds.includes(c.id) ? '●' : ''}
+                  </td>
+                ))}
+              </tr>
+            )
+          })}
+        </tbody>
+      </table>
+    </div>
+  )
+}
+
 const SubmitDateItem: FC<SubmissionCellProps> = ({ answer }) => {
   const { i18n } = useTranslation()
 
@@ -382,6 +443,10 @@ export default function SubmissionCell(props: SubmissionCellProps) {
 
     case FieldKindEnum.INPUT_TABLE:
       return <InputTableItem {...props} />
+
+    case FieldKindEnum.MATRIX:
+    case 'matrix':
+      return <MatrixItem {...props} />
 
     case FieldKindEnum.PAYMENT:
       return <PaymentItem {...props} />

@@ -166,6 +166,27 @@ export function getPropertiesFromKind(properties: Property, newKind: FieldKindEn
       }
       break
 
+    case FieldKindEnum.MATRIX:
+    case 'matrix':
+      if (!helper.isArray(props.rows)) {
+        props.rows = [
+          { id: nanoid(12), label: '' },
+          { id: nanoid(12), label: '' },
+          { id: nanoid(12), label: '' }
+        ]
+      }
+      if (!helper.isArray(props.matrixColumns)) {
+        props.matrixColumns = [
+          { id: nanoid(12), label: '' },
+          { id: nanoid(12), label: '' },
+          { id: nanoid(12), label: '' }
+        ]
+      }
+      if (!props.matrixType) {
+        props.matrixType = 'single'
+      }
+      break
+
     case FieldKindEnum.PAYMENT:
       if (!props.currency) {
         props.currency = 'USD'

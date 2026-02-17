@@ -89,6 +89,30 @@ function inputTable(answer: Answer): string {
   return ''
 }
 
+function matrix(answer: Answer): string {
+  const rows = answer.properties?.rows
+  const columns = answer.properties?.matrixColumns
+
+  if (helper.isValidArray(rows) && helper.isValidArray(columns) && helper.isValid(answer.value)) {
+    return rows!
+      .map(row => {
+        const selected = answer.value[row.id]
+
+        if (helper.isNil(selected)) {
+          return `${row.label}: -`
+        }
+
+        const selectedIds = Array.isArray(selected) ? selected : [selected]
+        const labels = columns!.filter(col => selectedIds.includes(col.id)).map(col => col.label)
+
+        return `${row.label}: ${labels.join(', ')}`
+      })
+      .join('\n')
+  }
+
+  return ''
+}
+
 function payment(answer: Answer): string {
   const value = answer.value as ServerSidePaymentValue
   const price = Big(value.amount).div(100).toFixed(2)
@@ -113,5 +137,6 @@ export default {
   legalTerms,
   dateRange,
   inputTable,
+  matrix,
   payment
 }

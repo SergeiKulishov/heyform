@@ -1290,6 +1290,7 @@
         "signature": "署名",
         "website": "ウェブサイト",
         "inputTable": "入力テーブル",
+        "matrix": "マトリクス",
         "submitDate": "提出日",
         "hiddenFields": "非表示フィールド",
         "contactInfo": "連絡先情報",
@@ -1321,7 +1322,9 @@
         "addChoice": "選択肢を追加",
         "dateRangeTo": "から",
         "addColumn": "列を追加",
-        "columnPlaceholder": "列 {{index}}"
+        "columnPlaceholder": "列 {{index}}",
+        "addRow": "行を追加",
+        "rowPlaceholder": "行 {{index}}"
       },
       "settings": {
         "title": "設定",

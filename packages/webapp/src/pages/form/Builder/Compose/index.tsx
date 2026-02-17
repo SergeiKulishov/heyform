@@ -23,6 +23,7 @@ import {
   InputTable,
   LegalTerms,
   LongText,
+  Matrix,
   MultipleChoice,
   Number,
   OpinionScale,
@@ -85,6 +86,10 @@ const Fields: FC = () => {
       return (
         <InputTable key={field.id} field={field} locale={state.locale} parentField={parentField} />
       )
+
+    case FieldKindEnum.MATRIX:
+    case 'matrix':
+      return <Matrix key={field.id} field={field} locale={state.locale} parentField={parentField} />
 
     case FieldKindEnum.LEGAL_TERMS:
       return (

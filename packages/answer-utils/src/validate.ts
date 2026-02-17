@@ -109,6 +109,10 @@ export function validate(rule: FieldsToValidateRules, value: AnswerValue): void 
       validateInputTable(rule, value)
       break
 
+    case FieldKindEnum.MATRIX:
+      validateMatrix(rule, value)
+      break
+
     case FieldKindEnum.SIGNATURE:
       validateSignature(rule, value)
       break
@@ -554,6 +558,46 @@ function validateLegalTerms(rule: FieldsToValidateRules, value: AnswerValue): bo
 
 function validateInputTable(rule: FieldsToValidateRules, value: AnswerValue): boolean {
   return (rule.required && helper.isValidArray(value)) || false
+}
+
+function validateMatrix(rule: FieldsToValidateRules, value: AnswerValue): void {
+  if (!helper.isObject(value)) {
+    if (rule.required) {
+      throw new ValidateError({
+        id: rule.id,
+        kind: rule.kind,
+        title: rule.title,
+        message: 'This field is required'
+      })
+    }
+    return
+  }
+
+  const rowIds = Object.keys(value)
+
+  if (rule.required && rowIds.length < 1) {
+    throw new ValidateError({
+      id: rule.id,
+      kind: rule.kind,
+      title: rule.title,
+      message: 'This field is required'
+    })
+  }
+
+  for (const rowId of rowIds) {
+    const selected = value[rowId]
+
+    if (helper.isEmpty(selected)) {
+      if (rule.required) {
+        throw new ValidateError({
+          id: rule.id,
+          kind: rule.kind,
+          title: rule.title,
+          message: 'Please answer all rows'
+        })
+      }
+    }
+  }
 }
 
 function validateSignature(rule: FieldsToValidateRules, value: AnswerValue): boolean {

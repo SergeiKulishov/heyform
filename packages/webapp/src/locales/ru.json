@@ -1360,6 +1360,7 @@
         "signature": "Подпись",
         "website": "Веб-сайт",
         "inputTable": "Таблица ввода",
+        "matrix": "Матрица",
         "submitDate": "Дата отправки",
         "hiddenFields": "Скрытые поля",
         "contactInfo": "Контактная информация",
@@ -1395,7 +1396,9 @@
         "addChoice": "Добавить вариант",
         "dateRangeTo": "до",
         "addColumn": "Добавить колонку",
-        "columnPlaceholder": "Кол {{index}}"
+        "columnPlaceholder": "Кол {{index}}",
+        "addRow": "Добавить строку",
+        "rowPlaceholder": "Строка {{index}}"
       },
       "settings": {
         "title": "Настройки",

@@ -64,6 +64,10 @@ function parseHtmlAnswer(answer: Answer): string {
         value = parser.inputTable(answer)
         break
 
+      case FieldKindEnum.MATRIX:
+        value = parser.matrix(answer)
+        break
+
       case FieldKindEnum.PAYMENT:
         value = parser.payment(answer)
         break

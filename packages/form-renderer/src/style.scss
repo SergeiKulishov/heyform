@@ -1415,6 +1415,74 @@ button.button-icon-only {
 }
 
 // ----------------------------------------------------------------------------
+// Matrix
+.heyform-matrix-root {
+  @apply w-full overflow-x-auto;
+
+  table {
+    @apply w-full border-collapse;
+  }
+
+  th,
+  td {
+    @apply border-0 px-3 py-2 text-center;
+    color: var(--heyform-question-color);
+  }
+}
+
+.heyform-matrix-header {
+  th {
+    @apply pb-3 text-sm font-medium;
+    color: var(--heyform-question-color);
+    opacity: 0.7;
+  }
+}
+
+.heyform-matrix-row-label {
+  @apply text-left font-medium;
+  color: var(--heyform-question-color);
+  min-width: 8rem;
+}
+
+.heyform-matrix-col-label {
+  min-width: 4rem;
+}
+
+.heyform-matrix-row {
+  &.heyform-matrix-row-even {
+    background: var(--heyform-answer-opacity-10-color);
+  }
+}
+
+.heyform-matrix-cell {
+  @apply cursor-pointer;
+
+  &:hover .heyform-matrix-indicator {
+    border-color: var(--heyform-answer-color);
+  }
+}
+
+.heyform-matrix-indicator {
+  @apply mx-auto inline-block h-5 w-5;
+  border: 2px solid var(--heyform-answer-opacity-40-color);
+  transition: all 0.15s ease;
+
+  &.heyform-matrix-indicator-radio {
+    @apply rounded-full;
+  }
+
+  &.heyform-matrix-indicator-checkbox {
+    @apply rounded;
+  }
+
+  &.heyform-matrix-indicator-selected {
+    border-color: var(--heyform-answer-color);
+    background-color: var(--heyform-answer-color);
+    box-shadow: inset 0 0 0 2px var(--heyform-background-color, #fff);
+  }
+}
+
+// ----------------------------------------------------------------------------
 // Payment
 .heyform-payment-header {
 }

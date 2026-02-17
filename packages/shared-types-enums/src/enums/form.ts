@@ -53,6 +53,7 @@ export enum FieldKindEnum {
 
   // Data
   INPUT_TABLE = 'input_table',
+  MATRIX = 'matrix',
 
   // Fieldset
   PAYMENT = 'payment',

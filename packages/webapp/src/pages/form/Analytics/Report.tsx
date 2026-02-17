@@ -70,6 +70,8 @@ export const ReportList: FC<ReportListProps> = ({ isHideFieldEnabled }) => {
         row.kind = field.kind
         row.properties = pickValidValues((field.properties as any) || {}, [
           'tableColumns',
+          'rows',
+          'matrixColumns',
           'total',
           'average',
           'leftLabel',

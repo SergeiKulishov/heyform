@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next'
 import { useStoreContext } from '../../store'
 import CoverAndLayout from './CoverAndLayout'
 import DateSettings from './Date'
+import MatrixSettings from './Matrix'
 import MultipleChoiceSettings from './MultipleChoice'
 import OpinionScaleSettings from './OpinionScale'
 import PaymentSettings from './Payment'
@@ -42,6 +43,10 @@ const Settings = ({ field }: RequiredSettingsProps) => {
 
       case FieldKindEnum.THANK_YOU:
         return <ThankYouSettings field={field} />
+
+      case FieldKindEnum.MATRIX:
+      case 'matrix':
+        return <MatrixSettings field={field} />
 
       case FieldKindEnum.PAYMENT:
         return <PaymentSettings field={field} />

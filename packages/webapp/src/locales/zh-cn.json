@@ -1290,6 +1290,7 @@
         "signature": "签名",
         "website": "网站",
         "inputTable": "输入表",
+        "matrix": "矩阵",
         "submitDate": "提交日期",
         "hiddenFields": "隐藏字段",
         "contactInfo": "联系信息",
@@ -1321,7 +1322,9 @@
         "addChoice": "添加选项",
         "dateRangeTo": "至",
         "addColumn": "添加列",
-        "columnPlaceholder": "列 {{index}}"
+        "columnPlaceholder": "列 {{index}}",
+        "addRow": "添加行",
+        "rowPlaceholder": "行 {{index}}"
       },
       "settings": {
         "title": "设置",

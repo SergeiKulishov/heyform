@@ -867,6 +867,84 @@
     }
   }
 
+  .heyform-matrix-editable-item {
+    @apply relative flex items-center;
+
+    .heyform-radio-remove {
+      @apply -top-4 right-auto cursor-pointer;
+    }
+
+    &:hover {
+      .heyform-radio-remove {
+        @apply visible opacity-100;
+      }
+    }
+
+    input {
+      @apply border-0 bg-transparent text-lg;
+      min-height: 1.75rem;
+      max-width: 9rem;
+      color: var(--heyform-answer-color);
+
+      &::placeholder {
+        color: var(--heyform-answer-opacity-60-color);
+      }
+
+      &,
+      &:focus {
+        outline: none !important;
+        box-shadow: none !important;
+      }
+    }
+  }
+
+  .heyform-matrix {
+    .heyform-table-scrollable {
+      @apply pt-5;
+    }
+
+    table {
+      @apply border-separate;
+      border-spacing: 0 0.5rem;
+      -webkit-border-horizontal-spacing: 0;
+      -webkit-border-vertical-spacing: 0.5rem;
+    }
+
+    tr {
+      td,
+      th {
+        @apply border-0 p-2;
+      }
+    }
+
+    thead th {
+      min-width: 8rem;
+
+      .heyform-matrix-editable-item {
+        @apply flex-col items-center;
+
+        input {
+          @apply text-center;
+        }
+      }
+    }
+
+    tbody td:first-child {
+      min-width: 8rem;
+
+      .heyform-matrix-editable-item {
+        .heyform-radio-remove {
+          @apply -left-3 -top-3 right-auto;
+        }
+      }
+    }
+
+    .heyform-matrix-preview-indicator {
+      @apply mx-auto block h-5 w-5 rounded-full;
+      border: 2px solid var(--heyform-answer-opacity-40-color);
+    }
+  }
+
   
   
   .heyform-payment-header,

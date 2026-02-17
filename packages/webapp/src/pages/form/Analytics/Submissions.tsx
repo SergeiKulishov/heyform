@@ -1,4 +1,4 @@
-import { Column, FieldKindEnum } from '@voxly/shared-types-enums'
+import { Choice, Column, FieldKindEnum } from '@voxly/shared-types-enums'
 import { useBoolean } from 'ahooks'
 import { FC, useCallback, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -61,6 +61,58 @@ const InputTableItem: FC<InputTableItemProps> = ({ columns, answers: rawAnswers 
             </td>
           </tr>
         ))}
+      </tbody>
+    </table>
+  )
+}
+
+interface MatrixItemProps extends SubmissionItemProps {
+  rows: Choice[]
+  columns: Choice[]
+}
+
+const MatrixAnalyticsItem: FC<MatrixItemProps> = ({ rows, columns, answers: rawAnswers = [] }) => {
+  const { i18n } = useTranslation()
+
+  return (
+    <table className="w-full">
+      <thead>
+        <tr>
+          <th className="heyform-report-border text-secondary border-b py-2 text-sm/6 font-medium" />
+          {columns.map(c => (
+            <th
+              key={c.id}
+              className="heyform-report-border text-secondary border-b py-2 text-center text-sm/6 font-medium"
+            >
+              {c.label}
+            </th>
+          ))}
+          <th className="heyform-report-border border-b" />
+        </tr>
+      </thead>
+      <tbody className="heyform-report-divide divide-y">
+        {rawAnswers.map((answer: any, index: number) => {
+          const value = answer.value || {}
+
+          return rows.map(row => {
+            const selected = value[row.id]
+            const selectedIds = Array.isArray(selected) ? selected : selected ? [selected] : []
+
+            return (
+              <tr key={`${index}-${row.id}`}>
+                <td className="heyform-report-input-value font-medium">{row.label}</td>
+                {columns.map(c => (
+                  <td key={c.id} className="heyform-report-input-value text-center">
+                    {selectedIds.includes(c.id) ? '●' : ''}
+                  </td>
+                ))}
+                <td className="heyform-report-input-datetime">
+                  {index === 0 ? timeFromNow(answer.endAt, i18n.language) : ''}
+                </td>
+              </tr>
+            )
+          })
+        })}
       </tbody>
     </table>
   )
@@ -156,6 +208,12 @@ export default function FormReportSubmissions({ response }: any) {
     <div>
       {response.kind === FieldKindEnum.INPUT_TABLE ? (
         <InputTableItem answers={answers} columns={response.properties?.tableColumns || []} />
+      ) : response.kind === FieldKindEnum.MATRIX || response.kind === 'matrix' ? (
+        <MatrixAnalyticsItem
+          answers={answers}
+          rows={response.properties?.rows || []}
+          columns={response.properties?.matrixColumns || []}
+        />
       ) : (
         <SubmissionItem answers={answers} />
       )}

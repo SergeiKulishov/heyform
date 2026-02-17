@@ -15,6 +15,7 @@ import { FullName } from '../blocks/FullName'
 import { InputTable } from '../blocks/InputTable'
 import { LegalTerms } from '../blocks/LegalTerms'
 import { LongText } from '../blocks/LongText'
+import { Matrix } from '../blocks/Matrix'
 import { MultipleChoice } from '../blocks/MultipleChoice'
 import { Number } from '../blocks/Number'
 import { OpinionScale } from '../blocks/OpinionScale'
@@ -91,6 +92,9 @@ function getBlock(field: FormField, blockIndex?: number) {
 
     case FieldKindEnum.INPUT_TABLE:
       return <InputTable key={field.id} field={field} />
+
+    case FieldKindEnum.MATRIX:
+      return <Matrix key={field.id} field={field} />
 
     case FieldKindEnum.SHORT_TEXT:
       return <ShortText key={field.id} field={field} />
