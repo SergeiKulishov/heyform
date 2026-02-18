@@ -682,6 +682,9 @@ export class CreateFieldsWithAIInput extends FormDetailInput {
 }
 
 @InputType()
+export class AuditFormWithAIInput extends FormDetailInput {}
+
+@InputType()
 export class CreateFormThemeWithAIInput extends CreateFieldsWithAIInput {
   @Field()
   theme: string

@@ -127,6 +127,35 @@ Each logic rule:
 
 Return ONLY the JSON object, no markdown, no explanation.`
 
+const FORM_AUDIT_SYSTEM_PROMPT = `You are a form quality reviewer. Analyze the given form fields and return specific, actionable suggestions.
+
+
+Check for:
+- Spelling and grammar errors in question titles and descriptions (check in whatever language the questions are written in)
+- Duplicate or very similar questions
+- Vague or unclear question wording
+- Wrong field type (e.g. asking for age with short_text instead of number)
+- Missing important fields for the form's apparent purpose
+- Overly long forms (>15 questions) or too short (<3 questions) for a serious topic
+- Too many required fields (friction)
+- Missing descriptions on complex questions (multiple_choice, matrix)
+
+Return ONLY a JSON object: { "suggestions": [...] }
+
+Each suggestion:
+{
+  "severity": "warning" | "info",
+  "fieldIndex": <1-based integer or null for general form-level feedback>,
+  "title": "<short issue title, max 6 words>",
+  "description": "<specific actionable recommendation, 1-2 sentences>"
+}
+
+Return 3-7 most important suggestions. If the form is good, return { "suggestions": [] }.
+Write all "title" and "description" values in the same language as the form questions.
+Return ONLY JSON, no markdown, no explanation.
+
+IMPORTANT!: Write your suggestions in the same language as the form questions. `
+
 const FORM_THEME_SYSTEM_PROMPT = `You are a form theme assistant. Given a current theme JSON and a user instruction, return ONLY a valid JSON object with updated theme properties.
 
 Theme properties you can set:
@@ -327,6 +356,44 @@ export class AiService {
       return parsed.logics || []
     } catch (err) {
       this.logger.error('Failed to generate form logics', err)
+      return []
+    }
+  }
+
+  async auditFormFields(fields: any[]): Promise<any[]> {
+    const questionFields = fields
+      .filter(f => f.kind !== 'thank_you' && f.kind !== 'welcome')
+      .map((f, i) => ({
+        index: i + 1,
+        id: f.id,
+        kind: f.kind,
+        title: f.title,
+        required: f.validations?.required ?? false,
+        properties: f.properties ?? null
+      }))
+
+    try {
+      const { choices } = await this.openai.chat.completions.create({
+        model: OPENAI_GPT_MODEL,
+        temperature: 0.3,
+        max_tokens: 1500,
+        messages: [
+          { role: 'system', content: FORM_AUDIT_SYSTEM_PROMPT },
+          {
+            role: 'user',
+            content: `Form fields:\n${JSON.stringify(questionFields, null, 2)}`
+          }
+        ]
+      })
+
+      if (!helper.isValidArray(choices) || !choices[0].message.content) {
+        return []
+      }
+
+      const parsed = extractJson(choices[0].message.content)
+      return parsed.suggestions || []
+    } catch (err) {
+      this.logger.error('Failed to audit form fields', err)
       return []
     }
   }

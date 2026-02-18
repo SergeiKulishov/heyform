@@ -801,12 +801,17 @@
       "defaultName": "Sans titre"
     },
     "chat": {
-      "title": "Assistant IA HeyForm",
-      "welcome": "Bienvenue dans l'Assistant IA de HeyForm ! Il s'agit d'une fonctionnalité innovante alimentée par une technologie IA de pointe, conçue pour vous aider à créer des questions et des logiques de formulaire.",
+      "title": "Assistant IA",
+      "welcome": "Bonjour ! Je peux vous aider à créer des questions, améliorer la logique et auditer votre formulaire. Posez-moi n'importe quelle question.",
       "compose": "Demandez-moi n'importe quoi...",
       "fieldsUpdated": "Les questions de votre formulaire ont été mises à jour.",
       "logicUpdated": "La logique de votre formulaire a été mise à jour.",
-      "themeUpdated": "Le thème de votre formulaire a été mis à jour."
+      "themeUpdated": "Le thème de votre formulaire a été mis à jour.",
+      "auditButton": "Auditer",
+      "auditTooltip": "Vérifier les fautes d'orthographe, les formulations floues et les types de champs inappropriés",
+      "auditComplete": "{{count}} suggestion(s) trouvée(s) :",
+      "auditEmpty": "Votre formulaire semble correct ! Aucun problème majeur.",
+      "expandHint": "Cliquer pour agrandir"
     },
     "rename": {
       "headline": "Renommer ce formulaire",

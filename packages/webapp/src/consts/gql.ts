@@ -668,6 +668,12 @@ export const CREATE_FIELDS_WITH_AI_GQL = gql`
   }
 `
 
+export const AUDIT_FORM_WITH_AI_GQL = gql`
+  mutation auditFormWithAI($input: AuditFormWithAIInput!) {
+    auditFormWithAI(input: $input)
+  }
+`
+
 export const IMPORT_FORM_GQL = gql`
   query importExternalForm($input: ImportExternalFormInput!) {
     importExternalForm(input: $input)

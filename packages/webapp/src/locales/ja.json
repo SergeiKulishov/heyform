@@ -797,12 +797,17 @@
       "defaultName": "無題"
     },
     "chat": {
-      "title": "HeyForm AI アシスタント",
-      "welcome": "HeyFormのAIアシスタントへようこそ！これは最先端のAI技術によって支えられた革新的な機能で、フォームの質問やロジックを作成するのに役立ちます。",
+      "title": "AI アシスタント",
+      "welcome": "こんにちは！質問の作成、ロジックの改善、フォームの診断をお手伝いします。何でも聞いてください。",
       "compose": "何でも聞いてください...",
       "fieldsUpdated": "フォームの質問が更新されました。",
       "logicUpdated": "フォームのロジックが更新されました。",
-      "themeUpdated": "フォームのテーマが更新されました。"
+      "themeUpdated": "フォームのテーマが更新されました。",
+      "auditButton": "診断",
+      "auditTooltip": "スペルミス、不明確な表現、フィールドタイプの誤りを確認する",
+      "auditComplete": "{{count}} 件の提案が見つかりました:",
+      "auditEmpty": "フォームは良好です！重大な問題はありません。",
+      "expandHint": "クリックして展開"
     },
     "rename": {
       "headline": "このフォームの名前を変更する",

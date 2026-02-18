@@ -13,6 +13,7 @@ import {
 import { apollo } from '@/utils'
 
 import {
+  AUDIT_FORM_WITH_AI_GQL,
   COMPLETE_SUBMISSION_GQL,
   CREATE_FIELDS_WITH_AI_GQL,
   CREATE_FORM_FIELD_GQL,
@@ -131,6 +132,13 @@ export class FormService {
           history
         }
       }
+    })
+  }
+
+  static auditFormWithAI(formId: string) {
+    return apollo.mutate({
+      mutation: AUDIT_FORM_WITH_AI_GQL,
+      variables: { input: { formId } }
     })
   }
 

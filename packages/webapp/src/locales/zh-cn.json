@@ -797,12 +797,17 @@
       "defaultName": "未命名"
     },
     "chat": {
-      "title": "HeyForm AI 助手",
-      "welcome": "欢迎使用 HeyForm 的 AI 助手！这是一个由最先进的 AI 技术驱动的创新功能，旨在帮助您创建表单问题和逻辑。",
+      "title": "AI 助手",
+      "welcome": "你好！我可以帮你创建问题、改进逻辑并审查表单。有什么问题尽管问我。",
       "compose": "问我任何问题...",
       "fieldsUpdated": "您的表单问题已更新。",
       "logicUpdated": "您的表单逻辑已更新。",
-      "themeUpdated": "您的表单主题已更新。"
+      "themeUpdated": "您的表单主题已更新。",
+      "auditButton": "审查",
+      "auditTooltip": "检查问题中的拼写错误、措辞不清和字段类型不当",
+      "auditComplete": "发现 {{count}} 条建议:",
+      "auditEmpty": "表单看起来不错！没有发现重大问题。",
+      "expandHint": "点击展开"
     },
     "rename": {
       "headline": "重命名此表单",

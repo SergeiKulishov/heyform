@@ -797,12 +797,17 @@
       "defaultName": "Bez tytułu"
     },
     "chat": {
-      "title": "HeyForm Asystent AI",
-      "welcome": "Witamy w HeyForm Asystent AI! To innowacyjna funkcja zasilana najnowocześniejszą technologią AI, zaprojektowana, aby pomóc Ci tworzyć pytania i logikę formularzy.",
+      "title": "Asystent AI",
+      "welcome": "Cześć! Pomogę Ci tworzyć pytania, ulepszać logikę i weryfikować formularz. Zapytaj mnie o cokolwiek.",
       "compose": "Zapytaj mnie o cokolwiek...",
       "fieldsUpdated": "Pytania w Twoim formularzu zostały zaktualizowane.",
       "logicUpdated": "Logika Twojego formularza została zaktualizowana.",
-      "themeUpdated": "Motyw Twojego formularza został zaktualizowany."
+      "themeUpdated": "Motyw Twojego formularza został zaktualizowany.",
+      "auditButton": "Audyt",
+      "auditTooltip": "Sprawdź pytania pod kątem błędów ortograficznych, niejasnych sformułowań i nieodpowiednich typów pól",
+      "auditComplete": "Znaleziono {{count}} sugestię(i):",
+      "auditEmpty": "Formularz wygląda dobrze! Nie znaleziono poważnych problemów.",
+      "expandHint": "Kliknij aby rozwinąć"
     },
     "rename": {
       "headline": "Zmień nazwę tego formularza",

@@ -856,12 +856,17 @@
       "submit": "Generate questions"
     },
     "chat": {
-      "title": "HeyForm AI Assistant",
-      "welcome": "Welcome to HeyForm's AI Assistant! This is an innovative feature powered by cutting-edge AI technology, designed to help you create form questions and logics.",
+      "title": "AI Assistant",
+      "welcome": "Hi! I can help you create questions, improve logic, and audit your form. Ask me anything.",
       "compose": "Ask me anything...",
       "fieldsUpdated": "Your form's questions have been updated.",
       "logicUpdated": "Your form's logic has been updated.",
-      "themeUpdated": "your form's theme has been updated."
+      "themeUpdated": "your form's theme has been updated.",
+      "auditButton": "Audit",
+      "auditTooltip": "Check questions for spelling errors, unclear wording, and wrong field types",
+      "auditComplete": "Found {{count}} suggestion(s):",
+      "auditEmpty": "Your form looks good! No major issues found.",
+      "expandHint": "Click to expand"
     },
     "rename": {
       "headline": "Rename this form",

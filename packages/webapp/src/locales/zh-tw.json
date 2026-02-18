@@ -797,12 +797,17 @@
       "defaultName": "未命名"
     },
     "chat": {
-      "title": "HeyForm AI 助理",
-      "welcome": "歡迎使用 HeyForm 的 AI 助理！這是一個由尖端 AI 技術驅動的創新功能，旨在幫助您創建表單問題和邏輯。",
+      "title": "AI 助理",
+      "welcome": "你好！我可以幫你建立問題、改善邏輯並審查表單。有什麼問題儘管問我。",
       "compose": "問我任何問題...",
       "fieldsUpdated": "您的表單問題已更新。",
       "logicUpdated": "您的表單邏輯已更新。",
-      "themeUpdated": "您的表單主題已更新。"
+      "themeUpdated": "您的表單主題已更新。",
+      "auditButton": "審查",
+      "auditTooltip": "檢查問題中的拼寫錯誤、措辭不清和欄位類型不當",
+      "auditComplete": "發現 {{count}} 條建議:",
+      "auditEmpty": "表單看起來不錯！沒有發現重大問題。",
+      "expandHint": "點擊展開"
     },
     "rename": {
       "headline": "重新命名此表單",
