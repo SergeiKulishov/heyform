@@ -6,6 +6,7 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import { helper } from '@voxly/utils'
 
 import { IComponentProps } from '../typings'
+import { ChevronDownIcon, ChevronUpIcon } from './Icons'
 
 interface RankingInputProps extends Omit<IComponentProps, 'onChange' | 'value'> {
   value?: RankingValue
@@ -118,7 +119,7 @@ export const RankingInput: FC<RankingInputProps> = ({ value, choices, onChange, 
                 onClick={() => handleMoveUp(index)}
                 disabled={index === 0}
               >
-                ↑
+                <ChevronUpIcon />
               </button>
               <button
                 type="button"
@@ -126,7 +127,7 @@ export const RankingInput: FC<RankingInputProps> = ({ value, choices, onChange, 
                 onClick={() => handleMoveDown(index)}
                 disabled={index === orderedIds.length - 1}
               >
-                ↓
+                <ChevronDownIcon />
               </button>
             </div>
           </div>

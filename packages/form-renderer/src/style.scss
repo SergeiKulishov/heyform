@@ -1537,7 +1537,7 @@ button.button-icon-only {
 }
 
 .heyform-ranking-arrows {
-  display: none;
+  display: flex;
   gap: 4px;
 }
 
@@ -1551,12 +1551,6 @@ button.button-icon-only {
   &:disabled {
     opacity: 0.3;
     cursor: not-allowed;
-  }
-}
-
-@media (pointer: coarse) {
-  .heyform-ranking-arrows {
-    display: flex;
   }
 }
 

@@ -1,3 +1,4 @@
+export * from './ChevronIcon'
 export * from './CollapseIcon'
 export * from './CrownIcon'
 export * from './EmotionIcon'
