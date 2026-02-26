@@ -38,5 +38,15 @@ export const LOCALE_OPTIONS = [
     value: 'zh-tw',
     label: 'languages.zh-tw.original',
     translated: 'languages.zh-tw.translated'
+  },
+  {
+    value: 'isv-latn',
+    label: 'languages.isv-latn.original',
+    translated: 'languages.isv-latn.translated'
+  },
+  {
+    value: 'isv-cyrl',
+    label: 'languages.isv-cyrl.original',
+    translated: 'languages.isv-cyrl.translated'
   }
 ]

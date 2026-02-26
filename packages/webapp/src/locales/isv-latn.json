@@ -1,0 +1,1661 @@
+{
+  "languages": {
+    "de": {
+      "original": "Deutsch",
+      "translated": "Němečsky"
+    },
+    "en": {
+      "original": "English",
+      "translated": "Anglijsky"
+    },
+    "ru": {
+      "original": "Русский",
+      "translated": "Rusky"
+    },
+    "fr": {
+      "original": "Français",
+      "translated": "Francuzsky"
+    },
+    "ja": {
+      "original": "日本語",
+      "translated": "Japonsky"
+    },
+    "pl": {
+      "original": "Polski",
+      "translated": "Poljsky"
+    },
+    "zh-cn": {
+      "original": "简体中文",
+      "translated": "Kitajsky (uprošćeny)"
+    },
+    "zh-tw": {
+      "original": "繁體中文（台灣）",
+      "translated": "Kitajsky (Tajvan)"
+    },
+    "isv-latn": {
+      "original": "Medžuslovjansky",
+      "translated": "Medžuslovjansky (latinica)"
+    },
+    "isv-cyrl": {
+      "original": "Меджусловјанскы",
+      "translated": "Medžuslovjansky (kirilica)"
+    }
+  },
+  "timezones": {
+    "niue": "Niue",
+    "samoa": "Samoa",
+    "cookislands": "Kukovy ostrovy",
+    "hawaiialeutian": "Gavajsko-Aleutsky",
+    "tahiti": "Tahiti",
+    "marquesas": "Markizske ostrovy",
+    "gambier": "Gambier",
+    "hawaiialeutianadak": "Gavajsko-Aleutsky (Adak)",
+    "anchorage": "Ankoridž",
+    "juneau": "Džuno",
+    "metlakatla": "Metlakatla",
+    "nome": "Nom",
+    "sitka": "Sitka",
+    "yakutat": "Jakutat",
+    "pitcairn": "Pitkern",
+    "mexicanpacific": "Meksikanski Tihomorsky",
+    "dawsoncreek": "Doson Krik",
+    "fortnelson": "Fort Nelson",
+    "phoenix": "Finiks",
+    "losangeles": "Los Andželes",
+    "tijuana": "Tihuana",
+    "vancouver": "Vankuver",
+    "dawson": "Doson",
+    "whitehorse": "Vajthors",
+    "belize": "Beliz",
+    "costarica": "Kosta Rika",
+    "elsalvador": "Salvador",
+    "guatemala": "Gvatemala",
+    "managua": "Managva",
+    "regina": "Redžina",
+    "swiftcurrent": "Svift Karent",
+    "tegucigalpa": "Tegusigalpa",
+    "easterisland": "Velikonoćny ostrov",
+    "galapagos": "Galapagos",
+    "chihuahua": "Čihuahua",
+    "mazatlan": "Mazatlan",
+    "boise": "Bojzi",
+    "cambridgebay": "Kembridž Bej",
+    "denver": "Denver",
+    "edmonton": "Edmonton",
+    "inuvik": "Inuvik",
+    "ojinaga": "Ohinaga",
+    "yellowknife": "Jelouknajf",
+    "eirunepe": "Ejrunepe",
+    "riobranco": "Rio Branko",
+    "bahiabanderas": "Bahia Banderas",
+    "beulahnorthdakota": "Bjula, Severna Dakota",
+    "centernorthdakota": "Centr, Severna Dakota",
+    "chicago": "Čikago",
+    "knoxindiana": "Noks, Indiana",
+    "matamoros": "Matamoros",
+    "menominee": "Menomini",
+    "merida": "Merida",
+    "mexicocity": "Meksiko",
+    "monterrey": "Monterej",
+    "newsalemnorthdakota": "Novy Salem, Severna Dakota",
+    "rainyriver": "Rejni River",
+    "rankininlet": "Rankin Inlet",
+    "resolute": "Rezoljut",
+    "tellcityindiana": "Tel Siti, Indiana",
+    "winnipeg": "Vinipeg",
+    "colombia": "Kolumbija",
+    "cancun": "Kankun",
+    "jamaica": "Jamajka",
+    "panama": "Panama",
+    "ecuador": "Ekvador",
+    "peru": "Peru",
+    "boavista": "Boa Vista",
+    "campogrande": "Kampo Grande",
+    "cuiaba": "Kujaba",
+    "manaus": "Manaus",
+    "portovelho": "Porto Veljo",
+    "barbados": "Barbados",
+    "martinique": "Martinik",
+    "puertorico": "Puerto Riko",
+    "santodomingo": "Santo Domingo",
+    "bolivia": "Bolivija",
+    "chile": "Čile",
+    "cuba": "Kuba",
+    "detroit": "Detroit",
+    "grandturk": "Grand Terk",
+    "indianapolis": "Indianapolis",
+    "iqaluit": "Ikaluit",
+    "louisville": "Luisvil",
+    "marengoindiana": "Marengo, Indiana",
+    "monticellokentucky": "Montičelo, Kentaki",
+    "newyork": "Novy Jork",
+    "nipigon": "Nipigon",
+    "pangnirtung": "Pangnirtung",
+    "petersburgindiana": "Petersburg, Indiana",
+    "portauprince": "Port-o-Prens",
+    "thunderbay": "Tander Bej",
+    "toronto": "Toronto",
+    "vevayindiana": "Vivej, Indiana",
+    "vincennesindiana": "Vinsens, Indiana",
+    "winamacindiana": "Vinamak, Indiana",
+    "guyana": "Gvijana",
+    "paraguay": "Paragvaj",
+    "venezuela": "Venezuela",
+    "buenosaires": "Buenos Ajres",
+    "catamarca": "Katamarka",
+    "cordoba": "Kordoba",
+    "jujuy": "Žužuj",
+    "larioja": "La Rioha",
+    "mendoza": "Mendoza",
+    "riogallegos": "Rio Galjegos",
+    "salta": "Salta",
+    "sanjuan": "San Huan",
+    "sanluis": "San Luis",
+    "tucuman": "Tukuman",
+    "ushuaia": "Ušuaja",
+    "bermuda": "Bermudy",
+    "glacebay": "Glejs Bej",
+    "goosebay": "Gus Bej",
+    "halifax": "Galifaks",
+    "moncton": "Monkton",
+    "thule": "Tule",
+    "araguaina": "Aragvaina",
+    "bahia": "Bahija",
+    "belem": "Belem",
+    "fortaleza": "Fortaleza",
+    "maceio": "Masejo",
+    "recife": "Resife",
+    "santarem": "Santarem",
+    "saopaulo": "Sao Paulo",
+    "falklandislands": "Folklandske ostrovy",
+    "frenchguiana": "Francuzska Gvijana",
+    "palmer": "Palmer",
+    "puntaarenas": "Punta Arenas",
+    "rothera": "Rotera",
+    "suriname": "Surinam",
+    "uruguay": "Urugvaj",
+    "newfoundland": "Njufaundlend",
+    "fernandodenoronha": "Fernando de Noronja",
+    "southgeorgia": "Južna Georgija",
+    "stpierremiquelon": "Sv. Pjer i Mikelon",
+    "westgreenland": "Zapadna Grenlandija",
+    "capeverde": "Kabo Verde",
+    "azores": "Azory",
+    "coordinateduniversal": "Koordinovano univerzalno",
+    "eastgreenland": "Vyhodna Grenlandija",
+    "greenwichmean": "Griničsky srědnji",
+    "abidjan": "Abidžan",
+    "bissau": "Bisau",
+    "danmarkshavn": "Danmarkshavn",
+    "monrovia": "Monrovija",
+    "reykjavik": "Rejkjavik",
+    "sãotomé": "Sao Tome",
+    "algiers": "Alžir",
+    "tunis": "Tunis",
+    "ireland": "Irlandija",
+    "morocco": "Maroko",
+    "unitedkingdom": "Sjedinjeno Kraljevstvo",
+    "lagos": "Lagos",
+    "ndjamena": "Ndžamena",
+    "canary": "Kanarski",
+    "faroe": "Farersky",
+    "lisbon": "Lisabon",
+    "madeira": "Madejra",
+    "westernsahara": "Zapadna Sahara",
+    "juba": "Džuba",
+    "khartoum": "Hartum",
+    "maputo": "Maputo",
+    "windhoek": "Vindhuk",
+    "amsterdam": "Amsterdam",
+    "andorra": "Andora",
+    "belgrade": "Bělgrad",
+    "berlin": "Berlin",
+    "brussels": "Brjuselj",
+    "budapest": "Budapešt",
+    "ceuta": "Seuta",
+    "copenhagen": "Kopenhagen",
+    "gibraltar": "Gibraltar",
+    "luxembourg": "Ljuksemburg",
+    "madrid": "Madrid",
+    "malta": "Malta",
+    "monaco": "Monako",
+    "oslo": "Oslo",
+    "paris": "Pariž",
+    "prague": "Praha",
+    "rome": "Rim",
+    "stockholm": "Stokgolm",
+    "tirane": "Tirana",
+    "vienna": "Videnj",
+    "warsaw": "Varšava",
+    "zurich": "Cjurih",
+    "cairo": "Kairo",
+    "kaliningrad": "Kaliningrad",
+    "tripoli": "Tripoli",
+    "southafrica": "Južna Afrika",
+    "troll": "Trolj",
+    "baghdad": "Bagdad",
+    "qatar": "Katar",
+    "riyadh": "Rijad",
+    "eastAfrica": "Vyhodna Afrika",
+    "amman": "Aman",
+    "athens": "Atiny",
+    "beirut": "Bejrut",
+    "bucharest": "Bukurešt",
+    "chisinau": "Kišinjov",
+    "damascus": "Damask",
+    "gaza": "Gaza",
+    "hebron": "Hebron",
+    "helsinki": "Helsinki",
+    "kiev": "Kijev",
+    "nicosia": "Nikozija",
+    "riga": "Riga",
+    "sofia": "Sofija",
+    "tallinn": "Talin",
+    "uzhhorod": "Užgorod",
+    "vilnius": "Viljnjus",
+    "zaporozhye": "Zaporožje",
+    "famagusta": "Famagusta",
+    "israel": "Izraelj",
+    "kirov": "Kirov",
+    "minsk": "Minsk",
+    "moscow": "Moskva",
+    "simferopol": "Simferopolj",
+    "turkey": "Turcija",
+    "volgograd": "Volgograd",
+    "armenia": "Armenija",
+    "astrakhan": "Astrahan",
+    "azerbaijan": "Azerbajdžan",
+    "georgia": "Gruzija",
+    "gulf": "Zaliv",
+    "mauritius": "Mavricij",
+    "réunion": "Reunion",
+    "samara": "Samara",
+    "saratov": "Saratov",
+    "seychelles": "Sejšely",
+    "ulyanovsk": "Uljanovsk",
+    "afghanistan": "Afganistan",
+    "iran": "Iran",
+    "frenchSouthernAntarctic": "Francuzske južne i antarktičske",
+    "maldives": "Maldivy",
+    "mawson": "Moson",
+    "pakistan": "Pakistan",
+    "tajikistan": "Tadžikistan",
+    "turkmenistan": "Turkmenistan",
+    "samarkand": "Samarkand",
+    "tashkent": "Taškent",
+    "aktau": "Aktau",
+    "aqtobe": "Aktobe",
+    "atyrau": "Atyrau",
+    "oral": "Oral",
+    "qyzylorda": "Kyzylorda",
+    "yekaterinburg": "Jekaterinburg",
+    "colombo": "Kolombo",
+    "kolkata": "Kolkata",
+    "nepal": "Nepal",
+    "bangladesh": "Bangladeš",
+    "bhutan": "Butan",
+    "almaty": "Almaty",
+    "kostanay": "Kostanaj",
+    "indianOcean": "Indijski okean",
+    "kyrgyzstan": "Kyrgyzstan",
+    "omsk": "Omsk",
+    "urumqi": "Urumči",
+    "vostok": "Vostok",
+    "cocosIslands": "Kokosove ostrovy",
+    "myanmar": "Mjanmar",
+    "barnaul": "Barnaul",
+    "christmasIsland": "Božićny ostrov",
+    "davis": "Dejvis",
+    "hovd": "Hovd",
+    "bangkok": "Bangkok",
+    "hoChiMinhCity": "Ho Ši Min",
+    "krasnoyarsk": "Krasnojarsk",
+    "novokuznetsk": "Novokuzneck",
+    "novosibirsk": "Novosibirsk",
+    "tomsk": "Tomsk",
+    "jakarta": "Džakarta",
+    "pontianak": "Pontianak",
+    "australianWestern": "Australsky zapadny",
+    "bruneiDarussalam": "Brunej Darussalam",
+    "centralIndonesia": "Centralna Indonezija",
+    "macao": "Makao",
+    "shanghai": "Šanghaj",
+    "hongKong": "Gonkong",
+    "irkutsk": "Irkutsk",
+    "kualaLumpur": "Kuala Lumpur",
+    "kuching": "Kučing",
+    "philippine": "Filipinsky",
+    "singapore": "Singapur",
+    "taipei": "Tajpej",
+    "choibalsan": "Čojbalsan",
+    "ulaanbaatar": "Ulan-Bator",
+    "australianCentralWestern": "Australsky centralno-zapadny",
+    "eastTimor": "Vyhodni Timor",
+    "easternIndonesia": "Vyhodna Indonezija",
+    "japan": "Japonija",
+    "pyongyang": "Pjongjang",
+    "seoul": "Seul",
+    "palau": "Palau",
+    "chita": "Čita",
+    "khandyga": "Handyga",
+    "yakutsk": "Jakutsk",
+    "australianCentral": "Australsky centralny",
+    "adelaide": "Adelaida",
+    "brokenHill": "Broken Hil",
+    "brisbane": "Brisben",
+    "lindeman": "Lindeman",
+    "chamorro": "Čamoro",
+    "chuuk": "Čuuk",
+    "hobart": "Hobart",
+    "macquarie": "Makvori",
+    "melbourne": "Melburn",
+    "sydney": "Sidnej",
+    "papuaNewGuinea": "Papua Nova Gvineja",
+    "ustNera": "Ust-Nera",
+    "vladivostok": "Vladivostok",
+    "lordHowe": "Lord Hou",
+    "bougainville": "Bugenvil",
+    "casey": "Kejsi",
+    "kosrae": "Kosre",
+    "magadan": "Magadan",
+    "newCaledonia": "Nova Kaledonija",
+    "norfolkIsland": "Ostrov Norfolk",
+    "ponape": "Ponape",
+    "sakhalin": "Sahalin",
+    "solomonIslands": "Solomonove ostrovy",
+    "srednekolymsk": "Srědnekolymsk",
+    "vanuatu": "Vanuatu",
+    "anadyr": "Anadyr",
+    "fiji": "Fidži",
+    "gilbertIslands": "Gilbertove ostrovy",
+    "kwajalein": "Kvajalein",
+    "majuro": "Madžuro",
+    "nauru": "Nauru",
+    "newZealand": "Nova Zelandija",
+    "petropavlovskKamchatski": "Petropavlovsk-Kamčatsky",
+    "tuvalu": "Tuvalu",
+    "wakeIsland": "Ostrov Vejk",
+    "wallisFutuna": "Volis i Futuna",
+    "chatham": "Čatem",
+    "apia": "Apija",
+    "phoenixIslands": "Ostrovy Finiks",
+    "tokelau": "Tokelau",
+    "tonga": "Tonga",
+    "lineIsLands": "Linijne ostrovy"
+  },
+  "components": {
+    "add": "Dodati",
+    "apply": "Priměniti",
+    "cancel": "Otměniti",
+    "change": "Změniti",
+    "close": "Zakryti",
+    "confirm": "Potvrditi",
+    "continue": "Prodòlžiti",
+    "copy": "Kopijovati",
+    "copied": "Kopijovano",
+    "generate": "Generovati",
+    "delete": "Izbrisati",
+    "enabled": "Vključeno",
+    "disabled": "Vyključeno",
+    "duplicate": "Dublikovati",
+    "expand": "Rozšyriti",
+    "edit": "Redaktovati",
+    "moveto": "Prěměstiti do",
+    "next": "Dalje",
+    "optional": "neobvęzno",
+    "permanentlyDelete": "Nezvratno izbrisati",
+    "previous": "Nazad",
+    "publish": "Publikovati",
+    "print": "Tiskati",
+    "revert": "Vrnuti",
+    "refresh": "Obnoviti",
+    "rename": "Prěimenovati",
+    "restore": "Obnoviti",
+    "remove": "Udaliti",
+    "send": "Poslati",
+    "save": "Sohraniti",
+    "share": "Sděliti",
+    "saveChanges": "Sohraniti změny",
+    "pagination": {
+      "title": "Stranica {{page}} od {{maxPage}}",
+      "previous": "Prědhodna",
+      "next": "Slědujuča"
+    },
+    "uploader": {
+      "headline": "Naložite fajl abo prětęgnite tuto",
+      "subHeadline": "{{fileTypes}} do {{maxSize}}",
+      "reselectFile": "Izberite fajl povtorno za naloženje",
+      "invalidType": "Nepodtržovany tip fajla",
+      "exceedsMaxSize": "Fajl ktory ste izbrali presahuje limit {{maxSize}}",
+      "uploading": "Naloženje..."
+    },
+    "password": {
+      "invalid": "Parolj mora imati najmenje 8 znakov, i najmenje 1 veliku bukvu, 1 malu bukvu i 1 čislo."
+    },
+    "imagePicker": {
+      "image": "Izobraženje",
+      "unsplash": {
+        "title": "Unsplash",
+        "search": "Iskati izobraženja Unsplash",
+        "emptyState": "Ničto ne najdeno"
+      },
+      "gradient": {
+        "title": "Gradient"
+      }
+    },
+    "datePicker": {
+      "time": "Čas"
+    },
+    "error": {
+      "title": "Něčto pošlo ne tak",
+      "message": "Počekajte moment i probujte snova. Jesli hiba obstane, prosimo, svęžite sę s nami.",
+      "retry": "Probovati snova"
+    }
+  },
+  "login": {
+    "title": "Vhod",
+    "headline": "👋 Vitajte nazad!",
+    "subHeadline": "Vòjdite v svòj akount abo <a>sdělajte akount</a>",
+    "continueWith": "Abo prodòlžite s",
+    "email": {
+      "label": "Adresa e-pošty",
+      "required": "Adresa e-pošty ne smě byti prazna",
+      "invalid": "Adresa e-pošty ne je platna"
+    },
+    "password": {
+      "label": "Parolj",
+      "required": "Parolj ne smě byti prazna",
+      "maxLength": "Parolj mora imati menje od 100 znakov."
+    },
+    "forgotPassword": "Zabyli ste parolj?"
+  },
+  "signUp": {
+    "title": "Sdělati akount",
+    "subHeadline": "Počnite 7-dnevnu probu s vsěmi funkcijami",
+    "name": {
+      "label": "Imę",
+      "required": "Imę ne smě byti prazno"
+    },
+    "agreement": "Registracijeju vy sgodžujete sę s našimi <a1>uslovijami služby</a1> i <a2>politikeju privatnosti</a2>.",
+    "haveAccount": "Uže imate akount? <a>Vòjdite</a>."
+  },
+  "forgotPassword": {
+    "title": "Zabyli ste parolj?",
+    "subHeadline": "My pošljemo vam e-poštu s kodom prověrki",
+    "toLogin": "Nazad k <a>vhodu</a>"
+  },
+  "resetPassword": {
+    "title": "Sbrositi parolj",
+    "subHeadline": "My poslali vam e-poštu s 6-cifrnym kodom prověrki, prosimo, prověrite svoju poštovu skrinku na {{email}}.",
+    "verificationCode": {
+      "label": "Kod prověrki",
+      "required": "Kod prověrki ne smě byti prazny"
+    },
+    "newPassword": {
+      "label": "Nova parolj"
+    },
+    "repeatPassword": {
+      "label": "Nova parolj",
+      "invalid": "Nova parolj i ponovjena parolj ne sòvpadajut."
+    }
+  },
+  "verifyEmail": {
+    "title": "Prověriti adresu e-pošty",
+    "subHeadline": "My poslali vam e-poštu s 6-cifrnym kodom prověrki. Prosimo, prověrite svoju poštovu skrinku na {{email}}.",
+    "resend": "Ne dostali ste kod? <button>Poslati snova</button>"
+  },
+  "oauth": {
+    "title": "Avtorizacija",
+    "headline": "Sjedinjenje s {{name}}",
+    "subHeadline": "Koristajte {{name}} za integraciju HeyForm s vašimi ljubimymi aplikacijami, kako Chat, E-pošta abo SMS.",
+    "would": "{{name}} hče:",
+    "scopes": [
+      "Čitanje rabočego prostora",
+      "Polučiti danne o vsěh rabočih prostorah v vašem akauntě HeyForm",
+      "Čitanje projekta",
+      "Polučiti danne o vsěh projektah v vašem rabočem prostorě HeyForm",
+      "Čitanje formulěj",
+      "Polučiti danne o vsěh formulěh v vašem projektě HeyForm",
+      "Čitanje odgovorov",
+      "Polučiti odgovědi formulěj ktore ste sobrali",
+      "Čitanje akountov",
+      "Polučiti informaciju o vašem akauntě HeyForm"
+    ]
+  },
+  "workspace": {
+    "notExist": "Tòt rabočij prostor ne eksistuje.",
+    "backHome": "Nazad do HeyForm",
+    "appearance": {
+      "title": "Vněšnji vid",
+      "system": "Sistemny",
+      "light": "Světly",
+      "dark": "Tòmny",
+      "themes": {
+        "defaultLight": "Světly",
+        "defaultDark": "Tòmny",
+        "catppuccinLatte": "Catppuccin Latte",
+        "catppuccinMocha": "Catppuccin Mocha",
+        "dracula": "Dracula",
+        "nord": "Nord",
+        "gruvboxDark": "Gruvbox",
+        "tokyoNight": "Tokyo Night",
+        "renaissance": "Renaissance",
+        "renaissanceDark": "Renaissance Dark",
+        "material": "Material",
+        "materialOcean": "Material Ocean",
+        "github": "GitHub",
+        "githubDark": "GitHub Dark",
+        "monokaiPro": "Monokai Pro",
+        "solarized": "Solarized",
+        "solarizedDark": "Solarized Dark"
+      }
+    },
+    "sidebar": {
+      "workspaces": "Rabočje prostory",
+      "projects": "Projekty",
+      "noProjects": "Možete svęzati sę s vlasťnikom rabočego prostora, aby vas dodal do projekta, abo možete sdělati novy.",
+      "search": "Iskati",
+      "viewProfile": "Pogledati profil",
+      "accountSettings": "Nastavenja akounra",
+      "language": "Jezyk",
+      "version": "Versija {{version}}",
+      "logout": "Vyhod",
+      "resources": "Resursy",
+      "gettingStarted": "Počętek",
+      "help": "Centr pomoči",
+      "template": "Šablon",
+      "whatsNew": "Čto novogo"
+    },
+    "creation": {
+      "title": "Sdělati rabočij prostor",
+      "headline": "Sdělati novy rabočij prostor",
+      "subHeadline": "Rabočje prostory sut sdělane okruženja gde členy mogut sòtrudničati. Poslě sdělanja rabočego prostora, možete pozvati drugih aby sę pridružili.",
+      "name": {
+        "label": "Imę rabočego prostora",
+        "required": "Imę rabočego prostora ne smě byti prazno"
+      },
+      "logo": "Logo <span>($t(components.optional))</span>"
+    },
+    "invitation": {
+      "title": "Pozvanka",
+      "headline": "Vy ste pozvani pridružiti sę k rabočemu prostoru <span1>{{owner}}</span1>: <span2>{{name}}</span2>",
+      "subHeadline": "Pridružite sę k rabočemu prostoru i počnite sòtrudničati dneś!",
+      "join": "Pridružiti sę"
+    }
+  },
+  "dashboard": {
+    "title": "Prěgled",
+    "morning": "Dobre utrò, {{name}}",
+    "afternoon": "Dobry denj, {{name}}",
+    "evening": "Dobry večer, {{name}}",
+    "overview": "Prěgled",
+    "forms": "Formulě",
+    "submission": "Odgovor",
+    "resetsOn": "Sbros na {{date}}",
+    "members": "Členy",
+    "storage": "Hòvanilišče",
+    "recentForms": "Nedavne formulě",
+    "noForms": "V rabočem prostorě ne sut formulě",
+    "pickTemplate": "Prosto izberite šablon abo počnite od nuly.",
+    "search": {
+      "actions": "Dějanija",
+      "navigation": "Navigacija",
+      "newWorkspace": "Novy rabočij prostor",
+      "newProject": "Novy projekt",
+      "newForm": "Nova formula",
+      "forms": "Formulě",
+      "selectProject": "Sdělati formulu v projektě",
+      "placeholder": "Iskati formulě i dokumenty pomoči",
+      "emptyState": "Ničto ne najdeno."
+    }
+  },
+  "members": {
+    "title": "Členy",
+    "name": "Imę",
+    "role": "Rolja",
+    "you": "Vy",
+    "owner": "Vlasťnik",
+    "member": "Člen",
+    "lastSeen": "Poslědnje pojavjenje",
+    "menuTip": "Prěnositi, izbrisati i druže...",
+    "remove": {
+      "title": "Udaliti",
+      "headline": "Ste si jisty, že hočete udaliti {{name}} iz togoto rabočego prostora?",
+      "subHeadline": "Kogda potvrdite, člen uže ne bude iměti pristup k dannym togoto rabočego prostora.",
+      "confirm": "Udaliti"
+    },
+    "transfer": {
+      "title": "Prěnositi vlasťničstvo",
+      "headline": "Ste si jisty, že hočete prěnositi tòt rabočij prostor na {{name}}?",
+      "subHeadline": "Kogda potvrdite prěnos, vy uže ne budete vlasťnikom togoto rabočego prostora.",
+      "confirm": "Prěnositi"
+    },
+    "leave": {
+      "title": "Opustiti rabočij prostor",
+      "headline": "Ste si jisty, že hočete opustiti rabočij prostor?",
+      "subHeadline": "Kogda potvrdite opuščenje togoto rabočego prostora, vy uže ne budete iměti pristup k jego dannym.",
+      "confirm": "Opustiti"
+    },
+    "invite": {
+      "title": "Pozvati člena",
+      "headline": "Pozvati členov",
+      "subHeadline": "Pozvite svojih kolegov pridružiti sę k rabočemu prostoru črez e-poštu. Pozvanka je platna 7 dnjov.",
+      "addMore": "Dodati ješče",
+      "required": "Adresa e-pošty ne smě byti prazna",
+      "sentSuccess_one": "{{count}} pozvanka poslana",
+      "sentSuccess_other": "{{count}} pozvanok poslano",
+      "sentSuccessMessage": "Pozvani členy byli obavěšćeni e-pošteju aby sę zaregistrovali v HeyForm"
+    }
+  },
+  "settings": {
+    "title": "Nastavenja rabočego prostora",
+    "general": {
+      "title": "Obšće",
+      "name": "Imę",
+      "logo": "Logo",
+      "pickLogo": "Izberite logo za svòj rabočij prostor.",
+      "customSharingURL": "Vlastna URL za sdělanje",
+      "customSharingURLDescription": "Nastavite vlastnu bazovu URL za sdělanje vašyh formulěj. Jesli ne je nastavjena, bude koristana tokuča domena.",
+      "customSharingURLPlaceholder": "https://forms.vašadomena.com"
+    },
+    "branding": {
+      "title": "Brendirovanjje",
+      "removeBrandingHeadline": "Udaliti brendirovanjje HeyForm",
+      "removeBrandingSubHeadline": "Aby HeyForm vyględal polnostjų kako vaš brand, udalite logo HeyForm v podvale formulě.",
+      "viewBrandKit": "Pogledati",
+      "logo": {
+        "title": "Logo",
+        "required": "Logo ne smě byti prazno",
+        "invalid": "Logo ne je platna URL"
+      },
+      "theme": "Tema",
+      "presetThemes": "Prědnastavjene temy",
+      "brandKitHeadline": "Kit brenda",
+      "brandKitSubHeadline": "Bezproblemno priměnite vizualne aktivy vašego rabočego prostora na vaše formulě koristajuči Kit brenda. Naložite svòj logo i sdělajte temu ktoru každy člen vašego rabočego prostora može koristati.",
+      "brandKitPreview": {
+        "number": "Pytanje 1",
+        "title": "Kako je vaše imę?",
+        "description": "Vpišite svòje imę tuto",
+        "input": "Vaš odgovor ide tuto",
+        "next": "Dalje"
+      }
+    },
+    "exportData": {
+      "title": "Eksport dannyh",
+      "description": "Dostanite e-poštu s vsěmi vašimi formulěmi i nastavenijami v jednom fajlě.",
+      "button": "Zaprositi vaše danne",
+      "successTip": "Kogda eksport bude gòtovy, vy dostanete e-poštu s odkazom za stiahnjenje."
+    },
+    "deletion": {
+      "title": "Izbrisati rabočij prostor",
+      "description": "Izbrisanje rabočego prostora nezvratno izliše vsě formulě i danne. Postupajte ostorožno!",
+      "button": "Izbrisati tòt rabočij prostor",
+      "headline": "Prověrite zahtěv na izbrisanje rabočego prostora",
+      "sentSuccess": "Kod prověrki izbrisanja poslan",
+      "sentFailed": "Posylanje koda prověrki izbrisanja ne uspělo",
+      "tip1": "Jesli ste si jisty, že hočete prodòlžiti s izbrisanjem rabočego prostora <strong>{{name}}</strong>, prosimo, prodòlžite niže.",
+      "tip2": "Imajte na umě, že tota operacija je nezvratna i nezvratno izliše vsě danne svęzane s tymto rabočim prostorom.",
+      "tip3": "Kogda potvrdite izbrisanje rabočego prostora, vy uže ne budete mogli pristupiti k dannym rabočego prostora.",
+      "code": {
+        "label": "Vvedite kod izbrisanja poslany na <strong>{{email}}</strong>.",
+        "required": "Kod prověrki ne smě byti prazny"
+      }
+    },
+    "form": {
+      "exportImport": "Eksport/Import",
+      "exportImportDescription": "Eksportujte totu formulu kako JSON fajl abo importujte JSON fajl za sdělanje nověj formulě.",
+      "exportJson": "Eksportovati kako JSON"
+    }
+  },
+  "project": {
+    "menuTip": "Prěimenovati, izbrisati i druže...",
+    "forms": {
+      "title": "Formulě",
+      "headline": "V projektě ne sut formulě"
+    },
+    "trash": {
+      "title": "Koš",
+      "headline": "V košu ne sut formulě",
+      "subHeadline": "Formulě budut nezvratno izbrisane iz koša poslě 30 dnjov.",
+      "delete": {
+        "headline": "Ste si jisty, že hočete nezvratno izbrisati formulu: {{name}}?",
+        "subHeadline": "Kogda potvrdite izbrisanje formulě, vsě danne svęzane s formuleju budut nezvratno udalene."
+      },
+      "tip": "Možete obnoviti ljubu formulu izbrisanu v poslědnjih 30 dnjah. <a>Čitati dalje <icon /></a>"
+    },
+    "members": {
+      "title": "Členy",
+      "headline": "Členy v tom projektě",
+      "subHeadline": "Jedino koristniki ktore sut <strong>dodane do togoto projekta</strong> mogut pristupiti k jeho dannym, vključajuči formulě i odgovědi.",
+      "addMember": "Dodati člena do togoto projekta",
+      "unjoinedMembers": "Nepridruženi členy",
+      "add": "Dodati",
+      "addSuccess": "Člen byl uspěšno dodany",
+      "addFailed": "Dodanje člena ne uspělo",
+      "remove": "Udaliti",
+      "removeSuccess": "Člen byl uspěšno udaleny",
+      "removeFailed": "Udaljenje člena ne uspělo",
+      "leave": "Opustiti",
+      "leaveSuccess": "Vy uspěšno opustili projekt",
+      "leaveFailed": "Opuščenje projekta ne uspělo"
+    },
+    "creation": {
+      "title": "Sdělati projekt",
+      "headline": "Sdělati novy projekt",
+      "subHeadline": "Projekty sut podgrupy v rabočem prostorě, pozvoljajuči vam dodavati členov za sòtrudničanje na formulěh i integracijeh.",
+      "name": {
+        "label": "Imę projekta",
+        "required": "Imę projekta ne smě byti prazno"
+      },
+      "logo": "Logo <span>($t(components.optional))</span>",
+      "addMembers": "Dodati členov do togoto projekta"
+    },
+    "rename": {
+      "headline": "Prěimenovati tòt projekt",
+      "name": {
+        "label": "Imę",
+        "required": "Imę ne smě byti prazno"
+      }
+    },
+    "moveto": {
+      "headline": "Prěměstiti '{{name}}' do",
+      "project": {
+        "required": "Projekt ne smě byti prazny"
+      }
+    },
+    "delete": {
+      "headline": "Prověrite zahtěv na izbrisanje projekta",
+      "sentSuccess": "Kod prověrki izbrisanja poslan",
+      "sentFailed": "Posylanje koda prověrki izbrisanja ne uspělo",
+      "tip1": "Jesli ste si jisty, že hočete prodòlžiti s izbrisanjem projekta <strong>{{name}}</strong>, prosimo, prodòlžite niže.",
+      "tip2": "Imajte na umě, že tota operacija je nezvratna i nezvratno izliše vsě danne svęzane s tymto projektom.",
+      "tip3": "Kogda potvrdite izbrisanje projekta, vy uže ne budete mogli pristupiti k dannym projekta.",
+      "code": {
+        "label": "Vvedite kod izbrisanja poslany na <strong>{{email}}</strong>.",
+        "required": "Kod prověrki ne smě byti prazny"
+      },
+      "confirm": "Izbrisati projekt"
+    }
+  },
+  "form": {
+    "menuTip": "Prěimenovati, dublikovati i druže...",
+    "metadata_zero": "Ješče neț odgovorov · Redaktovano {{date}}",
+    "metadata_one": "{{count}} odgovor · Redaktovano {{date}}",
+    "metadata_other": "{{count}} odgovorov · Redaktovano {{date}}",
+    "metadata2_zero": "Ješče neț odgovorov · {{date}} ostalo",
+    "metadata2_one": "{{count}} odgovor · {{date}} ostalo",
+    "metadata2_other": "{{count}} odgovorov · {{date}} ostalo",
+    "metadata3_zero": "<span>{{status}}</span> · $t(form.metadata)",
+    "metadata3_one": "<span>{{status}}</span> · $t(form.metadata)",
+    "metadata3_other": "<span>{{status}}</span> · $t(form.metadata)",
+    "editForm": "Redaktovati formulu",
+    "active": "Aktivna",
+    "draft": "Čertak",
+    "suspended": "Priostavjena",
+    "closed": "Zakryta",
+    "duplicate": "{{name}} (Kopija)",
+    "saveAsTemplate": "Sohraniti kako šablon",
+    "moveToTrash": "Prěměstiti do koša",
+    "copyLinkToShare": "Kopijovati odkaz za sdělanje",
+    "creation": {
+      "title": "Sdělati formulu",
+      "headline": "Sdělati novu formulu",
+      "defaultName": "Bezimenna",
+      "scratch": {
+        "headline": "Počęti od nuly",
+        "subHeadline": "Sdělati iz spiska dostupnyh tipov pytanj"
+      },
+      "template": {
+        "headline": "Izbrati šablon",
+        "subHeadline": "Izberite iz ručno sdělanyh šablonov i počnite uže"
+      },
+      "ai": {
+        "headline": "Sdělati s AI",
+        "subHeadline": "Generujte vlastne pytanja s AI v sekundah"
+      },
+      "project": {
+        "label": "Projekt",
+        "required": "Projekt ne smě byti prazny"
+      }
+    },
+    "template": {
+      "headline": "Šablony",
+      "categories": [
+        "Anketa",
+        "Generacija lidov",
+        "Podpora klijentov",
+        "Zpětna svęz",
+        "Rabotnik/Rabota",
+        "Rezervacija i Zamovlenjje",
+        "Marketing",
+        "Registracija",
+        "Obrazovanje",
+        "Podija",
+        "Zdravohranenje",
+        "Aplikacija",
+        "Anketa i Kviz",
+        "Udaljena rabota",
+        "Kontakt",
+        "Biznes",
+        "COVID-19",
+        "Golosovanjje",
+        "Zahtěv",
+        "Bankovstvo i Financije",
+        "Donacija i Dobrotvornòst"
+      ],
+      "use": "Koristati tòt šablon"
+    },
+    "ai": {
+      "topic": {
+        "label": "Čto hočete sdělati?",
+        "description": "Prosimo, dajte kako možno věcej detajlov o formulě ktoru hočete sdělati.",
+        "ideasForYou": "Ideje za vas",
+        "examples": [
+          "Sdělajte formulu za aplikaciju na rabotu za sbirovanjje dannyh kandidatov i životopisov.",
+          "Anketa zadovoljnosti klijentov za ocěnku kvalitety produktov i služby klijentov.",
+          "Dajte mi formulu registracije na podiju za sbirovanjje informacij o učęstnikah."
+        ],
+        "required": "Toto polje ne smě byti prazno"
+      },
+      "reference": {
+        "label": "Referenca (neobvęzno)",
+        "description": "Poslě danja Reference, AI bude generovati pytanja i opcije strogo v ramkah oprěděljenyh Referenceju."
+      },
+      "submit": "Generovati pytanja"
+    },
+    "chat": {
+      "title": "AI Asistenț",
+      "welcome": "Zdravo! Ja mogu pomoči vam sdělati pytanja, ulěpšiti logiku i prověriti vašu formulu. Pytajte mene čtokolivo.",
+      "compose": "Pytajte mene čtokolivo...",
+      "fieldsUpdated": "Pytanja vašej formulě byli obnovljene.",
+      "logicUpdated": "Logika vašej formulě byla obnovljena.",
+      "themeUpdated": "Tema vašej formulě byla obnovljena.",
+      "auditButton": "Audit",
+      "auditTooltip": "Prověrite pytanja na pravopisne hiby, nejasne formulirovanija i neplatne tipy polěj",
+      "auditComplete": "Najdeno {{count}} predloženje(j):",
+      "auditEmpty": "Vaša formula vyględa dobre! Nikake važne problemy ne sut najdene.",
+      "expandHint": "Kliknite za rozšyrenje"
+    },
+    "rename": {
+      "headline": "Prěimenovati totu formulu",
+      "name": {
+        "label": "Imę",
+        "required": "Imę ne smě byti prazno"
+      }
+    },
+    "analytics": {
+      "title": "Analitika",
+      "views": "Pogleděnja",
+      "submissions": "Odgovědi",
+      "completeRate": "Procent dokončenja",
+      "averageDuration": "Srědnja trvanjje",
+      "7d": "Poslědnji tydenj",
+      "1m": "Poslědnji měsęc",
+      "3m": "Poslědnje 3 měsęce",
+      "6m": "Poslědnjih 6 měsęcov",
+      "1y": "Poslědnji god",
+      "7dTrend": "{{change}}% od poslědnjego tyděnja",
+      "1mTrend": "{{change}}% od poslědnjego měsęca",
+      "3mTrend": "{{change}}% od poslědnjih 3 měsęcov",
+      "6mTrend": "{{change}}% od poslědnjih 6 měsęcov",
+      "1yTrend": "{{change}}% od poslědnjego goda",
+      "report": {
+        "headline": "Izveštaj",
+        "submission_zero": "Ješče neț odgovorov",
+        "submission_one": "{{count}} odgovor",
+        "submission_other": "{{count}} odgovorov",
+        "submission2_zero": "Ješče neț odgovorov · {{average}} srědnje",
+        "submission2_one": "{{count}} odgovor · {{average}} srědnje",
+        "submission2_other": "{{count}} odgovorov · {{average}} srědnje",
+        "averageRank": "Sr. pozicija: {{rank}}"
+      },
+      "funnel": {
+        "title": "Lijka dokončenja",
+        "opened": "Otvořeno",
+        "started": "Počęto",
+        "completed": "Dokončeno",
+        "partial": "Částočno",
+        "views": "Celkove pogleděnja",
+        "completionRate": "Procent dokončenja",
+        "averageTime": "Srědnji čas",
+        "seconds": "sek.",
+        "dropOffByField": "Opuščenje po pytanju",
+        "noDropOff": "Ješče ne sut částočne odgovědi"
+      }
+    },
+    "customReport": {
+      "title": "Vlastny izveštaj",
+      "metadata_zero": "Ješče neț odgovorov",
+      "metadata_one": "{{count}} odgovor",
+      "metadata_other": "{{count}} odgovorov",
+      "enablePublicAccess": "Vključiti publičny pristup",
+      "copyLink": "Kopijovati odkaz izveštaja",
+      "theme": "Tema",
+      "heading": "Zagolovòk",
+      "question": "Pytanje",
+      "showQuestion": "Pokazati pytanje",
+      "hideQuestion": "Skryti pytanje",
+      "chart": "Grafik",
+      "background": "Pozadije"
+    },
+    "submissions": {
+      "title": "Odgovědi",
+      "headline": "Ješče ne sut odgovědi",
+      "subHeadline": "Sdělite formulu v internětě aby dosęgli šyrše publikum.",
+      "inbox": "Vhodna skrinka",
+      "spam": "Spam",
+      "partial": "Částočne",
+      "view": "Pogledati",
+      "downloadCSV": "Stiahnuti CSV",
+      "maximize": "Maksimalizovati tabelu",
+      "minimize": "Minimalizovati tabelu",
+      "moveTo": "Prěměstiti do {{name}}",
+      "detail": {
+        "headline": "Detajl odgovědi",
+        "menuTip": "Tiskati i druže..."
+      }
+    },
+    "integrations": {
+      "title": "Integracije",
+      "connect": "Sjedinjiti",
+      "connectWith": "Sjedinjiti s {{name}}",
+      "readMore": "Čitati dalje o integraciji {{name}} <icon />",
+      "reporting": "Izveštaje",
+      "analytics": "Analitika",
+      "marketing": "Marketing",
+      "automation": "Avtomatizacija",
+      "customerSupport": "Podpora klijentov",
+      "developerTools": "Instrumenty razrabotnika",
+      "productivity": "Produktivnost",
+      "itEngineering": "IT i Inženirstvo",
+      "fileManagement": "Upravljanje fajlami",
+      "mapFields": {
+        "headline": "Mapovati polja",
+        "subHeadline": "Mapujte HeyForm do stolpcov {{name}}. Jesli změnite stolpc na {{name}}, prosimo, obnovite to tuto takože, inače integracija ne bude rabotati kako se čekalo.",
+        "requried": "Mapovane polja ne smějut byti prazne",
+        "leftPlaceholder": "Izberite pytanje HeyForm",
+        "rightPlaceholder": "Stolpc {{name}}",
+        "requireLeft": "Lěva strana polja {{index}} ne smě byti prazna",
+        "requireRight": "Prava strana polja {{index}} ne smě byti prazna",
+        "addMore": "Dodati polje"
+      },
+      "authorization": {
+        "headline": "Avtorizacija",
+        "subHeadline": "Prěde vsěm, prosimo, avtorizujte HeyForm za pristup k vašim dannym.",
+        "loginWith": "Vòjti črez {{name}}"
+      },
+      "webhook": {
+        "label": "URL koncovej točky",
+        "invalid": "URL koncovej točky ne je platna"
+      },
+      "telegram": {
+        "label": "ID čata",
+        "required": "ID čata ne smě byti prazny",
+        "footer": "Dodajte <a>@HeyForm_bot</a> do vašej grupy Telegram, i vpišite <code>/start@HeyForm_bot</code> v grupě. Potom dostanete soobščenje s ID čata."
+      },
+      "legacyslack": {
+        "label": "URL Webhook",
+        "invalid": "URL Webhook ne je platna",
+        "footer": "Sdělajte svoju <a1>aplikaciju Slack</a1>, vključite <a2>Vhodne webhooky</a2>, a potom vstavite URL Webhook tuto."
+      },
+      "slack": {
+        "channel": {
+          "headline": "Kanal"
+        }
+      },
+      "lark": {
+        "label": "URL Webhook",
+        "invalid": "URL Webhook ne je platna",
+        "footer": "Dodajte <a>Vlastnogo bota</a> v vašu grupu, a potom vstavite URL Webhook tuto."
+      },
+      "email": {
+        "label": "Adresa e-pošty",
+        "invalid": "Adresa e-pošty ne je platna",
+        "deprecation": "Tota integracija je zastarěla. Prosimo, nastavite ju v <a>nastavenjah formulě</a>."
+      },
+      "facebookpixel": {
+        "label": "ID Piksela",
+        "required": "ID Piksela ne smě byti prazny",
+        "placeholder": "napr. 100xxxxxxxxxxxxx",
+        "footer": "Kopijujte i vstavite svòj ID Facebook Piksela tuto. <a>Kako najdu svòj ID Piksela</a>?"
+      },
+      "googleanalytics": {
+        "label": "Kod slědovanja",
+        "required": "Kod slědovanja ne smě byti prazny",
+        "placeholder": "napr. UA-XXXXX-Y",
+        "footer": "Kopijujte i vstavite svòj kod slědovanja Google Analytics niže. <a>Kako najdu svòj kod slědovanja</a>?"
+      },
+      "googledrive": {
+        "drive": {
+          "headline": "Izberite disk",
+          "footer": "Možete izbrati svòj vlastny Google Disk abo <a>sdělane disky Google</a> k ktrym ste pripojeny."
+        },
+        "folder": {
+          "headline": "Izberite složku",
+          "footer": "Možete izbrati složku za umęščenje fajlov naloženyh iz vašego HeyForm."
+        }
+      },
+      "googlesheets": {
+        "spreadsheet": "Izberite tabelju",
+        "worksheet": "Izberite rabočij list"
+      },
+      "osticket": {
+        "serverURL": {
+          "headline": "URL servera",
+          "footer": "URL servera je URL po ktroj pristupujete k frontěndu sistemy. napr. <span>https://support.domain.com</span>."
+        },
+        "apiKey": {
+          "headline": "Ključ API",
+          "footer": "Generujte ključ API v <a>Upravljanje -> Ključe API</a> v administratorskem panelě, ubědivši sę, že ima dozvolu za sdělanje zahtěvov."
+        },
+        "userName": {
+          "headline": "Imę koristnika"
+        },
+        "emailAddress": {
+          "headline": "Adresa e-pošty"
+        },
+        "phoneNumber": {
+          "headline": "Nomer telefona (neobvęzno)"
+        },
+        "subject": {
+          "headline": "Předměț"
+        },
+        "message": {
+          "headline": "Soobščenje"
+        }
+      },
+      "hubspot": {
+        "fullName": {
+          "headline": "Polno imę"
+        },
+        "jobTitle": {
+          "headline": "Nazvanje raboty (neobvęzno)"
+        }
+      },
+      "mailChimp": {
+        "audience": {
+          "headline": "Publika",
+          "placeholder": "Izberite publiku"
+        },
+        "subscriberEmail": {
+          "headline": "E-pošta podpisnika"
+        },
+        "address": {
+          "headline": "Adresa"
+        }
+      },
+      "airtable": {
+        "base": {
+          "headline": "Baza"
+        },
+        "table": {
+          "headline": "Tabela"
+        }
+      },
+      "monday": {
+        "board": {
+          "headline": "Doska"
+        },
+        "group": {
+          "headline": "Grupa (neobvęzno)"
+        },
+        "itemName": {
+          "headline": "Imę elementa"
+        },
+        "columnValues": {
+          "headline": "Vrědnosti stolpcov (neobvęzno)"
+        }
+      },
+      "supportPal": {
+        "systemURL": {
+          "headline": "URL sistemy",
+          "subHeadline": "URL servera je URL po ktroj pristupujete k frontěndu sistemy. napr. <span>https://support.domain.com</span>."
+        },
+        "token": {
+          "headline": "Token API",
+          "subHeadline": "Generujte token API v Nastavenja -> Obšće -> Tokeny API v panelě operatora, ubědivši sę, že ima pristup za Čitanje i Pisanje."
+        },
+        "userName": {
+          "headline": "Imę koristnika (neobvęzno)"
+        },
+        "email": {
+          "headline": "Adresa e-pošty (neobvęzno)"
+        },
+        "subject": {
+          "headline": "Předměț"
+        },
+        "text": {
+          "headline": "Tekst"
+        },
+        "department": {
+          "headline": "Oddělenje"
+        },
+        "priority": {
+          "headline": "Prioritet"
+        },
+        "status": {
+          "headline": "Status"
+        }
+      },
+      "notion": {
+        "database": {
+          "headline": "Baza dannyh"
+        }
+      }
+    },
+    "share": {
+      "title": "Sděliti",
+      "unpublishedTip": "Tota formula ima nepublikovane změny. Prosimo, publikujte poslědnju versiju prěd sdělanjem formulě.",
+      "link": {
+        "headline": "Odkaz za sdělanje",
+        "viaX": "Sděliti na X",
+        "viaFacebook": "Sděliti na Facebook",
+        "viaLinkedIn": "Sděliti na LinkedIn",
+        "qrcode": {
+          "title": "Sděliti črez QR kod",
+          "headline": "Vstaviti formulu",
+          "subHeadline": "Tuto sut něktre opcije za integraciju vašej formulě v vašu veb stranicu.",
+          "download": "Stiahnuti"
+        },
+        "email": {
+          "title": "Sděliti črez e-poštu",
+          "subject": "Možete li vzęti moment za vyplnjenje toj formulě heyform?",
+          "body": "Byli byh vam velmi vdečni jesli by ste vyplnili totu formulu: {{url}}. Děkujemo."
+        },
+        "useCustomDomain": "Koristati vlastnu domenu"
+      },
+      "generateLink": {
+        "title": "Generovati odkaz",
+        "addParameter": "Dodati parametr",
+        "parameterKey": "Ključ",
+        "parameterValue": "Vrědnost",
+        "preview": "Prěgled",
+        "fromCsv": "Iz .csv",
+        "fromCsvTooltip": "Naložite CSV fajl gde prvja stroka soderžuje imena parametrov (zagolovky) i každa slědujuča stroka soderžuje vrědnosti.\n\nPriměr .csv fajla:\nid,firstname,lastname\n1,Jack,Silver\n2,Nikita,Trofimoff\n\nPoslě obrabotkę, novy CSV fajl s generovannymi odkazami bude avtomatičsky stiahnjeny.",
+        "useUrlShortener": "Skratiti URL",
+        "shortening": "Skraćenje...",
+        "shorteningFailed": "Skraćenje URL ne uspělo",
+        "shorteningFailedMessage": "Udála sę hiba pri skraćenju URL. Bude koristana originalna URL.",
+        "shortenButton": "Skratiti",
+        "originalUrl": "Originalna URL",
+        "shortenedUrl": "Skraćena URL",
+        "processingStarted": "Obrabotka počęta",
+        "willNotifyWhenReady": "My vas obavěstimo kogda fajl bude gòtovy za stiahnjenje",
+        "uploadFailed": "Naloženje ne uspělo",
+        "processingComplete": "Obrabotka dokončena",
+        "readyToDownload": "Vaš fajl je gòtovy za stiahnjenje",
+        "processingFailed": "Obrabotka ne uspěla",
+        "unknownError": "Udála sę neznama hiba",
+        "processingCsv": "Obrabotka: {{fileName}}",
+        "rowsProcessed": "strok obrabotano",
+        "failed": "ne uspělo",
+        "downloadCsv": "Stiahnuti CSV",
+        "jobCancelled": "Zadačka otměnjena"
+      },
+      "settings": {
+        "headline": "Nastavenja odkaza",
+        "subHeadline": "Nastavite kako vaša formula vyględa kogda sdělujete odkaz v socialnyh sětjah.",
+        "title": "Nazvanje",
+        "description": "Opis",
+        "preview": {
+          "headline": "Prěgled",
+          "subHeadline": "HeyForm avtomatičsky generuje <a>Open Graph</a> izobraženje za vas. Takože možete <button>naložiti svòje vlastno izobraženje</button>.",
+          "uploadTitle": "Naložite svòje vlastno Open Graph izobraženje",
+          "uploadDescription": "Preporučeny razměr: 1200x630 | JPG, PNG."
+        }
+      },
+      "embed": {
+        "title": "Vstaviti",
+        "headline": "Vstaviti formulu",
+        "subHeadline": "Tuto sut něktre opcije za integraciju vašej formulě v vašu veb stranicu.",
+        "standard": "Standardny",
+        "modal": "Modalno okno",
+        "popup": "Vyskakovajuče okno",
+        "fullpage": "Polna stranica",
+        "getCode": "Dostati kod",
+        "settings": "Nastavenja",
+        "width": "Šyrokost",
+        "height": "Vysokost",
+        "auto": "Avto",
+        "fixed": "Fiksirovano",
+        "size": "Razměr modalnogo okna",
+        "small": "Maly",
+        "medium": "Srědnji",
+        "large": "Veliky",
+        "launch": "Zapustiti",
+        "click": "Po kliknjeńju na butonu",
+        "load": "Po naloženju stranicy",
+        "delay": "Poslě uplyvu časa",
+        "exit": "Pri zaměrě vyhoda",
+        "scroll": "Poslě prokrutky",
+        "triggerBackground": "Pozadije spušća",
+        "triggerText": "Tekst spušća",
+        "hideAfterSubmit": "Zakryti po poslanju",
+        "secondsDelay": "sekund zadrženija",
+        "pageScrolled": "% stranicy prokručeno",
+        "position": "Pozicija",
+        "bottomLeft": "Dolje lěvo",
+        "bottomRight": "Dolje pravo",
+        "transparentBackground": "Prozračno pozadije",
+        "code": {
+          "headline": "Dodajte HeyForm na svoju veb stranicu",
+          "subHeadline": "Vstavite slědujučij fragment koda v sekciju body vašej veb stranicy."
+        }
+      }
+    },
+    "settings": {
+      "title": "Nastavenja formulě",
+      "general": {
+        "title": "Obšće",
+        "archive": {
+          "headline": "Arhiv odgovorov",
+          "subHeadline": "Vyključite arhiv odgovorov jesli predpočitajete aby HeyForm ne sohranjal vaše odgovědi."
+        },
+        "redirect": {
+          "headline": "Prěnapravljenje po dokončenju",
+          "subHeadline": "Prěnapravite na vlastnu URL kogda formula bude poslana.",
+          "placeholder": "Vvedite URL prěnapravlenija tuto, napr., https://example.com",
+          "invalidUrl": "URL prěnapravlenija ne je platna"
+        },
+        "progressBar": {
+          "headline": "Linija postupka",
+          "subHeadline": "Možete lehko dati vediti respondentam kako daleko sut od dokončenja vašej formulě."
+        },
+        "viewQuestions": {
+          "headline": "Pogledati vsě pytanja",
+          "subHeadline": "Možete to vključiti aby respondenty mogli prohlědnuti vsě pytanja."
+        },
+        "navigationArrows": {
+          "headline": "Navigačne šipky",
+          "subHeadline": "Možete to vključiti aby respondenty mogli navigovati medžu pytanjami."
+        },
+        "partialSubmission": {
+          "headline": "Sohraniti částočne odgovědi",
+          "subHeadline": "Dozvolte koristnikam prodòlžiti nedokončene formulě kogda sę vrnůt."
+        }
+      },
+      "access": {
+        "title": "Pristup",
+        "closeForm": {
+          "headline": "Zakryti formulu",
+          "subHeadline": "Možete zakryti totu formulu aby ste prěstali prijimati nově odgovědi i zaprěčili publičny pristup k formulě."
+        },
+        "scheduledDate": {
+          "headline": "Zakryti formulu na planovanu datu",
+          "subHeadline": "Kogda hočete prijimati odgovědi v určitom datovom rozmezju, možete nastaviti datu počętka i konca tuto.",
+          "startDate": "Data počętka",
+          "endDate": "Data konca"
+        },
+        "countdown": {
+          "headline": "Odčitovanjje",
+          "subHeadline": "Možete nastaviti dozvoljeny čas tuto jesli hočete blokovati odgovor poslě konca odčitovania.",
+          "days": "Dny",
+          "seconds": "Sekundy",
+          "minutes": "Minuty",
+          "hours": "Hodiny"
+        },
+        "limitIP": {
+          "headline": "Ograničiti częstost posylanja za jednu IP adresu",
+          "subHeadline": "Možete nastaviti tuto jesli hočete ograničiti čislo posylanj od jednej IP adresy za obdobje.",
+          "times": "razov",
+          "inEvery": "v každom"
+        },
+        "quotaLimit": {
+          "headline": "Ograničiti čislo odgovorov",
+          "subHeadline": "Toto vam pozvoljuje nastaviti určitoje celkovoje čislo odgovorov dozvolenych za vašu formulu.",
+          "invalid": "Čislo odgovorov ne je platno"
+        },
+        "closedMessage": {
+          "headline": "Soobščenje zakrytej formulě",
+          "subHeadline": "Toto je to čto uvidęt prijemniki jesli ste zakryli formulu jedneju iz gorěnjih opcij.",
+          "title": "Nazvanje soobščenja zakrytej formulě",
+          "description": "Opis soobščenja zakrytej formulě"
+        }
+      },
+      "translations": {
+        "title": "Prěklady",
+        "primaryLanguage": {
+          "headline": "Glavny jezyk",
+          "subHeadline": "Izberite glavny jezyk v ktrom respondenty bůdut viděti vašu formulu. Priměnjuję sę na nepřizpůsobeny tekst, kako sut standardne butony, hiby validacije, itd."
+        },
+        "translations": {
+          "headline": "Prěklady",
+          "subHeadline": "Avtomatičsky prěložite pytanja formulě na vaše izbranne jezyky koristajuči <a>OpenAI ChatGPT</a>.",
+          "placeholder": "Izberite jezyky"
+        }
+      },
+      "emailNotification": {
+        "title": "Obavěščenja e-pošteju",
+        "self": {
+          "headline": "Vlastne obavěščenja e-pošteju",
+          "subHeadline": "Dostanite e-poštu kogda někto dokonči totu formulu."
+        },
+        "respondent": {
+          "headline": "Obavěščenja respondentov e-pošteju",
+          "subHeadline": "Pošlite přizpůsobenu tekstovu e-poštu respondentam poslě poslanija formulě."
+        }
+      },
+      "protection": {
+        "title": "Zaščita",
+        "password": {
+          "headline": "Zaščita parolju",
+          "subHeadline": "Zaščitite svoju formulu jedineju, lehko zapomniteľnu parolju."
+        },
+        "bot": {
+          "headline": "Prěvencija botov",
+          "subHeadline": "Zaprěčite posylanija botov vključenjjem captcha."
+        },
+        "antiSpam": {
+          "headline": "Anti-spam",
+          "subHeadline": "Možete to vključiti za prěvenciju spamovyh posylanj."
+        }
+      }
+    },
+    "builder": {
+      "title": "Konstruktor",
+      "navbar": {
+        "syncing": "Sohranjenje pytanj..."
+      },
+      "question": {
+        "menuTip": "Dublikovati, izbrisati i druže...",
+        "title": "Pytanje",
+        "answer": "Odgovor",
+        "recommended": "Preporučeno",
+        "welcome": "Ekran vitanja",
+        "thankYou": "Koncovy ekran",
+        "multipleChoice": "Mnòžstveny izbor",
+        "phoneNumber": "Nomer telefona",
+        "shortText": "Kratky tekst",
+        "longText": "Dlògy tekst",
+        "questionGroup": "Grupa pytanj",
+        "statement": "Vyjavjenje",
+        "pictureChoice": "Izbor izobraženja",
+        "yesNo": "Da/Ně",
+        "email": "E-pošta",
+        "fullName": "Polno imę",
+        "opinionScale": "Škala mninja",
+        "dateTime": "Data i čas",
+        "dateRange": "Datovy rozmez",
+        "fileUpload": "Naloženje fajla",
+        "address": "Adresa",
+        "country": "Država",
+        "legalTerms": "Pravne uslovia",
+        "signature": "Podpis",
+        "website": "Veb stranka",
+        "inputTable": "Vhodna tabela",
+        "matrix": "Matrica",
+        "ranking": "Renkovanjje",
+        "submitDate": "Data poslanija",
+        "hiddenFields": "Skryte polja",
+        "contactInfo": "Kontaktna informacija",
+        "choices": "Varianty",
+        "text": "Tekst",
+        "number": "Čislo",
+        "rating": "Ocěnka",
+        "data": "Danne",
+        "formStructure": "Struktura formulě",
+        "legalConsent": "Pravne i soglasje",
+        "date": "Data",
+        "payment": "Platba",
+        "string": "Niz"
+      },
+      "mention": {
+        "mention": "Zminka pytanja",
+        "hiddenfield": "Zminka skrytogo polja",
+        "variable": "Zminka proměnněj",
+        "emptyState": "Ničto ne najdeno."
+      },
+      "sidebar": {
+        "questions": "Pytanja",
+        "addQuestion": "Dodati pytanje",
+        "endings": "Koncovania",
+        "addEndingTip": "Dodajte novo koncovanjje. Možete sdělati mnòžstvene koncovania i implementovati logiku za oprěděljenje ktroje ljudi uvidęt."
+      },
+      "compose": {
+        "question": "Vpišite pytanje",
+        "description": "Dodajte opis (neobvęzno)",
+        "pasteLink": "Vstavite abo vvedite odkaz tuto",
+        "choicePlaceholder": "Variant",
+        "otherChoice": "Ino",
+        "addChoice": "Dodati variant",
+        "dateRangeTo": "do",
+        "addColumn": "Dodati stolpc",
+        "columnPlaceholder": "Kol {{index}}",
+        "addRow": "Dodati stroku",
+        "rowPlaceholder": "Stroka {{index}}",
+        "addRankingItem": "Dodati element",
+        "rankingItemPlaceholder": "Element {{index}}"
+      },
+      "settings": {
+        "title": "Nastavenja",
+        "required": "Neobhodne",
+        "dateFormat": "Format daty",
+        "timeField": "Polje časa",
+        "multipleSelection": "Mnòžstveny izbor",
+        "randomize": "Nahodne",
+        "allowOther": "Opcija \"Ino\"",
+        "total": "Celkovo",
+        "labels": "Nadpisy",
+        "leftLabel": "Lěvy nadpis",
+        "centerLabel": "Srědnji nadpis",
+        "rightLabel": "Pravy nadpis",
+        "defaultCountry": "Standardna država",
+        "buttonText": "Tekst butony",
+        "redirect": "Prěnapravljenje po dokončenju",
+        "shape": "Forma",
+        "star": "Zvězda",
+        "heart": "Srdce",
+        "crown": "Korona",
+        "happy": "Vesely",
+        "thumb_up": "Palec hore",
+        "layout": "Rozloženje",
+        "brightness": "Jaskost",
+        "questionType": {
+          "headline": "Změniti tip pytanja?",
+          "subHeadline": "Ròzne tipy pytanj imajut ròzne struktury dannyh za svoje odgovědi. Prěpnuťje medžu nimi može privesti k traťe něktrych odgovorov. \nProsimo, eksportujte svoje odgovědi prěd prodòlženjom."
+        },
+        "payment": {
+          "title": "Platba",
+          "headline": "Sjedinjiti sę s Stripe",
+          "subHeadline": "<div>Sbirajte i prijimajte platby direktno na svòj bankovny účet poskytovany Stripe.</div><div>Bezplatni koristniki HeyForm sbirajut platby za sadzbu <a>5% komisija HeyForm + transakcijny sbirok Stripe.</a></div><div>Za udaljenje 5% komisije HeyForm na platbah, obnovite na <button>HeyForm Premium</button>.</div>",
+          "stripeAccount": "Účet Stripe",
+          "revoke": "Odvolati",
+          "price": "Cěna",
+          "currency": "Valuta",
+          "eur": "EUR — Evro",
+          "gbp": "GBP — Britanski funt",
+          "usd": "USD — Američki dolar",
+          "aud": "AUD — Australsky dolar",
+          "cad": "CAD — Kanadsky dolar",
+          "chf": "CHF — Švajcarski frank",
+          "nok": "NOK — Norvežska krona",
+          "sek": "SEK — Švecka krona",
+          "dkk": "DKK — Danska krona",
+          "mxn": "MXN — Meksikanske peso",
+          "nzd": "NZD — Novozelandsky dolar",
+          "brl": "BRL — Brazilsky real"
+        },
+        "multipleChoice": {
+          "unlimited": "Neograničeno",
+          "exactNumber": "Točno čislo",
+          "range": "Rozmez",
+          "badge": {
+            "title": "Značka",
+            "letter": "Bukva",
+            "number": "Čislo"
+          },
+          "verticalAlignment": "Vertikalno výrovnanje"
+        }
+      },
+      "design": {
+        "title": "Dizajn",
+        "theme": {
+          "title": "Tema",
+          "success": "Tema byla uspěšno obnovljena.",
+          "failed": "Obnovljenje temy ne uspělo"
+        },
+        "customize": {
+          "title": "Přizpůsobiti",
+          "systemFonts": "Sistemne fonty",
+          "question": "Pytanja",
+          "answer": "Odgovědi",
+          "buttons": "Butony",
+          "buttonText": "Tekst butony",
+          "background": "Pozadije",
+          "backgroundImage": "Izobraženje pozadija",
+          "brightness": "Jaskost",
+          "customCSS": "Vlastny CSS"
+        }
+      },
+      "logic": {
+        "title": "Logika",
+        "hiddenFields": {
+          "menuTip": "Redaktovati, izbrisati i druže...",
+          "headline": "Skryte polja",
+          "subHeadline": "Skryte polja vam pozvoljujut slěditi předměty pod vyšětrovánjom. Oni ostajut nevidime za každogo kto vyplnjuje formulu, ale pozvoljujut efektivno sbirovati i koristati danne.",
+          "addHiddenField": "Dodati skryto polje",
+          "updateHiddenField": "Obnoviti skryto polje",
+          "emptyState": "Skryto polje pozvoljuje nevidimo efektivno sbirovati danne. <a>Čitati dalje <icon /></a>",
+          "name": "Imę"
+        },
+        "variable": {
+          "headline": "Proměnne",
+          "subHeadline": "Proměnna formulě predstavljuje skrytu vyčisljenu vrědnost bazovanu na odgovorah vašyh respondentov v vašej formulě. Naprimer, ona može byti koristana za vyčisljenje rezultata kviza.",
+          "addVariable": "Dodati proměnnu",
+          "updateVariable": "Obnoviti proměnnu",
+          "emptyState": "Proměnna vyčisljuje skryte vrědnosti z odgovorov. <a>Čitati dalje <icon /></a>",
+          "type": "Tip",
+          "name": "Imę",
+          "defaultValue": "Standardna vrědnost"
+        },
+        "rule": {
+          "headline": "Pravila",
+          "bulkEdit": {
+            "headline": "Masovo redaktovanjje",
+            "subHeadline": "Masovo redaktujte logiku mnòžstvenyh pytanj naraz."
+          },
+          "removeAll": "Udaliti vsě",
+          "when": "Kogda",
+          "then": "Togda",
+          "deleteRule": "Izbrisati pravilo",
+          "emptyState": "Logika pozvoljuje formulěm reagovati na odgovědi. <a>Čitati dalje <icon /></a>",
+          "singleRule": "1 pravilo bylo nastavjeno",
+          "multipleRules": "{{count}} pravil bylo nastavjeno",
+          "redirect": "Prěnapravljenje po dokončenju",
+          "required": "Logičsko pravilo ne smě byti prazno",
+          "addRule": "Dodati pravilo",
+          "ruleCount_one": "1 pravilo bylo nastavjeno",
+          "ruleCount_other": "{{count}} pravil bylo nastavjeno",
+          "is": "Rovnaje sę",
+          "isNot": "Ne rovnaje sę",
+          "contains": "Sodržuje",
+          "doesNotContain": "Ne sodržuje",
+          "startsWith": "Počinaje sę s",
+          "endsWith": "Končaje sę na",
+          "equal": "=",
+          "notEqual": "!=",
+          "greaterThan": ">",
+          "lessThan": "<",
+          "greaterOrEqualThan": ">=",
+          "lessOrEqualThan": "<=",
+          "isBefore": "Je prěd",
+          "isAfter": "Je poslě",
+          "isEmpty": "Je prazno",
+          "isNotEmpty": "Ne je prazno",
+          "addition": "Dodati (+)",
+          "subtraction": "Odnjeti (-)",
+          "multiplication": "Množiti (×)",
+          "division": "Děliti (÷)",
+          "assignment": "Prisvojiti (=)",
+          "navigate": "Skočiti do",
+          "calculate": "Vyčisliti"
+        }
+      },
+      "preview": {
+        "title": "Prěgled",
+        "desktop": "Kompjuter",
+        "mobile": "Mobilny"
+      }
+    },
+    "suspend": {
+      "headline": "Formula byla priostavjena",
+      "subHeadline": "Jesli imate pytanja o priostavjenju, kliknite na butonu niže za svęzanje s nami.",
+      "contactUs": "Svęzati sę s nami"
+    }
+  },
+  "template": {
+    "use": {
+      "title": "Šablon",
+      "workspace": "Rabočij prostor",
+      "createWorkspace": "Sdělati rabočij prostor",
+      "project": "Projekt",
+      "createProject": "Sdělati projekt",
+      "submit": "Počęti s tymto šablonom"
+    },
+    "save": {
+      "title": "Sohraniti kako šablon",
+      "subHeadline": "Sohranite totu formulu kako šablon za členov vašego rabočego prostora za povtorno koristanje.",
+      "name": "Imę šablona",
+      "nameRequired": "Imę šablona je neobhodne",
+      "category": "Kategorija",
+      "categoryRequired": "Kategorija je neobhodna",
+      "description": "Opis (neobvęzno)",
+      "success": "Šablon uspěšno sohranjeny"
+    },
+    "tabs": {
+      "all": "Vsě šablony",
+      "workspace": "Šablony rabočego prostora"
+    },
+    "workspace": {
+      "empty": "Ješče ne sut šablony rabočego prostora",
+      "emptyHint": "Sohranite formulu kako šablon aby ste ju videli tuto."
+    },
+    "delete": {
+      "title": "Izbrisati šablon",
+      "description": "Ste si jisty, že hočete izbrisati \"{{name}}\"? Tota akcija ne može byti nezvratna.",
+      "success": "Šablon uspěšno izbrisany"
+    }
+  },
+  "user": {
+    "headline": "Nastavenja akounra",
+    "subHeadline": "Změny nastavěnj akounra budut priměnjene na vsě vaše rabočje prostory.",
+    "avatar": {
+      "headline": "Avatar",
+      "subHeadline": "Gravatar je koristany standardno kako vaš avatar HeyForm, možete naložiti svòj vlastny avatar tuto."
+    },
+    "name": "Vaše imę",
+    "email": {
+      "headline": "Adresa e-pošty",
+      "subHeadline": "My pošljemo vam e-poštu s 6-cifrnym kodom prověrki.",
+      "label": "Adresa e-pošty",
+      "invalid": "Adresa e-pošty ne je platna",
+      "code": {
+        "label": "Vvedite kod poslany na <strong>{{email}}</strong>.",
+        "required": "Kod prověrki ne smě byti prazny"
+      },
+      "button": "Změniti adresu e-pošty"
+    },
+    "password": {
+      "headline": "Parolj",
+      "subHeadline": "My pošljemo vam e-poštu s 6-cifrnym kodom prověrki.",
+      "button": "Změniti parolj"
+    },
+    "deletion": {
+      "headline": "Izbrisati akount",
+      "subHeadline": "Toto nezvratno izbriše celkovoj vaš akount. Vsě vaše formulě, odgovědi i rabočje prostory budut izbrisane.",
+      "tip": "Tota akcija ne može byti nezvratna. Toto nezvratno izbriše celkovoj vaš akount. Vsě rabočje prostory ktore ste sdělali budut izbrisane, i vy budete udaleny iz vsěh sdělanych rabočih prostorov. \nJesli ste si jisty, že hočete prodòlžiti s izbrisanjom vašego akounra, prosimo, prodòlžite niže.",
+      "code": {
+        "label": "Vvedite kod izbrisanja poslany na <strong>{{email}}</strong>.",
+        "required": "Kod prověrki ne smě byti prazny"
+      },
+      "sentSuccess": "Kod prověrki izbrisanja poslan",
+      "sentFailed": "Posylanje koda prověrki izbrisanja ne uspělo",
+      "button": "Izbrisati mòj akount",
+      "scheduled": {
+        "title": "Vaš akount byl naplanovany za izbrisanje",
+        "description": "Vsě danne vašego akounra, vključajuči ale ne ograničujuči sę na rabočje prostory, projekty, formulě i odgovědi, budut nezvratno izbrisane v toku {{remainingTime}} hodin od zahtěva na izbrisanje. \nJesli toto bylo udělano omylno, možete otměniti izbrisanje vašego akounra niže.",
+        "cancel": "Otměniti planovano izbrisanje"
+      }
+    }
+  }
+}

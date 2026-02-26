@@ -31,6 +31,14 @@
     "zh-tw": {
       "original": "繁體中文（台灣）",
       "translated": "Chinesisch (Taiwan)"
+    },
+    "isv-latn": {
+      "original": "Medžuslovjansky",
+      "translated": "Interslawisch (Lateinisch)"
+    },
+    "isv-cyrl": {
+      "original": "Меджусловјанскы",
+      "translated": "Interslawisch (Kyrillisch)"
     }
   },
   "timezones": {

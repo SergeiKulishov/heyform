@@ -3,6 +3,8 @@ import de from './de'
 import en from './en'
 import es from './es'
 import fr from './fr'
+import isvCyrl from './isv-cyrl'
+import isvLatn from './isv-latn'
 import ja from './ja'
 import pl from './pl'
 import ptBr from './pt-br'
@@ -47,5 +49,11 @@ export const locales: Record<string, any> = {
   },
   cs: {
     translation: cs
+  },
+  'isv-latn': {
+    translation: isvLatn
+  },
+  'isv-cyrl': {
+    translation: isvCyrl
   }
 }

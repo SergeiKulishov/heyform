@@ -33,6 +33,14 @@ export const LOCALES_OPTIONS = [
   {
     label: '繁体中文',
     value: 'zh-tw'
+  },
+  {
+    label: 'Medžuslovjansky',
+    value: 'isv-latn'
+  },
+  {
+    label: 'Меджусловјанскы',
+    value: 'isv-cyrl'
   }
 ]
 
@@ -68,6 +76,14 @@ export const FORM_LOCALES_OPTIONS = [
   {
     label: 'Chinese (traditional)',
     value: 'zh-tw'
+  },
+  {
+    label: 'Interslavic (Latin)',
+    value: 'isv-latn'
+  },
+  {
+    label: 'Interslavic (Cyrillic)',
+    value: 'isv-cyrl'
   }
 ]
 

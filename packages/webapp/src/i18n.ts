@@ -7,6 +7,8 @@ import { LOCALE_COOKIE_NAME } from '@/consts'
 import de from '@/locales/de.json'
 import en from '@/locales/en.json'
 import fr from '@/locales/fr.json'
+import isvCyrl from '@/locales/isv-cyrl.json'
+import isvLatn from '@/locales/isv-latn.json'
 import ja from '@/locales/ja.json'
 import pl from '@/locales/pl.json'
 import ru from '@/locales/ru.json'
@@ -60,6 +62,18 @@ const resources = {
     translation: {
       ...zhTW,
       ...locales['zh-tw'].translation
+    }
+  },
+  'isv-latn': {
+    translation: {
+      ...isvLatn,
+      ...locales['isv-latn'].translation
+    }
+  },
+  'isv-cyrl': {
+    translation: {
+      ...isvCyrl,
+      ...locales['isv-cyrl'].translation
     }
   }
 }

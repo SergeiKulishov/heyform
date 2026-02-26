@@ -15,7 +15,7 @@
     "@apollo/client": "^3.11.8",
     "@fortaine/fetch-event-source": "^3.0.6",
     "@voxly/answer-utils": "https://nexus.nlnano.ru/repository/npm-hosted/@voxly/answer-utils/-/answer-utils-1.3.4.tgz",
-    "@voxly/form-renderer": "https://nexus.nlnano.ru/repository/npm-hosted/@voxly/form-renderer/-/form-renderer-0.5.2.tgz",
+    "@voxly/form-renderer": "https://nexus.nlnano.ru/repository/npm-hosted/@voxly/form-renderer/-/form-renderer-0.5.3.tgz",
     "@voxly/shared-types-enums": "https://nexus.nlnano.ru/repository/npm-hosted/@voxly/shared-types-enums/-/shared-types-enums-1.3.6.tgz",
     "@voxly/utils": "https://nexus.nlnano.ru/repository/npm-hosted/@voxly/utils/-/utils-1.2.5.tgz",
     "@heyooo-inc/react-router": "^0.0.5",

@@ -31,6 +31,14 @@
     "ru": {
       "original": "Русский",
       "translated": "Русский"
+    },
+    "isv-latn": {
+      "original": "Medžuslovjansky",
+      "translated": "Межславянский (латиница)"
+    },
+    "isv-cyrl": {
+      "original": "Меджусловјанскы",
+      "translated": "Межславянский (кириллица)"
     }
   },
   "timezones": {

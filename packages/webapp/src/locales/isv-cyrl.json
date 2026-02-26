@@ -1,0 +1,1661 @@
+{
+  "languages": {
+    "de": {
+      "original": "Deutsch",
+      "translated": "Нємечскы"
+    },
+    "en": {
+      "original": "English",
+      "translated": "Англијскы"
+    },
+    "ru": {
+      "original": "Русский",
+      "translated": "Рускы"
+    },
+    "fr": {
+      "original": "Français",
+      "translated": "Французскы"
+    },
+    "ja": {
+      "original": "日本語",
+      "translated": "Јапонскы"
+    },
+    "pl": {
+      "original": "Polski",
+      "translated": "Пољскы"
+    },
+    "zh-cn": {
+      "original": "简体中文",
+      "translated": "Китајскы (упрошчены)"
+    },
+    "zh-tw": {
+      "original": "繁體中文（台灣）",
+      "translated": "Китајскы (Тајван)"
+    },
+    "isv-latn": {
+      "original": "Medžuslovjansky",
+      "translated": "Меджусловјанскы (латиница)"
+    },
+    "isv-cyrl": {
+      "original": "Меджусловјанскы",
+      "translated": "Меджусловјанскы (кирилица)"
+    }
+  },
+  "timezones": {
+    "niue": "Ниуе",
+    "samoa": "Самоа",
+    "cookislands": "Кукове островы",
+    "hawaiialeutian": "Гавајско-Алеутскы",
+    "tahiti": "Тахити",
+    "marquesas": "Маркизске островы",
+    "gambier": "Гамбиер",
+    "hawaiialeutianadak": "Гавајско-Алеутскы (Адак)",
+    "anchorage": "Анкориджь",
+    "juneau": "Джуно",
+    "metlakatla": "Метлакатла",
+    "nome": "Ном",
+    "sitka": "Ситка",
+    "yakutat": "Јакутат",
+    "pitcairn": "Питкерн",
+    "mexicanpacific": "Мексикански Тихоморскы",
+    "dawsoncreek": "Досон Крик",
+    "fortnelson": "Форт Нелсон",
+    "phoenix": "Финикс",
+    "losangeles": "Лос Анджелес",
+    "tijuana": "Тихуана",
+    "vancouver": "Ванкувер",
+    "dawson": "Досон",
+    "whitehorse": "Вајтхорс",
+    "belize": "Белиз",
+    "costarica": "Коста Рика",
+    "elsalvador": "Салвадор",
+    "guatemala": "Гватемала",
+    "managua": "Манагва",
+    "regina": "Реджина",
+    "swiftcurrent": "Свифт Карент",
+    "tegucigalpa": "Тегусигалпа",
+    "easterisland": "Великоночны остров",
+    "galapagos": "Галапагос",
+    "chihuahua": "Чихуахуа",
+    "mazatlan": "Мазатлан",
+    "boise": "Бојзи",
+    "cambridgebay": "Кембриджь Бей",
+    "denver": "Денвер",
+    "edmonton": "Едмонтон",
+    "inuvik": "Инувик",
+    "ojinaga": "Охинага",
+    "yellowknife": "Јелоунајф",
+    "eirunepe": "Ејрунепе",
+    "riobranco": "Рио Бранко",
+    "bahiabanderas": "Бахиа Бандерас",
+    "beulahnorthdakota": "Бјула, Северна Дакота",
+    "centernorthdakota": "Центр, Северна Дакота",
+    "chicago": "Чикаго",
+    "knoxindiana": "Нокс, Индиана",
+    "matamoros": "Матаморос",
+    "menominee": "Менонини",
+    "merida": "Мерида",
+    "mexicocity": "Мексико",
+    "monterrey": "Монтерей",
+    "newsalemnorthdakota": "Новы Салем, Северна Дакота",
+    "rainyriver": "Рејни Ривер",
+    "rankininlet": "Ранкин Инлет",
+    "resolute": "Резољут",
+    "tellcityindiana": "Тел Сити, Индиана",
+    "winnipeg": "Винипег",
+    "colombia": "Колумбија",
+    "cancun": "Канкун",
+    "jamaica": "Јамајка",
+    "panama": "Панама",
+    "ecuador": "Еквадор",
+    "peru": "Перу",
+    "boavista": "Боа Виста",
+    "campogrande": "Кампо Гранде",
+    "cuiaba": "Кујаба",
+    "manaus": "Манаус",
+    "portovelho": "Порто Велјо",
+    "barbados": "Барбадос",
+    "martinique": "Мартиник",
+    "puertorico": "Пуерто Рико",
+    "santodomingo": "Санто Доминго",
+    "bolivia": "Боливија",
+    "chile": "Чиле",
+    "cuba": "Куба",
+    "detroit": "Детроит",
+    "grandturk": "Гранд Терк",
+    "indianapolis": "Индианаполис",
+    "iqaluit": "Икалуит",
+    "louisville": "Луисвил",
+    "marengoindiana": "Маренго, Индиана",
+    "monticellokentucky": "Монтичело, Кентаки",
+    "newyork": "Новы Јорк",
+    "nipigon": "Нипигон",
+    "pangnirtung": "Пангнитунг",
+    "petersburgindiana": "Петерсбург, Индиана",
+    "portauprince": "Порт-о-Пренс",
+    "thunderbay": "Тандер Беј",
+    "toronto": "Торонто",
+    "vevayindiana": "Вивеј, Индиана",
+    "vincennesindiana": "Винсенс, Индиана",
+    "winamacindiana": "Винамак, Индиана",
+    "guyana": "Гвијана",
+    "paraguay": "Парагвај",
+    "venezuela": "Венезуела",
+    "buenosaires": "Буенос Ајрес",
+    "catamarca": "Катамарка",
+    "cordoba": "Кордоба",
+    "jujuy": "Жужуј",
+    "larioja": "Ла Риоха",
+    "mendoza": "Мендоза",
+    "riogallegos": "Рио Гаљегос",
+    "salta": "Салта",
+    "sanjuan": "Сан Хуан",
+    "sanluis": "Сан Луис",
+    "tucuman": "Тукуман",
+    "ushuaia": "Ушуаја",
+    "bermuda": "Бермуды",
+    "glacebay": "Глејс Беј",
+    "goosebay": "Гус Беј",
+    "halifax": "Галифакс",
+    "moncton": "Монктон",
+    "thule": "Туле",
+    "araguaina": "Арагваина",
+    "bahia": "Бахија",
+    "belem": "Белем",
+    "fortaleza": "Форталеза",
+    "maceio": "Масејо",
+    "recife": "Ресифе",
+    "santarem": "Сантарем",
+    "saopaulo": "Сао Пауло",
+    "falklandislands": "Фолкландске островы",
+    "frenchguiana": "Французска Гвијана",
+    "palmer": "Палмер",
+    "puntaarenas": "Пунта Аренас",
+    "rothera": "Ротера",
+    "suriname": "Суринам",
+    "uruguay": "Уругвај",
+    "newfoundland": "Њуфаундленд",
+    "fernandodenoronha": "Фернандо де Нороња",
+    "southgeorgia": "Јужна Георгија",
+    "stpierremiquelon": "Св. Пјер и Микелон",
+    "westgreenland": "Западна Гренландија",
+    "capeverde": "Кабо Верде",
+    "azores": "Азоры",
+    "coordinateduniversal": "Координовано универзално",
+    "eastgreenland": "Выходна Гренландија",
+    "greenwichmean": "Гриничскы срєдњи",
+    "abidjan": "Абиджан",
+    "bissau": "Бисау",
+    "danmarkshavn": "Данмарксхавн",
+    "monrovia": "Монровија",
+    "reykjavik": "Рејкјавик",
+    "sãotomé": "Сао Томе",
+    "algiers": "Алжир",
+    "tunis": "Тунис",
+    "ireland": "Ирландија",
+    "morocco": "Мароко",
+    "unitedkingdom": "Сједињено Краљевство",
+    "lagos": "Лагос",
+    "ndjamena": "Нджамена",
+    "canary": "Канарскы",
+    "faroe": "Фарерскы",
+    "lisbon": "Лисабон",
+    "madeira": "Мадејра",
+    "westernsahara": "Западна Сахара",
+    "juba": "Джуба",
+    "khartoum": "Хартум",
+    "maputo": "Мапуто",
+    "windhoek": "Виндхук",
+    "amsterdam": "Амстердам",
+    "andorra": "Андора",
+    "belgrade": "Бєлград",
+    "berlin": "Берлин",
+    "brussels": "Брјусељ",
+    "budapest": "Будапешт",
+    "ceuta": "Сеута",
+    "copenhagen": "Копенхаген",
+    "gibraltar": "Гибралтар",
+    "luxembourg": "Љуксембург",
+    "madrid": "Мадрид",
+    "malta": "Малта",
+    "monaco": "Монако",
+    "oslo": "Осло",
+    "paris": "Париж",
+    "prague": "Прага",
+    "rome": "Рим",
+    "stockholm": "Стокголм",
+    "tirane": "Тирана",
+    "vienna": "Видењ",
+    "warsaw": "Варшава",
+    "zurich": "Цјурих",
+    "cairo": "Каиро",
+    "kaliningrad": "Калининград",
+    "tripoli": "Триполи",
+    "southafrica": "Јужна Африка",
+    "troll": "Троль",
+    "baghdad": "Багдад",
+    "qatar": "Катар",
+    "riyadh": "Ријад",
+    "eastAfrica": "Выходна Африка",
+    "amman": "Аман",
+    "athens": "Атины",
+    "beirut": "Бејрут",
+    "bucharest": "Букурешт",
+    "chisinau": "Кишињов",
+    "damascus": "Дамаск",
+    "gaza": "Газа",
+    "hebron": "Хеброн",
+    "helsinki": "Хелсинки",
+    "kiev": "Кијев",
+    "nicosia": "Никозија",
+    "riga": "Рига",
+    "sofia": "Софија",
+    "tallinn": "Талин",
+    "uzhhorod": "Ужгород",
+    "vilnius": "Виљнјус",
+    "zaporozhye": "Запорожје",
+    "famagusta": "Фамагуста",
+    "israel": "Израељ",
+    "kirov": "Киров",
+    "minsk": "Минск",
+    "moscow": "Москва",
+    "simferopol": "Симферополь",
+    "turkey": "Турција",
+    "volgograd": "Волгоград",
+    "armenia": "Арменија",
+    "astrakhan": "Астрахан",
+    "azerbaijan": "Азербајджан",
+    "georgia": "Грузија",
+    "gulf": "Залив",
+    "mauritius": "Маврициј",
+    "réunion": "Реунион",
+    "samara": "Самара",
+    "saratov": "Саратов",
+    "seychelles": "Сејшелы",
+    "ulyanovsk": "Уљановск",
+    "afghanistan": "Афганистан",
+    "iran": "Иран",
+    "frenchSouthernAntarctic": "Французске јужне и антарктичске",
+    "maldives": "Малдивы",
+    "mawson": "Мосон",
+    "pakistan": "Пакистан",
+    "tajikistan": "Таджикистан",
+    "turkmenistan": "Туркменистан",
+    "samarkand": "Самарканд",
+    "tashkent": "Ташкент",
+    "aktau": "Актау",
+    "aqtobe": "Актобе",
+    "atyrau": "Атырау",
+    "oral": "Орал",
+    "qyzylorda": "Кызылорда",
+    "yekaterinburg": "Јекатеринбург",
+    "colombo": "Коломбо",
+    "kolkata": "Колката",
+    "nepal": "Непал",
+    "bangladesh": "Бангладеш",
+    "bhutan": "Бутан",
+    "almaty": "Алматы",
+    "kostanay": "Костанај",
+    "indianOcean": "Индијскы океан",
+    "kyrgyzstan": "Кыргызстан",
+    "omsk": "Омск",
+    "urumqi": "Урумчи",
+    "vostok": "Восток",
+    "cocosIslands": "Кокосове островы",
+    "myanmar": "Мјанмар",
+    "barnaul": "Барнаул",
+    "christmasIsland": "Божичны остров",
+    "davis": "Дејвис",
+    "hovd": "Ховд",
+    "bangkok": "Банкок",
+    "hoChiMinhCity": "Хо Ши Мин",
+    "krasnoyarsk": "Красноjарск",
+    "novokuznetsk": "Новокузнецк",
+    "novosibirsk": "Новосибирск",
+    "tomsk": "Томск",
+    "jakarta": "Джакарта",
+    "pontianak": "Понтианак",
+    "australianWestern": "Аустралскы западны",
+    "bruneiDarussalam": "Брунеј Дарусалам",
+    "centralIndonesia": "Централна Индонезија",
+    "macao": "Макао",
+    "shanghai": "Шанхај",
+    "hongKong": "Гонконг",
+    "irkutsk": "Иркутск",
+    "kualaLumpur": "Куала Лумпур",
+    "kuching": "Кучинг",
+    "philippine": "Филипинскы",
+    "singapore": "Сингапур",
+    "taipei": "Тајпеј",
+    "choibalsan": "Чојбалсан",
+    "ulaanbaatar": "Улан-Батор",
+    "australianCentralWestern": "Аустралскы централно-западны",
+    "eastTimor": "Выходни Тимор",
+    "easternIndonesia": "Выходна Индонезија",
+    "japan": "Јапонија",
+    "pyongyang": "Пјонгјанг",
+    "seoul": "Сеул",
+    "palau": "Палау",
+    "chita": "Чита",
+    "khandyga": "Хандыга",
+    "yakutsk": "Јакутск",
+    "australianCentral": "Аустралскы централны",
+    "adelaide": "Аделаида",
+    "brokenHill": "Брокен Хил",
+    "brisbane": "Брисбен",
+    "lindeman": "Линдеман",
+    "chamorro": "Чаморо",
+    "chuuk": "Чуук",
+    "hobart": "Хобарт",
+    "macquarie": "Маквори",
+    "melbourne": "Мелбурн",
+    "sydney": "Сидней",
+    "papuaNewGuinea": "Папуа Нова Гвинеја",
+    "ustNera": "Уст-Нера",
+    "vladivostok": "Владивосток",
+    "lordHowe": "Лорд Хоу",
+    "bougainville": "Бугенвил",
+    "casey": "Кејси",
+    "kosrae": "Косре",
+    "magadan": "Магадан",
+    "newCaledonia": "Нова Каледонија",
+    "norfolkIsland": "Остров Норфолк",
+    "ponape": "Понапе",
+    "sakhalin": "Сахалин",
+    "solomonIslands": "Соломонове островы",
+    "srednekolymsk": "Срєднеколымск",
+    "vanuatu": "Вануату",
+    "anadyr": "Анадыр",
+    "fiji": "Фиджи",
+    "gilbertIslands": "Гилбертове островы",
+    "kwajalein": "Квајалеин",
+    "majuro": "Маджуро",
+    "nauru": "Науру",
+    "newZealand": "Нова Зеландија",
+    "petropavlovskKamchatski": "Петропавловск-Камчатскы",
+    "tuvalu": "Тувалу",
+    "wakeIsland": "Остров Вејк",
+    "wallisFutuna": "Волис и Футуна",
+    "chatham": "Чатем",
+    "apia": "Апија",
+    "phoenixIslands": "Островы Финикс",
+    "tokelau": "Токелау",
+    "tonga": "Тонга",
+    "lineIsLands": "Линијне островы"
+  },
+  "components": {
+    "add": "Додати",
+    "apply": "Примєнити",
+    "cancel": "Отмєнити",
+    "change": "Змєнити",
+    "close": "Закрыти",
+    "confirm": "Потврдити",
+    "continue": "Продòлжити",
+    "copy": "Копијовати",
+    "copied": "Копијовано",
+    "generate": "Генеровати",
+    "delete": "Избрисати",
+    "enabled": "Вкључено",
+    "disabled": "Выкључено",
+    "duplicate": "Дубликовати",
+    "expand": "Розширити",
+    "edit": "Редактовати",
+    "moveto": "Прємєстити до",
+    "next": "Даље",
+    "optional": "необвęзно",
+    "permanentlyDelete": "Незвратно избрисати",
+    "previous": "Назад",
+    "publish": "Публиковати",
+    "print": "Тискати",
+    "revert": "Врнути",
+    "refresh": "Обновити",
+    "rename": "Прєименовати",
+    "restore": "Обновити",
+    "remove": "Удалити",
+    "send": "Послати",
+    "save": "Сохранити",
+    "share": "Сдєлити",
+    "saveChanges": "Сохранити змєны",
+    "pagination": {
+      "title": "Страница {{page}} од {{maxPage}}",
+      "previous": "Прєдходна",
+      "next": "Слєдуjуча"
+    },
+    "uploader": {
+      "headline": "Наложите фајл або прєтęгните туто",
+      "subHeadline": "{{fileTypes}} до {{maxSize}}",
+      "reselectFile": "Изберите фајл повторно за наложење",
+      "invalidType": "Неподтрживаны тип фајла",
+      "exceedsMaxSize": "Фајл кторы сте избрали пресахује лимит {{maxSize}}",
+      "uploading": "Наложење..."
+    },
+    "password": {
+      "invalid": "Пароль мора имати најмење 8 знаков, и најмење 1 велику букву, 1 малу букву и 1 число."
+    },
+    "imagePicker": {
+      "image": "Изображење",
+      "unsplash": {
+        "title": "Unsplash",
+        "search": "Искати изображења Unsplash",
+        "emptyState": "Ничто не најдено"
+      },
+      "gradient": {
+        "title": "Градиент"
+      }
+    },
+    "datePicker": {
+      "time": "Час"
+    },
+    "error": {
+      "title": "Нєчто пошло не так",
+      "message": "Почекајте момент и пробујте снова. Јесли хиба обстане, просимо, свęжите сę с нами.",
+      "retry": "Пробовати снова"
+    }
+  },
+  "login": {
+    "title": "Вход",
+    "headline": "👋 Витајте назад!",
+    "subHeadline": "Вòјдите в свòј акоунт або <a>сдєлајте акоунт</a>",
+    "continueWith": "Або продòлжите с",
+    "email": {
+      "label": "Адреса е-пошты",
+      "required": "Адреса е-пошты не смє быти празна",
+      "invalid": "Адреса е-пошты не је платна"
+    },
+    "password": {
+      "label": "Пароль",
+      "required": "Пароль не смє быти празна",
+      "maxLength": "Пароль мора имати мење од 100 знаков."
+    },
+    "forgotPassword": "Забыли сте пароль?"
+  },
+  "signUp": {
+    "title": "Сдєлати акоунт",
+    "subHeadline": "Почните 7-дневну пробу с всєми функцијами",
+    "name": {
+      "label": "Имę",
+      "required": "Имę не смє быти празно"
+    },
+    "agreement": "Регистрацијеју вы сгоджујете сę с нашими <a1>условијами служба</a1> и <a2>политикеју приватности</a2>.",
+    "haveAccount": "Уже имате акоунт? <a>Вòјдите</a>."
+  },
+  "forgotPassword": {
+    "title": "Забыли сте пароль?",
+    "subHeadline": "Мы пошљемо вам е-пошту с кодом провєрки",
+    "toLogin": "Назад к <a>входу</a>"
+  },
+  "resetPassword": {
+    "title": "Сбросити пароль",
+    "subHeadline": "Мы послали вам е-пошту с 6-цифрным кодом провєрки, просимо, провєрите своју поштову скринку на {{email}}.",
+    "verificationCode": {
+      "label": "Код провєрки",
+      "required": "Код провєрки не смє быти празны"
+    },
+    "newPassword": {
+      "label": "Нова пароль"
+    },
+    "repeatPassword": {
+      "label": "Нова пароль",
+      "invalid": "Нова пароль и поновјена пароль не совпадајут."
+    }
+  },
+  "verifyEmail": {
+    "title": "Провєрити адресу е-пошты",
+    "subHeadline": "Мы послали вам е-пошту с 6-цифрным кодом провєрки. Просимо, провєрите своју поштову скринку на {{email}}.",
+    "resend": "Не достали сте код? <button>Послати снова</button>"
+  },
+  "oauth": {
+    "title": "Авторизација",
+    "headline": "Сједињење с {{name}}",
+    "subHeadline": "Користајте {{name}} за интеграцију HeyForm с вашими љубимыми апликацијами, како Чат, Е-пошта або СМС.",
+    "would": "{{name}} хче:",
+    "scopes": [
+      "Читање работчего простора",
+      "Получити данне о всєх работчих просторах в вашем акоунтє HeyForm",
+      "Читање проєкта",
+      "Получити данне о всєх проєктах в вашем работчем просторє HeyForm",
+      "Читање формулєй",
+      "Получити данне о всєх формулєх в вашем проєктє HeyForm",
+      "Читање одговоров",
+      "Получити одговєди формулєй кторе сте собрали",
+      "Читање акоунтов",
+      "Получити информацију о вашем акоунтє HeyForm"
+    ]
+  },
+  "workspace": {
+    "notExist": "Тòт работчиј простор не ексистује.",
+    "backHome": "Назад до HeyForm",
+    "appearance": {
+      "title": "Внєшњи вид",
+      "system": "Системны",
+      "light": "Свєтлы",
+      "dark": "Тòмны",
+      "themes": {
+        "defaultLight": "Свєтлы",
+        "defaultDark": "Тòмны",
+        "catppuccinLatte": "Catppuccin Latte",
+        "catppuccinMocha": "Catppuccin Mocha",
+        "dracula": "Dracula",
+        "nord": "Nord",
+        "gruvboxDark": "Gruvbox",
+        "tokyoNight": "Tokyo Night",
+        "renaissance": "Renaissance",
+        "renaissanceDark": "Renaissance Dark",
+        "material": "Material",
+        "materialOcean": "Material Ocean",
+        "github": "GitHub",
+        "githubDark": "GitHub Dark",
+        "monokaiPro": "Monokai Pro",
+        "solarized": "Solarized",
+        "solarizedDark": "Solarized Dark"
+      }
+    },
+    "sidebar": {
+      "workspaces": "Работче просторы",
+      "projects": "Проєкты",
+      "noProjects": "Можете свęзати сę с власьтником работчего простора, абы вас додал до проєкта, або можете сдєлати новы.",
+      "search": "Искати",
+      "viewProfile": "Погледати профил",
+      "accountSettings": "Наставења акоунра",
+      "language": "Језык",
+      "version": "Версија {{version}}",
+      "logout": "Выход",
+      "resources": "Ресурсы",
+      "gettingStarted": "Почętок",
+      "help": "Центр помочи",
+      "template": "Шаблон",
+      "whatsNew": "Что новаго"
+    },
+    "creation": {
+      "title": "Сдєлати работчиј простор",
+      "headline": "Сдєлати новы работчиј простор",
+      "subHeadline": "Работче просторы сут сдєлане окружења где члены могут сòтрудничати. Послє сдєлања работчего простора, можете позвати других абы сę придружили.",
+      "name": {
+        "label": "Имę работчего простора",
+        "required": "Имę работчего простора не смє быти празно"
+      },
+      "logo": "Лого <span>($t(components.optional))</span>"
+    },
+    "invitation": {
+      "title": "Позванка",
+      "headline": "Вы сте позвани придружити сę к работчему простору <span1>{{owner}}</span1>: <span2>{{name}}</span2>",
+      "subHeadline": "Придружите сę к работчему простору и почните сòтрудничати днесь!",
+      "join": "Придружити сę"
+    }
+  },
+  "dashboard": {
+    "title": "Прєглед",
+    "morning": "Добре утрò, {{name}}",
+    "afternoon": "Добры день, {{name}}",
+    "evening": "Добры вечер, {{name}}",
+    "overview": "Прєглед",
+    "forms": "Формулє",
+    "submission": "Одговор",
+    "resetsOn": "Сброс на {{date}}",
+    "members": "Члены",
+    "storage": "Хòванилишче",
+    "recentForms": "Недавне формулє",
+    "noForms": "В работчем просторє не сут формулє",
+    "pickTemplate": "Просто изберите шаблон або почните од нулы.",
+    "search": {
+      "actions": "Дєјанија",
+      "navigation": "Навигација",
+      "newWorkspace": "Новы работчиј простор",
+      "newProject": "Новы проєкт",
+      "newForm": "Нова формула",
+      "forms": "Формулє",
+      "selectProject": "Сдєлати формулу в проєктє",
+      "placeholder": "Искати формулє и документы помочи",
+      "emptyState": "Ничто не најдено."
+    }
+  },
+  "members": {
+    "title": "Члены",
+    "name": "Имę",
+    "role": "Роља",
+    "you": "Вы",
+    "owner": "Власьтник",
+    "member": "Член",
+    "lastSeen": "Послєдње појавјење",
+    "menuTip": "Прєносити, избрисати и друже...",
+    "remove": {
+      "title": "Удалити",
+      "headline": "Сте си јисты, же хочете удалити {{name}} из тогото работчего простора?",
+      "subHeadline": "Когда потврдите, член уже не буде имєти приступ к данным тогото работчего простора.",
+      "confirm": "Удалити"
+    },
+    "transfer": {
+      "title": "Прєносити власьтничство",
+      "headline": "Сте си јисты, же хочете прєносити тòт работчиј простор на {{name}}?",
+      "subHeadline": "Когда потврдите прєнос, вы уже не будете власьтником тогото работчего простора.",
+      "confirm": "Прєносити"
+    },
+    "leave": {
+      "title": "Опустити работчиј простор",
+      "headline": "Сте си јисты, же хочете опустити работчиј простор?",
+      "subHeadline": "Когда потврдите опушчење тогото работчего простора, вы уже не будете имєти приступ к јего данным.",
+      "confirm": "Опустити"
+    },
+    "invite": {
+      "title": "Позвати члена",
+      "headline": "Позвати членов",
+      "subHeadline": "Позвите својих колегов придружити сę к работчему простору чрез е-пошту. Позванка је платна 7 дњов.",
+      "addMore": "Додати јешче",
+      "required": "Адреса е-пошты не смє быти празна",
+      "sentSuccess_one": "{{count}} позванка послана",
+      "sentSuccess_other": "{{count}} позванок послано",
+      "sentSuccessMessage": "Позвани члены были обавєшчени е-поштеју абы сę зарегистровали в HeyForm"
+    }
+  },
+  "settings": {
+    "title": "Наставења работчего простора",
+    "general": {
+      "title": "Обшче",
+      "name": "Имę",
+      "logo": "Лого",
+      "pickLogo": "Изберите лого за свòј работчиј простор.",
+      "customSharingURL": "Властна URL за сдєлање",
+      "customSharingURLDescription": "Наставите властну базову URL за сдєлање вашых формулєй. Јесли не је наставјена, буде користана токуча домена.",
+      "customSharingURLPlaceholder": "https://forms.вашадомена.com"
+    },
+    "branding": {
+      "title": "Брендированјје",
+      "removeBrandingHeadline": "Удалити брендированјје HeyForm",
+      "removeBrandingSubHeadline": "Абы HeyForm выгледал полностју како ваш бранд, удалите лого HeyForm в подвалє формулє.",
+      "viewBrandKit": "Погледати",
+      "logo": {
+        "title": "Лого",
+        "required": "Лого не смє быти празно",
+        "invalid": "Лого не је платна URL"
+      },
+      "theme": "Тема",
+      "presetThemes": "Прєднаставјене темы",
+      "brandKitHeadline": "Кит бренда",
+      "brandKitSubHeadline": "Безпроблемно примєните визуалне активы вашего работчего простора на ваше формулє користајучи Кит бренда. Наложите свòј лого и сдєлајте тему кторы каждый член вашего работчего простора може користати.",
+      "brandKitPreview": {
+        "number": "Пытање 1",
+        "title": "Како је ваше имę?",
+        "description": "Впишите своје имę туто",
+        "input": "Ваш одговор иде туто",
+        "next": "Даље"
+      }
+    },
+    "exportData": {
+      "title": "Експорт данных",
+      "description": "Достаните е-пошту с всєми вашими формулєми и наставенијами в једном фајлє.",
+      "button": "Запросити ваше данне",
+      "successTip": "Когда експорт буде гòтовы, вы достанете е-пошту с одказом за стиахнјење."
+    },
+    "deletion": {
+      "title": "Избрисати работчиј простор",
+      "description": "Избрисање работчего простора незвратно излише всє формулє и данне. Поступајте осторожно!",
+      "button": "Избрисати тòт работчиј простор",
+      "headline": "Провєрите захтєв на избрисање работчего простора",
+      "sentSuccess": "Код провєрки избрисања послан",
+      "sentFailed": "Посылање кода провєрки избрисања не успєло",
+      "tip1": "Јесли сте си јисты, же хочете продòлжити с избрисањем работчего простора <strong>{{name}}</strong>, просимо, продòлжите ниже.",
+      "tip2": "Имајте на умє, же тота операција је незвратна и незвратно излише всє данне свęзане с тымто работчим простором.",
+      "tip3": "Когда потврдите избрисање работчего простора, вы уже не будете могли приступити к данным работчего простора.",
+      "code": {
+        "label": "Введите код избрисања посланы на <strong>{{email}}</strong>.",
+        "required": "Код провєрки не смє быти празны"
+      }
+    },
+    "form": {
+      "exportImport": "Експорт/Импорт",
+      "exportImportDescription": "Експортујте тоту формулу како JSON фајл або импортујте JSON фајл за сдєлање новєј формулє.",
+      "exportJson": "Експортовати како JSON"
+    }
+  },
+  "project": {
+    "menuTip": "Прєименовати, избрисати и друже...",
+    "forms": {
+      "title": "Формулє",
+      "headline": "В проєктє не сут формулє"
+    },
+    "trash": {
+      "title": "Кош",
+      "headline": "В кошу не сут формулє",
+      "subHeadline": "Формулє будут незвратно избрисане из коша послє 30 дњов.",
+      "delete": {
+        "headline": "Сте си јисты, же хочете незвратно избрисати формулу: {{name}}?",
+        "subHeadline": "Когда потврдите избрисање формулє, всє данне свęзане с формулеју будут незвратно удалене."
+      },
+      "tip": "Можете обновити љубу формулу избрисану в послєдњих 30 дњах. <a>Читати даље <icon /></a>"
+    },
+    "members": {
+      "title": "Члены",
+      "headline": "Члены в том проєктє",
+      "subHeadline": "Једино користники кторе сут <strong>додане до тогото проєкта</strong> могут приступити к јего данным, вкључајучи формулє и одговєди.",
+      "addMember": "Додати члена до тогото проєкта",
+      "unjoinedMembers": "Непридружени члены",
+      "add": "Додати",
+      "addSuccess": "Член был успєшно доданы",
+      "addFailed": "Додање члена не успєло",
+      "remove": "Удалити",
+      "removeSuccess": "Член был успєшно удалены",
+      "removeFailed": "Удаљење члена не успєло",
+      "leave": "Опустити",
+      "leaveSuccess": "Вы успєшно опустили проєкт",
+      "leaveFailed": "Опушчење проєкта не успєло"
+    },
+    "creation": {
+      "title": "Сдєлати проєкт",
+      "headline": "Сдєлати новы проєкт",
+      "subHeadline": "Проєкты сут подгрупы в работчем просторє, позвољајучи вам додавати членов за сòтрудничање на формулєх и интеграцијех.",
+      "name": {
+        "label": "Имę проєкта",
+        "required": "Имę проєкта не смє быти празно"
+      },
+      "logo": "Лого <span>($t(components.optional))</span>",
+      "addMembers": "Додати членов до тогото проєкта"
+    },
+    "rename": {
+      "headline": "Прєименовати тòт проєкт",
+      "name": {
+        "label": "Имę",
+        "required": "Имę не смє быти празно"
+      }
+    },
+    "moveto": {
+      "headline": "Прємєстити '{{name}}' до",
+      "project": {
+        "required": "Проєкт не смє быти празны"
+      }
+    },
+    "delete": {
+      "headline": "Провєрите захтєв на избрисање проєкта",
+      "sentSuccess": "Код провєрки избрисања послан",
+      "sentFailed": "Посылање кода провєрки избрисања не успєло",
+      "tip1": "Јесли сте си јисты, же хочете продòлжити с избрисањем проєкта <strong>{{name}}</strong>, просимо, продòлжите ниже.",
+      "tip2": "Имајте на умє, же тота операција је незвратна и незвратно излише всє данне свęзане с тымто проєктом.",
+      "tip3": "Когда потврдите избрисање проєкта, вы уже не будете могли приступити к данным проєкта.",
+      "code": {
+        "label": "Введите код избрисања посланы на <strong>{{email}}</strong>.",
+        "required": "Код провєрки не смє быти празны"
+      },
+      "confirm": "Избрисати проєкт"
+    }
+  },
+  "form": {
+    "menuTip": "Прєименовати, дубликовати и друже...",
+    "metadata_zero": "Јешче нєт одговоров · Редактовано {{date}}",
+    "metadata_one": "{{count}} одговор · Редактовано {{date}}",
+    "metadata_other": "{{count}} одговоров · Редактовано {{date}}",
+    "metadata2_zero": "Јешче нєт одговоров · {{date}} остало",
+    "metadata2_one": "{{count}} одговор · {{date}} остало",
+    "metadata2_other": "{{count}} одговоров · {{date}} остало",
+    "metadata3_zero": "<span>{{status}}</span> · $t(form.metadata)",
+    "metadata3_one": "<span>{{status}}</span> · $t(form.metadata)",
+    "metadata3_other": "<span>{{status}}</span> · $t(form.metadata)",
+    "editForm": "Редактовати формулу",
+    "active": "Активна",
+    "draft": "Чертак",
+    "suspended": "Приоставјена",
+    "closed": "Закрыта",
+    "duplicate": "{{name}} (Копија)",
+    "saveAsTemplate": "Сохранити како шаблон",
+    "moveToTrash": "Прємєстити до коша",
+    "copyLinkToShare": "Копијовати одказ за сдєлање",
+    "creation": {
+      "title": "Сдєлати формулу",
+      "headline": "Сдєлати нову формулу",
+      "defaultName": "Безименна",
+      "scratch": {
+        "headline": "Почęти од нулы",
+        "subHeadline": "Сдєлати из списка доступных типов пытањ"
+      },
+      "template": {
+        "headline": "Избрати шаблон",
+        "subHeadline": "Изберите из ручно сдєланых шаблонов и почните уже"
+      },
+      "ai": {
+        "headline": "Сдєлати с AI",
+        "subHeadline": "Генерујте властне пытања с AI в секундах"
+      },
+      "project": {
+        "label": "Проєкт",
+        "required": "Проєкт не смє быти празны"
+      }
+    },
+    "template": {
+      "headline": "Шаблоны",
+      "categories": [
+        "Анкета",
+        "Генерација лидов",
+        "Подпора клијентов",
+        "Зпєтна свęз",
+        "Работник/Работа",
+        "Резервација и Замовлењје",
+        "Маркетинг",
+        "Регистрација",
+        "Образовање",
+        "Подија",
+        "Здравохранење",
+        "Апликација",
+        "Анкета и Квиз",
+        "Удаљена работа",
+        "Контакт",
+        "Бизнес",
+        "COVID-19",
+        "Голосовање",
+        "Захтєв",
+        "Банковство и Финанције",
+        "Донација и Добротворнòст"
+      ],
+      "use": "Користати тòт шаблон"
+    },
+    "ai": {
+      "topic": {
+        "label": "Что хочете сдєлати?",
+        "description": "Просимо, дајте како можно вєцей детајлов о формулє кторы хочете сдєлати.",
+        "ideasForYou": "Идеје за вас",
+        "examples": [
+          "Сдєлајте формулу за апликацију на работу за сбировање данных кандидатов и животописов.",
+          "Анкета задовољности клијентов за оцєнку квалитеты продуктов и службы клијентов.",
+          "Дајте ми формулу регистрације на подију за сбировање информациј о учęстниках."
+        ],
+        "required": "Тото поље не смє быти празно"
+      },
+      "reference": {
+        "label": "Референца (необвęзно)",
+        "description": "Послє дања Референце, AI буде генеровати пытања и опције строго в рамках опрєдєљеных Референцеју."
+      },
+      "submit": "Генеровати пытања"
+    },
+    "chat": {
+      "title": "AI Асистент",
+      "welcome": "Здраво! Ја могу помочи вам сдєлати пытања, улєпшити логику и провєрити вашу формулу. Пытајте мене чтоколиво.",
+      "compose": "Пытајте мене чтоколиво...",
+      "fieldsUpdated": "Пытања вашеј формулє были обновљене.",
+      "logicUpdated": "Логика вашеј формулє была обновљена.",
+      "themeUpdated": "Тема вашеј формулє была обновљена.",
+      "auditButton": "Аудит",
+      "auditTooltip": "Провєрите пытања на правописне хибы, нејасне формулированија и неплатне типы полєй",
+      "auditComplete": "Најдено {{count}} предложење(ј):",
+      "auditEmpty": "Ваша формула выгледа добре! Никаке важне проблемы не сут најдене.",
+      "expandHint": "Кликните за розширење"
+    },
+    "rename": {
+      "headline": "Прєименовати тоту формулу",
+      "name": {
+        "label": "Имę",
+        "required": "Имę не смє быти празно"
+      }
+    },
+    "analytics": {
+      "title": "Аналитика",
+      "views": "Погледєнја",
+      "submissions": "Одговєди",
+      "completeRate": "Процент докончења",
+      "averageDuration": "Срєдња тривањје",
+      "7d": "Послєдњи тыдењ",
+      "1m": "Послєдњи мєсęц",
+      "3m": "Послєдње 3 мєсęце",
+      "6m": "Послєдњих 6 мєсęцов",
+      "1y": "Послєдњи год",
+      "7dTrend": "{{change}}% од послєдњего тыдєња",
+      "1mTrend": "{{change}}% од послєдњего мєсęца",
+      "3mTrend": "{{change}}% од послєдњих 3 мєсęцов",
+      "6mTrend": "{{change}}% од послєдњих 6 мєсęцов",
+      "1yTrend": "{{change}}% од послєдњего года",
+      "report": {
+        "headline": "Извештај",
+        "submission_zero": "Јешче нєт одговоров",
+        "submission_one": "{{count}} одговор",
+        "submission_other": "{{count}} одговоров",
+        "submission2_zero": "Јешче нєт одговоров · {{average}} срєдње",
+        "submission2_one": "{{count}} одговор · {{average}} срєдње",
+        "submission2_other": "{{count}} одговоров · {{average}} срєдње",
+        "averageRank": "Ср. позиција: {{rank}}"
+      },
+      "funnel": {
+        "title": "Лијка докончења",
+        "opened": "Отворено",
+        "started": "Почęто",
+        "completed": "Докончено",
+        "partial": "Часточно",
+        "views": "Целкове погледєнја",
+        "completionRate": "Процент докончења",
+        "averageTime": "Срєдњи час",
+        "seconds": "сек.",
+        "dropOffByField": "Опушчење по пытању",
+        "noDropOff": "Јешче не сут часточне одговєди"
+      }
+    },
+    "customReport": {
+      "title": "Властны извештај",
+      "metadata_zero": "Јешче нєт одговоров",
+      "metadata_one": "{{count}} одговор",
+      "metadata_other": "{{count}} одговоров",
+      "enablePublicAccess": "Вкључити публичны приступ",
+      "copyLink": "Копијовати одказ извештаја",
+      "theme": "Тема",
+      "heading": "Заголовòк",
+      "question": "Пытање",
+      "showQuestion": "Показати пытање",
+      "hideQuestion": "Скрыти пытање",
+      "chart": "График",
+      "background": "Позадије"
+    },
+    "submissions": {
+      "title": "Одговєди",
+      "headline": "Јешче не сут одговєди",
+      "subHeadline": "Сдєлите формулу в интернєтє абы досęгли шырше публикум.",
+      "inbox": "Входна скринка",
+      "spam": "Спам",
+      "partial": "Часточне",
+      "view": "Погледати",
+      "downloadCSV": "Стиахнути CSV",
+      "maximize": "Максималізовати табелу",
+      "minimize": "Минималізовати табелу",
+      "moveTo": "Прємєстити до {{name}}",
+      "detail": {
+        "headline": "Детајл одговєди",
+        "menuTip": "Тискати и друже..."
+      }
+    },
+    "integrations": {
+      "title": "Интеграције",
+      "connect": "Сјединити",
+      "connectWith": "Сјединити с {{name}}",
+      "readMore": "Читати даље о интеграцији {{name}} <icon />",
+      "reporting": "Извештаје",
+      "analytics": "Аналитика",
+      "marketing": "Маркетинг",
+      "automation": "Автоматизација",
+      "customerSupport": "Подпора клијентов",
+      "developerTools": "Инструменты разработника",
+      "productivity": "Продуктивност",
+      "itEngineering": "ИТ и Инженирство",
+      "fileManagement": "Управљање фајлами",
+      "mapFields": {
+        "headline": "Маповати поља",
+        "subHeadline": "Мапујте HeyForm до столпцов {{name}}. Јесли змєните столпц на {{name}}, просимо, обновите то туто такоже, иначе інтеграција не буде работати како сę чекало.",
+        "requried": "Маповане поља не смєјут быти празне",
+        "leftPlaceholder": "Изберите пытање HeyForm",
+        "rightPlaceholder": "Столпц {{name}}",
+        "requireLeft": "Лєва страна поља {{index}} не смє быти празна",
+        "requireRight": "Права страна поља {{index}} не смє быти празна",
+        "addMore": "Додати поље"
+      },
+      "authorization": {
+        "headline": "Авторизација",
+        "subHeadline": "Прєде всєм, просимо, авторизујте HeyForm за приступ к вашим данным.",
+        "loginWith": "Вòјти чрез {{name}}"
+      },
+      "webhook": {
+        "label": "URL концовеј точкы",
+        "invalid": "URL концовеј точкы не је платна"
+      },
+      "telegram": {
+        "label": "ИД чата",
+        "required": "ИД чата не смє быти празны",
+        "footer": "Додајте <a>@HeyForm_bot</a> до вашеј групы Телеграм, и впишите <code>/start@HeyForm_bot</code> в групє. Потом достанете соопшчење с ИД чата."
+      },
+      "legacyslack": {
+        "label": "URL Webhook",
+        "invalid": "URL Webhook не је платна",
+        "footer": "Сдєлајте своју <a1>апликацију Slack</a1>, вкључите <a2>Входне вебхукы</a2>, а потом вставите URL Webhook туто."
+      },
+      "slack": {
+        "channel": {
+          "headline": "Канал"
+        }
+      },
+      "lark": {
+        "label": "URL Webhook",
+        "invalid": "URL Webhook не је платна",
+        "footer": "Додајте <a>Властного бота</a> в вашу групу, а потом вставите URL Webhook туто."
+      },
+      "email": {
+        "label": "Адреса е-пошты",
+        "invalid": "Адреса е-пошты не је платна",
+        "deprecation": "Тота интеграција је застарєла. Просимо, наставите ју в <a>наставењах формулє</a>."
+      },
+      "facebookpixel": {
+        "label": "ИД Пикселa",
+        "required": "ИД Пикселa не смє быти празны",
+        "placeholder": "напр. 100xxxxxxxxxxxxx",
+        "footer": "Копијујте и вставите свòј ИД Facebook Пикселa туто. <a>Како најду свòј ИД Пикселa</a>?"
+      },
+      "googleanalytics": {
+        "label": "Код слєдовања",
+        "required": "Код слєдовања не смє быти празны",
+        "placeholder": "напр. UA-XXXXX-Y",
+        "footer": "Копијујте и вставите свòј код слєдовања Google Analytics ниже. <a>Како најду свòј код слєдовања</a>?"
+      },
+      "googledrive": {
+        "drive": {
+          "headline": "Изберите диск",
+          "footer": "Можете избрати свòј властны Google Диск або <a>сдєлане дискы Google</a> к кторым сте припојены."
+        },
+        "folder": {
+          "headline": "Изберите сложку",
+          "footer": "Можете избрати сложку за умєшчење фајлов наложеных из вашего HeyForm."
+        }
+      },
+      "googlesheets": {
+        "spreadsheet": "Изберите табељу",
+        "worksheet": "Изберите работчиј лист"
+      },
+      "osticket": {
+        "serverURL": {
+          "headline": "URL сервера",
+          "footer": "URL сервера је URL по которој приступујете к фронтєнду системы. напр. <span>https://support.domain.com</span>."
+        },
+        "apiKey": {
+          "headline": "Кључ API",
+          "footer": "Генерујте кључ API в <a>Управљање -> Кључе API</a> в администраторском панелє, убєдивши сę, же има дозволу за сдєлање захтєвов."
+        },
+        "userName": {
+          "headline": "Имę користника"
+        },
+        "emailAddress": {
+          "headline": "Адреса е-пошты"
+        },
+        "phoneNumber": {
+          "headline": "Номер телефона (необвęзно)"
+        },
+        "subject": {
+          "headline": "Предмєт"
+        },
+        "message": {
+          "headline": "Соопшчење"
+        }
+      },
+      "hubspot": {
+        "fullName": {
+          "headline": "Полно имę"
+        },
+        "jobTitle": {
+          "headline": "Назвање работы (необвęзно)"
+        }
+      },
+      "mailChimp": {
+        "audience": {
+          "headline": "Публика",
+          "placeholder": "Изберите публику"
+        },
+        "subscriberEmail": {
+          "headline": "Е-пошта подписника"
+        },
+        "address": {
+          "headline": "Адреса"
+        }
+      },
+      "airtable": {
+        "base": {
+          "headline": "База"
+        },
+        "table": {
+          "headline": "Табела"
+        }
+      },
+      "monday": {
+        "board": {
+          "headline": "Доска"
+        },
+        "group": {
+          "headline": "Група (необвęзно)"
+        },
+        "itemName": {
+          "headline": "Имę елемента"
+        },
+        "columnValues": {
+          "headline": "Врєдности столпцов (необвęзно)"
+        }
+      },
+      "supportPal": {
+        "systemURL": {
+          "headline": "URL системы",
+          "subHeadline": "URL сервера је URL по кторој приступујете к фронтєнду системы. напр. <span>https://support.domain.com</span>."
+        },
+        "token": {
+          "headline": "Токен API",
+          "subHeadline": "Генерујте токен API в Наставења -> Обшче -> Токены API в панелє оператора, убєдивши сę, же има приступ за Читање и Писање."
+        },
+        "userName": {
+          "headline": "Имę користника (необвęзно)"
+        },
+        "email": {
+          "headline": "Адреса е-пошты (необвęзно)"
+        },
+        "subject": {
+          "headline": "Предмєт"
+        },
+        "text": {
+          "headline": "Текст"
+        },
+        "department": {
+          "headline": "Оддєлење"
+        },
+        "priority": {
+          "headline": "Приоритет"
+        },
+        "status": {
+          "headline": "Статус"
+        }
+      },
+      "notion": {
+        "database": {
+          "headline": "База данных"
+        }
+      }
+    },
+    "share": {
+      "title": "Сдєлити",
+      "unpublishedTip": "Тота формула има непубликоване змєны. Просимо, публикујте послєдњу версију прєд сдєлањем формулє.",
+      "link": {
+        "headline": "Одказ за сдєлање",
+        "viaX": "Сдєлити на X",
+        "viaFacebook": "Сдєлити на Facebook",
+        "viaLinkedIn": "Сдєлити на LinkedIn",
+        "qrcode": {
+          "title": "Сдєлити чрез QR код",
+          "headline": "Вставити формулу",
+          "subHeadline": "Туто сут нєкторе опције за интеграцију вашеј формулє в вашу веб страницу.",
+          "download": "Стиахнути"
+        },
+        "email": {
+          "title": "Сдєлити чрез е-пошту",
+          "subject": "Можете ли взęти момент за выплнјење тој формулє heyform?",
+          "body": "Были бых вам велми вдечни јесли бы сте выплнили тоту формулу: {{url}}. Дєкујемо."
+        },
+        "useCustomDomain": "Користати властну домену"
+      },
+      "generateLink": {
+        "title": "Генеровати одказ",
+        "addParameter": "Додати параметр",
+        "parameterKey": "Кључ",
+        "parameterValue": "Врєдност",
+        "preview": "Прєглед",
+        "fromCsv": "Из .csv",
+        "fromCsvTooltip": "Наложите CSV фајл где првја строка содержује имена параметров (заголовкы) и каждa слєдуjуча строка содержује врєдности.\n\nПримєр .csv фајла:\nid,firstname,lastname\n1,Jack,Silver\n2,Nikita,Trofimoff\n\nПослє обработкę, новы CSV фајл с генерованными одказами буде автоматичскы стиахнјены.",
+        "useUrlShortener": "Скратити URL",
+        "shortening": "Скрачење...",
+        "shorteningFailed": "Скрачење URL не успєло",
+        "shorteningFailedMessage": "Удала сę хиба при скрачењу URL. Буде користана оригинална URL.",
+        "shortenButton": "Скратити",
+        "originalUrl": "Оригинална URL",
+        "shortenedUrl": "Скрачена URL",
+        "processingStarted": "Обработка почęта",
+        "willNotifyWhenReady": "Мы вас обавєстимо когда фајл буде гòтовы за стиахнјење",
+        "uploadFailed": "Наложење не успєло",
+        "processingComplete": "Обработка докончена",
+        "readyToDownload": "Ваш фајл је гòтовы за стиахнјење",
+        "processingFailed": "Обработка не успєла",
+        "unknownError": "Удала сę незнама хиба",
+        "processingCsv": "Обработка: {{fileName}}",
+        "rowsProcessed": "строк обработано",
+        "failed": "не успєло",
+        "downloadCsv": "Стиахнути CSV",
+        "jobCancelled": "Задачка отмєнјена"
+      },
+      "settings": {
+        "headline": "Наставења одказа",
+        "subHeadline": "Наставите како ваша формула выгледа когда сдєлујете одказ в социалных сєтјах.",
+        "title": "Назвање",
+        "description": "Опис",
+        "preview": {
+          "headline": "Прєглед",
+          "subHeadline": "HeyForm автоматичскы генерује <a>Open Graph</a> изображење за вас. Такоже можете <button>наложити своје властно изображење</button>.",
+          "uploadTitle": "Наложите своје властно Open Graph изображење",
+          "uploadDescription": "Препоручены размєр: 1200x630 | JPG, PNG."
+        }
+      },
+      "embed": {
+        "title": "Вставити",
+        "headline": "Вставити формулу",
+        "subHeadline": "Туто сут нєкторе опције за интеграцију вашеј формулє в вашу веб страницу.",
+        "standard": "Стандардны",
+        "modal": "Модално окно",
+        "popup": "Выскаковаjуче окно",
+        "fullpage": "Полна страница",
+        "getCode": "Достати код",
+        "settings": "Наставења",
+        "width": "Широкост",
+        "height": "Высокост",
+        "auto": "Авто",
+        "fixed": "Фиксировано",
+        "size": "Размєр моданого окна",
+        "small": "Малы",
+        "medium": "Срєдњи",
+        "large": "Великы",
+        "launch": "Запустити",
+        "click": "По кликнјењу на бутону",
+        "load": "По наложењу странцы",
+        "delay": "Послє уплыву часа",
+        "exit": "При замєрє выхода",
+        "scroll": "Послє прокруткы",
+        "triggerBackground": "Позадије спушча",
+        "triggerText": "Текст спушча",
+        "hideAfterSubmit": "Закрыти по послању",
+        "secondsDelay": "секунд задржеија",
+        "pageScrolled": "% странцы прокручено",
+        "position": "Позиција",
+        "bottomLeft": "Доље лєво",
+        "bottomRight": "Доље право",
+        "transparentBackground": "Прозрачно позадије",
+        "code": {
+          "headline": "Додајте HeyForm на своју веб страницу",
+          "subHeadline": "Вставите слєдуjучиј фрагмент кода в секцију body вашеј веб странцы."
+        }
+      }
+    },
+    "settings": {
+      "title": "Наставења формулє",
+      "general": {
+        "title": "Обшче",
+        "archive": {
+          "headline": "Архив одговоров",
+          "subHeadline": "Выкључите архив одговоров јесли предпочитајете абы HeyForm не соханјал ваше одговєди."
+        },
+        "redirect": {
+          "headline": "Прєнаправљење по докончењу",
+          "subHeadline": "Прєнаправите на властну URL когда формула буде послана.",
+          "placeholder": "Введите URL прєнаправленија туто, напр., https://example.com",
+          "invalidUrl": "URL прєнаправленија не је платна"
+        },
+        "progressBar": {
+          "headline": "Линиja поступка",
+          "subHeadline": "Можете лехко дати ведити респондентам како далеко сут од докончења вашеј формулє."
+        },
+        "viewQuestions": {
+          "headline": "Погледати всє пытања",
+          "subHeadline": "Можете то вкључити абы респонденты могли прогледнути всє пытања."
+        },
+        "navigationArrows": {
+          "headline": "Навигачне шипкы",
+          "subHeadline": "Можете то вкључити абы респонденты могли навиговати между пытањами."
+        },
+        "partialSubmission": {
+          "headline": "Сохранити часточне одговєди",
+          "subHeadline": "Дозвольте користникам продòлжити недокончене формулє когда сę врнут."
+        }
+      },
+      "access": {
+        "title": "Приступ",
+        "closeForm": {
+          "headline": "Закрыти формулу",
+          "subHeadline": "Можете закрыти тоту формулу абы сте прєстали приjимати новє одговєди и запрєчили публичны приступ к формулє."
+        },
+        "scheduledDate": {
+          "headline": "Закрыти формулу на планованы дату",
+          "subHeadline": "Когда хочете приjимати одговєди в определеном датовом розмежу, можете наставити дату почętка и конца туто.",
+          "startDate": "Дата почętка",
+          "endDate": "Дата конца"
+        },
+        "countdown": {
+          "headline": "Одчитовањје",
+          "subHeadline": "Можете наставити дозвољеный час туто јесли хочете блоковати одговор послє конца одчитованија.",
+          "days": "Дны",
+          "seconds": "Секунды",
+          "minutes": "Минуты",
+          "hours": "Ходины"
+        },
+        "limitIP": {
+          "headline": "Ограничити чęстост посылања за једну ИП адресу",
+          "subHeadline": "Можете наставити туто јесли хочете ограничити число посылањ од једнеј ИП адресы за обдобје.",
+          "times": "разов",
+          "inEvery": "в каждом"
+        },
+        "quotaLimit": {
+          "headline": "Ограничити число одговоров",
+          "subHeadline": "Тото вам позвољује наставити определеное целковоје число одговоров дозволеных за вашу формулу.",
+          "invalid": "Число одговоров не је платно"
+        },
+        "closedMessage": {
+          "headline": "Соопшчење закрытеј формулє",
+          "subHeadline": "Тото је то что увидęт приjемники јесли сте закрыли формулу једнеjу из горєнјих опциј.",
+          "title": "Назвање соопшчења закрытеј формулє",
+          "description": "Опис соопшчења закрытеј формулє"
+        }
+      },
+      "translations": {
+        "title": "Прєклады",
+        "primaryLanguage": {
+          "headline": "Главны језык",
+          "subHeadline": "Изберите главны језык в кторм респонденты будут видєти вашу формулу. Примєнјује сę на неприспособены текст, како сут стандардне бутоны, хибы валидације, итд."
+        },
+        "translations": {
+          "headline": "Прєклады",
+          "subHeadline": "Автоматичскы прєложите пытања формулє на ваше избранне језыкы користајучи <a>OpenAI ChatGPT</a>.",
+          "placeholder": "Изберите језыкы"
+        }
+      },
+      "emailNotification": {
+        "title": "Обавєшчења е-поштеју",
+        "self": {
+          "headline": "Властне обавєшчења е-поштеју",
+          "subHeadline": "Достаните е-пошту когда нєкто доконча тоту формулу."
+        },
+        "respondent": {
+          "headline": "Обавєшчења респондентов е-поштеју",
+          "subHeadline": "Пошлите приспособену текстову е-пошту респондентам послє посланија формулє."
+        }
+      },
+      "protection": {
+        "title": "Зашчита",
+        "password": {
+          "headline": "Зашчита парољу",
+          "subHeadline": "Зашчитите своју формулу јединеjу, лехко запомнитељну парољу."
+        },
+        "bot": {
+          "headline": "Прєвенција ботов",
+          "subHeadline": "Запрєчите посыланија ботов вкључењјем captcha."
+        },
+        "antiSpam": {
+          "headline": "Анти-спам",
+          "subHeadline": "Можете то вкључити за прєвенцију спамовых посылањ."
+        }
+      }
+    },
+    "builder": {
+      "title": "Конструктор",
+      "navbar": {
+        "syncing": "Сохранјење пытањ..."
+      },
+      "question": {
+        "menuTip": "Дубликовати, избрисати и друже...",
+        "title": "Пытање",
+        "answer": "Одговор",
+        "recommended": "Препоручено",
+        "welcome": "Екран витања",
+        "thankYou": "Концовы екран",
+        "multipleChoice": "Мнòжственны избор",
+        "phoneNumber": "Номер телефона",
+        "shortText": "Краткы текст",
+        "longText": "Длòгы текст",
+        "questionGroup": "Група пытањ",
+        "statement": "Выјавјење",
+        "pictureChoice": "Избор изображења",
+        "yesNo": "Да/Нє",
+        "email": "Е-пошта",
+        "fullName": "Полно имę",
+        "opinionScale": "Шкала мнења",
+        "dateTime": "Дата и час",
+        "dateRange": "Датовы розмез",
+        "fileUpload": "Наложење фајла",
+        "address": "Адреса",
+        "country": "Држава",
+        "legalTerms": "Правне условија",
+        "signature": "Подпис",
+        "website": "Веб странка",
+        "inputTable": "Входна табела",
+        "matrix": "Матрица",
+        "ranking": "Ренковање",
+        "submitDate": "Дата посланија",
+        "hiddenFields": "Скрыте поља",
+        "contactInfo": "Контактна информација",
+        "choices": "Варианты",
+        "text": "Текст",
+        "number": "Число",
+        "rating": "Оцєнка",
+        "data": "Данне",
+        "formStructure": "Структура формулє",
+        "legalConsent": "Правне и согласје",
+        "date": "Дата",
+        "payment": "Платба",
+        "string": "Низ"
+      },
+      "mention": {
+        "mention": "Зминка пытања",
+        "hiddenfield": "Зминка скрытого поља",
+        "variable": "Зминка промєнněj",
+        "emptyState": "Ничто не најдено."
+      },
+      "sidebar": {
+        "questions": "Пытања",
+        "addQuestion": "Додати пытање",
+        "endings": "Концованија",
+        "addEndingTip": "Додајте ново концовањје. Можете сдєлати мнòжественне концованија и имплементовати логику за опрєдєљење кторе људи увидęт."
+      },
+      "compose": {
+        "question": "Впишите пытање",
+        "description": "Додајте опис (необвęзно)",
+        "pasteLink": "Вставите або введите одказ туто",
+        "choicePlaceholder": "Вариант",
+        "otherChoice": "Ино",
+        "addChoice": "Додати вариант",
+        "dateRangeTo": "до",
+        "addColumn": "Додати столпц",
+        "columnPlaceholder": "Кол {{index}}",
+        "addRow": "Додати строку",
+        "rowPlaceholder": "Строка {{index}}",
+        "addRankingItem": "Додати елемент",
+        "rankingItemPlaceholder": "Елемент {{index}}"
+      },
+      "settings": {
+        "title": "Наставења",
+        "required": "Необходне",
+        "dateFormat": "Формат даты",
+        "timeField": "Поље часа",
+        "multipleSelection": "Мнòжественны избор",
+        "randomize": "Находне",
+        "allowOther": "Опција \"Ино\"",
+        "total": "Целково",
+        "labels": "Надписы",
+        "leftLabel": "Лєвы надпис",
+        "centerLabel": "Срєдњи надпис",
+        "rightLabel": "Правы надпис",
+        "defaultCountry": "Стандардна држава",
+        "buttonText": "Текст бутоны",
+        "redirect": "Прєнаправљење по докончењу",
+        "shape": "Форма",
+        "star": "Звєзда",
+        "heart": "Срдце",
+        "crown": "Корона",
+        "happy": "Веселы",
+        "thumb_up": "Палец горе",
+        "layout": "Розложење",
+        "brightness": "Јаскост",
+        "questionType": {
+          "headline": "Змєнити тип пытања?",
+          "subHeadline": "Рòзне типы пытањ имајут рòзне структуры данных за своје одговєди. Прєпнутје между ними може привести к тратје нєкторых одговоров. \nПросимо, експортујте своје одговєди прєд продòлжењом."
+        },
+        "payment": {
+          "title": "Платба",
+          "headline": "Сјединити сę с Stripe",
+          "subHeadline": "<div>Сбирајте и приjимајте платбы директно на свòј банковны учет поскытованы Stripe.</div><div>Безплатни користници HeyForm сбирајут платбы за садзбу <a>5% комисија HeyForm + трансакцијны сбирок Stripe.</a></div><div>За удалење 5% комисије HeyForm на платбах, обновите на <button>HeyForm Premium</button>.</div>",
+          "stripeAccount": "Учет Stripe",
+          "revoke": "Одволати",
+          "price": "Цєна",
+          "currency": "Валута",
+          "eur": "EUR — Евро",
+          "gbp": "GBP — Британскы фунт",
+          "usd": "USD — Америчкы долар",
+          "aud": "AUD — Аустралскы долар",
+          "cad": "CAD — Канадскы долар",
+          "chf": "CHF — Швајцарскы франк",
+          "nok": "NOK — Норвежска крона",
+          "sek": "SEK — Швецка крона",
+          "dkk": "DKK — Данска крона",
+          "mxn": "MXN — Мексиканске песо",
+          "nzd": "NZD — Новозеландскы долар",
+          "brl": "BRL — Бразилскы реал"
+        },
+        "multipleChoice": {
+          "unlimited": "Неограничено",
+          "exactNumber": "Точно число",
+          "range": "Розмез",
+          "badge": {
+            "title": "Значка",
+            "letter": "Буква",
+            "number": "Число"
+          },
+          "verticalAlignment": "Вертикално выровнање"
+        }
+      },
+      "design": {
+        "title": "Дизајн",
+        "theme": {
+          "title": "Тема",
+          "success": "Тема была успєшно обновљена.",
+          "failed": "Обновљење темы не успєло"
+        },
+        "customize": {
+          "title": "Приспособити",
+          "systemFonts": "Системне фонты",
+          "question": "Пытања",
+          "answer": "Одговєди",
+          "buttons": "Бутоны",
+          "buttonText": "Текст бутоны",
+          "background": "Позадије",
+          "backgroundImage": "Изображење позадија",
+          "brightness": "Јаскост",
+          "customCSS": "Властны CSS"
+        }
+      },
+      "logic": {
+        "title": "Логика",
+        "hiddenFields": {
+          "menuTip": "Редактовати, избрисати и друже...",
+          "headline": "Скрыте поља",
+          "subHeadline": "Скрыте поља вам позвољујут слєдити предмєты под выштровањом. Они остајут невидиме за каждого кто выплнјаје формулу, але позвољујут ефективно сбировати и користати данне.",
+          "addHiddenField": "Додати скрыто поље",
+          "updateHiddenField": "Обновити скрыто поље",
+          "emptyState": "Скрыто поље позвољује невидимо ефективно сбировати данне. <a>Читати даље <icon /></a>",
+          "name": "Имę"
+        },
+        "variable": {
+          "headline": "Промєнне",
+          "subHeadline": "Промєнна формулє представљаје скрыту выслисљену врєдност базовану на одговорах вашых респондентов в вашеј формулє. Напримєр, она може быти користана за вычисљење резултата квиза.",
+          "addVariable": "Додати промєнну",
+          "updateVariable": "Обновити промєнну",
+          "emptyState": "Промєнна вычисљује скрыте врєдности з одговоров. <a>Читати даље <icon /></a>",
+          "type": "Тип",
+          "name": "Имę",
+          "defaultValue": "Стандардна врєдност"
+        },
+        "rule": {
+          "headline": "Правила",
+          "bulkEdit": {
+            "headline": "Масово редактовање",
+            "subHeadline": "Масово редактујте логику мнòжественых пытањ нараз."
+          },
+          "removeAll": "Удалити всє",
+          "when": "Когда",
+          "then": "Тогда",
+          "deleteRule": "Избрисати правило",
+          "emptyState": "Логика позвољаје формулєм реаговати на одговєди. <a>Читати даље <icon /></a>",
+          "singleRule": "1 правило было наставјено",
+          "multipleRules": "{{count}} правил было наставјено",
+          "redirect": "Прєнаправљење по докончењу",
+          "required": "Логичско правило не смє быти празно",
+          "addRule": "Додати правило",
+          "ruleCount_one": "1 правило было наставјено",
+          "ruleCount_other": "{{count}} правил было наставјено",
+          "is": "Ровнаје сę",
+          "isNot": "Не ровнаје сę",
+          "contains": "Содржује",
+          "doesNotContain": "Не содржује",
+          "startsWith": "Починаје сę с",
+          "endsWith": "Кончаје сę на",
+          "equal": "=",
+          "notEqual": "!=",
+          "greaterThan": ">",
+          "lessThan": "<",
+          "greaterOrEqualThan": ">=",
+          "lessOrEqualThan": "<=",
+          "isBefore": "Је прєд",
+          "isAfter": "Је послє",
+          "isEmpty": "Је празно",
+          "isNotEmpty": "Не је празно",
+          "addition": "Додати (+)",
+          "subtraction": "Однjети (-)",
+          "multiplication": "Множити (×)",
+          "division": "Дєлити (÷)",
+          "assignment": "Присвојити (=)",
+          "navigate": "Скочити до",
+          "calculate": "Вычислити"
+        }
+      },
+      "preview": {
+        "title": "Прєглед",
+        "desktop": "Компјутер",
+        "mobile": "Мобилны"
+      }
+    },
+    "suspend": {
+      "headline": "Формула была приоставјена",
+      "subHeadline": "Јесли имате пытања о приоставјењу, кликните на бутону ниже за свęзање с нами.",
+      "contactUs": "Свęзати сę с нами"
+    }
+  },
+  "template": {
+    "use": {
+      "title": "Шаблон",
+      "workspace": "Работчиј простор",
+      "createWorkspace": "Сдєлати работчиј простор",
+      "project": "Проєкт",
+      "createProject": "Сдєлати проєкт",
+      "submit": "Почęти с тымто шаблоном"
+    },
+    "save": {
+      "title": "Сохранити како шаблон",
+      "subHeadline": "Сохраните тоту формулу како шаблон за членов вашего работчего простора за повторно користање.",
+      "name": "Имę шаблона",
+      "nameRequired": "Имę шаблона је необходне",
+      "category": "Категорија",
+      "categoryRequired": "Категорија је необходна",
+      "description": "Опис (необвęзно)",
+      "success": "Шаблон успєшно сохранјены"
+    },
+    "tabs": {
+      "all": "Всє шаблоны",
+      "workspace": "Шаблоны работчего простора"
+    },
+    "workspace": {
+      "empty": "Јешче не сут шаблоны работчего простора",
+      "emptyHint": "Сохраните формулу како шаблон абы сте ју видели туто."
+    },
+    "delete": {
+      "title": "Избрисати шаблон",
+      "description": "Сте си јисты, же хочете избрисати \"{{name}}\"? Тота акција не може быти незвратна.",
+      "success": "Шаблон успєшно избрисаны"
+    }
+  },
+  "user": {
+    "headline": "Наставења акоунра",
+    "subHeadline": "Змєны наставєнј акоунра будут примєнјене на всє ваше работче просторы.",
+    "avatar": {
+      "headline": "Аватар",
+      "subHeadline": "Gravatar је користаны стандардно како ваш аватар HeyForm, можете наложити свòј властны аватар туто."
+    },
+    "name": "Ваше имę",
+    "email": {
+      "headline": "Адреса е-пошты",
+      "subHeadline": "Мы пошљемо вам е-пошту с 6-цифрным кодом провєрки.",
+      "label": "Адреса е-пошты",
+      "invalid": "Адреса е-пошты не је платна",
+      "code": {
+        "label": "Введите код посланы на <strong>{{email}}</strong>.",
+        "required": "Код провєрки не смє быти празны"
+      },
+      "button": "Змєнити адресу е-пошты"
+    },
+    "password": {
+      "headline": "Пароль",
+      "subHeadline": "Мы пошљемо вам е-пошту с 6-цифрным кодом провєрки.",
+      "button": "Змєнити пароль"
+    },
+    "deletion": {
+      "headline": "Избрисати акоунт",
+      "subHeadline": "Тото незвратно избрише целковој ваш акоунт. Всє ваше формулє, одговєди и работче просторы будут избрисане.",
+      "tip": "Тота акција не може быти незвратна. Тото незвратно избрише целковој ваш акоунт. Всє работче просторы кторе сте сдєлали будут избрисане, и вы будете удалены из всєх сдєланых работчих просторов. \nЈесли сте си јисты, же хочете продòлжити с избрисањом вашего акоунра, просимо, продòлжите ниже.",
+      "code": {
+        "label": "Введите код избрисања посланы на <strong>{{email}}</strong>.",
+        "required": "Код провєрки не смє быти празны"
+      },
+      "sentSuccess": "Код провєрки избрисања послан",
+      "sentFailed": "Посылање кода провєрки избрисања не успєло",
+      "button": "Избрисати мòј акоунт",
+      "scheduled": {
+        "title": "Ваш акоунт был наплановани за избрисање",
+        "description": "Всє данне вашего акоунта, вкључајучи але не ограничујучи сę на работче просторы, проєкты, формулє и одговєди, будут незвратно избрисане в току {{remainingTime}} ходин од захтєва на избрисање. \nЈесли тото было удєлано омылно, можете отмєнити избрисање вашего акоунта ниже.",
+        "cancel": "Отмєнити планованое избрисање"
+      }
+    }
+  }
+}
