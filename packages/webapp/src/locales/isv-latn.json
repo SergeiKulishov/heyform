@@ -797,6 +797,7 @@
     "saveAsTemplate": "Sohraniti kako šablon",
     "moveToTrash": "Prěměstiti do koša",
     "copyLinkToShare": "Kopijovati odkaz za sdělanje",
+    "testLink": "Kopijovati testovy odkaz",
     "creation": {
       "title": "Sdělati formulu",
       "headline": "Sdělati novu formulu",
@@ -1190,7 +1191,9 @@
         "rowsProcessed": "strok obrabotano",
         "failed": "ne uspělo",
         "downloadCsv": "Stiahnuti CSV",
-        "jobCancelled": "Zadačka otměnjena"
+        "jobCancelled": "Zadačka otměnjena",
+        "testMode": "Testovy režim",
+        "testModeDescription": "Podělite tutų odkaz za testovanje formulara bez sohranjenija odgovorov"
       },
       "settings": {
         "headline": "Nastavenja odkaza",

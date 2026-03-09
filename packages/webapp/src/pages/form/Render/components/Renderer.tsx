@@ -12,6 +12,7 @@ import {
   HiddenFieldAnswer
 } from '@voxly/shared-types-enums'
 import { FC, useEffect, useRef, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 
 import { EndpointService } from '../service/endpoint'
 import { geeTestToken, initGeeTest, recaptchaToken } from '../utils/captcha'
@@ -31,12 +32,19 @@ interface RendererProps {
 let captchaRef: Any = null
 
 export const Renderer: FC<RendererProps> = ({ form, query, locale, contactId }) => {
+  const { t } = useTranslation()
+  const isTestMode = query?.test === 'true'
   const openTokenRef = useRef<string>('')
   const passwordTokenRef = useRef<string>('')
   const [isPasswordChecked, setIsPasswordChecked] = useState(false)
 
   async function openForm() {
     sendMessageToParent('FORM_OPENED')
+
+    if (isTestMode) {
+      return
+    }
+
     openTokenRef.current = await EndpointService.openForm(form.id)
   }
 
@@ -52,6 +60,11 @@ export const Renderer: FC<RendererProps> = ({ form, query, locale, contactId }) 
     meta?: { sessionId: string; lastFieldId?: string; lastFieldIndex?: number }
   ) {
     try {
+      if (isTestMode) {
+        sendMessageToParent('FORM_SUBMITTED')
+        return
+      }
+
       let token: Record<string, Any> = {}
 
       switch (form.settings?.captchaKind) {
@@ -171,6 +184,27 @@ export const Renderer: FC<RendererProps> = ({ form, query, locale, contactId }) 
       )}
 
       {isStripeEnabled(form) && <script id="stripe" src="https://js.stripe.com/v3/" />}
+
+      {isTestMode && (
+        <div
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            right: 0,
+            zIndex: 9999,
+            backgroundColor: '#f59e0b',
+            color: '#000',
+            textAlign: 'center',
+            padding: '6px 12px',
+            fontSize: '13px',
+            fontWeight: 500,
+            fontFamily: 'system-ui, sans-serif'
+          }}
+        >
+          {t('Test mode — responses are not saved', { lng: locale })}
+        </div>
+      )}
 
       <FormRenderer
         form={form as Any}

@@ -1,5 +1,12 @@
 import { LayoutProps } from '@heyooo-inc/react-router'
-import { IconChevronLeft, IconCopy, IconDots, IconTag, IconTrash } from '@tabler/icons-react'
+import {
+  IconChevronLeft,
+  IconCopy,
+  IconDots,
+  IconTag,
+  IconTestPipe,
+  IconTrash
+} from '@tabler/icons-react'
 import { preventDefault } from '@voxly/form-renderer'
 import { useRequest } from 'ahooks'
 import { FC, useEffect, useMemo } from 'react'
@@ -301,6 +308,14 @@ export const FormLayout: FC<LayoutProps> = ({ options, children }) => {
             text={`${sharingURLPrefix}/form/${formId}`}
             label={t('form.copyLinkToShare')}
             icon={<IconLink className="h-5 w-5" />}
+          />
+
+          <Button.Copy
+            size="md"
+            className="order-last sm:order-first"
+            text={`${sharingURLPrefix}/form/${formId}?test=true`}
+            label={t('form.testLink')}
+            icon={<IconTestPipe className="h-5 w-5" />}
           />
 
           {/* Go to form edit page */}

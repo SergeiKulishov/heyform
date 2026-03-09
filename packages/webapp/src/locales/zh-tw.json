@@ -779,6 +779,7 @@
     "saveAsTemplate": "儲存為範本",
     "moveToTrash": "移至回收站",
     "copyLinkToShare": "複製連結以分享",
+    "testLink": "複製測試連結",
     "creation": {
       "title": "創建表單",
       "headline": "創建一個新表單",
@@ -1116,7 +1117,9 @@
         "rowsProcessed": "行已處理",
         "failed": "失敗",
         "downloadCsv": "下載CSV",
-        "jobCancelled": "任務已取消"
+        "jobCancelled": "任務已取消",
+        "testMode": "測試模式",
+        "testModeDescription": "分享此連結以測試表單，不會儲存回答"
       },
       "settings": {
         "headline": "連結設定",

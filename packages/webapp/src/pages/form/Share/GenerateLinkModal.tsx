@@ -73,17 +73,17 @@ const GenerateLinkComponent: FC<GenerateLinkComponentProps> = ({ onClose }) => {
   const baseUrl = useMemo(() => `${sharingURLPrefix}/form/${formId}`, [formId, sharingURLPrefix])
 
   const generatedUrl = useMemo(() => {
-    const validParams = parameters.filter(p => p.key.trim() !== '')
-    if (validParams.length === 0) return baseUrl
-
     const searchParams = new URLSearchParams()
+
+    const validParams = parameters.filter(p => p.key.trim() !== '')
     validParams.forEach(p => {
       if (p.key.trim()) {
         searchParams.append(p.key.trim(), p.value.trim())
       }
     })
 
-    return `${baseUrl}?${searchParams.toString()}`
+    const queryString = searchParams.toString()
+    return queryString ? `${baseUrl}?${queryString}` : baseUrl
   }, [baseUrl, parameters])
 
   // Clear shortened URL when toggle is disabled

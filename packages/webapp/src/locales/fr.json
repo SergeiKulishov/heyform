@@ -779,6 +779,7 @@
     "saveAsTemplate": "Enregistrer comme modèle",
     "moveToTrash": "Mettre à la corbeille",
     "copyLinkToShare": "Copier le lien pour partager",
+    "testLink": "Copier le lien de test",
     "creation": {
       "title": "Créer un formulaire",
       "headline": "Créer un nouveau formulaire",
@@ -1120,7 +1121,9 @@
         "rowsProcessed": "lignes traitées",
         "failed": "échoué",
         "downloadCsv": "Télécharger le CSV",
-        "jobCancelled": "Tâche annulée"
+        "jobCancelled": "Tâche annulée",
+        "testMode": "Mode test",
+        "testModeDescription": "Partagez ce lien pour tester le formulaire sans enregistrer les réponses"
       },
       "settings": {
         "headline": "Paramètres du lien",

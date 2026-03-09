@@ -788,6 +788,7 @@
     "saveAsTemplate": "Сохранить как шаблон",
     "moveToTrash": "Переместить в корзину",
     "copyLinkToShare": "Копировать ссылку для обмена",
+    "testLink": "Копировать тестовую ссылку",
     "creation": {
       "title": "Создать форму",
       "headline": "Создать новую форму",
@@ -1185,7 +1186,9 @@
         "rowsProcessed": "строк обработано",
         "failed": "ошибок",
         "downloadCsv": "Скачать CSV",
-        "jobCancelled": "Задача отменена"
+        "jobCancelled": "Задача отменена",
+        "testMode": "Тестовый режим",
+        "testModeDescription": "Поделитесь ссылкой для тестирования формы без сохранения ответов"
       },
       "settings": {
         "headline": "Настройки ссылки",

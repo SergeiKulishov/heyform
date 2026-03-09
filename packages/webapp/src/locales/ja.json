@@ -779,6 +779,7 @@
     "saveAsTemplate": "テンプレートとして保存",
     "moveToTrash": "ゴミ箱に移動",
     "copyLinkToShare": "共有リンクをコピー",
+    "testLink": "テストリンクをコピー",
     "creation": {
       "title": "フォームの作成",
       "headline": "新しいフォームを作成",
@@ -1116,7 +1117,9 @@
         "rowsProcessed": "行を処理しました",
         "failed": "失敗",
         "downloadCsv": "CSVをダウンロード",
-        "jobCancelled": "ジョブがキャンセルされました"
+        "jobCancelled": "ジョブがキャンセルされました",
+        "testMode": "テストモード",
+        "testModeDescription": "回答を保存せずにフォームをテストするためのリンクを共有します"
       },
       "settings": {
         "headline": "リンク設定",

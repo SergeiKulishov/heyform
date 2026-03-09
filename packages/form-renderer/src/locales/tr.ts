@@ -104,6 +104,7 @@ export default {
   paginationTitle: 'Sayfa {{page}} / {{maxPage}}',
   paginationPrevious: 'Önceki',
   paginationNext: 'Sonraki',
+  'Test mode — responses are not saved': 'Test modu — yanıtlar kaydedilmiyor',
   Afghanistan: 'Afganistan',
   'Åland Islands': 'Åland Adaları',
   Albania: 'Arnavutluk',

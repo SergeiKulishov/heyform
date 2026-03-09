@@ -779,6 +779,7 @@
     "saveAsTemplate": "Als Vorlage speichern",
     "moveToTrash": "In den Papierkorb verschieben",
     "copyLinkToShare": "Link zum Teilen kopieren",
+    "testLink": "Testlink kopieren",
     "creation": {
       "title": "Formular erstellen",
       "headline": "Ein neues Formular erstellen",
@@ -1116,7 +1117,9 @@
         "rowsProcessed": "Zeilen verarbeitet",
         "failed": "fehlgeschlagen",
         "downloadCsv": "CSV herunterladen",
-        "jobCancelled": "Auftrag abgebrochen"
+        "jobCancelled": "Auftrag abgebrochen",
+        "testMode": "Testmodus",
+        "testModeDescription": "Teilen Sie diesen Link, um das Formular zu testen, ohne Antworten zu speichern"
       },
       "settings": {
         "headline": "Linkeinstellungen",

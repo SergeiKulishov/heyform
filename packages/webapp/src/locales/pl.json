@@ -779,6 +779,7 @@
     "saveAsTemplate": "Zapisz jako szablon",
     "moveToTrash": "Przenieś do kosza",
     "copyLinkToShare": "Skopiuj link do udostępnienia",
+    "testLink": "Skopiuj link testowy",
     "creation": {
       "title": "Utwórz formularz",
       "headline": "Utwórz nowy formularz",
@@ -1120,7 +1121,9 @@
         "rowsProcessed": "wierszy przetworzonych",
         "failed": "nieudane",
         "downloadCsv": "Pobierz CSV",
-        "jobCancelled": "Zadanie anulowane"
+        "jobCancelled": "Zadanie anulowane",
+        "testMode": "Tryb testowy",
+        "testModeDescription": "Udostępnij ten link, aby przetestować formularz bez zapisywania odpowiedzi"
       },
       "settings": {
         "headline": "Ustawienia linku",

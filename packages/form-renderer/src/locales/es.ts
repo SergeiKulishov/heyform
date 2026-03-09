@@ -105,6 +105,7 @@ export default {
   paginationTitle: 'Página {{page}} de {{maxPage}}',
   paginationPrevious: 'Anterior',
   paginationNext: 'Siguiente',
+  'Test mode — responses are not saved': 'Modo de prueba — las respuestas no se guardan',
   Afghanistan: 'Afganistán',
   'Åland Islands': 'Islas Åland',
   Albania: 'Albania',

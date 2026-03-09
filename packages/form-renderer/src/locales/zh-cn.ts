@@ -103,6 +103,7 @@ export default {
   paginationTitle: '第 {{page}} 页，共 {{maxPage}} 页',
   paginationPrevious: '上一页',
   paginationNext: '下一页',
+  'Test mode — responses are not saved': '测试模式 — 回答不会被保存',
   Afghanistan: '阿富汗',
   'Åland Islands': '奥兰群岛',
   Albania: '阿尔巴尼亚',
