@@ -52,7 +52,7 @@ const GenerateLinkComponent: FC<GenerateLinkComponentProps> = ({ onClose }) => {
   )
 
   const [parameters, setParameters] = useState<UrlParameter[]>([
-    { id: crypto.randomUUID(), key: '', value: '' }
+    { id: crypto.randomUUID?.() ?? Math.random().toString(36).slice(2), key: '', value: '' }
   ])
   const [useUrlShortener, setUseUrlShortener] = useState(false)
   const [shortenedUrl, setShortenedUrl] = useState<string | null>(null)
@@ -99,7 +99,10 @@ const GenerateLinkComponent: FC<GenerateLinkComponentProps> = ({ onClose }) => {
   }, [generatedUrl])
 
   const handleAddParameter = useCallback(() => {
-    setParameters(prev => [...prev, { id: crypto.randomUUID(), key: '', value: '' }])
+    setParameters(prev => [
+      ...prev,
+      { id: crypto.randomUUID?.() ?? Math.random().toString(36).slice(2), key: '', value: '' }
+    ])
   }, [])
 
   const handleRemoveParameter = useCallback((id: string) => {
