@@ -44,7 +44,7 @@ export class ResetPasswordResolver {
       password: await passwordHash(input.password, BCRYPT_SALT)
     })
 
-    this.mailService.passwordChangeAlert(user.email)
+    this.mailService.passwordChangeAlert(user.email, lang)
 
     return true
   }

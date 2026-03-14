@@ -48,11 +48,15 @@ export class LoginResolver {
     const devices = await this.authService.devices(user.id)
 
     if (helper.isValid(devices) && !devices.includes(client.deviceId)) {
-      this.mailService.userSecurityAlert(user.email, {
-        deviceModel: `${client.userAgent.browser.name} on ${client.userAgent.os.name}`,
-        ip: client.ip,
-        loginAt: date().format('YYYY-MM-DD HH:mm:ss')
-      })
+      this.mailService.userSecurityAlert(
+        user.email,
+        {
+          deviceModel: `${client.userAgent.browser.name} on ${client.userAgent.os.name}`,
+          ip: client.ip,
+          loginAt: date().format('YYYY-MM-DD HH:mm:ss')
+        },
+        user.lang
+      )
     }
 
     this.authService.createUserActivity({
