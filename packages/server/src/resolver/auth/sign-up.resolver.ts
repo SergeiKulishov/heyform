@@ -1,7 +1,7 @@
 import { BadRequestException, UseGuards } from '@nestjs/common'
 
 import { GraphqlResponse } from '@decorator'
-import { BCRYPT_SALT } from '@environments'
+import { APP_DISABLE_REGISTRATION, BCRYPT_SALT } from '@environments'
 import { SignUpInput } from '@graphql'
 import { DeviceIdGuard } from '@guard'
 import { UserActivityKindEnum } from '@model'
@@ -25,6 +25,10 @@ export class SignUpResolver {
     @GraphqlResponse() res: any,
     @Args('input') input: SignUpInput
   ): Promise<boolean> {
+    if (APP_DISABLE_REGISTRATION) {
+      throw new BadRequestException('Error: Registration is disabled')
+    }
+
     if (isDisposableEmail(input.email)) {
       throw new BadRequestException(
         'Error: Disposable email address detected, please use a work email to create the account'

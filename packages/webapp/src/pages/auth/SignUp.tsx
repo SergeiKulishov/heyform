@@ -7,6 +7,7 @@ import { useRouter } from '@/utils'
 import { helper } from '@voxly/utils'
 
 import { Form, Input, PasswordStrength } from '@/components'
+import { APP_DISABLE_REGISTRATION } from '@/consts/env'
 import { useUserStore } from '@/store'
 
 import SocialLogin from './SocialLogin'
@@ -29,6 +30,26 @@ const SignUp = () => {
 
     setTemporaryEmail(values.email)
     router.replace('/verify-email')
+  }
+
+  if (APP_DISABLE_REGISTRATION) {
+    return (
+      <div className="mx-auto grid w-[21.875rem] gap-6 py-12 lg:py-0">
+        <div className="text-center">
+          <h1 className="text-2xl font-bold">{t('signUp.title')}</h1>
+          <p className="text-secondary mt-2">{t('signUp.disabled')}</p>
+        </div>
+        <p className="text-center">
+          <Trans
+            t={t}
+            i18nKey="signUp.haveAccount"
+            components={{
+              a: <Link className="hover:text-primary underline underline-offset-4" to="/login" />
+            }}
+          />
+        </p>
+      </div>
+    )
   }
 
   return (

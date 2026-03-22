@@ -5,6 +5,7 @@ import { AuthService } from '@/services'
 import { useRouter } from '@/utils'
 
 import { Form, Input } from '@/components'
+import { APP_DISABLE_REGISTRATION } from '@/consts/env'
 
 import SocialLogin from './SocialLogin'
 
@@ -22,19 +23,23 @@ const Login = () => {
       <div className="grid gap-2 text-center">
         <h1 className="text-3xl font-bold">{t('login.headline')}</h1>
         <p className="text-secondary text-sm">
-          <Trans
-            t={t}
-            i18nKey="login.subHeadline"
-            components={{
-              a: (
-                <Link
-                  key="sign-up"
-                  className="hover:text-primary underline underline-offset-4"
-                  to="/sign-up"
-                />
-              )
-            }}
-          />
+          {APP_DISABLE_REGISTRATION ? (
+            <span>{t('login.subHeadlineNoRegistration')}</span>
+          ) : (
+            <Trans
+              t={t}
+              i18nKey="login.subHeadline"
+              components={{
+                a: (
+                  <Link
+                    key="sign-up"
+                    className="hover:text-primary underline underline-offset-4"
+                    to="/sign-up"
+                  />
+                )
+              }}
+            />
+          )}
         </p>
       </div>
 

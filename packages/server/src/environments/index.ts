@@ -92,6 +92,7 @@ export const APPLE_LOGIN_PRIVATE_KEY_PATH: Buffer | undefined = process.env
   ? fs.readFileSync(process.env.APPLE_LOGIN_PRIVATE_KEY_PATH as any)
   : undefined
 export const DISABLE_LOGIN_WITH_APPLE =
+  helper.isTrue(process.env.DISABLE_LOGIN_WITH_APPLE) ||
   helper.isEmpty(APPLE_LOGIN_TEAM_ID) ||
   helper.isEmpty(APPLE_LOGIN_WEB_CLIENT_ID) ||
   helper.isEmpty(APPLE_LOGIN_KEY_ID) ||
@@ -100,7 +101,9 @@ export const DISABLE_LOGIN_WITH_APPLE =
 export const GOOGLE_LOGIN_CLIENT_ID: string = process.env.GOOGLE_LOGIN_CLIENT_ID
 export const GOOGLE_LOGIN_CLIENT_SECRET: string = process.env.GOOGLE_LOGIN_CLIENT_SECRET
 export const DISABLE_LOGIN_WITH_GOOGLE =
-  helper.isEmpty(GOOGLE_LOGIN_CLIENT_ID) || helper.isEmpty(GOOGLE_LOGIN_CLIENT_SECRET)
+  helper.isTrue(process.env.DISABLE_LOGIN_WITH_GOOGLE) ||
+  helper.isEmpty(GOOGLE_LOGIN_CLIENT_ID) ||
+  helper.isEmpty(GOOGLE_LOGIN_CLIENT_SECRET)
 
 // Stripe
 export const STRIPE_VERSION: string = process.env.STRIPE_VERSION

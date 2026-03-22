@@ -456,6 +456,7 @@
     "title": "Login",
     "headline": "👋 Welcome back!",
     "subHeadline": "Log in to your account or <a>create an account</a>",
+    "subHeadlineNoRegistration": "Log in to your account",
     "continueWith": "Or continue with",
     "email": {
       "label": "Email address",
@@ -477,7 +478,8 @@
       "required": "The name is not allow to be empty"
     },
     "agreement": "By signing up, you agree to our <a1>terms of service</a1> and <a2>privacy policy</a2>.",
-    "haveAccount": "Already have an account? <a>Log in</a>."
+    "haveAccount": "Already have an account? <a>Log in</a>.",
+    "disabled": "Registration is disabled"
   },
   "forgotPassword": {
     "title": "Forgot password?",
