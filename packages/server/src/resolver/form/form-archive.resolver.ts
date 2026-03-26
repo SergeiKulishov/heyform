@@ -1,5 +1,6 @@
-import { Auth, FormGuard } from '@decorator'
+import { Auth, FormGuard, Roles } from '@decorator'
 import { UpdateFormArchiveInput } from '@graphql'
+import { TeamRoleEnum } from '@model'
 import { Args, Mutation, Resolver } from '@nestjs/graphql'
 import { FormService } from '@service'
 
@@ -10,6 +11,7 @@ export class FormArchiveResolver {
 
   @Mutation(returns => Boolean)
   @FormGuard()
+  @Roles(TeamRoleEnum.ADMIN, TeamRoleEnum.COLLABORATOR)
   async formArchive(@Args('input') input: UpdateFormArchiveInput): Promise<boolean> {
     if (!input.allowArchive) {
     }

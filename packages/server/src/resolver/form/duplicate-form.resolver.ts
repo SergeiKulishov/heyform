@@ -1,6 +1,6 @@
-import { Auth, Form, FormGuard, User } from '@decorator'
+import { Auth, Form, FormGuard, Roles, User } from '@decorator'
 import { DuplicateFormInput } from '@graphql'
-import { FormModel, UserModel } from '@model'
+import { FormModel, TeamRoleEnum, UserModel } from '@model'
 import { Args, Mutation, Resolver } from '@nestjs/graphql'
 import { FormService } from '@service'
 import { helper, pickValidValues } from '@voxly/utils'
@@ -12,6 +12,7 @@ export class DuplicateFormResolver {
 
   @Mutation(returns => String)
   @FormGuard()
+  @Roles(TeamRoleEnum.ADMIN, TeamRoleEnum.COLLABORATOR)
   async duplicateForm(
     @User() user: UserModel,
     @Form() form: FormModel,

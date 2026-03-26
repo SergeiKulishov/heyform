@@ -1,6 +1,6 @@
-import { Auth, Form, FormGuard } from '@decorator'
+import { Auth, Form, FormGuard, Roles } from '@decorator'
 import { UpdateFormInput } from '@graphql'
-import { FormModel } from '@model'
+import { FormModel, TeamRoleEnum } from '@model'
 import { Args, Mutation, Resolver } from '@nestjs/graphql'
 import { FormService, SubmissionService } from '@service'
 import { helper, pickValidValues } from '@voxly/utils'
@@ -15,6 +15,7 @@ export class UpdateFormResolver {
 
   @Mutation(returns => Boolean)
   @FormGuard()
+  @Roles(TeamRoleEnum.ADMIN, TeamRoleEnum.COLLABORATOR)
   async updateForm(
     @Form() form: FormModel,
     @Args('input') input: UpdateFormInput

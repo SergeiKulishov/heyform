@@ -36,6 +36,7 @@ export interface WorkspaceType {
   contactCount: number
   brandKits: BrandKitType[]
   isOwner?: boolean
+  role?: number
   owner?: UserType
   createdAt?: number
   projects: ProjectType[]
@@ -50,6 +51,7 @@ export interface MemberType {
   name: string
   email: string
   avatar: string
+  role: number
   isOwner: boolean
   isYou: boolean
   lastSeenAt?: number

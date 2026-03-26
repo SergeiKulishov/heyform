@@ -1,8 +1,6 @@
-import { BadRequestException } from '@nestjs/common'
-
-import { Auth, Team, TeamGuard } from '@decorator'
+import { Auth, Roles, Team, TeamGuard } from '@decorator'
 import { TeamDetailInput } from '@graphql'
-import { TeamModel } from '@model'
+import { TeamModel, TeamRoleEnum } from '@model'
 import { Args, Mutation, Resolver } from '@nestjs/graphql'
 import { TeamService } from '@service'
 
@@ -13,14 +11,11 @@ export class ResetTeamInviteCodeResolver {
 
   @Mutation(() => Boolean)
   @TeamGuard()
+  @Roles(TeamRoleEnum.ADMIN)
   async resetTeamInviteCode(
     @Team() team: TeamModel,
     @Args('input') input: TeamDetailInput
   ): Promise<boolean> {
-    if (!team.isOwner) {
-      throw new BadRequestException("You don't have permission to reset workspace invite code")
-    }
-
     await this.teamService.resetInviteCode(input.teamId)
     return true
   }

@@ -1,8 +1,8 @@
 import { FormStatusEnum } from '@voxly/shared-types-enums'
 
-import { Auth, Form, FormGuard } from '@decorator'
+import { Auth, Form, FormGuard, Roles } from '@decorator'
 import { FormDetailInput } from '@graphql'
-import { FormModel } from '@model'
+import { FormModel, TeamRoleEnum } from '@model'
 import { Args, Mutation, Resolver } from '@nestjs/graphql'
 import { FormService } from '@service'
 
@@ -13,6 +13,7 @@ export class RestoreFormResolver {
 
   @Mutation(returns => Boolean)
   @FormGuard()
+  @Roles(TeamRoleEnum.ADMIN, TeamRoleEnum.COLLABORATOR)
   async restoreForm(
     @Form() form: FormModel,
     @Args('input') input: FormDetailInput

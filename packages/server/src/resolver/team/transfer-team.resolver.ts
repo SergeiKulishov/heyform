@@ -1,6 +1,6 @@
 import { BadRequestException } from '@nestjs/common'
 
-import { Auth, Team, TeamGuard } from '@decorator'
+import { Auth, Roles, Team, TeamGuard } from '@decorator'
 import { TransferTeamInput } from '@graphql'
 import { TeamModel, TeamRoleEnum } from '@model'
 import { Args, Mutation, Resolver } from '@nestjs/graphql'
@@ -16,6 +16,7 @@ export class TransferTeamResolver {
 
   @Mutation(returns => Boolean)
   @TeamGuard()
+  @Roles(TeamRoleEnum.OWNER)
   async transferTeam(
     @Team() team: TeamModel,
     @Args('input') input: TransferTeamInput

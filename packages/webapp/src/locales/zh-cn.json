@@ -606,7 +606,13 @@
     "role": "角色",
     "you": "你",
     "owner": "所有者",
+    "admin": "管理员",
+    "collaborator": "协作者",
     "member": "成员",
+    "changeRole": {
+      "title": "更改角色",
+      "success": "角色更新成功"
+    },
     "lastSeen": "最后在线",
     "menuTip": "转移、删除等...",
     "remove": {

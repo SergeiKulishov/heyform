@@ -1,8 +1,8 @@
 import { BadRequestException } from '@nestjs/common'
 
-import { Auth, Team, TeamGuard, User } from '@decorator'
+import { Auth, Roles, Team, TeamGuard, User } from '@decorator'
 import { DissolveTeamInput } from '@graphql'
-import { TeamModel, UserModel } from '@model'
+import { TeamModel, TeamRoleEnum, UserModel } from '@model'
 import { Args, Mutation, Resolver } from '@nestjs/graphql'
 import { AuthService, FormService, MailService, SubmissionService, TeamService } from '@service'
 
@@ -19,6 +19,7 @@ export class DissolveTeamResolver {
 
   @Mutation(returns => Boolean)
   @TeamGuard()
+  @Roles(TeamRoleEnum.OWNER)
   async dissolveTeam(
     @Team() team: TeamModel,
     @User() user: UserModel,

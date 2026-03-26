@@ -1,6 +1,6 @@
-import { Auth, FormGuard, Team } from '@decorator'
+import { Auth, FormGuard, Roles, Team } from '@decorator'
 import { UpdateFormArchiveInput } from '@graphql'
-import { TeamModel } from '@model'
+import { TeamModel, TeamRoleEnum } from '@model'
 import { Args, Mutation, Resolver } from '@nestjs/graphql'
 import { FormService, SubmissionService } from '@service'
 
@@ -14,6 +14,7 @@ export class UpdateFormArchiveResolver {
 
   @Mutation(returns => Boolean)
   @FormGuard()
+  @Roles(TeamRoleEnum.ADMIN, TeamRoleEnum.COLLABORATOR)
   async updateFormArchive(
     @Team() team: TeamModel,
     @Args('input') input: UpdateFormArchiveInput

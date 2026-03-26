@@ -1,8 +1,8 @@
 import { BadRequestException } from '@nestjs/common'
 
-import { Auth, Project, ProjectGuard, Team, User } from '@decorator'
+import { Auth, Project, ProjectGuard, Roles, Team, User } from '@decorator'
 import { DeleteProjectInput } from '@graphql'
-import { ProjectModel, TeamModel, UserModel } from '@model'
+import { ProjectModel, TeamModel, TeamRoleEnum, UserModel } from '@model'
 import { Args, Mutation, Resolver } from '@nestjs/graphql'
 import { AuthService, MailService, ProjectService } from '@service'
 
@@ -16,6 +16,7 @@ export class DeleteProjectResolver {
   ) {}
 
   @ProjectGuard()
+  @Roles(TeamRoleEnum.OWNER)
   @Mutation(returns => Boolean)
   async deleteProject(
     @Team() team: TeamModel,

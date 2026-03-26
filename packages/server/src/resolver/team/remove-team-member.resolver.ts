@@ -1,8 +1,8 @@
 import { BadRequestException } from '@nestjs/common'
 
-import { Auth, Team, TeamGuard } from '@decorator'
+import { Auth, Roles, Team, TeamGuard } from '@decorator'
 import { TransferTeamInput } from '@graphql'
-import { TeamModel } from '@model'
+import { TeamModel, TeamRoleEnum } from '@model'
 import { Args, Mutation, Resolver } from '@nestjs/graphql'
 import { ProjectService, TeamService } from '@service'
 
@@ -16,14 +16,11 @@ export class RemoveTeamMemberResolver {
 
   @Mutation(returns => Boolean)
   @TeamGuard()
+  @Roles(TeamRoleEnum.ADMIN)
   async removeTeamMember(
     @Team() team: TeamModel,
     @Args('input') input: TransferTeamInput
   ): Promise<boolean> {
-    if (!team.isOwner) {
-      throw new BadRequestException('This operation is not allowed in the workspace')
-    }
-
     const member = await this.teamService.findMemberById(input.teamId, input.memberId)
 
     if (!member) {
@@ -32,6 +29,10 @@ export class RemoveTeamMemberResolver {
 
     if (input.memberId === team.ownerId) {
       throw new BadRequestException('This operation is not allowed in the workspace')
+    }
+
+    if (!team.isOwner && member.role <= team.role) {
+      throw new BadRequestException('You can only remove members with a lower role')
     }
 
     await this.teamService.deleteMember(input.teamId, input.memberId)

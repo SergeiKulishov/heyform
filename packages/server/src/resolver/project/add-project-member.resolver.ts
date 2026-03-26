@@ -1,7 +1,8 @@
 import { BadRequestException } from '@nestjs/common'
 
-import { Auth, ProjectGuard } from '@decorator'
+import { Auth, ProjectGuard, Roles } from '@decorator'
 import { ProjectMemberInput } from '@graphql'
+import { TeamRoleEnum } from '@model'
 import { Args, Mutation, Resolver } from '@nestjs/graphql'
 import { ProjectService } from '@service'
 
@@ -11,6 +12,7 @@ export class AddProjectMemberResolver {
   constructor(private readonly projectService: ProjectService) {}
 
   @ProjectGuard()
+  @Roles(TeamRoleEnum.ADMIN)
   @Mutation(returns => Boolean)
   async addProjectMember(@Args('input') input: ProjectMemberInput): Promise<boolean> {
     const member = await this.projectService.findMemberById(input.projectId, input.memberId)

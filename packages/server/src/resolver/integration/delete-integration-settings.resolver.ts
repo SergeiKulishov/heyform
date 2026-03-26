@@ -1,5 +1,6 @@
-import { Auth, FormGuard } from '@decorator'
+import { Auth, FormGuard, Roles } from '@decorator'
 import { IntegrationInput } from '@graphql'
+import { TeamRoleEnum } from '@model'
 import { Args, Mutation, Resolver } from '@nestjs/graphql'
 import { IntegrationService } from '@service'
 
@@ -10,6 +11,7 @@ export class DeleteIntegrationSettingsResolver {
 
   @Mutation(returns => Boolean)
   @FormGuard()
+  @Roles(TeamRoleEnum.ADMIN)
   async deleteIntegrationSettings(
     @Args('input')
     input: IntegrationInput

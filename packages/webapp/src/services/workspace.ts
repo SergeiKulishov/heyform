@@ -17,6 +17,7 @@ import {
   TRANSFER_WORKSPACE_GQL,
   UPDATE_BRAND_KIT_GQL,
   UPDATE_WORKSPACE_GQL,
+  UPDATE_WORKSPACE_MEMBER_GQL,
   WORKSPACES_GQL,
   WORKSPACE_MEMBERS_GQL,
   WORKSPACE_OVERVIEW_GQL,
@@ -122,6 +123,19 @@ export class WorkspaceService {
         }
       },
       fetchPolicy: 'network-only'
+    })
+  }
+
+  static updateMemberRole(teamId: string, memberId: string, role: number) {
+    return apollo.mutate({
+      mutation: UPDATE_WORKSPACE_MEMBER_GQL,
+      variables: {
+        input: {
+          teamId,
+          memberId,
+          role
+        }
+      }
     })
   }
 

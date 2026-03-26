@@ -1,9 +1,7 @@
-import { BadRequestException } from '@nestjs/common'
-
-import { Auth, Team, TeamGuard, User } from '@decorator'
+import { Auth, Roles, Team, TeamGuard, User } from '@decorator'
 import { APP_HOMEPAGE_URL } from '@environments'
 import { InviteMemberInput } from '@graphql'
-import { TeamModel, UserModel } from '@model'
+import { TeamModel, TeamRoleEnum, UserModel } from '@model'
 import { Args, Mutation, Resolver } from '@nestjs/graphql'
 import { MailService, TeamService, UserService } from '@service'
 import { helper } from '@voxly/utils'
@@ -19,15 +17,12 @@ export class InviteMemberResolver {
 
   @Mutation(returns => Boolean)
   @TeamGuard()
+  @Roles(TeamRoleEnum.ADMIN)
   async inviteMember(
     @Team() team: TeamModel,
     @User() user: UserModel,
     @Args('input') input: InviteMemberInput
   ): Promise<boolean> {
-    if (!team.isOwner) {
-      throw new BadRequestException("You don't have permission to invite member")
-    }
-
     let exists: string[] = []
     const members = await this.teamService.findMembersInTeam(input.teamId)
 

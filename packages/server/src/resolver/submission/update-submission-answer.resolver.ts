@@ -1,8 +1,9 @@
 import { BadRequestException } from '@nestjs/common'
 import { Answer } from '@voxly/shared-types-enums'
 
-import { Auth, FormGuard } from '@decorator'
+import { Auth, FormGuard, Roles } from '@decorator'
 import { UpdateSubmissionAnswerInput } from '@graphql'
+import { TeamRoleEnum } from '@model'
 import { Args, Mutation, Resolver } from '@nestjs/graphql'
 import { SubmissionService } from '@service'
 
@@ -13,6 +14,7 @@ export class UpdateSubmissionAnswerResolver {
 
   @Mutation(returns => Boolean)
   @FormGuard()
+  @Roles(TeamRoleEnum.ADMIN, TeamRoleEnum.COLLABORATOR)
   async updateSubmissionAnswer(
     @Args('input') input: UpdateSubmissionAnswerInput
   ): Promise<boolean> {

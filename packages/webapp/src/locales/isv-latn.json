@@ -615,7 +615,13 @@
     "role": "Rolja",
     "you": "Vy",
     "owner": "Vlasťnik",
+    "admin": "Administrator",
+    "collaborator": "Sotrudnik",
     "member": "Člen",
+    "changeRole": {
+      "title": "Izmeniti rolʹ",
+      "success": "Rolʹ uspješno obnovljena"
+    },
     "lastSeen": "Poslědnje pojavjenje",
     "menuTip": "Prěnositi, izbrisati i druže...",
     "remove": {

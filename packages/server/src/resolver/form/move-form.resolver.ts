@@ -1,6 +1,6 @@
-import { Auth, FormGuard, Team, User } from '@decorator'
+import { Auth, FormGuard, Roles, Team, User } from '@decorator'
 import { MoveFormInput } from '@graphql'
-import { TeamModel, UserModel } from '@model'
+import { TeamModel, TeamRoleEnum, UserModel } from '@model'
 import { Args, Mutation, Resolver } from '@nestjs/graphql'
 import { FormService, ProjectService } from '@service'
 
@@ -14,6 +14,7 @@ export class MoveFormResolver {
 
   @Mutation(returns => Boolean)
   @FormGuard()
+  @Roles(TeamRoleEnum.ADMIN, TeamRoleEnum.COLLABORATOR)
   async moveForm(
     @Team() team: TeamModel,
     @User() user: UserModel,

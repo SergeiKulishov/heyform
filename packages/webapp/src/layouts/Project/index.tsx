@@ -1,11 +1,12 @@
 import { LayoutProps } from '@heyooo-inc/react-router'
+import { IconUsers } from '@tabler/icons-react'
 import { FC, useEffect, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { NavLink, useLocation } from 'react-router-dom'
 
 import { cn, useParam } from '@/utils'
 
-import { Button } from '@/components'
+import { Button, Tooltip } from '@/components'
 import { useAppStore, useWorkspaceStore } from '@/store'
 
 import { WorkspaceLayout } from '../Workspace'
@@ -55,9 +56,17 @@ export const ProjectLayout: FC<LayoutProps> = ({ options, children }) => {
         <div className="flex items-center justify-between">
           <h1 className="text-2xl/8 font-semibold sm:text-xl/8">{project?.name}</h1>
 
-          <Button size="md" onClick={() => openModal('CreateFormModal')}>
-            {t('form.creation.title')}
-          </Button>
+          <div className="flex items-center gap-2">
+            <Tooltip label={t('project.members.title')}>
+              <Button.Ghost size="md" iconOnly onClick={() => openModal('ProjectMembersModal')}>
+                <IconUsers className="h-5 w-5" />
+              </Button.Ghost>
+            </Tooltip>
+
+            <Button size="md" onClick={() => openModal('CreateFormModal')}>
+              {t('form.creation.title')}
+            </Button>
+          </div>
         </div>
 
         <ProjectMembers />

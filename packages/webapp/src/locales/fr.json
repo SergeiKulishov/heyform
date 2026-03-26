@@ -606,7 +606,13 @@
     "role": "Rôle",
     "you": "Vous",
     "owner": "Propriétaire",
+    "admin": "Administrateur",
+    "collaborator": "Collaborateur",
     "member": "Membre",
+    "changeRole": {
+      "title": "Changer le rôle",
+      "success": "Rôle mis à jour avec succès"
+    },
     "lastSeen": "Dernière vue",
     "menuTip": "Transférer, supprimer et plus encore...",
     "remove": {

@@ -1,7 +1,8 @@
 import { FieldKindEnum } from '@voxly/shared-types-enums'
 
-import { Auth, FormGuard } from '@decorator'
+import { Auth, FormGuard, Roles } from '@decorator'
 import { CreateFieldsWithAIInput } from '@graphql'
+import { TeamRoleEnum } from '@model'
 import { Args, Mutation, Resolver } from '@nestjs/graphql'
 import { AiService, FormService } from '@service'
 import GraphQLJSON from 'graphql-type-json'
@@ -16,6 +17,7 @@ export class CreateFieldsWithAIResolver {
 
   @Mutation(returns => GraphQLJSON)
   @FormGuard()
+  @Roles(TeamRoleEnum.ADMIN, TeamRoleEnum.COLLABORATOR)
   async createFieldsWithAI(@Args('input') input: CreateFieldsWithAIInput): Promise<any[]> {
     const form = await this.formService.findById(input.formId)
     const existing = JSON.parse((form as any)._drafts || '[]')

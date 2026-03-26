@@ -1,5 +1,6 @@
-import { Auth, FormGuard } from '@decorator'
+import { Auth, FormGuard, Roles } from '@decorator'
 import { UpdateFormLogicsInput } from '@graphql'
+import { TeamRoleEnum } from '@model'
 import { Args, Mutation, Resolver } from '@nestjs/graphql'
 import { FormService } from '@service'
 
@@ -10,6 +11,7 @@ export class UpdateFormLogicsResolver {
 
   @Mutation(returns => Boolean)
   @FormGuard()
+  @Roles(TeamRoleEnum.ADMIN, TeamRoleEnum.COLLABORATOR)
   async updateFormLogics(@Args('input') input: UpdateFormLogicsInput): Promise<boolean> {
     return this.formService.update(input.formId, {
       logics: input.logics

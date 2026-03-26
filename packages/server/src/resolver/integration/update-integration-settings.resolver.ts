@@ -1,8 +1,8 @@
 import { BadRequestException } from '@nestjs/common'
 
-import { Auth, FormGuard } from '@decorator'
+import { Auth, FormGuard, Roles } from '@decorator'
 import { UpdateIntegrationInput } from '@graphql'
-import { IntegrationStatusEnum } from '@model'
+import { IntegrationStatusEnum, TeamRoleEnum } from '@model'
 import { Args, Mutation, Resolver } from '@nestjs/graphql'
 import { AppService, IntegrationService } from '@service'
 import { helper } from '@voxly/utils'
@@ -17,6 +17,7 @@ export class UpdateIntegrationSettingsResolver {
 
   @Mutation(returns => Boolean)
   @FormGuard()
+  @Roles(TeamRoleEnum.ADMIN)
   async updateIntegrationSettings(
     @Args('input')
     input: UpdateIntegrationInput

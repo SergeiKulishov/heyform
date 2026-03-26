@@ -3,7 +3,7 @@ import { FC, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { ProjectService } from '@/services'
-import { useParam, useRouter } from '@/utils'
+import { canManageMembers, useParam, useRouter } from '@/utils'
 
 import { Avatar, Button, useToast } from '@/components'
 import { useWorkspaceStore } from '@/store'
@@ -100,25 +100,25 @@ export const ProjectJoinedMemberItem: FC<ProjectMemberItemProps> = ({ member }) 
   )
 
   const children = useMemo(() => {
-    if (!member.isOwner && !member.isYou) {
-      if (member.isYou) {
-        return (
-          <Button size="md" loading={leaveLoading} onClick={handleLeave}>
-            {t('project.members.leave')}
-          </Button>
-        )
-      } else if (workspace?.isOwner) {
-        return (
-          <Button
-            className="bg-error text-primary-light hover:bg-error dark:text-primary"
-            size="md"
-            loading={removeLoading}
-            onClick={handleRemove}
-          >
-            {t('project.members.remove')}
-          </Button>
-        )
-      }
+    if (member.isYou && !member.isOwner) {
+      return (
+        <Button size="md" loading={leaveLoading} onClick={handleLeave}>
+          {t('project.members.leave')}
+        </Button>
+      )
+    }
+
+    if (!member.isOwner && !member.isYou && canManageMembers(workspace)) {
+      return (
+        <Button
+          className="bg-error text-primary-light hover:bg-error dark:text-primary"
+          size="md"
+          loading={removeLoading}
+          onClick={handleRemove}
+        >
+          {t('project.members.remove')}
+        </Button>
+      )
     }
 
     return null
@@ -130,7 +130,8 @@ export const ProjectJoinedMemberItem: FC<ProjectMemberItemProps> = ({ member }) 
     member.isYou,
     removeLoading,
     t,
-    workspace?.isOwner
+    workspace?.isOwner,
+    workspace?.role
   ])
 
   return <ProjectMemberItem member={member}>{children}</ProjectMemberItem>

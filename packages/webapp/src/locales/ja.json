@@ -606,7 +606,13 @@
     "role": "役割",
     "you": "あなた",
     "owner": "所有者",
+    "admin": "管理者",
+    "collaborator": "コラボレーター",
     "member": "メンバー",
+    "changeRole": {
+      "title": "役割を変更",
+      "success": "役割が正常に更新されました"
+    },
     "lastSeen": "最後にオンライン",
     "menuTip": "転送、削除、およびその他...",
     "remove": {

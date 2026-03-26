@@ -1,6 +1,6 @@
-import { Auth, Team, TeamGuard, User } from '@decorator'
+import { Auth, Roles, Team, TeamGuard, User } from '@decorator'
 import { CreateProjectInput } from '@graphql'
-import { TeamModel, UserModel } from '@model'
+import { TeamModel, TeamRoleEnum, UserModel } from '@model'
 import { Args, Mutation, Resolver } from '@nestjs/graphql'
 import { ProjectService } from '@service'
 import { helper } from '@voxly/utils'
@@ -13,6 +13,7 @@ export class CreateProjectResolver {
   constructor(private readonly projectService: ProjectService) {}
 
   @TeamGuard()
+  @Roles(TeamRoleEnum.ADMIN)
   @Mutation(returns => String)
   async createProject(
     @User() user: UserModel,

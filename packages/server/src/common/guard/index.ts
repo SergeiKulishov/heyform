@@ -1,6 +1,5 @@
 export * from './auth.guard'
 export * from './device-id.guard'
 export * from './endpoint-anonymous-id.guard'
-export * from './role.guard'
 export * from './permission.guard'
 export * from './gql-throttler.guard'

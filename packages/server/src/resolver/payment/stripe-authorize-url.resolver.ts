@@ -1,6 +1,6 @@
-import { Auth, FormGuard, User } from '@decorator'
+import { Auth, FormGuard, Roles, User } from '@decorator'
 import { FormDetailInput } from '@graphql'
-import { UserModel } from '@model'
+import { TeamRoleEnum, UserModel } from '@model'
 import { Args, Query, Resolver } from '@nestjs/graphql'
 import { PaymentService, RedisService } from '@service'
 import { nanoid } from '@voxly/utils'
@@ -15,6 +15,7 @@ export class StripeAuthorizeUrlResolver {
 
   @Query(returns => String)
   @FormGuard()
+  @Roles(TeamRoleEnum.OWNER)
   async stripeAuthorizeUrl(
     @User() user: UserModel,
     @Args('input') input: FormDetailInput

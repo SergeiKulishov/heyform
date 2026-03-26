@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next'
 
 import { WorkspaceService } from '@/services'
-import { useParam } from '@/utils'
+import { canInviteMembers, useParam } from '@/utils'
 
 import { Async, Button, Repeat } from '@/components'
 import { useAppStore, useWorkspaceStore } from '@/store'
@@ -13,7 +13,7 @@ export default function WorkspaceMembers() {
   const { t } = useTranslation()
 
   const { workspaceId } = useParam()
-  const { members, setMembers } = useWorkspaceStore()
+  const { members, setMembers, workspace } = useWorkspaceStore()
   const { openModal } = useAppStore()
 
   async function fetch() {
@@ -25,9 +25,11 @@ export default function WorkspaceMembers() {
     <>
       <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
         <h1 className="text-2xl/8 font-semibold sm:text-xl/8">{t('members.title')}</h1>
-        <Button size="md" onClick={() => openModal('InvitationModal')}>
-          {t('members.invite.title')}
-        </Button>
+        {canInviteMembers(workspace) && (
+          <Button size="md" onClick={() => openModal('InvitationModal')}>
+            {t('members.invite.title')}
+          </Button>
+        )}
       </div>
 
       <div className="-mx-6 mt-8 overflow-x-auto whitespace-nowrap lg:-mx-10">

@@ -1,7 +1,8 @@
 import { BadRequestException, HttpStatus } from '@nestjs/common'
 
-import { Auth, FormGuard } from '@decorator'
+import { Auth, FormGuard, Roles } from '@decorator'
 import { FormSchemasType, UpdateFormSchemasInput } from '@graphql'
+import { TeamRoleEnum } from '@model'
 import { Args, Mutation, Resolver } from '@nestjs/graphql'
 import { FormService } from '@service'
 import { timestamp } from '@voxly/utils'
@@ -13,6 +14,7 @@ export class UpdateFormSchemasResolver {
 
   @Mutation(returns => FormSchemasType)
   @FormGuard()
+  @Roles(TeamRoleEnum.ADMIN, TeamRoleEnum.COLLABORATOR)
   async updateFormSchemas(@Args('input') input: UpdateFormSchemasInput): Promise<FormSchemasType> {
     const form = await this.formService.findById(input.formId)
 

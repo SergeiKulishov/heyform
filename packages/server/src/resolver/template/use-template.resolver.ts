@@ -1,9 +1,9 @@
 import { BadRequestException } from '@nestjs/common'
 import { CaptchaKindEnum, FormStatusEnum } from '@voxly/shared-types-enums'
 
-import { Auth, ProjectGuard, Team, User } from '@decorator'
+import { Auth, ProjectGuard, Roles, Team, User } from '@decorator'
 import { UseTemplateInput } from '@graphql'
-import { TeamModel, UserModel } from '@model'
+import { TeamModel, TeamRoleEnum, UserModel } from '@model'
 import { Args, Mutation, Resolver } from '@nestjs/graphql'
 import { FormService, TemplateService } from '@service'
 import { helper } from '@voxly/utils'
@@ -18,6 +18,7 @@ export class UseTemplateResolver {
 
   @Mutation(returns => String)
   @ProjectGuard()
+  @Roles(TeamRoleEnum.ADMIN, TeamRoleEnum.COLLABORATOR)
   async useTemplate(
     @Team() team: TeamModel,
     @User() user: UserModel,

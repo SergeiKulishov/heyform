@@ -1,6 +1,6 @@
-import { Auth, Team, TeamGuard } from '@decorator'
+import { Auth, Roles, Team, TeamGuard } from '@decorator'
 import { CreateBrandKitInput } from '@graphql'
-import { TeamModel } from '@model'
+import { TeamModel, TeamRoleEnum } from '@model'
 import { Args, Mutation, Resolver } from '@nestjs/graphql'
 import { BrandKitService } from '@service'
 
@@ -11,6 +11,7 @@ export class CreateBrandKitResolver {
 
   @Mutation(returns => String)
   @TeamGuard()
+  @Roles(TeamRoleEnum.ADMIN)
   async createBrandKit(
     @Team() team: TeamModel,
     @Args('input') input: CreateBrandKitInput

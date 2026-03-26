@@ -75,6 +75,7 @@ export const WORKSPACES_GQL = gql`
       memberCount
       additionalSeats
       isOwner
+      role
       inviteCode
       inviteCodeExpireAt
       removeBranding

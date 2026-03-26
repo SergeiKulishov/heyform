@@ -36,6 +36,7 @@ type WorkspaceStoreType = {
   deleteForm: (projectId: string, formId: string) => void
   setMembers: (workspaceId: string, members: MemberType[]) => void
   removeMember: (workspaceId: string, memberId: string) => void
+  updateMemberRole: (workspaceId: string, memberId: string, role: number) => void
 }
 
 interface ComputedStoreType {
@@ -243,6 +244,20 @@ export const useWorkspaceStore = create<WorkspaceStoreType>()(
 
             if (helper.isValidArray(members)) {
               state._memberMap[workspaceId] = members.filter(m => m.id !== memberId)
+            }
+          })
+        },
+
+        updateMemberRole: (workspaceId: string, memberId: string, role: number) => {
+          set((state: WorkspaceStoreType) => {
+            const members = state._memberMap[workspaceId]
+
+            if (helper.isValidArray(members)) {
+              const member = members.find((m: MemberType) => m.id === memberId)
+
+              if (member) {
+                member.role = role
+              }
             }
           })
         }

@@ -617,7 +617,13 @@
     "role": "Role",
     "you": "You",
     "owner": "Owner",
+    "admin": "Admin",
+    "collaborator": "Collaborator",
     "member": "Member",
+    "changeRole": {
+      "title": "Change role",
+      "success": "Role updated successfully"
+    },
     "lastSeen": "Last Seen",
     "menuTip": "Transfer, delete and more...",
     "remove": {

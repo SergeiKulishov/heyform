@@ -1,7 +1,8 @@
 import { BadRequestException } from '@nestjs/common'
 
-import { Auth, FormGuard } from '@decorator'
+import { Auth, FormGuard, Roles } from '@decorator'
 import { ConnectStripeInput, ConnectStripeType } from '@graphql'
+import { TeamRoleEnum } from '@model'
 import { Args, Mutation, Resolver } from '@nestjs/graphql'
 import { FormService, PaymentService, RedisService } from '@service'
 import { helper } from '@voxly/utils'
@@ -17,6 +18,7 @@ export class ConnectStripeResolver {
 
   @Mutation(returns => ConnectStripeType)
   @FormGuard()
+  @Roles(TeamRoleEnum.OWNER)
   async connectStripe(@Args('input') input: ConnectStripeInput): Promise<ConnectStripeType> {
     const key = `connect:stripe:${input.state}`
     const stateCache = await this.redisService.get(key)

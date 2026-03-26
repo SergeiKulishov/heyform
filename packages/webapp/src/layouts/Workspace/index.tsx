@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next'
 import { Link, useLocation } from 'react-router-dom'
 
 import { UserService, WorkspaceService } from '@/services'
-import { clearCookie, cn, getCookie, useParam, useRouter } from '@/utils'
+import { canManageSettings, clearCookie, cn, getCookie, useParam, useRouter } from '@/utils'
 import { helper, timestamp } from '@voxly/utils'
 
 import Logo from '@/assets/logo.svg?react'
@@ -167,6 +167,16 @@ export const WorkspaceGuard: FC<LayoutProps> = ({ options, children }) => {
       document.title = title
     }
   }, [options, selectWorkspace, t, workspace?.name, workspaceId])
+
+  useEffect(() => {
+    if (!isMounted || !workspace) return
+
+    const isSettingsPage = location.pathname.includes('/settings')
+
+    if (isSettingsPage && !canManageSettings(workspace)) {
+      router.replace(`/workspace/${workspaceId}/`)
+    }
+  }, [isMounted, workspace, location.pathname, workspaceId])
 
   useEffect(() => {
     selectProject(projectId)

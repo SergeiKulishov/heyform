@@ -1,8 +1,6 @@
-import { BadRequestException } from '@nestjs/common'
-
-import { Auth, Team, TeamGuard } from '@decorator'
+import { Auth, Roles, Team, TeamGuard } from '@decorator'
 import { UpdateTeamInput } from '@graphql'
-import { TeamModel } from '@model'
+import { TeamModel, TeamRoleEnum } from '@model'
 import { Args, Mutation, Resolver } from '@nestjs/graphql'
 import { TeamService } from '@service'
 import { helper, pickValidValues } from '@voxly/utils'
@@ -14,14 +12,11 @@ export class UpdateTeamResolver {
 
   @Mutation(returns => Boolean)
   @TeamGuard()
+  @Roles(TeamRoleEnum.ADMIN)
   async updateTeam(
     @Team() team: TeamModel,
     @Args('input') input: UpdateTeamInput
   ): Promise<boolean> {
-    if (!team.isOwner) {
-      throw new BadRequestException("You don't have permission to change the workspace settings")
-    }
-
     const updates: Record<string, any> = pickValidValues(input as any, ['name', 'avatar'])
 
     if (!helper.isNil(input.removeBranding)) {

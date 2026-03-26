@@ -14,7 +14,7 @@ import { FC, ForwardRefExoticComponent } from 'react'
 import { useTranslation } from 'react-i18next'
 import { NavLink } from 'react-router-dom'
 
-import { cn, useParam } from '@/utils'
+import { canManageSettings, cn, useParam } from '@/utils'
 import { helper } from '@voxly/utils'
 
 import { Button, Tooltip } from '@/components'
@@ -108,7 +108,7 @@ const WorkspaceSidebarComponent = () => {
             label={t('members.title')}
           />
 
-          {workspace.isOwner && (
+          {canManageSettings(workspace) && (
             <>
               {/* Settings */}
               <Link

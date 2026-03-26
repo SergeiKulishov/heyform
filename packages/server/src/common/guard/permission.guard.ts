@@ -1,7 +1,8 @@
 import { BadRequestException, CanActivate, ExecutionContext, Inject } from '@nestjs/common'
 import { Reflector } from '@nestjs/core'
 
-import { IS_PUBLIC_KEY } from '@decorator'
+import { IS_PUBLIC_KEY, ROLES_KEY } from '@decorator'
+import { TeamRoleEnum } from '@model'
 import { GqlExecutionContext } from '@nestjs/graphql'
 import { FormService, ProjectService, TeamService } from '@service'
 import { requestParser } from '@utils'
@@ -104,8 +105,13 @@ export class PermissionGuard implements CanActivate {
     }
 
     const isOwner = team.ownerId === user.id
-    if (!isOwner) {
-      throw new BadRequestException("You don't have permission to access the workspace")
+
+    const requiredRoles = this.reflector.get<TeamRoleEnum[]>(ROLES_KEY, context.getHandler())
+
+    if (requiredRoles && requiredRoles.length > 0) {
+      if (!isOwner && !requiredRoles.includes(member.role)) {
+        throw new BadRequestException("You don't have permission for this operation")
+      }
     }
 
     req.team = {

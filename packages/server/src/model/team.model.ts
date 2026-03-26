@@ -63,6 +63,9 @@ export class TeamModel extends Document {
 
   // If the user is team owner
   isOwner?: boolean
+
+  // The role of the current user in this team
+  role?: number
 }
 
 export const TeamSchema = SchemaFactory.createForClass(TeamModel)

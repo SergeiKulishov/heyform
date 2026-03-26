@@ -26,15 +26,15 @@ export class TeamsResolver {
     const teamIds = teams.map(row => row.id)
     const projectIds = await this.projectService.findProjectsByMemberId(user.id)
 
-    const [memberCountMaps, projects, projectMembers, formCountMaps, brandKits] = await Promise.all(
-      [
+    const [memberCountMaps, projects, projectMembers, formCountMaps, brandKits, memberRelations] =
+      await Promise.all([
         this.teamService.memberCountMaps(teamIds),
         this.projectService.findByIds(projectIds),
         this.projectService.findMembers(projectIds),
         this.formService.countMaps(projectIds),
-        this.brandKitService.findAllInTeams(teamIds)
-      ]
-    )
+        this.brandKitService.findAllInTeams(teamIds),
+        this.teamService.findMemberRelationInTeams(user.id, teamIds)
+      ])
 
     return teams.map(team => {
       team.projects = projects
@@ -48,8 +48,10 @@ export class TeamsResolver {
         })
       team.isOwner = team.ownerId === user.id
       team.memberCount = memberCountMaps.find(row => row._id === team.id)?.count || 0
-
       team.brandKits = brandKits.filter(row => row.teamId === team.id)
+
+      const memberRelation = memberRelations.find(m => m.teamId === team.id)
+      team.role = memberRelation?.role
 
       return team
     })

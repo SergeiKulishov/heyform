@@ -1,5 +1,6 @@
-import { Auth, FormGuard } from '@decorator'
+import { Auth, FormGuard, Roles } from '@decorator'
 import { CreateFormThemeWithAIInput } from '@graphql'
+import { TeamRoleEnum } from '@model'
 import { Args, Mutation, Resolver } from '@nestjs/graphql'
 import { AiService, FormService } from '@service'
 import GraphQLJSON from 'graphql-type-json'
@@ -14,6 +15,7 @@ export class CreateFormThemeWithAIResolver {
 
   @Mutation(returns => GraphQLJSON)
   @FormGuard()
+  @Roles(TeamRoleEnum.ADMIN, TeamRoleEnum.COLLABORATOR)
   async createFormThemeWithAI(@Args('input') input: CreateFormThemeWithAIInput): Promise<any> {
     const themeUpdates = await this.aiService.generateFormTheme(input.theme, input.prompt)
 

@@ -17,6 +17,7 @@ export { ResetTeamInviteCodeResolver } from './team/reset-team-invite-code.resol
 export { PublicTeamDetailResolver } from './team/public-team-detail.resolver'
 export { LeaveTeamResolver } from './team/leave-team.resolver'
 export { InviteMemberResolver } from './team/invite-member.resolver'
+export { UpdateTeamMemberRoleResolver } from './team/update-team-member-role.resolver'
 export { TeamRecentFormsResolver } from './team/team-recent-forms.resolver'
 export { CreateBrandKitResolver } from './team/create-brand-kit.resolver'
 export { UpdateBrandKitResolver } from './team/update-brand-kit.resolver'
