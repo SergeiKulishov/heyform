@@ -1,8 +1,9 @@
+import { PermissionKey } from '@common/permission'
 import { BadRequestException, HttpStatus } from '@nestjs/common'
 
-import { Auth, FormGuard, Roles, Team, User } from '@decorator'
+import { Auth, FormGuard, RequirePermission, Team, User } from '@decorator'
 import { UpdateFormSchemasInput } from '@graphql'
-import { TeamModel, TeamRoleEnum, UserModel } from '@model'
+import { TeamModel, UserModel } from '@model'
 import { Args, Mutation, Resolver } from '@nestjs/graphql'
 import { FormService, UserService } from '@service'
 import { helper, timestamp } from '@voxly/utils'
@@ -17,7 +18,7 @@ export class PublishFormResolver {
 
   @Mutation(returns => Boolean)
   @FormGuard()
-  @Roles(TeamRoleEnum.ADMIN, TeamRoleEnum.COLLABORATOR)
+  @RequirePermission(PermissionKey.FORM_PUBLISH)
   async publishForm(
     @Team() team: TeamModel,
     @User() user: UserModel,

@@ -1,6 +1,7 @@
-import { Auth, FormGuard, Roles } from '@decorator'
+import { PermissionKey } from '@common/permission'
+
+import { Auth, FormGuard, RequirePermission } from '@decorator'
 import { UpdateHiddenFieldsInput } from '@graphql'
-import { TeamRoleEnum } from '@model'
 import { Args, Mutation, Resolver } from '@nestjs/graphql'
 import { FormService } from '@service'
 
@@ -11,7 +12,7 @@ export class UpdateFormHiddenFieldsResolver {
 
   @Mutation(returns => Boolean)
   @FormGuard()
-  @Roles(TeamRoleEnum.ADMIN, TeamRoleEnum.COLLABORATOR)
+  @RequirePermission(PermissionKey.FORM_EDIT)
   async updateFormHiddenFields(@Args('input') input: UpdateHiddenFieldsInput): Promise<boolean> {
     return this.formService.update(input.formId, {
       hiddenFields: input.hiddenFields

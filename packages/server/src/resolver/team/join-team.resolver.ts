@@ -40,7 +40,7 @@ export class JoinTeamResolver {
     await this.teamService.createMember({
       teamId: input.teamId,
       memberId: user.id,
-      role: TeamRoleEnum.COLLABORATOR
+      role: team.defaultMemberRole ?? TeamRoleEnum.COLLABORATOR
     })
 
     const teamOwner = await this.userService.findById(team.ownerId)

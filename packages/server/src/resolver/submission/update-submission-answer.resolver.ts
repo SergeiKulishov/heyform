@@ -1,9 +1,9 @@
+import { PermissionKey } from '@common/permission'
 import { BadRequestException } from '@nestjs/common'
 import { Answer } from '@voxly/shared-types-enums'
 
-import { Auth, FormGuard, Roles } from '@decorator'
+import { Auth, FormGuard, RequirePermission } from '@decorator'
 import { UpdateSubmissionAnswerInput } from '@graphql'
-import { TeamRoleEnum } from '@model'
 import { Args, Mutation, Resolver } from '@nestjs/graphql'
 import { SubmissionService } from '@service'
 
@@ -14,7 +14,7 @@ export class UpdateSubmissionAnswerResolver {
 
   @Mutation(returns => Boolean)
   @FormGuard()
-  @Roles(TeamRoleEnum.ADMIN, TeamRoleEnum.COLLABORATOR)
+  @RequirePermission(PermissionKey.SUBMISSION_EDIT)
   async updateSubmissionAnswer(
     @Args('input') input: UpdateSubmissionAnswerInput
   ): Promise<boolean> {

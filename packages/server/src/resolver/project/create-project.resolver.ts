@@ -1,6 +1,8 @@
-import { Auth, Roles, Team, TeamGuard, User } from '@decorator'
+import { PermissionKey } from '@common/permission'
+
+import { Auth, RequirePermission, Team, TeamGuard, User } from '@decorator'
 import { CreateProjectInput } from '@graphql'
-import { TeamModel, TeamRoleEnum, UserModel } from '@model'
+import { TeamModel, UserModel } from '@model'
 import { Args, Mutation, Resolver } from '@nestjs/graphql'
 import { ProjectService } from '@service'
 import { helper } from '@voxly/utils'
@@ -13,7 +15,7 @@ export class CreateProjectResolver {
   constructor(private readonly projectService: ProjectService) {}
 
   @TeamGuard()
-  @Roles(TeamRoleEnum.ADMIN)
+  @RequirePermission(PermissionKey.PROJECT_CREATE)
   @Mutation(returns => String)
   async createProject(
     @User() user: UserModel,

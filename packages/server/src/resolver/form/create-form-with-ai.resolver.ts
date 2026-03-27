@@ -1,3 +1,4 @@
+import { PermissionKey } from '@common/permission'
 import {
   CaptchaKindEnum,
   FieldKindEnum,
@@ -6,9 +7,9 @@ import {
   InteractiveModeEnum
 } from '@voxly/shared-types-enums'
 
-import { Auth, ProjectGuard, Roles, Team, User } from '@decorator'
+import { Auth, ProjectGuard, RequirePermission, Team, User } from '@decorator'
 import { CreateFormWithAIInput } from '@graphql'
-import { TeamModel, TeamRoleEnum, UserModel } from '@model'
+import { TeamModel, UserModel } from '@model'
 import { Args, Mutation, Resolver } from '@nestjs/graphql'
 import { AiService, FormService } from '@service'
 import { nanoid } from '@voxly/utils'
@@ -23,7 +24,7 @@ export class CreateFormWithAIResolver {
 
   @Mutation(returns => String)
   @ProjectGuard()
-  @Roles(TeamRoleEnum.ADMIN, TeamRoleEnum.COLLABORATOR)
+  @RequirePermission(PermissionKey.FORM_CREATE)
   async createFormWithAI(
     @Team() team: TeamModel,
     @User() user: UserModel,

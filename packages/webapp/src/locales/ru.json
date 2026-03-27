@@ -646,6 +646,12 @@
       "sentSuccessMessage": "Приглашенные участники получили уведомление по электронной почте для регистрации в HeyForm"
     }
   },
+  "permissions": {
+    "denied": "Доступ запрещён",
+    "deniedMessage": "У вас недостаточно прав для выполнения этого действия",
+    "deniedWithAction": "У вас нет прав на: {{action}}",
+    "noPermission": "У вас нет прав на это действие"
+  },
   "settings": {
     "title": "Настройки рабочего пространства",
     "general": {
@@ -698,6 +704,44 @@
       "code": {
         "label": "Введите код удаления, отправленный на <strong>{{email}}</strong>.",
         "required": "Код подтверждения не может быть пустым"
+      }
+    },
+    "permissions": {
+      "title": "Права доступа",
+      "description": "Настройте, что каждая роль может делать в этом рабочем пространстве",
+      "readOnlyTip": "Только владелец рабочего пространства может изменять права доступа",
+      "resetDefaults": "Сбросить по умолчанию",
+      "save": "Сохранить",
+      "table": {
+        "permission": "Разрешение",
+        "admin": "Администратор",
+        "collaborator": "Сотрудник",
+        "member": "Участник"
+      },
+      "groups": {
+        "workspace": "Рабочее пространство",
+        "project": "Проект",
+        "form": "Форма",
+        "submission": "Ответы",
+        "integration": "Интеграции"
+      },
+      "keys": {
+        "workspace.settings": "Управление настройками",
+        "workspace.members.invite": "Приглашение участников",
+        "workspace.members.remove": "Удаление участников",
+        "workspace.members.role": "Изменение ролей участников",
+        "workspace.branding": "Управление брендингом",
+        "project.create": "Создание проектов",
+        "project.delete": "Удаление проектов",
+        "project.members": "Управление участниками проектов",
+        "form.create": "Создание форм",
+        "form.edit": "Редактирование форм",
+        "form.delete": "Удаление форм",
+        "form.publish": "Публикация форм",
+        "submission.view": "Просмотр ответов",
+        "submission.edit": "Редактирование ответов",
+        "submission.delete": "Удаление ответов",
+        "integration.manage": "Управление интеграциями"
       }
     },
     "form": {

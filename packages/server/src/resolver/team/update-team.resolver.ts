@@ -1,6 +1,8 @@
-import { Auth, Roles, Team, TeamGuard } from '@decorator'
+import { PermissionKey } from '@common/permission'
+
+import { Auth, RequirePermission, Team, TeamGuard } from '@decorator'
 import { UpdateTeamInput } from '@graphql'
-import { TeamModel, TeamRoleEnum } from '@model'
+import { TeamModel } from '@model'
 import { Args, Mutation, Resolver } from '@nestjs/graphql'
 import { TeamService } from '@service'
 import { helper, pickValidValues } from '@voxly/utils'
@@ -12,7 +14,7 @@ export class UpdateTeamResolver {
 
   @Mutation(returns => Boolean)
   @TeamGuard()
-  @Roles(TeamRoleEnum.ADMIN)
+  @RequirePermission(PermissionKey.WORKSPACE_SETTINGS)
   async updateTeam(
     @Team() team: TeamModel,
     @Args('input') input: UpdateTeamInput

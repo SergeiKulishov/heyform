@@ -1,8 +1,8 @@
+import { PermissionKey } from '@common/permission'
 import { FormStatusEnum } from '@voxly/shared-types-enums'
 
-import { Auth, ProjectGuard, Roles } from '@decorator'
+import { Auth, ProjectGuard, RequirePermission } from '@decorator'
 import { ProjectDetailInput } from '@graphql'
-import { TeamRoleEnum } from '@model'
 import { Args, Mutation, Resolver } from '@nestjs/graphql'
 import { FormService, SubmissionService } from '@service'
 
@@ -16,7 +16,7 @@ export class EmptyProjectTrashResolver {
 
   @Mutation(returns => Boolean)
   @ProjectGuard()
-  @Roles(TeamRoleEnum.ADMIN)
+  @RequirePermission(PermissionKey.FORM_DELETE)
   async emptyProjectTrash(@Args('input') input: ProjectDetailInput): Promise<boolean> {
     const forms = await this.formService.findAll(input.projectId, FormStatusEnum.TRASH)
 

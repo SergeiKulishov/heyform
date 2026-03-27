@@ -13,7 +13,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { WorkspaceService } from '@/services'
-import { cn, useParam, useRouter } from '@/utils'
+import { canCreateProject, cn, useParam, useRouter } from '@/utils'
 import { helper, toJSON } from '@voxly/utils'
 
 import { Button, Loader, Modal } from '@/components'
@@ -92,6 +92,7 @@ const SearchModalComponent = () => {
   const router = useRouter()
   const { workspaceId } = useParam()
   const { openModal, closeModal } = useAppStore()
+  const { workspace } = useWorkspaceStore()
 
   const defaultGroups: GroupType[] = useMemo(
     () => [
@@ -274,24 +275,26 @@ const SearchModalComponent = () => {
                 className="text-secondary text-sm/6 [&_[cmdk-group-heading]]:mb-0 [&_[cmdk-group-heading]]:px-4"
                 heading={g.heading}
               >
-                {g.items.map(row => (
-                  <Command.Item
-                    key={row.value}
-                    className="aria-selected:bg-accent-light mx-2 cursor-pointer rounded-lg"
-                    value={JSON.stringify({ type: g.type, value: row.value })}
-                    onSelect={handleSelect}
-                  >
-                    <div className="text-primary flex h-10 items-center gap-2 px-2 sm:h-9">
-                      {row.icon && <row.icon className="text-secondary h-5 w-5" />}
-                      <span className="flex-1 truncate">
-                        {row.title}
-                        {row.description && (
-                          <span className="text-secondary pl-2">{row.description}</span>
-                        )}
-                      </span>
-                    </div>
-                  </Command.Item>
-                ))}
+                {g.items
+                  .filter(row => row.value !== 'newProject' || canCreateProject(workspace))
+                  .map(row => (
+                    <Command.Item
+                      key={row.value}
+                      className="aria-selected:bg-accent-light mx-2 cursor-pointer rounded-lg"
+                      value={JSON.stringify({ type: g.type, value: row.value })}
+                      onSelect={handleSelect}
+                    >
+                      <div className="text-primary flex h-10 items-center gap-2 px-2 sm:h-9">
+                        {row.icon && <row.icon className="text-secondary h-5 w-5" />}
+                        <span className="flex-1 truncate">
+                          {row.title}
+                          {row.description && (
+                            <span className="text-secondary pl-2">{row.description}</span>
+                          )}
+                        </span>
+                      </div>
+                    </Command.Item>
+                  ))}
               </Command.Group>
             ))}
           </>

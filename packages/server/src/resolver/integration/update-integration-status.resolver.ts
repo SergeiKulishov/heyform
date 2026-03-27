@@ -1,6 +1,7 @@
-import { Auth, FormGuard, Roles } from '@decorator'
+import { PermissionKey } from '@common/permission'
+
+import { Auth, FormGuard, RequirePermission } from '@decorator'
 import { UpdateIntegrationStatusInput } from '@graphql'
-import { TeamRoleEnum } from '@model'
 import { Args, Mutation, Resolver } from '@nestjs/graphql'
 import { IntegrationService } from '@service'
 
@@ -11,7 +12,7 @@ export class UpdateIntegrationStatusResolver {
 
   @Mutation(returns => Boolean)
   @FormGuard()
-  @Roles(TeamRoleEnum.ADMIN)
+  @RequirePermission(PermissionKey.INTEGRATION_MANAGE)
   async updateIntegrationStatus(
     @Args('input')
     input: UpdateIntegrationStatusInput

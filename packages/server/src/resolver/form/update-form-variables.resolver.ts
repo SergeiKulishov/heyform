@@ -1,6 +1,7 @@
-import { Auth, FormGuard, Roles } from '@decorator'
+import { PermissionKey } from '@common/permission'
+
+import { Auth, FormGuard, RequirePermission } from '@decorator'
 import { UpdateFormVariablesInput } from '@graphql'
-import { TeamRoleEnum } from '@model'
 import { Args, Mutation, Resolver } from '@nestjs/graphql'
 import { FormService } from '@service'
 
@@ -11,7 +12,7 @@ export class UpdateFormVariablesResolver {
 
   @Mutation(returns => Boolean)
   @FormGuard()
-  @Roles(TeamRoleEnum.ADMIN, TeamRoleEnum.COLLABORATOR)
+  @RequirePermission(PermissionKey.FORM_EDIT)
   async updateFormVariables(@Args('input') input: UpdateFormVariablesInput): Promise<boolean> {
     return this.formService.update(input.formId, {
       variables: input.variables

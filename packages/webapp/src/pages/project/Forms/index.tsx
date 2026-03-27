@@ -3,11 +3,11 @@ import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { FormService } from '@/services'
-import { useParam } from '@/utils'
+import { canCreateForms, useParam } from '@/utils'
 import { helper } from '@voxly/utils'
 
 import { Async, EmptyState, Repeat } from '@/components'
-import { useAppStore } from '@/store'
+import { useAppStore, useWorkspaceStore } from '@/store'
 import { FormType } from '@/types'
 
 import FormItem from './FormItem'
@@ -17,6 +17,7 @@ export default function ProjectForms() {
 
   const { projectId } = useParam()
   const { openModal } = useAppStore()
+  const workspace = useWorkspaceStore(state => state.workspace)
   const [forms, setForms] = useState<FormType[]>([])
 
   async function fetch() {
@@ -54,8 +55,8 @@ export default function ProjectForms() {
           <EmptyState
             headline={t('project.forms.headline')}
             subHeadline={t('dashboard.pickTemplate')}
-            buttonTitle={t('form.creation.title')}
-            onClick={() => openModal('CreateFormModal')}
+            buttonTitle={canCreateForms(workspace) ? t('form.creation.title') : undefined}
+            onClick={canCreateForms(workspace) ? () => openModal('CreateFormModal') : undefined}
           />
         </div>
       )}

@@ -37,6 +37,7 @@ export interface WorkspaceType {
   brandKits: BrandKitType[]
   isOwner?: boolean
   role?: number
+  permissionMatrix?: Record<string, number[]>
   owner?: UserType
   createdAt?: number
   projects: ProjectType[]

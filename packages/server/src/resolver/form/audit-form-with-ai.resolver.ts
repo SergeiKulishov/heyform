@@ -1,6 +1,7 @@
-import { Auth, FormGuard, Roles } from '@decorator'
+import { PermissionKey } from '@common/permission'
+
+import { Auth, FormGuard, RequirePermission } from '@decorator'
 import { AuditFormWithAIInput } from '@graphql'
-import { TeamRoleEnum } from '@model'
 import { Args, Mutation, Resolver } from '@nestjs/graphql'
 import { AiService, FormService } from '@service'
 import GraphQLJSON from 'graphql-type-json'
@@ -15,7 +16,7 @@ export class AuditFormWithAIResolver {
 
   @Mutation(returns => GraphQLJSON)
   @FormGuard()
-  @Roles(TeamRoleEnum.ADMIN, TeamRoleEnum.COLLABORATOR)
+  @RequirePermission(PermissionKey.FORM_EDIT)
   async auditFormWithAI(@Args('input') input: AuditFormWithAIInput): Promise<any[]> {
     const form = await this.formService.findById(input.formId)
     const fields = JSON.parse((form as any)._drafts || '[]')

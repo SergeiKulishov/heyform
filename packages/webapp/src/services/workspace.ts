@@ -14,8 +14,10 @@ import {
   REMOVE_WORKSPACE_MEMBER_GQL,
   RESET_WORKSPACE_INVITE_CODE_GQL,
   SEARCH_WORKSPACE_GQL,
+  TEAM_PERMISSIONS_GQL,
   TRANSFER_WORKSPACE_GQL,
   UPDATE_BRAND_KIT_GQL,
+  UPDATE_PERMISSION_MATRIX_GQL,
   UPDATE_WORKSPACE_GQL,
   UPDATE_WORKSPACE_MEMBER_GQL,
   WORKSPACES_GQL,
@@ -246,6 +248,29 @@ export class WorkspaceService {
       mutation: UPDATE_BRAND_KIT_GQL,
       variables: {
         input
+      }
+    })
+  }
+
+  static getPermissions(teamId: string) {
+    return apollo.query({
+      query: TEAM_PERMISSIONS_GQL,
+      variables: {
+        input: {
+          teamId
+        }
+      }
+    })
+  }
+
+  static updatePermissionMatrix(teamId: string, permissionMatrix: Record<string, number[]>) {
+    return apollo.mutate({
+      mutation: UPDATE_PERMISSION_MATRIX_GQL,
+      variables: {
+        input: {
+          teamId,
+          permissionMatrix
+        }
       }
     })
   }

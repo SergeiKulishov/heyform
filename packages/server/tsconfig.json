@@ -6,6 +6,7 @@
     "outDir": "./dist",
     "baseUrl": "./",
     "paths": {
+      "@common/*": ["src/common/*"],
       "@decorator": ["src/common/decorator"],
       "@graphql": ["src/common/graphql"],
       "@guard": ["src/common/guard"],

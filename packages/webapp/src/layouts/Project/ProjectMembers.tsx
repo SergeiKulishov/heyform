@@ -3,7 +3,7 @@ import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { WorkspaceService } from '@/services'
-import { useParam } from '@/utils'
+import { canManageProjectMembers, useParam } from '@/utils'
 
 import { Async, Avatar, Repeat, Tooltip } from '@/components'
 import { useAppStore, useWorkspaceStore } from '@/store'
@@ -12,7 +12,7 @@ export default function ProjectMembers() {
   const { t } = useTranslation()
 
   const { workspaceId } = useParam()
-  const { project, members, setMembers } = useWorkspaceStore()
+  const { project, members, setMembers, workspace } = useWorkspaceStore()
   const { openModal } = useAppStore()
 
   const exists = useMemo(
@@ -54,11 +54,13 @@ export default function ProjectMembers() {
           ))}
         </Async>
 
-        <Tooltip label={t('project.members.addMember')}>
-          <div className="ring-foreground bg-accent-light text-secondary group-hover:bg-accent flex h-9 w-9 items-center justify-center rounded-full ring-2 transition-colors">
-            <IconPlus className="h-4 w-4" />
-          </div>
-        </Tooltip>
+        {canManageProjectMembers(workspace) && (
+          <Tooltip label={t('project.members.addMember')}>
+            <div className="ring-foreground bg-accent-light text-secondary group-hover:bg-accent flex h-9 w-9 items-center justify-center rounded-full ring-2 transition-colors">
+              <IconPlus className="h-4 w-4" />
+            </div>
+          </Tooltip>
+        )}
       </button>
     </div>
   )

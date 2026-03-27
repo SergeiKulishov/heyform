@@ -1,8 +1,9 @@
+import { PermissionKey } from '@common/permission'
 import { FormStatusEnum } from '@voxly/shared-types-enums'
 
-import { Auth, Form, FormGuard, Roles } from '@decorator'
+import { Auth, Form, FormGuard, RequirePermission } from '@decorator'
 import { FormDetailInput } from '@graphql'
-import { FormModel, TeamRoleEnum } from '@model'
+import { FormModel } from '@model'
 import { Args, Mutation, Resolver } from '@nestjs/graphql'
 import { FormService } from '@service'
 import { date } from '@voxly/utils'
@@ -14,7 +15,7 @@ export class MoveFormToTrashResolver {
 
   @Mutation(returns => Boolean)
   @FormGuard()
-  @Roles(TeamRoleEnum.ADMIN, TeamRoleEnum.COLLABORATOR)
+  @RequirePermission(PermissionKey.FORM_EDIT)
   async moveFormToTrash(
     @Form() form: FormModel,
     @Args('input') input: FormDetailInput

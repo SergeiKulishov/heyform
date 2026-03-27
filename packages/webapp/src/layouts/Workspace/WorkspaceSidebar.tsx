@@ -14,7 +14,7 @@ import { FC, ForwardRefExoticComponent } from 'react'
 import { useTranslation } from 'react-i18next'
 import { NavLink } from 'react-router-dom'
 
-import { canManageSettings, cn, useParam } from '@/utils'
+import { canCreateProject, canManageSettings, cn, useParam } from '@/utils'
 import { helper } from '@voxly/utils'
 
 import { Button, Tooltip } from '@/components'
@@ -123,21 +123,23 @@ const WorkspaceSidebarComponent = () => {
         <div className="group/projects mt-8 flex flex-col gap-0.5">
           <div className="text-secondary mb-1 flex items-center justify-between px-2 text-xs/6 font-medium">
             <h3>{t('workspace.sidebar.projects')}</h3>
-            <Tooltip label={t('project.creation.title')}>
-              <Button.Link
-                className={cn(
-                  'text-secondary -mr-1 !h-6 !w-6 rounded opacity-0 group-hover/projects:opacity-100',
-                  {
-                    'opacity-100': helper.isEmpty(workspace?.projects)
-                  }
-                )}
-                size="sm"
-                iconOnly
-                onClick={() => openModal('CreateProjectModal')}
-              >
-                <IconPlus className="h-5 w-5" />
-              </Button.Link>
-            </Tooltip>
+            {canCreateProject(workspace) && (
+              <Tooltip label={t('project.creation.title')}>
+                <Button.Link
+                  className={cn(
+                    'text-secondary -mr-1 !h-6 !w-6 rounded opacity-0 group-hover/projects:opacity-100',
+                    {
+                      'opacity-100': helper.isEmpty(workspace?.projects)
+                    }
+                  )}
+                  size="sm"
+                  iconOnly
+                  onClick={() => openModal('CreateProjectModal')}
+                >
+                  <IconPlus className="h-5 w-5" />
+                </Button.Link>
+              </Tooltip>
+            )}
           </div>
 
           {helper.isValidArray(workspace?.projects) ? (

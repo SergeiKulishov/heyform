@@ -644,6 +644,12 @@
       "sentSuccessMessage": "Zaproszeni członkowie zostali powiadomieni e-mailem, aby zarejestrować się w HeyForm"
     }
   },
+  "permissions": {
+    "denied": "Odmowa dostępu",
+    "deniedMessage": "Nie masz uprawnień do wykonania tej czynności",
+    "deniedWithAction": "Nie masz uprawnień do: {{action}}",
+    "noPermission": "Nie masz uprawnień do tej czynności"
+  },
   "settings": {
     "title": "Ustawienia miejsca pracy",
     "branding": {
@@ -687,6 +693,44 @@
       "code": {
         "label": "Wprowadź kod usunięcia wysłany na <strong>{{email}}</strong>.",
         "required": "Kod weryfikacyjny nie może być pusty"
+      }
+    },
+    "permissions": {
+      "title": "Uprawnienia",
+      "description": "Skonfiguruj, co każda rola może robić w tym obszarze roboczym",
+      "readOnlyTip": "Tylko właściciel obszaru roboczego może zmieniać uprawnienia",
+      "resetDefaults": "Przywróć domyślne",
+      "save": "Zapisz",
+      "table": {
+        "permission": "Uprawnienie",
+        "admin": "Administrator",
+        "collaborator": "Współpracownik",
+        "member": "Członek"
+      },
+      "groups": {
+        "workspace": "Obszar roboczy",
+        "project": "Projekt",
+        "form": "Formularz",
+        "submission": "Odpowiedzi",
+        "integration": "Integracje"
+      },
+      "keys": {
+        "workspace.settings": "Zarządzanie ustawieniami",
+        "workspace.members.invite": "Zapraszanie członków",
+        "workspace.members.remove": "Usuwanie członków",
+        "workspace.members.role": "Zmiana ról członków",
+        "workspace.branding": "Zarządzanie marką",
+        "project.create": "Tworzenie projektów",
+        "project.delete": "Usuwanie projektów",
+        "project.members": "Zarządzanie członkami projektu",
+        "form.create": "Tworzenie formularzy",
+        "form.edit": "Edytowanie formularzy",
+        "form.delete": "Usuwanie formularzy",
+        "form.publish": "Publikowanie formularzy",
+        "submission.view": "Przeglądanie odpowiedzi",
+        "submission.edit": "Edytowanie odpowiedzi",
+        "submission.delete": "Usuwanie odpowiedzi",
+        "integration.manage": "Zarządzanie integracjami"
       }
     },
     "general": {

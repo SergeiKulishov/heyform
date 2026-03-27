@@ -48,6 +48,12 @@ export class TeamModel extends Document {
   @Prop()
   storageQuota?: number
 
+  @Prop({ type: Object })
+  permissionMatrix?: Record<string, number[]>
+
+  @Prop({ type: Number })
+  defaultMemberRole?: number
+
   /**
    * Attach references to the team model for easy query,
    * will not be used as a column in the team schema

@@ -1,12 +1,20 @@
-import { BadRequestException, CanActivate, ExecutionContext, Inject } from '@nestjs/common'
+import {
+  BadRequestException,
+  CanActivate,
+  ExecutionContext,
+  ForbiddenException,
+  Inject
+} from '@nestjs/common'
 import { Reflector } from '@nestjs/core'
 
-import { IS_PUBLIC_KEY, ROLES_KEY } from '@decorator'
+import { IS_PUBLIC_KEY, PERMISSION_KEY, ROLES_KEY } from '@decorator'
 import { TeamRoleEnum } from '@model'
 import { GqlExecutionContext } from '@nestjs/graphql'
 import { FormService, ProjectService, TeamService } from '@service'
 import { requestParser } from '@utils'
 import { helper, timestamp } from '@voxly/utils'
+
+import { DEFAULT_PERMISSION_MATRIX, PermissionKey } from '../permission'
 
 export enum PermissionScopeEnum {
   team = 0,
@@ -110,7 +118,29 @@ export class PermissionGuard implements CanActivate {
 
     if (requiredRoles && requiredRoles.length > 0) {
       if (!isOwner && !requiredRoles.includes(member.role)) {
-        throw new BadRequestException("You don't have permission for this operation")
+        throw new ForbiddenException("You don't have permission for this operation")
+      }
+    }
+
+    const requiredPermission = this.reflector.get<PermissionKey>(
+      PERMISSION_KEY,
+      context.getHandler()
+    )
+
+    if (requiredPermission) {
+      if (!isOwner) {
+        const matrix =
+          (team.permissionMatrix as Record<string, number[]>) || DEFAULT_PERMISSION_MATRIX
+        const allowedRoles =
+          matrix[requiredPermission] || DEFAULT_PERMISSION_MATRIX[requiredPermission] || []
+
+        if (!allowedRoles.includes(member.role)) {
+          throw new ForbiddenException({
+            statusCode: 403,
+            message: "You don't have permission for this operation",
+            permissionKey: requiredPermission
+          })
+        }
       }
     }
 
@@ -121,7 +151,8 @@ export class PermissionGuard implements CanActivate {
       name: team.name,
       role: member.role,
       storageQuota: team.storageQuota,
-      inviteCode: team.inviteCode
+      inviteCode: team.inviteCode,
+      permissionMatrix: team.permissionMatrix
     }
 
     this.teamService.updateMember(teamId, user.id, {

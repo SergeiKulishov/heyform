@@ -1,6 +1,8 @@
-import { Auth, Roles, Team, TeamGuard } from '@decorator'
+import { PermissionKey } from '@common/permission'
+
+import { Auth, RequirePermission, Team, TeamGuard } from '@decorator'
 import { TeamDetailInput } from '@graphql'
-import { TeamModel, TeamRoleEnum } from '@model'
+import { TeamModel } from '@model'
 import { Args, Mutation, Resolver } from '@nestjs/graphql'
 import { TeamService } from '@service'
 
@@ -11,7 +13,7 @@ export class ResetTeamInviteCodeResolver {
 
   @Mutation(() => Boolean)
   @TeamGuard()
-  @Roles(TeamRoleEnum.ADMIN)
+  @RequirePermission(PermissionKey.WORKSPACE_MEMBERS_INVITE)
   async resetTeamInviteCode(
     @Team() team: TeamModel,
     @Args('input') input: TeamDetailInput

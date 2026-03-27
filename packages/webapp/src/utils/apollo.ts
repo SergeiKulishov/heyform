@@ -54,10 +54,32 @@ const errorLink = onError(({ response }) => {
   if (helper.isValid(response?.errors)) {
     const error: any = response!.errors![0]
 
-    if (helper.isValid(error) && error.status === 401) {
+    if (!helper.isValid(error)) {
+      return
+    }
+
+    const statusCode =
+      error.extensions?.response?.statusCode ||
+      error.extensions?.originalError?.statusCode ||
+      error.status
+
+    if (statusCode === 401) {
       clearAuthState()
       window.location.href = '/logout'
       return
+    }
+
+    if (statusCode === 403) {
+      const permissionKey =
+        error.extensions?.response?.permissionKey ||
+        error.extensions?.originalError?.permissionKey ||
+        null
+
+      window.dispatchEvent(
+        new CustomEvent('permission-denied', {
+          detail: { permissionKey }
+        })
+      )
     }
   }
 })

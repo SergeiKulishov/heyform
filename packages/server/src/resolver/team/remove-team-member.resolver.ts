@@ -1,8 +1,9 @@
+import { PermissionKey } from '@common/permission'
 import { BadRequestException } from '@nestjs/common'
 
-import { Auth, Roles, Team, TeamGuard } from '@decorator'
+import { Auth, RequirePermission, Team, TeamGuard } from '@decorator'
 import { TransferTeamInput } from '@graphql'
-import { TeamModel, TeamRoleEnum } from '@model'
+import { TeamModel } from '@model'
 import { Args, Mutation, Resolver } from '@nestjs/graphql'
 import { ProjectService, TeamService } from '@service'
 
@@ -16,7 +17,7 @@ export class RemoveTeamMemberResolver {
 
   @Mutation(returns => Boolean)
   @TeamGuard()
-  @Roles(TeamRoleEnum.ADMIN)
+  @RequirePermission(PermissionKey.WORKSPACE_MEMBERS_REMOVE)
   async removeTeamMember(
     @Team() team: TeamModel,
     @Args('input') input: TransferTeamInput

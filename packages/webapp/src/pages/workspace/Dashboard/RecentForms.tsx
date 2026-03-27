@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { WorkspaceService } from '@/services'
-import { useParam, useRouter } from '@/utils'
+import { canCreateProject, useParam, useRouter } from '@/utils'
 import { helper } from '@voxly/utils'
 
 import { Async, EmptyState, Repeat } from '@/components'
@@ -53,12 +53,14 @@ export default function RecentForms() {
       }
       emptyRender={() => (
         <div className="border-accent-light mt-4 flex flex-1 items-center justify-center rounded-lg border border-dashed py-36 shadow-sm">
-          <EmptyState
-            headline={t('dashboard.noForms')}
-            subHeadline={t('dashboard.pickTemplate')}
-            buttonTitle={t('form.creation.title')}
-            onClick={handleCreateForm}
-          />
+          {canCreateProject(workspace) && (
+            <EmptyState
+              headline={t('dashboard.noForms')}
+              subHeadline={t('dashboard.pickTemplate')}
+              buttonTitle={t('form.creation.title')}
+              onClick={handleCreateForm}
+            />
+          )}
         </div>
       )}
     >

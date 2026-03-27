@@ -1,6 +1,7 @@
-import { Auth, FormGuard, Roles } from '@decorator'
+import { PermissionKey } from '@common/permission'
+
+import { Auth, FormGuard, RequirePermission } from '@decorator'
 import { UpdateSubmissionsCategoryInput } from '@graphql'
-import { TeamRoleEnum } from '@model'
 import { Args, Mutation, Resolver } from '@nestjs/graphql'
 import { SubmissionService } from '@service'
 
@@ -11,7 +12,7 @@ export class UpdateSubmissionsCategoryResolver {
 
   @Mutation(returns => Boolean)
   @FormGuard()
-  @Roles(TeamRoleEnum.ADMIN, TeamRoleEnum.COLLABORATOR)
+  @RequirePermission(PermissionKey.SUBMISSION_EDIT)
   async updateSubmissionsCategory(
     @Args('input') input: UpdateSubmissionsCategoryInput
   ): Promise<boolean> {

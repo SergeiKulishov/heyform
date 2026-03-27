@@ -653,6 +653,12 @@
       "sentSuccessMessage": "Pozvani členy byli obavěšćeni e-pošteju aby sę zaregistrovali v HeyForm"
     }
   },
+  "permissions": {
+    "denied": "Dostup odrěčen",
+    "deniedMessage": "Vy ne mate dozvol za to dějstvo",
+    "deniedWithAction": "Vy ne mate dozvol za: {{action}}",
+    "noPermission": "Vy ne mate dozvol za to dějstvo"
+  },
   "settings": {
     "title": "Nastavenja rabočego prostora",
     "general": {
@@ -705,6 +711,44 @@
       "code": {
         "label": "Vvedite kod izbrisanja poslany na <strong>{{email}}</strong>.",
         "required": "Kod prověrki ne smě byti prazny"
+      }
+    },
+    "permissions": {
+      "title": "Dozvoly",
+      "description": "Nastrojte, čto každa rolja može dělati v tom rabočem prostorje",
+      "readOnlyTip": "Tȯlko vlasnik rabočego prostorja može měniti dozvoly",
+      "resetDefaults": "Obnoviti po umolčanje",
+      "save": "Zberegti",
+      "table": {
+        "permission": "Dozvol",
+        "admin": "Administrator",
+        "collaborator": "Sotrudnik",
+        "member": "Učastnik"
+      },
+      "groups": {
+        "workspace": "Rabočo prostorje",
+        "project": "Projekt",
+        "form": "Forma",
+        "submission": "Odgovory",
+        "integration": "Integracije"
+      },
+      "keys": {
+        "workspace.settings": "Upravljanje nastrojkami",
+        "workspace.members.invite": "Pozvanje učastnikov",
+        "workspace.members.remove": "Vyčerknenje učastnikov",
+        "workspace.members.role": "Měna rolj učastnikov",
+        "workspace.branding": "Upravljanje brandingom",
+        "project.create": "Stvorjenje projektov",
+        "project.delete": "Vyčerknenje projektov",
+        "project.members": "Upravljanje učastnikami projekta",
+        "form.create": "Stvorjenje form",
+        "form.edit": "Redakcija form",
+        "form.delete": "Vyčerknenje form",
+        "form.publish": "Publikacija form",
+        "submission.view": "Ogledanje odgovorov",
+        "submission.edit": "Redakcija odgovorov",
+        "submission.delete": "Vyčerknenje odgovorov",
+        "integration.manage": "Upravljanje integracijami"
       }
     },
     "form": {

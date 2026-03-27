@@ -1,6 +1,7 @@
+import { PermissionKey } from '@common/permission'
 import { BadRequestException } from '@nestjs/common'
 
-import { Auth, Roles, Team, TeamGuard } from '@decorator'
+import { Auth, RequirePermission, Team, TeamGuard } from '@decorator'
 import { UpdateTeamMemberInput } from '@graphql'
 import { TeamModel, TeamRoleEnum } from '@model'
 import { Args, Mutation, Resolver } from '@nestjs/graphql'
@@ -13,7 +14,7 @@ export class UpdateTeamMemberRoleResolver {
 
   @Mutation(returns => Boolean)
   @TeamGuard()
-  @Roles(TeamRoleEnum.OWNER)
+  @RequirePermission(PermissionKey.WORKSPACE_MEMBERS_ROLE)
   async updateTeamMemberRole(
     @Team() team: TeamModel,
     @Args('input') input: UpdateTeamMemberInput

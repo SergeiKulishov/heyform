@@ -81,6 +81,7 @@ export const WORKSPACES_GQL = gql`
       removeBranding
       customSharingURL
       createdAt
+      permissionMatrix
       projects {
         id
         teamId
@@ -197,6 +198,20 @@ export const REMOVE_WORKSPACE_MEMBER_GQL = gql`
 export const UPDATE_WORKSPACE_MEMBER_GQL = gql`
   mutation updateTeamMemberRole($input: UpdateTeamMemberInput!) {
     updateTeamMemberRole(input: $input)
+  }
+`
+
+export const TEAM_PERMISSIONS_GQL = gql`
+  query teamPermissions($input: TeamDetailInput!) {
+    teamPermissions(input: $input) {
+      permissions
+    }
+  }
+`
+
+export const UPDATE_PERMISSION_MATRIX_GQL = gql`
+  mutation updatePermissionMatrix($input: UpdatePermissionMatrixInput!) {
+    updatePermissionMatrix(input: $input)
   }
 `
 

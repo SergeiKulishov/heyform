@@ -1,7 +1,9 @@
-import { Auth, Roles, Team, TeamGuard, User } from '@decorator'
+import { PermissionKey } from '@common/permission'
+
+import { Auth, RequirePermission, Team, TeamGuard, User } from '@decorator'
 import { APP_HOMEPAGE_URL } from '@environments'
 import { InviteMemberInput } from '@graphql'
-import { TeamModel, TeamRoleEnum, UserModel } from '@model'
+import { TeamModel, UserModel } from '@model'
 import { Args, Mutation, Resolver } from '@nestjs/graphql'
 import { MailService, TeamService, UserService } from '@service'
 import { helper } from '@voxly/utils'
@@ -17,7 +19,7 @@ export class InviteMemberResolver {
 
   @Mutation(returns => Boolean)
   @TeamGuard()
-  @Roles(TeamRoleEnum.ADMIN)
+  @RequirePermission(PermissionKey.WORKSPACE_MEMBERS_INVITE)
   async inviteMember(
     @Team() team: TeamModel,
     @User() user: UserModel,

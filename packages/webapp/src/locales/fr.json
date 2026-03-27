@@ -644,6 +644,12 @@
       "sentSuccessMessage": "Les membres invités ont été notifiés par e-mail pour s'inscrire à HeyForm"
     }
   },
+  "permissions": {
+    "denied": "Accès refusé",
+    "deniedMessage": "Vous n'avez pas la permission d'effectuer cette action",
+    "deniedWithAction": "Vous n'avez pas la permission de: {{action}}",
+    "noPermission": "Vous n'avez pas la permission pour cette action"
+  },
   "settings": {
     "title": "Paramètres de l'espace de travail",
     "branding": {
@@ -687,6 +693,44 @@
       "code": {
         "label": "Entrez le code de suppression envoyé à <strong>{{email}}</strong>.",
         "required": "Le code de vérification ne doit pas être vide"
+      }
+    },
+    "permissions": {
+      "title": "Autorisations",
+      "description": "Configurez ce que chaque rôle peut faire dans cet espace de travail",
+      "readOnlyTip": "Seul le propriétaire de l'espace de travail peut modifier les autorisations",
+      "resetDefaults": "Réinitialiser par défaut",
+      "save": "Enregistrer",
+      "table": {
+        "permission": "Autorisation",
+        "admin": "Administrateur",
+        "collaborator": "Collaborateur",
+        "member": "Membre"
+      },
+      "groups": {
+        "workspace": "Espace de travail",
+        "project": "Projet",
+        "form": "Formulaire",
+        "submission": "Soumissions",
+        "integration": "Intégrations"
+      },
+      "keys": {
+        "workspace.settings": "Gérer les paramètres",
+        "workspace.members.invite": "Inviter des membres",
+        "workspace.members.remove": "Supprimer des membres",
+        "workspace.members.role": "Modifier les rôles des membres",
+        "workspace.branding": "Gérer l'image de marque",
+        "project.create": "Créer des projets",
+        "project.delete": "Supprimer des projets",
+        "project.members": "Gérer les membres du projet",
+        "form.create": "Créer des formulaires",
+        "form.edit": "Modifier des formulaires",
+        "form.delete": "Supprimer des formulaires",
+        "form.publish": "Publier des formulaires",
+        "submission.view": "Voir les soumissions",
+        "submission.edit": "Modifier les soumissions",
+        "submission.delete": "Supprimer les soumissions",
+        "integration.manage": "Gérer les intégrations"
       }
     },
     "general": {

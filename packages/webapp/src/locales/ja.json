@@ -644,6 +644,12 @@
       "sentSuccessMessage": "招待されたメンバーにはHeyFormにサインアップするためのメールが送信されました"
     }
   },
+  "permissions": {
+    "denied": "アクセス拒否",
+    "deniedMessage": "このアクションを実行する権限がありません",
+    "deniedWithAction": "次の権限がありません: {{action}}",
+    "noPermission": "この操作を行う権限がありません"
+  },
   "settings": {
     "title": "ワークスペース設定",
     "branding": {
@@ -687,6 +693,44 @@
       "code": {
         "label": "<strong>{{email}}</strong> に送信された削除コードを入力してください。",
         "required": "検証コードは空にできません"
+      }
+    },
+    "permissions": {
+      "title": "権限設定",
+      "description": "各ロールがこのワークスペースで実行できる操作を設定します",
+      "readOnlyTip": "ワークスペースのオーナーのみが権限を変更できます",
+      "resetDefaults": "デフォルトにリセット",
+      "save": "保存",
+      "table": {
+        "permission": "権限",
+        "admin": "管理者",
+        "collaborator": "コラボレーター",
+        "member": "メンバー"
+      },
+      "groups": {
+        "workspace": "ワークスペース",
+        "project": "プロジェクト",
+        "form": "フォーム",
+        "submission": "回答",
+        "integration": "インテグレーション"
+      },
+      "keys": {
+        "workspace.settings": "設定の管理",
+        "workspace.members.invite": "メンバーを招待",
+        "workspace.members.remove": "メンバーを削除",
+        "workspace.members.role": "メンバーのロールを変更",
+        "workspace.branding": "ブランディングの管理",
+        "project.create": "プロジェクトを作成",
+        "project.delete": "プロジェクトを削除",
+        "project.members": "プロジェクトメンバーを管理",
+        "form.create": "フォームを作成",
+        "form.edit": "フォームを編集",
+        "form.delete": "フォームを削除",
+        "form.publish": "フォームを公開",
+        "submission.view": "回答を表示",
+        "submission.edit": "回答を編集",
+        "submission.delete": "回答を削除",
+        "integration.manage": "インテグレーションを管理"
       }
     },
     "general": {

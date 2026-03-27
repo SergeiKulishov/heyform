@@ -8,7 +8,7 @@ import { Navigate } from 'react-router-dom'
 
 import { getAuthState, getDeviceId, setCookie, setDeviceId } from '@/utils'
 
-import { Toaster } from '@/components'
+import { PermissionDeniedToast, Toaster } from '@/components'
 import { REDIRECT_COOKIE_NAME } from '@/consts'
 import '@/i18n'
 import { AuthLayout } from '@/layouts'
@@ -56,6 +56,7 @@ const App = () => {
         <Router routes={routes as Route[]} render={render} />
       </Tooltip.Provider>
       <Toaster />
+      <PermissionDeniedToast />
     </ErrorBoundary>
   )
 }

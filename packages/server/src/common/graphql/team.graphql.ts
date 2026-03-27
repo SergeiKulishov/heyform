@@ -35,6 +35,10 @@ export class CreateTeamInput {
 
   @Field()
   projectName: string
+
+  @Field(type => Number, { nullable: true })
+  @IsOptional()
+  defaultMemberRole?: TeamRoleEnum
 }
 
 @InputType()
@@ -132,6 +136,10 @@ export class UpdateTeamInput extends TeamDetailInput {
   @IsUrl()
   @IsOptional()
   customSharingURL?: string
+
+  @Field(type => Number, { nullable: true })
+  @IsOptional()
+  defaultMemberRole?: TeamRoleEnum
 }
 
 @InputType()
@@ -166,6 +174,13 @@ export class UpdateTeamMemberInput extends TransferTeamInput {
   @Field(type => Number)
   @IsEnum([TeamRoleEnum.ADMIN, TeamRoleEnum.COLLABORATOR, TeamRoleEnum.MEMBER])
   role: TeamRoleEnum
+}
+
+@InputType()
+export class UpdatePermissionMatrixInput extends TeamDetailInput {
+  @Field(type => GraphQLJSONObject)
+  @IsObject()
+  permissionMatrix: Record<string, number[]>
 }
 
 @ObjectType()
@@ -262,6 +277,12 @@ export class TeamType extends PublicTeamType {
 
   @Field()
   createdAt: Date
+
+  @Field(type => GraphQLJSONObject, { nullable: true })
+  permissionMatrix?: Record<string, number[]>
+
+  @Field(type => Number, { nullable: true })
+  defaultMemberRole?: TeamRoleEnum
 }
 
 @ObjectType()
@@ -322,4 +343,10 @@ export class SearchTeamType {
 
   @Field(type => [DocType], { nullable: true })
   docs: DocType[]
+}
+
+@ObjectType()
+export class TeamPermissionsType {
+  @Field(type => GraphQLJSONObject)
+  permissions: Record<string, boolean>
 }

@@ -1,8 +1,9 @@
+import { PermissionKey } from '@common/permission'
 import { CaptchaKindEnum, FieldKindEnum, FormStatusEnum } from '@voxly/shared-types-enums'
 
-import { Auth, ProjectGuard, Roles, Team, User } from '@decorator'
+import { Auth, ProjectGuard, RequirePermission, Team, User } from '@decorator'
 import { CreateFormInput } from '@graphql'
-import { TeamModel, TeamRoleEnum, UserModel } from '@model'
+import { TeamModel, UserModel } from '@model'
 import { Args, Mutation, Resolver } from '@nestjs/graphql'
 import { FormService } from '@service'
 import { nanoid } from '@voxly/utils'
@@ -14,7 +15,7 @@ export class CreateFormResolver {
 
   @Mutation(returns => String)
   @ProjectGuard()
-  @Roles(TeamRoleEnum.ADMIN, TeamRoleEnum.COLLABORATOR)
+  @RequirePermission(PermissionKey.FORM_CREATE)
   async createForm(
     @Team() team: TeamModel,
     @User() user: UserModel,

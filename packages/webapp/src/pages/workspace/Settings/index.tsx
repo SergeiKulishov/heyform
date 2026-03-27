@@ -7,6 +7,7 @@ import WorkspaceBranding from './Branding'
 import WorkspaceDeletion from './Deletion'
 import WorkspaceDeletionModal from './DeletionModal'
 import WorkspaceGeneral from './General'
+import WorkspacePermissions from './Permissions'
 
 export default function WorkspaceSettings() {
   const { t } = useTranslation()
@@ -32,6 +33,10 @@ export default function WorkspaceSettings() {
                     value: 'branding'
                   },
                   {
+                    label: t('settings.permissions.title'),
+                    value: 'permissions'
+                  },
+                  {
                     label: t('settings.deletion.title'),
                     value: 'deletion'
                   }
@@ -42,6 +47,7 @@ export default function WorkspaceSettings() {
             <div className="flex-1">
               <WorkspaceGeneral />
               <WorkspaceBranding />
+              <WorkspacePermissions />
               <WorkspaceDeletion />
             </div>
           </div>

@@ -1,6 +1,8 @@
-import { Auth, ProjectGuard, Roles, Team } from '@decorator'
+import { PermissionKey } from '@common/permission'
+
+import { Auth, ProjectGuard, RequirePermission, Team } from '@decorator'
 import { RenameProjectInput } from '@graphql'
-import { TeamModel, TeamRoleEnum } from '@model'
+import { TeamModel } from '@model'
 import { Args, Mutation, Resolver } from '@nestjs/graphql'
 import { ProjectService } from '@service'
 
@@ -10,7 +12,7 @@ export class RenameProjectResolver {
   constructor(private readonly projectService: ProjectService) {}
 
   @ProjectGuard()
-  @Roles(TeamRoleEnum.ADMIN, TeamRoleEnum.COLLABORATOR)
+  @RequirePermission(PermissionKey.PROJECT_CREATE)
   @Mutation(returns => Boolean)
   async renameProject(
     @Team() team: TeamModel,

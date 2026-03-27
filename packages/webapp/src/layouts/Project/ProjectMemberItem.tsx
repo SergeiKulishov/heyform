@@ -3,7 +3,7 @@ import { FC, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { ProjectService } from '@/services'
-import { canManageMembers, useParam, useRouter } from '@/utils'
+import { canManageProjectMembers, useParam, useRouter } from '@/utils'
 
 import { Avatar, Button, useToast } from '@/components'
 import { useWorkspaceStore } from '@/store'
@@ -108,7 +108,7 @@ export const ProjectJoinedMemberItem: FC<ProjectMemberItemProps> = ({ member }) 
       )
     }
 
-    if (!member.isOwner && !member.isYou && canManageMembers(workspace)) {
+    if (!member.isOwner && !member.isYou && canManageProjectMembers(workspace)) {
       return (
         <Button
           className="bg-error text-primary-light hover:bg-error dark:text-primary"
@@ -143,7 +143,7 @@ export const ProjectRemainingMemberItem: FC<ProjectMemberItemProps> = ({ member 
   const toast = useToast()
 
   const { workspaceId, projectId } = useParam()
-  const { addMemberToProject } = useWorkspaceStore()
+  const { addMemberToProject, workspace } = useWorkspaceStore()
 
   const { loading, run } = useRequest(
     async () => {
@@ -164,9 +164,11 @@ export const ProjectRemainingMemberItem: FC<ProjectMemberItemProps> = ({ member 
 
   return (
     <ProjectMemberItem member={member}>
-      <Button.Ghost size="md" loading={loading} onClick={run}>
-        {t('project.members.add')}
-      </Button.Ghost>
+      {canManageProjectMembers(workspace) && (
+        <Button.Ghost size="md" loading={loading} onClick={run}>
+          {t('project.members.add')}
+        </Button.Ghost>
+      )}
     </ProjectMemberItem>
   )
 }

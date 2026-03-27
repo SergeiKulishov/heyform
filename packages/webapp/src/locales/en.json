@@ -655,6 +655,12 @@
       "sentSuccessMessage": "Invited members have been notified with email to sign up for HeyForm"
     }
   },
+  "permissions": {
+    "denied": "Access denied",
+    "deniedMessage": "You don't have permission to perform this action",
+    "deniedWithAction": "You don't have permission to: {{action}}",
+    "noPermission": "You don't have permission for this action"
+  },
   "settings": {
     "title": "Workspace Settings",
     "general": {
@@ -707,6 +713,44 @@
       "code": {
         "label": "Enter deletion code sent to <strong>{{email}}</strong>.",
         "required": "The verification code is not allow to be empty"
+      }
+    },
+    "permissions": {
+      "title": "Permissions",
+      "description": "Configure what each role can do in this workspace",
+      "readOnlyTip": "Only the workspace owner can change permissions",
+      "resetDefaults": "Reset to defaults",
+      "save": "Save permissions",
+      "table": {
+        "permission": "Permission",
+        "admin": "Admin",
+        "collaborator": "Collaborator",
+        "member": "Member"
+      },
+      "groups": {
+        "workspace": "Workspace",
+        "project": "Project",
+        "form": "Form",
+        "submission": "Submission",
+        "integration": "Integration"
+      },
+      "keys": {
+        "workspace.settings": "Manage settings",
+        "workspace.members.invite": "Invite members",
+        "workspace.members.remove": "Remove members",
+        "workspace.members.role": "Change member roles",
+        "workspace.branding": "Manage branding",
+        "project.create": "Create projects",
+        "project.delete": "Delete projects",
+        "project.members": "Manage project members",
+        "form.create": "Create forms",
+        "form.edit": "Edit forms",
+        "form.delete": "Delete forms",
+        "form.publish": "Publish forms",
+        "submission.view": "View submissions",
+        "submission.edit": "Edit submissions",
+        "submission.delete": "Delete submissions",
+        "integration.manage": "Manage integrations"
       }
     },
     "form": {

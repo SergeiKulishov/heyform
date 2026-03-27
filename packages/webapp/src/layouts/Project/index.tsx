@@ -4,7 +4,7 @@ import { FC, useEffect, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { NavLink, useLocation } from 'react-router-dom'
 
-import { cn, useParam } from '@/utils'
+import { canCreateForms, canManageProjectMembers, cn, useParam } from '@/utils'
 
 import { Button, Tooltip } from '@/components'
 import { useAppStore, useWorkspaceStore } from '@/store'
@@ -19,7 +19,7 @@ export const ProjectLayout: FC<LayoutProps> = ({ options, children }) => {
   const location = useLocation()
   const { workspaceId, projectId } = useParam()
   const { openModal } = useAppStore()
-  const { project } = useWorkspaceStore()
+  const { project, workspace } = useWorkspaceStore()
 
   const navigations = useMemo(
     () => [
@@ -57,15 +57,34 @@ export const ProjectLayout: FC<LayoutProps> = ({ options, children }) => {
           <h1 className="text-2xl/8 font-semibold sm:text-xl/8">{project?.name}</h1>
 
           <div className="flex items-center gap-2">
-            <Tooltip label={t('project.members.title')}>
-              <Button.Ghost size="md" iconOnly onClick={() => openModal('ProjectMembersModal')}>
+            <Tooltip
+              label={
+                canManageProjectMembers(workspace)
+                  ? t('project.members.title')
+                  : t('permissions.noPermission')
+              }
+            >
+              <Button.Ghost
+                size="md"
+                iconOnly
+                disabled={!canManageProjectMembers(workspace)}
+                onClick={() =>
+                  canManageProjectMembers(workspace) && openModal('ProjectMembersModal')
+                }
+              >
                 <IconUsers className="h-5 w-5" />
               </Button.Ghost>
             </Tooltip>
 
-            <Button size="md" onClick={() => openModal('CreateFormModal')}>
-              {t('form.creation.title')}
-            </Button>
+            <Tooltip label={canCreateForms(workspace) ? undefined : t('permissions.noPermission')}>
+              <Button
+                size="md"
+                disabled={!canCreateForms(workspace)}
+                onClick={() => canCreateForms(workspace) && openModal('CreateFormModal')}
+              >
+                {t('form.creation.title')}
+              </Button>
+            </Tooltip>
           </div>
         </div>
 

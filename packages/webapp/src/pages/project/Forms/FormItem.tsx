@@ -14,7 +14,14 @@ import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 
 import { FormService } from '@/services'
-import { timeFromNow, timeToNow, useRouter } from '@/utils'
+import {
+  canCreateForms,
+  canDeleteForms,
+  canEditForms,
+  timeFromNow,
+  timeToNow,
+  useRouter
+} from '@/utils'
 
 import IconLink from '@/assets/link.svg?react'
 import IconMoveTo from '@/assets/move-to.svg?react'
@@ -102,25 +109,25 @@ const FormItem: FC<FormItemProps> = ({ form, isInTrash, onChange }) => {
   const options = useMemo(
     () =>
       isInTrash
-        ? [
-            {
+        ? ([
+            canEditForms(workspace) && {
               value: 'restore',
               icon: <IconRestore className="h-4 w-4" />,
               label: 'components.restore'
             },
-            {
+            canDeleteForms(workspace) && {
               value: 'delete',
               icon: <IconTrash className="h-4 w-4" />,
               label: 'components.permanentlyDelete'
             }
-          ]
-        : [
-            {
+          ].filter(Boolean) as any[])
+        : ([
+            canEditForms(workspace) && {
               value: 'edit',
               icon: <IconPencil className="h-4 w-4" />,
               label: 'components.edit'
             },
-            {
+            canEditForms(workspace) && {
               value: 'rename',
               icon: <IconTag className="h-4 w-4" />,
               label: 'components.rename'
@@ -130,28 +137,28 @@ const FormItem: FC<FormItemProps> = ({ form, isInTrash, onChange }) => {
               icon: <IconShare className="h-4 w-4" />,
               label: 'components.share'
             },
-            {
+            canCreateForms(workspace) && {
               value: 'duplicate',
               icon: <IconCopy className="h-4 w-4" />,
               label: 'components.duplicate'
             },
-            {
+            canEditForms(workspace) && {
               value: 'moveto',
               icon: <IconMoveTo className="h-4 w-4" />,
               label: 'components.moveto'
             },
-            {
+            canEditForms(workspace) && {
               value: 'saveAsTemplate',
               icon: <IconTemplate className="h-4 w-4" />,
               label: 'form.saveAsTemplate'
             },
-            {
+            canDeleteForms(workspace) && {
               value: 'trash',
               icon: <IconTrash className="h-4 w-4" />,
               label: 'components.delete'
             }
-          ],
-    [isInTrash]
+          ].filter(Boolean) as any[]),
+    [isInTrash, workspace]
   )
 
   function handleEdit(event?: MouseEvent<HTMLButtonElement>) {
@@ -345,11 +352,13 @@ const FormItem: FC<FormItemProps> = ({ form, isInTrash, onChange }) => {
               icon={<IconLink strokeWidth={2.2} />}
             />
 
-            <Tooltip label={t('components.edit')}>
-              <Button.Link size="sm" iconOnly onClick={handleEdit}>
-                <IconPencil className="h-5 w-5" />
-              </Button.Link>
-            </Tooltip>
+            {canEditForms(workspace) && (
+              <Tooltip label={t('components.edit')}>
+                <Button.Link size="sm" iconOnly onClick={handleEdit}>
+                  <IconPencil className="h-5 w-5" />
+                </Button.Link>
+              </Tooltip>
+            )}
           </div>
         )}
 

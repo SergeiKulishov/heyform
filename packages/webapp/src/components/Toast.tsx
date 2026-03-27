@@ -1,9 +1,10 @@
 import { Action, Close, Description, Provider, Root, Title, Viewport } from '@radix-ui/react-toast'
-import { IconX } from '@tabler/icons-react'
+import { IconAlertTriangle, IconX } from '@tabler/icons-react'
 import { ReactNode, useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import { create } from 'zustand'
 
+import { cn } from '@/utils'
 import { nanoid } from '@voxly/utils'
 import { immer } from 'zustand/middleware/immer'
 
@@ -15,6 +16,7 @@ interface Toast {
   message?: ReactNode
   action?: typeof Action
   duration?: number
+  variant?: 'default' | 'error'
 }
 
 interface ToastStoreType {
@@ -83,12 +85,24 @@ export const Toaster = () => {
       {toasts.map(row => (
         <Root
           key={row.id}
-          className="bg-foreground ring-accent data-[state=open]:animate-in data-[state=closed]:animate-out data-[swipe=end]:animate-out data-[state=closed]:fade-out-80 data-[state=closed]:slide-out-to-bottom data-[state=open]:slide-in-from-top-full data-[state=open]:sm:slide-in-from-bottom-full relative w-full rounded-lg px-3 py-2 opacity-100 shadow-lg ring-1 data-[swipe=cancel]:translate-x-0 data-[swipe=end]:translate-x-[var(--radix-toast-swipe-end-x)] data-[swipe=move]:translate-x-[var(--radix-toast-swipe-move-x)] data-[swipe=move]:transition-none"
+          className={cn(
+            'bg-foreground ring-accent data-[state=open]:animate-in data-[state=closed]:animate-out data-[swipe=end]:animate-out data-[state=closed]:fade-out-80 data-[state=closed]:slide-out-to-bottom data-[state=open]:slide-in-from-top-full data-[state=open]:sm:slide-in-from-bottom-full relative w-full overflow-hidden rounded-lg px-3 py-2 opacity-100 shadow-lg ring-1 data-[swipe=cancel]:translate-x-0 data-[swipe=end]:translate-x-[var(--radix-toast-swipe-end-x)] data-[swipe=move]:translate-x-[var(--radix-toast-swipe-move-x)] data-[swipe=move]:transition-none',
+            {
+              'border-error border-l-4 pl-3': row.variant === 'error'
+            }
+          )}
           duration={row.duration}
           onOpenChange={open => !open && remove(row.id)}
         >
-          <Title className="text-sm/6 font-semibold">{row.title}</Title>
-          <Description className="text-secondary text-sm">{row.message}</Description>
+          <div className="flex items-start gap-2">
+            {row.variant === 'error' && (
+              <IconAlertTriangle className="text-error mt-0.5 h-4 w-4 shrink-0" />
+            )}
+            <div className="min-w-0 flex-1">
+              <Title className="text-sm/6 font-semibold">{row.title}</Title>
+              <Description className="text-secondary text-sm">{row.message}</Description>
+            </div>
+          </div>
           <Close asChild>
             <Button.Link
               className="text-secondary hover:text-primary absolute right-1 top-1.5"

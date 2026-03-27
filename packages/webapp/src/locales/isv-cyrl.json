@@ -653,6 +653,12 @@
       "sentSuccessMessage": "Позвани члены были обавєшчени е-поштеју абы сę зарегистровали в HeyForm"
     }
   },
+  "permissions": {
+    "denied": "Доступ одрěчен",
+    "deniedMessage": "Вы не мате дозвол за то дějство",
+    "deniedWithAction": "Вы не мате дозвол за: {{action}}",
+    "noPermission": "Вы не мате дозвол за то дějство"
+  },
   "settings": {
     "title": "Наставења работчего простора",
     "general": {
@@ -705,6 +711,44 @@
       "code": {
         "label": "Введите код избрисања посланы на <strong>{{email}}</strong>.",
         "required": "Код провєрки не смє быти празны"
+      }
+    },
+    "permissions": {
+      "title": "Дозволы",
+      "description": "Настројте, что кажда роља може дělати в том рабочем просторје",
+      "readOnlyTip": "Тöлько власник рабочего просторја може мěнити дозволы",
+      "resetDefaults": "Обновити по умолчанје",
+      "save": "Зберегти",
+      "table": {
+        "permission": "Дозвол",
+        "admin": "Администратор",
+        "collaborator": "Сотрудник",
+        "member": "Участник"
+      },
+      "groups": {
+        "workspace": "Рабоче просторје",
+        "project": "Проект",
+        "form": "Форма",
+        "submission": "Одговоры",
+        "integration": "Интеграциjе"
+      },
+      "keys": {
+        "workspace.settings": "Управлjање настројками",
+        "workspace.members.invite": "Поканjе участников",
+        "workspace.members.remove": "Вычеркнjење участников",
+        "workspace.members.role": "Мěна ролj участников",
+        "workspace.branding": "Управлjање брандингом",
+        "project.create": "Створjење проектов",
+        "project.delete": "Вычеркнjење проектов",
+        "project.members": "Управлjање участниками проекта",
+        "form.create": "Створjење форм",
+        "form.edit": "Редакциjа форм",
+        "form.delete": "Вычеркнjење форм",
+        "form.publish": "Публикациjа форм",
+        "submission.view": "Огледање одговоров",
+        "submission.edit": "Редакциjа одговоров",
+        "submission.delete": "Вычеркнjење одговоров",
+        "integration.manage": "Управлjање интеграциjами"
       }
     },
     "form": {

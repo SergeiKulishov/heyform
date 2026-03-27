@@ -644,6 +644,12 @@
       "sentSuccessMessage": "已通知受邀成員通過電子郵件註冊 HeyForm"
     }
   },
+  "permissions": {
+    "denied": "存取被拒絕",
+    "deniedMessage": "您沒有執行此操作的權限",
+    "deniedWithAction": "您沒有權限執行: {{action}}",
+    "noPermission": "您沒有執行此操作的權限"
+  },
   "settings": {
     "title": "工作區設置",
     "branding": {
@@ -687,6 +693,44 @@
       "code": {
         "label": "輸入發送到 <strong>{{email}}</strong> 的刪除驗證碼。",
         "required": "驗證碼不能為空"
+      }
+    },
+    "permissions": {
+      "title": "權限設定",
+      "description": "設定每個角色在此工作區中可以執行的操作",
+      "readOnlyTip": "只有工作區擁有者才能變更權限",
+      "resetDefaults": "還原預設",
+      "save": "儲存",
+      "table": {
+        "permission": "權限",
+        "admin": "管理員",
+        "collaborator": "協作者",
+        "member": "成員"
+      },
+      "groups": {
+        "workspace": "工作區",
+        "project": "專案",
+        "form": "表單",
+        "submission": "提交",
+        "integration": "整合"
+      },
+      "keys": {
+        "workspace.settings": "管理設定",
+        "workspace.members.invite": "邀請成員",
+        "workspace.members.remove": "移除成員",
+        "workspace.members.role": "變更成員角色",
+        "workspace.branding": "管理品牌形象",
+        "project.create": "建立專案",
+        "project.delete": "刪除專案",
+        "project.members": "管理專案成員",
+        "form.create": "建立表單",
+        "form.edit": "編輯表單",
+        "form.delete": "刪除表單",
+        "form.publish": "發布表單",
+        "submission.view": "檢視提交",
+        "submission.edit": "編輯提交",
+        "submission.delete": "刪除提交",
+        "integration.manage": "管理整合"
       }
     },
     "general": {

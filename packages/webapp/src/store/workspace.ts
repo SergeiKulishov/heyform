@@ -37,6 +37,7 @@ type WorkspaceStoreType = {
   setMembers: (workspaceId: string, members: MemberType[]) => void
   removeMember: (workspaceId: string, memberId: string) => void
   updateMemberRole: (workspaceId: string, memberId: string, role: number) => void
+  updatePermissionMatrix: (workspaceId: string, permissionMatrix: Record<string, number[]>) => void
 }
 
 interface ComputedStoreType {
@@ -258,6 +259,19 @@ export const useWorkspaceStore = create<WorkspaceStoreType>()(
               if (member) {
                 member.role = role
               }
+            }
+          })
+        },
+
+        updatePermissionMatrix: (
+          workspaceId: string,
+          permissionMatrix: Record<string, number[]>
+        ) => {
+          set(state => {
+            const workspace = state.workspaces.find(w => w.id === workspaceId)
+
+            if (workspace) {
+              workspace.permissionMatrix = permissionMatrix
             }
           })
         }

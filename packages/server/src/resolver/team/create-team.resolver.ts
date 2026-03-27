@@ -21,7 +21,8 @@ export class CreateTeamResolver {
       ownerId: user.id,
       name: input.name,
       avatar: input.avatar,
-      storageQuota: 0
+      storageQuota: 0,
+      defaultMemberRole: input.defaultMemberRole ?? TeamRoleEnum.COLLABORATOR
     })
 
     await this.teamService.createMember({

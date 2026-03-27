@@ -1,6 +1,7 @@
-import { Auth, FormGuard, Roles } from '@decorator'
+import { PermissionKey } from '@common/permission'
+
+import { Auth, FormGuard, RequirePermission } from '@decorator'
 import { DeleteSubmissionInput } from '@graphql'
-import { TeamRoleEnum } from '@model'
 import { Args, Mutation, Resolver } from '@nestjs/graphql'
 import { SubmissionService } from '@service'
 
@@ -11,7 +12,7 @@ export class DeleteSubmissionResolver {
 
   @Mutation(returns => Boolean)
   @FormGuard()
-  @Roles(TeamRoleEnum.ADMIN)
+  @RequirePermission(PermissionKey.SUBMISSION_DELETE)
   async deleteSubmissions(@Args('input') input: DeleteSubmissionInput): Promise<boolean> {
     return this.submissionService.deleteByIds(input.formId, input.submissionIds)
   }

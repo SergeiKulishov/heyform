@@ -644,6 +644,12 @@
       "sentSuccessMessage": "Eingeladene Mitglieder wurden per E-Mail benachrichtigt, um sich bei HeyForm anzumelden"
     }
   },
+  "permissions": {
+    "denied": "Zugriff verweigert",
+    "deniedMessage": "Sie haben keine Berechtigung, diese Aktion durchzuführen",
+    "deniedWithAction": "Sie haben keine Berechtigung für: {{action}}",
+    "noPermission": "Sie haben keine Berechtigung für diese Aktion"
+  },
   "settings": {
     "title": "Arbeitsbereich-Einstellungen",
     "branding": {
@@ -687,6 +693,44 @@
       "code": {
         "label": "Geben Sie den Löschcode ein, der an <strong>{{email}}</strong> gesendet wurde.",
         "required": "Der Bestätigungscode darf nicht leer sein"
+      }
+    },
+    "permissions": {
+      "title": "Berechtigungen",
+      "description": "Konfigurieren Sie, was jede Rolle in diesem Arbeitsbereich tun kann",
+      "readOnlyTip": "Nur der Inhaber des Arbeitsbereichs kann Berechtigungen ändern",
+      "resetDefaults": "Auf Standard zurücksetzen",
+      "save": "Speichern",
+      "table": {
+        "permission": "Berechtigung",
+        "admin": "Administrator",
+        "collaborator": "Mitarbeiter",
+        "member": "Mitglied"
+      },
+      "groups": {
+        "workspace": "Arbeitsbereich",
+        "project": "Projekt",
+        "form": "Formular",
+        "submission": "Einreichungen",
+        "integration": "Integrationen"
+      },
+      "keys": {
+        "workspace.settings": "Einstellungen verwalten",
+        "workspace.members.invite": "Mitglieder einladen",
+        "workspace.members.remove": "Mitglieder entfernen",
+        "workspace.members.role": "Rollen der Mitglieder ändern",
+        "workspace.branding": "Branding verwalten",
+        "project.create": "Projekte erstellen",
+        "project.delete": "Projekte löschen",
+        "project.members": "Projektmitglieder verwalten",
+        "form.create": "Formulare erstellen",
+        "form.edit": "Formulare bearbeiten",
+        "form.delete": "Formulare löschen",
+        "form.publish": "Formulare veröffentlichen",
+        "submission.view": "Einreichungen anzeigen",
+        "submission.edit": "Einreichungen bearbeiten",
+        "submission.delete": "Einreichungen löschen",
+        "integration.manage": "Integrationen verwalten"
       }
     },
     "general": {
