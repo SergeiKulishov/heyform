@@ -5,12 +5,19 @@ import { CaptchaKindEnum, FormField, FormStatusEnum } from '@voxly/shared-types-
 import { Queue } from 'bull'
 import { Model } from 'mongoose'
 
+import { RedisService } from './redis.service'
 import { TeamService } from './team.service'
 import { GOOGLE_RECAPTCHA_KEY } from '@environments'
 import { FormModel } from '@model'
 import { mapToObject } from '@utils'
 import { getUpdateQuery } from '@utils'
 import { helper, pickObject, timestamp } from '@voxly/utils'
+
+const PUBLIC_FORM_CACHE_TTL = '1m'
+
+function publicFormCacheKey(formId: string): string {
+  return `public-form:${formId}`
+}
 
 interface UpdateFiledOptions {
   formId: string
@@ -24,6 +31,7 @@ export class FormService {
     @InjectModel(FormModel.name)
     private readonly formModel: Model<FormModel>,
     private readonly teamService: TeamService,
+    private readonly redisService: RedisService,
     @InjectQueue('TranslateFormQueue')
     private readonly translateFormQueue: Queue
   ) {}
@@ -213,6 +221,7 @@ export class FormService {
       },
       updates
     )
+    await this.redisService.del(publicFormCacheKey(formId))
     return !!result?.ok
   }
 
@@ -225,6 +234,7 @@ export class FormService {
       },
       updates
     )
+    await Promise.all(formIds.map(id => this.redisService.del(publicFormCacheKey(id))))
     return !!result?.ok
   }
 
@@ -238,11 +248,15 @@ export class FormService {
         },
         status: FormStatusEnum.TRASH
       })
+      await Promise.all(
+        (formId as string[]).map(id => this.redisService.del(publicFormCacheKey(id)))
+      )
     } else {
       result = await this.formModel.deleteOne({
         _id: formId as string,
         status: FormStatusEnum.TRASH
       })
+      await this.redisService.del(publicFormCacheKey(formId as string))
     }
 
     return result?.n > 0
@@ -259,6 +273,7 @@ export class FormService {
         }
       }
     )
+    await this.redisService.del(publicFormCacheKey(formId))
     return !!result?.ok
   }
 
@@ -272,6 +287,7 @@ export class FormService {
         $set: getUpdateQuery(updates, 'fields.$')
       }
     )
+    await this.redisService.del(publicFormCacheKey(formId))
     return !!result?.ok
   }
 
@@ -293,6 +309,7 @@ export class FormService {
         multi: true
       }
     )
+    await this.redisService.del(publicFormCacheKey(formId))
     return !!result?.ok
   }
 
@@ -310,10 +327,21 @@ export class FormService {
   }
 
   public async findPublicForm(formId: string): Promise<Record<string, any> | undefined> {
+    const cacheKey = publicFormCacheKey(formId)
+    const cached = await this.redisService.get(cacheKey)
+
+    if (cached) {
+      try {
+        return JSON.parse(cached)
+      } catch {
+        await this.redisService.del(cacheKey)
+      }
+    }
+
     const form = await this.findById(formId)
 
     if (!form || !form.settings.active) {
-      return {
+      const inactive = {
         id: formId,
         teamId: form?.teamId,
         projectId: form?.projectId,
@@ -331,6 +359,12 @@ export class FormService {
         },
         themeSettings: form?.themeSettings
       }
+      await this.redisService.set({
+        key: cacheKey,
+        value: JSON.stringify(inactive),
+        duration: PUBLIC_FORM_CACHE_TTL
+      })
+      return inactive
     }
 
     const now = timestamp()
@@ -339,7 +373,7 @@ export class FormService {
       (now < form.settings.enabledAt ||
         (now > form.settings.closedAt && form.settings.closedAt > 0))
     ) {
-      return {
+      const expired = {
         id: formId,
         teamId: form.teamId,
         projectId: form.projectId,
@@ -357,6 +391,12 @@ export class FormService {
         },
         themeSettings: form.themeSettings
       }
+      await this.redisService.set({
+        key: cacheKey,
+        value: JSON.stringify(expired),
+        duration: PUBLIC_FORM_CACHE_TTL
+      })
+      return expired
     }
 
     const masked: Record<string, any> = pickObject(form.toObject(), [
@@ -388,7 +428,7 @@ export class FormService {
       'enableClosedMessage',
       'closedFormTitle',
       'closedFormDescription',
-      'removeBranding' // Добавить эту строку
+      'removeBranding'
     ])
 
     masked.fields = form.fields.map(field => {
@@ -416,6 +456,12 @@ export class FormService {
     if (form.settings?.captchaKind === CaptchaKindEnum.GOOGLE_RECAPTCHA) {
       masked.settings.googleRecaptchaKey = GOOGLE_RECAPTCHA_KEY
     }
+
+    await this.redisService.set({
+      key: cacheKey,
+      value: JSON.stringify(masked),
+      duration: PUBLIC_FORM_CACHE_TTL
+    })
 
     return masked
   }
