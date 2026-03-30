@@ -1245,6 +1245,35 @@
         "testMode": "Тестовы режим",
         "testModeDescription": "Подєлите тутų одказ за тестованје формулара без сохранјенија одговоров"
       },
+      "links": {
+        "headline": "Shortened Links",
+        "empty": "No shortened links yet",
+        "loading": "Loading links...",
+        "clicks": "{{count}} clicks",
+        "source": "Source",
+        "delete": "Delete link",
+        "deleteConfirm": "Are you sure you want to delete this link? It will also be removed from Kutt.",
+        "deleteSuccess": "Link deleted",
+        "deleteFailed": "Failed to delete link",
+        "loadFailed": "Failed to load links",
+        "copied": "Copied!",
+        "refresh": "Refresh",
+        "stats": "Statistics"
+      },
+      "linkStats": {
+        "title": "Link Statistics",
+        "totalClicks": "total clicks",
+        "lastDay": "Last 24h",
+        "lastWeek": "Last 7 days",
+        "lastMonth": "Last 30 days",
+        "clicksOverTime": "Clicks over time",
+        "browsers": "Browsers",
+        "os": "Operating Systems",
+        "countries": "Countries",
+        "referrers": "Referrers",
+        "noData": "No data for this period",
+        "loadFailed": "Failed to load statistics"
+      },
       "settings": {
         "headline": "Наставења одказа",
         "subHeadline": "Наставите како ваша формула выгледа когда сдєлујете одказ в социалных сєтјах.",

@@ -1171,6 +1171,35 @@
         "testMode": "Testmodus",
         "testModeDescription": "Teilen Sie diesen Link, um das Formular zu testen, ohne Antworten zu speichern"
       },
+      "links": {
+        "headline": "Gekürzte Links",
+        "empty": "Noch keine gekürzten Links",
+        "loading": "Links werden geladen...",
+        "clicks": "{{count}} Klicks",
+        "source": "Quelle",
+        "delete": "Link löschen",
+        "deleteConfirm": "Diesen Link wirklich löschen? Er wird auch aus Kutt entfernt.",
+        "deleteSuccess": "Link gelöscht",
+        "deleteFailed": "Link konnte nicht gelöscht werden",
+        "loadFailed": "Links konnten nicht geladen werden",
+        "copied": "Kopiert!",
+        "refresh": "Aktualisieren",
+        "stats": "Statistik"
+      },
+      "linkStats": {
+        "title": "Link-Statistik",
+        "totalClicks": "Klicks gesamt",
+        "lastDay": "Letzte 24h",
+        "lastWeek": "Letzte 7 Tage",
+        "lastMonth": "Letzte 30 Tage",
+        "clicksOverTime": "Klicks im Zeitverlauf",
+        "browsers": "Browser",
+        "os": "Betriebssysteme",
+        "countries": "Länder",
+        "referrers": "Referrer",
+        "noData": "Keine Daten für diesen Zeitraum",
+        "loadFailed": "Statistik konnte nicht geladen werden"
+      },
       "settings": {
         "headline": "Linkeinstellungen",
         "subHeadline": "Legen Sie fest, wie Ihr Formular erscheint, wenn Sie den Link in sozialen Medien teilen.",

@@ -1171,6 +1171,35 @@
         "testMode": "測試模式",
         "testModeDescription": "分享此連結以測試表單，不會儲存回答"
       },
+      "links": {
+        "headline": "短連結列表",
+        "empty": "暫無短連結",
+        "loading": "載入連結中...",
+        "clicks": "{{count}} 次點擊",
+        "source": "來源",
+        "delete": "刪除連結",
+        "deleteConfirm": "確定刪除此連結？它也將從 Kutt 中刪除。",
+        "deleteSuccess": "連結已刪除",
+        "deleteFailed": "刪除連結失敗",
+        "loadFailed": "載入連結失敗",
+        "copied": "已複製！",
+        "refresh": "重新整理",
+        "stats": "統計"
+      },
+      "linkStats": {
+        "title": "連結統計",
+        "totalClicks": "總點擊數",
+        "lastDay": "近24小時",
+        "lastWeek": "近7天",
+        "lastMonth": "近30天",
+        "clicksOverTime": "點擊趨勢",
+        "browsers": "瀏覽器",
+        "os": "作業系統",
+        "countries": "國家",
+        "referrers": "來源",
+        "noData": "該時段暫無資料",
+        "loadFailed": "載入統計失敗"
+      },
       "settings": {
         "headline": "連結設定",
         "subHeadline": "設定當您在社交媒體上分享連結時，您的表單將如何顯示。",

@@ -28,3 +28,4 @@ export {
   CsvShortenJobSchema,
   CsvShortenJobStatus
 } from './csv-shorten-job.model'
+export { FormLinkModel, FormLinkSchema } from './form-link.model'

@@ -1175,6 +1175,35 @@
         "testMode": "Tryb testowy",
         "testModeDescription": "Udostępnij ten link, aby przetestować formularz bez zapisywania odpowiedzi"
       },
+      "links": {
+        "headline": "Skrócone linki",
+        "empty": "Brak skróconych linków",
+        "loading": "Ładowanie linków...",
+        "clicks": "{{count}} kliknięć",
+        "source": "Źródło",
+        "delete": "Usuń link",
+        "deleteConfirm": "Usunąć ten link? Zostanie też usunięty z Kutt.",
+        "deleteSuccess": "Link usunięty",
+        "deleteFailed": "Nie udało się usunąć linku",
+        "loadFailed": "Nie udało się załadować linków",
+        "copied": "Skopiowano!",
+        "refresh": "Odśwież",
+        "stats": "Statystyki"
+      },
+      "linkStats": {
+        "title": "Statystyki linku",
+        "totalClicks": "kliknięć łącznie",
+        "lastDay": "Ostatnie 24h",
+        "lastWeek": "Ostatnie 7 dni",
+        "lastMonth": "Ostatnie 30 dni",
+        "clicksOverTime": "Kliknięcia w czasie",
+        "browsers": "Przeglądarki",
+        "os": "Systemy operacyjne",
+        "countries": "Kraje",
+        "referrers": "Referery",
+        "noData": "Brak danych za ten okres",
+        "loadFailed": "Nie udało się załadować statystyk"
+      },
       "settings": {
         "headline": "Ustawienia linku",
         "subHeadline": "Ustaw, jak twój formularz będzie wyglądał, gdy udostępnisz link na mediach społecznościowych.",

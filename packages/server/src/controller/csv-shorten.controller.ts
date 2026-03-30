@@ -63,6 +63,7 @@ export class CsvShortenController {
     @UserDecorator() user: UserModel,
     @UploadedFile() file: Express.Multer.File,
     @Body('formId') formId: string,
+    @Body('teamId') teamId: string,
     @Body('baseUrl') baseUrl: string,
     @Body('useUrlShortener') useUrlShortener: string
   ): Promise<{ jobId: string }> {
@@ -89,6 +90,7 @@ export class CsvShortenController {
     await this.csvShortenQueue.add({
       jobId: job.id,
       formId,
+      teamId: teamId || '',
       csvContent,
       baseUrl,
       uploadDir: UPLOAD_DIR,

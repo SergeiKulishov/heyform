@@ -15,6 +15,8 @@ import {
   EmailTemplateSchema,
   FormAnalyticModel,
   FormAnalyticSchema,
+  FormLinkModel,
+  FormLinkSchema,
   FormModel,
   FormOpenHistoryModel,
   FormOpenHistorySchema,
@@ -81,5 +83,6 @@ export const ModelModule = MongooseModule.forFeature([
   { name: ProjectGroupModel.name, schema: ProjectGroupSchema },
   { name: ProjectMemberModel.name, schema: ProjectMemberSchema },
   { name: BrandKitModel.name, schema: BrandKitSchema },
-  { name: CsvShortenJobModel.name, schema: CsvShortenJobSchema }
+  { name: CsvShortenJobModel.name, schema: CsvShortenJobSchema },
+  { name: FormLinkModel.name, schema: FormLinkSchema }
 ])

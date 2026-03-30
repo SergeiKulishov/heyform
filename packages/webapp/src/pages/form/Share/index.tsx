@@ -6,7 +6,7 @@ import {
   IconMail,
   IconQrcode
 } from '@tabler/icons-react'
-import { useMemo } from 'react'
+import { useCallback, useMemo, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { getDecoratedURL, useParam } from '@/utils'
@@ -16,8 +16,10 @@ import { FORM_EMBED_OPTIONS } from '@/consts'
 import { useAppStore, useFormStore, useWorkspaceStore } from '@/store'
 
 import EmbedModal from './EmbedModal'
+import FormLinksList from './FormLinksList'
 import GenerateLinkModal from './GenerateLinkModal'
 import LinkSettings from './LinkSettings'
+import LinkStatsModal from './LinkStatsModal'
 import QRCodeModal from './QRCodeModal'
 
 export default function FormShare() {
@@ -27,6 +29,12 @@ export default function FormShare() {
   const { openModal } = useAppStore()
   const { sharingURLPrefix } = useWorkspaceStore()
   const { form, selectEmbedType } = useFormStore()
+
+  const linksListRefreshRef = useRef<(() => void) | null>(null)
+
+  const handleLinkCreated = useCallback(() => {
+    linksListRefreshRef.current?.()
+  }, [])
 
   const shareLink = useMemo(() => sharingURLPrefix + '/form/' + formId, [formId, sharingURLPrefix])
 
@@ -144,6 +152,12 @@ export default function FormShare() {
 
         <LinkSettings />
 
+        <FormLinksList
+          onRefreshRef={fn => {
+            linksListRefreshRef.current = fn
+          }}
+        />
+
         <section id="embed">
           <h2 className="text-base/6 font-semibold">{t('form.share.embed.headline')}</h2>
           <p className="text-secondary text-sm/6">{t('form.share.embed.subHeadline')}</p>
@@ -169,7 +183,8 @@ export default function FormShare() {
 
       <QRCodeModal />
       <EmbedModal />
-      <GenerateLinkModal />
+      <GenerateLinkModal onLinkCreated={handleLinkCreated} />
+      <LinkStatsModal />
     </>
   )
 }

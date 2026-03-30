@@ -1171,6 +1171,35 @@
         "testMode": "テストモード",
         "testModeDescription": "回答を保存せずにフォームをテストするためのリンクを共有します"
       },
+      "links": {
+        "headline": "短縮リンク一覧",
+        "empty": "まだ短縮リンクがありません",
+        "loading": "リンクを読み込み中...",
+        "clicks": "{{count}} クリック",
+        "source": "ソース",
+        "delete": "リンクを削除",
+        "deleteConfirm": "このリンクを削除しますか？Kuttからも削除されます。",
+        "deleteSuccess": "リンクを削除しました",
+        "deleteFailed": "リンクの削除に失敗しました",
+        "loadFailed": "リンクの読み込みに失敗しました",
+        "copied": "コピーしました！",
+        "refresh": "更新",
+        "stats": "統計"
+      },
+      "linkStats": {
+        "title": "リンク統計",
+        "totalClicks": "合計クリック数",
+        "lastDay": "過去24時間",
+        "lastWeek": "過去7日間",
+        "lastMonth": "過去30日間",
+        "clicksOverTime": "クリック推移",
+        "browsers": "ブラウザ",
+        "os": "OS",
+        "countries": "国",
+        "referrers": "リファラー",
+        "noData": "この期間のデータはありません",
+        "loadFailed": "統計の読み込みに失敗しました"
+      },
       "settings": {
         "headline": "リンク設定",
         "subHeadline": "リンクをソーシャルメディアで共有する際に、フォームの表示方法を設定します。",

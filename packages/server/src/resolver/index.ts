@@ -69,6 +69,9 @@ export { CreateFieldsWithAIResolver } from './form/create-fields-with-ai.resolve
 export { CreateFormLogicsWithAIResolver } from './form/create-form-logics-with-ai.resolver'
 export { CreateFormThemeWithAIResolver } from './form/create-form-theme-with-ai.resolver'
 export { AuditFormWithAIResolver } from './form/audit-form-with-ai.resolver'
+export { FormLinksResolver } from './form/form-links.resolver'
+export { DeleteFormLinkResolver } from './form/delete-form-link.resolver'
+export { FormLinkStatsResolver } from './form/form-link-stats.resolver'
 
 export { OpenFormResolver } from './endpoint/open-form.resolver'
 export { CompleteSubmissionResolver } from './endpoint/complete-submission.resolver'

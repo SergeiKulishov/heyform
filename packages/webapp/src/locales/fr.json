@@ -1175,6 +1175,35 @@
         "testMode": "Mode test",
         "testModeDescription": "Partagez ce lien pour tester le formulaire sans enregistrer les réponses"
       },
+      "links": {
+        "headline": "Liens raccourcis",
+        "empty": "Aucun lien raccourci pour le moment",
+        "loading": "Chargement des liens...",
+        "clicks": "{{count}} clics",
+        "source": "Source",
+        "delete": "Supprimer le lien",
+        "deleteConfirm": "Supprimer ce lien ? Il sera également supprimé de Kutt.",
+        "deleteSuccess": "Lien supprimé",
+        "deleteFailed": "Échec de la suppression du lien",
+        "loadFailed": "Échec du chargement des liens",
+        "copied": "Copié !",
+        "refresh": "Actualiser",
+        "stats": "Statistiques"
+      },
+      "linkStats": {
+        "title": "Statistiques du lien",
+        "totalClicks": "clics au total",
+        "lastDay": "Dernières 24h",
+        "lastWeek": "7 derniers jours",
+        "lastMonth": "30 derniers jours",
+        "clicksOverTime": "Clics dans le temps",
+        "browsers": "Navigateurs",
+        "os": "Systèmes d'exploitation",
+        "countries": "Pays",
+        "referrers": "Référents",
+        "noData": "Aucune donnée pour cette période",
+        "loadFailed": "Échec du chargement des statistiques"
+      },
       "settings": {
         "headline": "Paramètres du lien",
         "subHeadline": "Définissez comment votre formulaire apparaît lorsque vous partagez le lien sur les réseaux sociaux.",

@@ -23,12 +23,15 @@ import {
   CREATE_FORM_WITH_AI_GQL,
   DELETE_FORM_FIELD_GQL,
   DELETE_FORM_GQL,
+  DELETE_FORM_LINK_GQL,
   DELETE_TEAM_TEMPLATE_GQL,
   DUPLICATE_FORM_GQL,
   FORMS_GQL,
   FORM_ANALYTIC_GQL,
   FORM_DETAIL_GQL,
   FORM_INTEGRATIONS_GQL,
+  FORM_LINKS_GQL,
+  FORM_LINK_STATS_GQL,
   FORM_REPORT_GQL,
   FORM_SUMMARY_GQL,
   FUNNEL_ANALYTICS_GQL,
@@ -619,6 +622,35 @@ export class FormService {
           password
         }
       }
+    })
+  }
+
+  static async formLinks(formId: string) {
+    return apollo.query({
+      query: FORM_LINKS_GQL,
+      variables: {
+        input: { formId }
+      },
+      fetchPolicy: 'network-only'
+    })
+  }
+
+  static async deleteFormLink(id: string, formId: string) {
+    return apollo.mutate({
+      mutation: DELETE_FORM_LINK_GQL,
+      variables: {
+        input: { id, formId }
+      }
+    })
+  }
+
+  static async formLinkStats(id: string, formId: string) {
+    return apollo.query({
+      query: FORM_LINK_STATS_GQL,
+      variables: {
+        input: { id, formId }
+      },
+      fetchPolicy: 'network-only'
     })
   }
 }

@@ -1171,6 +1171,35 @@
         "testMode": "测试模式",
         "testModeDescription": "分享此链接以测试表单，不会保存回答"
       },
+      "links": {
+        "headline": "短链接列表",
+        "empty": "暂无短链接",
+        "loading": "加载链接中...",
+        "clicks": "{{count}} 次点击",
+        "source": "来源",
+        "delete": "删除链接",
+        "deleteConfirm": "确定删除此链接？它也将从 Kutt 中删除。",
+        "deleteSuccess": "链接已删除",
+        "deleteFailed": "删除链接失败",
+        "loadFailed": "加载链接失败",
+        "copied": "已复制！",
+        "refresh": "刷新",
+        "stats": "统计"
+      },
+      "linkStats": {
+        "title": "链接统计",
+        "totalClicks": "总点击数",
+        "lastDay": "近24小时",
+        "lastWeek": "近7天",
+        "lastMonth": "近30天",
+        "clicksOverTime": "点击趋势",
+        "browsers": "浏览器",
+        "os": "操作系统",
+        "countries": "国家",
+        "referrers": "来源",
+        "noData": "该时段暂无数据",
+        "loadFailed": "加载统计失败"
+      },
       "settings": {
         "headline": "链接设置",
         "subHeadline": "设置您的表单在社交媒体上分享时的显示方式。",

@@ -7,11 +7,14 @@ import { Model } from 'mongoose'
 import * as path from 'path'
 
 import { CsvShortenJobModel, CsvShortenJobStatus } from '@model'
+import { FormLinkService } from '@service'
 
 import { BaseQueue } from './base.queue'
 
 export interface CsvShortenQueueJob {
   jobId: string
+  formId: string
+  teamId: string
   csvContent: string
   baseUrl: string
   uploadDir: string
@@ -29,14 +32,15 @@ export class CsvShortenQueue extends BaseQueue {
 
   constructor(
     @InjectModel(CsvShortenJobModel.name)
-    private readonly csvShortenJobModel: Model<CsvShortenJobModel>
+    private readonly csvShortenJobModel: Model<CsvShortenJobModel>,
+    private readonly formLinkService: FormLinkService
   ) {
     super()
   }
 
   @Process()
   async process(job: Job<CsvShortenQueueJob>): Promise<void> {
-    const { jobId, csvContent, baseUrl, uploadDir, originalFileName } = job.data
+    const { jobId, formId, teamId, csvContent, baseUrl, uploadDir, originalFileName } = job.data
 
     try {
       // Get job to check useUrlShortener flag
@@ -92,30 +96,60 @@ export class CsvShortenQueue extends BaseQueue {
         const batch = linksToShorten.slice(i, i + this.BATCH_SIZE)
 
         // Only shorten URLs if useUrlShortener flag is enabled
-        let batchResults: Array<{ status: 'fulfilled' | 'rejected'; value?: string; reason?: any }>
+        let batchResults: Array<{
+          status: 'fulfilled' | 'rejected'
+          value?: { link: string; kuttId: string }
+          reason?: any
+        }>
 
         if (useUrlShortener) {
           // Promise.allSettled equivalent for older TypeScript versions
-          const batchPromises = batch.map(link =>
+          const batchPromises = batch.map((link, batchIdx) =>
             this.shortenUrlWithRetry(link)
-              .then(value => ({ status: 'fulfilled' as const, value }))
-              .catch(error => ({ status: 'rejected' as const, reason: error }))
+              .then(value => ({
+                status: 'fulfilled' as const,
+                value,
+                originalUrl: linksToShorten[i + batchIdx]
+              }))
+              .catch(error => ({
+                status: 'rejected' as const,
+                reason: error,
+                originalUrl: linksToShorten[i + batchIdx]
+              }))
           )
           batchResults = await Promise.all(batchPromises)
         } else {
           // Skip shortening, return empty strings
-          batchResults = batch.map(() => ({ status: 'fulfilled' as const, value: '' }))
+          batchResults = batch.map(() => ({
+            status: 'fulfilled' as const,
+            value: { link: '', kuttId: '' }
+          }))
         }
 
-        for (const result of batchResults) {
+        for (let batchIdx = 0; batchIdx < batchResults.length; batchIdx++) {
+          const result = batchResults[batchIdx]
           if (result.status === 'fulfilled') {
+            const { link, kuttId } = result.value!
             // Если сокращение включено, проверяем что value не пустое
-            if (useUrlShortener && !result.value) {
+            if (useUrlShortener && !link) {
               shortenedLinks.push('')
               failedCount++
               this.logger.error('Failed to shorten URL: Empty result')
             } else {
-              shortenedLinks.push(result.value || '')
+              shortenedLinks.push(link)
+              if (useUrlShortener && kuttId && formId) {
+                const originalUrl = linksToShorten[i + batchIdx]
+                this.formLinkService
+                  .create({
+                    formId,
+                    teamId: teamId || '',
+                    kuttId,
+                    shortLink: link,
+                    target: originalUrl,
+                    source: 'csv'
+                  })
+                  .catch(() => {})
+              }
             }
           } else {
             // Реальная ошибка (rejected)
@@ -178,7 +212,7 @@ export class CsvShortenQueue extends BaseQueue {
     }
   }
 
-  private async shortenUrlWithRetry(url: string): Promise<string> {
+  private async shortenUrlWithRetry(url: string): Promise<{ link: string; kuttId: string }> {
     for (let attempt = 0; attempt < this.RETRY_ATTEMPTS; attempt++) {
       try {
         const response = await axios.post(
@@ -192,7 +226,7 @@ export class CsvShortenQueue extends BaseQueue {
             timeout: 10000
           }
         )
-        return response.data.link
+        return { link: response.data.link, kuttId: response.data.id || '' }
       } catch (error: any) {
         if (attempt === this.RETRY_ATTEMPTS - 1) {
           throw error

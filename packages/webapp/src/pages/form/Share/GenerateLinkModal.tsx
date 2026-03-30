@@ -18,15 +18,6 @@ import { useParam } from '@/utils'
 import { Button, Input, Modal, Switch, Tooltip, useToast } from '@/components'
 import { useCsvJobStore, useFormStore, useModal, useWorkspaceStore } from '@/store'
 
-async function shortenUrl(url: string): Promise<string> {
-  try {
-    return await ShortenUrlService.shorten(url)
-  } catch (error) {
-    console.error('Failed to shorten URL:', error)
-    return url // Return original URL on error
-  }
-}
-
 interface UrlParameter {
   id: string
   key: string
@@ -35,12 +26,13 @@ interface UrlParameter {
 
 interface GenerateLinkComponentProps {
   onClose: () => void
+  onLinkCreated?: () => void
 }
 
-const GenerateLinkComponent: FC<GenerateLinkComponentProps> = ({ onClose }) => {
+const GenerateLinkComponent: FC<GenerateLinkComponentProps> = ({ onClose, onLinkCreated }) => {
   const { t } = useTranslation()
   const toast = useToast()
-  const { formId } = useParam()
+  const { formId, workspaceId } = useParam()
   const { sharingURLPrefix } = useWorkspaceStore()
   const { form } = useFormStore()
   const fileInputRef = useRef<HTMLInputElement>(null)
@@ -120,8 +112,9 @@ const GenerateLinkComponent: FC<GenerateLinkComponentProps> = ({ onClose }) => {
   const handleShortenUrl = useCallback(async () => {
     setIsShortening(true)
     try {
-      const shortened = await shortenUrl(generatedUrl)
+      const shortened = await ShortenUrlService.shorten(generatedUrl, formId, workspaceId)
       setShortenedUrl(shortened)
+      onLinkCreated?.()
     } catch (error: any) {
       console.error('Error shortening URL:', error)
       toast({
@@ -134,7 +127,7 @@ const GenerateLinkComponent: FC<GenerateLinkComponentProps> = ({ onClose }) => {
     } finally {
       setIsShortening(false)
     }
-  }, [generatedUrl, toast, t])
+  }, [generatedUrl, formId, workspaceId, onLinkCreated, toast, t])
 
   const handleCsvButtonClick = useCallback(() => {
     fileInputRef.current?.click()
@@ -206,6 +199,7 @@ const GenerateLinkComponent: FC<GenerateLinkComponentProps> = ({ onClose }) => {
       const formData = new FormData()
       formData.append('file', file)
       formData.append('formId', formId)
+      formData.append('teamId', workspaceId)
       formData.append('baseUrl', baseUrl)
       formData.append('useUrlShortener', String(useUrlShortener))
 
@@ -482,7 +476,11 @@ const GenerateLinkComponent: FC<GenerateLinkComponentProps> = ({ onClose }) => {
   )
 }
 
-export default function GenerateLinkModal() {
+interface GenerateLinkModalProps {
+  onLinkCreated?: () => void
+}
+
+export default function GenerateLinkModal({ onLinkCreated }: GenerateLinkModalProps) {
   const { t } = useTranslation()
   const { isOpen, onOpenChange } = useModal('GenerateLinkModal')
 
@@ -495,7 +493,7 @@ export default function GenerateLinkModal() {
       }}
       onOpenChange={onOpenChange}
     >
-      <GenerateLinkComponent onClose={() => onOpenChange(false)} />
+      <GenerateLinkComponent onClose={() => onOpenChange(false)} onLinkCreated={onLinkCreated} />
     </Modal.Simple>
   )
 }

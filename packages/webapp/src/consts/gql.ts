@@ -1538,3 +1538,87 @@ export const VERIFY_FORM_PASSWORD_GQL = gql`
     verifyFormPassword(input: $input)
   }
 `
+
+export const FORM_LINKS_GQL = gql`
+  query formLinks($input: FormLinksInput!) {
+    formLinks(input: $input) {
+      id
+      shortLink
+      target
+      source
+      visitCount
+      createdAt
+    }
+  }
+`
+
+export const DELETE_FORM_LINK_GQL = gql`
+  mutation deleteFormLink($input: DeleteFormLinkInput!) {
+    deleteFormLink(input: $input)
+  }
+`
+
+export const FORM_LINK_STATS_GQL = gql`
+  query formLinkStats($input: FormLinkStatsInput!) {
+    formLinkStats(input: $input) {
+      visitCount
+      lastDay {
+        browser {
+          name
+          value
+        }
+        os {
+          name
+          value
+        }
+        country {
+          name
+          value
+        }
+        referrer {
+          name
+          value
+        }
+        views
+      }
+      lastWeek {
+        browser {
+          name
+          value
+        }
+        os {
+          name
+          value
+        }
+        country {
+          name
+          value
+        }
+        referrer {
+          name
+          value
+        }
+        views
+      }
+      lastMonth {
+        browser {
+          name
+          value
+        }
+        os {
+          name
+          value
+        }
+        country {
+          name
+          value
+        }
+        referrer {
+          name
+          value
+        }
+        views
+      }
+    }
+  }
+`
