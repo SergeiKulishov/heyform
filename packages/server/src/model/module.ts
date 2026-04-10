@@ -13,6 +13,8 @@ import {
   CsvShortenJobSchema,
   EmailTemplateModel,
   EmailTemplateSchema,
+  FolderModel,
+  FolderSchema,
   FormAnalyticModel,
   FormAnalyticSchema,
   FormLinkModel,
@@ -25,8 +27,6 @@ import {
   FormSchema,
   IntegrationModel,
   IntegrationSchema,
-  ProjectGroupModel,
-  ProjectGroupSchema,
   ProjectMemberModel,
   ProjectMemberSchema,
   ProjectModel,
@@ -57,6 +57,7 @@ import {
 
 export const ModelModule = MongooseModule.forFeature([
   { name: EmailTemplateModel.name, schema: EmailTemplateSchema },
+  { name: FolderModel.name, schema: FolderSchema },
   { name: FormModel.name, schema: FormSchema },
   { name: FormAnalyticModel.name, schema: FormAnalyticSchema },
   { name: FormOpenHistoryModel.name, schema: FormOpenHistorySchema },
@@ -80,7 +81,6 @@ export const ModelModule = MongooseModule.forFeature([
   { name: AppTokenModel.name, schema: AppTokenSchema },
   { name: ThirdPartyOauthModel.name, schema: ThirdPartyOauthSchema },
   { name: ProjectModel.name, schema: ProjectSchema },
-  { name: ProjectGroupModel.name, schema: ProjectGroupSchema },
   { name: ProjectMemberModel.name, schema: ProjectMemberSchema },
   { name: BrandKitModel.name, schema: BrandKitSchema },
   { name: CsvShortenJobModel.name, schema: CsvShortenJobSchema },

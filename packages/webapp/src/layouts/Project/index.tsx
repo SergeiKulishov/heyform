@@ -1,5 +1,5 @@
 import { LayoutProps } from '@heyooo-inc/react-router'
-import { IconUsers } from '@tabler/icons-react'
+import { IconFolderPlus, IconUsers } from '@tabler/icons-react'
 import { FC, useEffect, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { NavLink, useLocation } from 'react-router-dom'
@@ -84,6 +84,17 @@ export const ProjectLayout: FC<LayoutProps> = ({ options, children }) => {
               >
                 {t('form.creation.title')}
               </Button>
+            </Tooltip>
+
+            <Tooltip label={canCreateForms(workspace) ? undefined : t('permissions.noPermission')}>
+              <Button.Ghost
+                size="md"
+                iconOnly
+                disabled={!canCreateForms(workspace)}
+                onClick={() => canCreateForms(workspace) && openModal('CreateFolderModal')}
+              >
+                <IconFolderPlus className="h-5 w-5" />
+              </Button.Ghost>
             </Tooltip>
           </div>
         </div>

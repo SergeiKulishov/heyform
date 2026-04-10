@@ -45,6 +45,9 @@ export class SaveAsTemplateResolver {
       category: input.category,
       description: input.description,
       fields,
+      hiddenFields: form.hiddenFields,
+      logics: form.logics,
+      variables: form.variables,
       themeSettings: form.themeSettings,
       kind: form.kind,
       interactiveMode: form.interactiveMode

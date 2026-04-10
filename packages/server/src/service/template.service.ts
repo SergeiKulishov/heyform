@@ -3,9 +3,11 @@ import { InjectModel } from '@nestjs/mongoose'
 import {
   FormField,
   FormKindEnum,
+  HiddenField,
   InteractiveModeEnum,
   ThemeSettings
 } from '@voxly/shared-types-enums'
+import { Logic, Variable } from '@voxly/shared-types-enums'
 import { Model } from 'mongoose'
 
 import { TemplateModel } from '@model'
@@ -18,6 +20,9 @@ interface CreateTemplateData {
   category: string
   description?: string
   fields: FormField[]
+  hiddenFields?: HiddenField[]
+  logics?: Logic[]
+  variables?: Variable[]
   themeSettings?: ThemeSettings
   kind: FormKindEnum
   interactiveMode: InteractiveModeEnum

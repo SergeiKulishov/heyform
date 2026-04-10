@@ -32,7 +32,8 @@ export class MoveFormResolver {
 
       if (project) {
         return this.formService.update(input.formId, {
-          projectId: input.targetProjectId
+          projectId: input.targetProjectId,
+          folderId: null
         })
       }
     }

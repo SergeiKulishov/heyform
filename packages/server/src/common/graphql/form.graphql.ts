@@ -310,6 +310,14 @@ export class FormsInput {
   @Field({ nullable: true })
   @IsOptional()
   keyword?: string
+
+  @Field({ nullable: true })
+  @IsOptional()
+  folderId?: string
+
+  @Field(type => [String], { nullable: true })
+  @IsOptional()
+  tags?: string[]
 }
 
 @InputType()
@@ -341,6 +349,10 @@ export class CreateFormInput {
   @Field(type => Number)
   @IsEnum(Object.values(FormKindEnum))
   kind: FormKindEnum
+
+  @Field({ nullable: true })
+  @IsOptional()
+  folderId?: string
 }
 
 @InputType()
@@ -1214,6 +1226,12 @@ export class FormType {
 
   @Field(type => FormCustomReportType, { nullable: true })
   customReport: FormCustomReportType
+
+  @Field({ nullable: true })
+  folderId?: string | null
+
+  @Field(type => [String], { nullable: true })
+  tags?: string[]
 }
 
 @ObjectType()

@@ -1,5 +1,6 @@
 export * from './date'
 export * from './env'
+export * from './folder-gql'
 export * from './form'
 export * from './gql'
 export * from './locale'

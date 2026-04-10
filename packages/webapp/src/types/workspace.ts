@@ -4,6 +4,15 @@ import { FormType } from '@/types/index.ts'
 
 import { UserType } from './user'
 
+export interface FolderType {
+  id: string
+  teamId: string
+  projectId: string
+  parentId: string | null
+  name: string
+  order: number
+}
+
 export interface ProjectType {
   id: string
   teamId: string

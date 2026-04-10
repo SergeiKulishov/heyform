@@ -103,6 +103,7 @@ export class FormService {
     nameSchema?: string[]
     interactiveMode: InteractiveModeEnum
     kind: FormKindEnum
+    folderId?: string
   }) {
     return apollo.mutate({
       mutation: CREATE_FORM_GQL,

@@ -6,7 +6,7 @@ import {
   HiddenField,
   STATEMENT_FIELD_KINDS
 } from '@voxly/shared-types-enums'
-import { parseAsync } from 'json2csv'
+import { FieldInfo, parseAsync } from 'json2csv'
 
 import { SubmissionModel } from '@model'
 import { htmlUtils, parsePlainAnswer } from '@voxly/answer-utils'
@@ -31,9 +31,12 @@ export class ExportFileService {
         title: helper.isArray(field.title) ? htmlUtils.serialize(field.title) : field.title
       }))
 
-    const fields: string[] = [
+    const fields: Array<string | FieldInfo<any>> = [
       FIELD_ID_KEY,
-      ...selectedFormFields.map(field => field.title),
+      ...selectedFormFields.map(field => ({
+        label: field.title,
+        value: field.id
+      })),
       ...selectedHiddenFields.map(hiddenField => hiddenField.name),
       START_DATE_KEY,
       SUBMIT_DATE_KEY
@@ -53,7 +56,7 @@ export class ExportFileService {
           answer = this.parseAnswer(answer)
         }
 
-        record[field.title] = answer
+        record[field.id] = answer
       }
 
       for (const selectedHiddenField of selectedHiddenFields) {

@@ -2,9 +2,11 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose'
 import {
   FormField,
   FormKindEnum,
+  HiddenField,
   InteractiveModeEnum,
   ThemeSettings
 } from '@voxly/shared-types-enums'
+import { Logic, Variable } from '@voxly/shared-types-enums'
 import { Document } from 'mongoose'
 
 @Schema({
@@ -53,6 +55,15 @@ export class TemplateModel extends Document {
 
   @Prop({ default: [] })
   fields?: FormField[]
+
+  @Prop({ default: [] })
+  hiddenFields?: HiddenField[]
+
+  @Prop({ default: [] })
+  logics?: Logic[]
+
+  @Prop({ default: [] })
+  variables?: Variable[]
 
   @Prop()
   fieldsUpdatedAt?: number

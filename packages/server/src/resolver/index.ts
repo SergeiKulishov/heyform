@@ -42,6 +42,13 @@ export { UpdateIntegrationSettingsResolver } from './integration/update-integrat
 export { DeleteIntegrationSettingsResolver } from './integration/delete-integration-settings.resolver'
 export { UpdateIntegrationStatusResolver } from './integration/update-integration-status.resolver'
 
+export { FoldersResolver } from './folder/folders.resolver'
+export { CreateFolderResolver } from './folder/create-folder.resolver'
+export { UpdateFolderResolver } from './folder/update-folder.resolver'
+export { DeleteFolderResolver } from './folder/delete-folder.resolver'
+export { ReorderFoldersResolver } from './folder/reorder-folders.resolver'
+export { MoveFormsToFolderResolver } from './folder/move-forms-to-folder.resolver'
+
 export { FormsResolver } from './form/forms.resolver'
 export { SearchFormsResolver } from './form/search-forms.resolver'
 export { FormAnalyticResolver } from './form/form-analytic.resolver'

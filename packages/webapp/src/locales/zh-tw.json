@@ -450,7 +450,8 @@
       "message": "請稍候再試。如果錯誤持續發生，請聯絡我們。",
       "retry": "重試"
     },
-    "moveto": "移動到"
+    "moveto": "移動到",
+    "moveToFolder": "移動到資料夾"
   },
   "login": {
     "title": "登入",
@@ -813,6 +814,26 @@
       "project": {
         "required": "專案不可為空"
       }
+    }
+  },
+  "folder": {
+    "create": "新建資料夾",
+    "rename": "重新命名資料夾",
+    "delete": "刪除資料夾",
+    "createSub": "創建子資料夾",
+    "moveToFolder": "移動到資料夾",
+    "noFolder": "無資料夾",
+    "select": {
+      "required": "請選擇一個資料夾"
+    },
+    "name": {
+      "label": "資料夾名稱",
+      "placeholder": "輸入資料夾名稱",
+      "required": "資料夾名稱不能為空"
+    },
+    "parent": {
+      "label": "父資料夾",
+      "none": "無（根目錄）"
     }
   },
   "form": {

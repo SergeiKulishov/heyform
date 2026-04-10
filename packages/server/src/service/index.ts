@@ -1,5 +1,6 @@
 export { AuthService } from './auth.service'
 export { EndpointService } from './endpoint.service'
+export { FolderService } from './folder.service'
 export { FormService } from './form.service'
 export { FormAnalyticService } from './form-analytic.service'
 export { FormReportService } from './form-report.service'

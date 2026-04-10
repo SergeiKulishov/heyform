@@ -116,7 +116,9 @@ export class FormService {
   async findAll(
     projectId: string | string[],
     status: FormStatusEnum,
-    keyword?: string
+    keyword?: string,
+    folderId?: string | null,
+    tags?: string[]
   ): Promise<FormModel[]> {
     const conditions: any = {
       projectId,
@@ -131,6 +133,14 @@ export class FormService {
 
     if (keyword) {
       conditions.name = new RegExp(keyword, 'i')
+    }
+
+    if (folderId !== undefined) {
+      conditions.folderId = folderId
+    }
+
+    if (tags && tags.length > 0) {
+      conditions.tags = { $all: tags }
     }
 
     return this.formModel.find(conditions).sort({

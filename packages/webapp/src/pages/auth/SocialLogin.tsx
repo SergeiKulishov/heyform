@@ -33,21 +33,17 @@ const SocialLogin: FC<SocialLoginProps> = () => {
     <>
       <div className="flex items-center gap-4">
         {!DISABLE_LOGIN_WITH_GOOGLE && (
-          <Button
-            variant="outline"
-            className="block w-full"
-            onClick={() => handleConnect('google')}
-          >
+          <Button.Ghost className="block w-full" onClick={() => handleConnect('google')}>
             <IconGoogle className="h-4 w-4" />
             <span>Google</span>
-          </Button>
+          </Button.Ghost>
         )}
 
         {!DISABLE_LOGIN_WITH_APPLE && (
-          <Button variant="outline" className="block w-full" onClick={() => handleConnect('apple')}>
+          <Button.Ghost className="block w-full" onClick={() => handleConnect('apple')}>
             <IconApple className="-mt-0.5 h-4 w-4" />
             <span>Apple</span>
-          </Button>
+          </Button.Ghost>
         )}
       </div>
 

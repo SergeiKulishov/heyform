@@ -401,6 +401,7 @@
     "expand": "Expand",
     "edit": "Edit",
     "moveto": "Move to",
+    "moveToFolder": "Move to Folder",
     "next": "Next",
     "optional": "optional",
     "permanentlyDelete": "Permanently delete",
@@ -827,6 +828,26 @@
         "required": "The verification code is not allow to be empty"
       },
       "confirm": "Delete project"
+    }
+  },
+  "folder": {
+    "create": "New Folder",
+    "rename": "Rename Folder",
+    "delete": "Delete Folder",
+    "createSub": "Create Subfolder",
+    "moveToFolder": "Move to Folder",
+    "noFolder": "No Folder",
+    "select": {
+      "required": "Please select a folder"
+    },
+    "name": {
+      "label": "Folder Name",
+      "placeholder": "Enter folder name",
+      "required": "Folder name is required"
+    },
+    "parent": {
+      "label": "Parent Folder",
+      "none": "None (root level)"
     }
   },
   "form": {

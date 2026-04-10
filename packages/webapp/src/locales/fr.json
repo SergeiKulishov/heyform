@@ -450,7 +450,8 @@
       "message": "Prenez un moment et réessayez. Si l'erreur persiste, veuillez nous contacter.",
       "retry": "Réessayer"
     },
-    "moveto": "Déplacer vers"
+    "moveto": "Déplacer vers",
+    "moveToFolder": "Déplacer vers le dossier"
   },
   "login": {
     "title": "Connexion",
@@ -813,6 +814,26 @@
       "project": {
         "required": "Le projet ne peut pas être vide"
       }
+    }
+  },
+  "folder": {
+    "create": "Nouveau dossier",
+    "rename": "Renommer le dossier",
+    "delete": "Supprimer le dossier",
+    "createSub": "Créer un sous-dossier",
+    "moveToFolder": "Déplacer vers le dossier",
+    "noFolder": "Aucun dossier",
+    "select": {
+      "required": "Veuillez sélectionner un dossier"
+    },
+    "name": {
+      "label": "Nom du dossier",
+      "placeholder": "Entrez le nom du dossier",
+      "required": "Le nom du dossier est obligatoire"
+    },
+    "parent": {
+      "label": "Dossier parent",
+      "none": "Aucun (racine)"
     }
   },
   "form": {

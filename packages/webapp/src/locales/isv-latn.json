@@ -401,6 +401,7 @@
     "expand": "Rozšyriti",
     "edit": "Redaktovati",
     "moveto": "Prěměstiti do",
+    "moveToFolder": "Prěměstiti do papky",
     "next": "Dalje",
     "optional": "neobvęzno",
     "permanentlyDelete": "Nezvratno izbrisati",
@@ -812,20 +813,40 @@
       "project": {
         "required": "Projekt ne smě byti prazny"
       }
-    },
-    "delete": {
-      "headline": "Prověrite zahtěv na izbrisanje projekta",
-      "sentSuccess": "Kod prověrki izbrisanja poslan",
-      "sentFailed": "Posylanje koda prověrki izbrisanja ne uspělo",
-      "tip1": "Jesli ste si jisty, že hočete prodòlžiti s izbrisanjem projekta <strong>{{name}}</strong>, prosimo, prodòlžite niže.",
-      "tip2": "Imajte na umě, že tota operacija je nezvratna i nezvratno izliše vsě danne svęzane s tymto projektom.",
-      "tip3": "Kogda potvrdite izbrisanje projekta, vy uže ne budete mogli pristupiti k dannym projekta.",
-      "code": {
-        "label": "Vvedite kod izbrisanja poslany na <strong>{{email}}</strong>.",
-        "required": "Kod prověrki ne smě byti prazny"
-      },
-      "confirm": "Izbrisati projekt"
     }
+  },
+  "folder": {
+    "create": "Novaja papka",
+    "rename": "Přejmenovati papku",
+    "delete": "Izbrisati papku",
+    "createSub": "Sozdati podpapku",
+    "moveToFolder": "Prěměstiti do papky",
+    "noFolder": "Běz papky",
+    "select": {
+      "required": "Prosimo, izberite papku"
+    },
+    "name": {
+      "label": "Imę papky",
+      "placeholder": "Vvedite imę papky",
+      "required": "Imę papky je obovęzno"
+    },
+    "parent": {
+      "label": "Roditelska papka",
+      "none": "Nijedna (koreněvyj urověnь)"
+    }
+  },
+  "delete": {
+    "headline": "Prověrite zahtěv na izbrisanje projekta",
+    "sentSuccess": "Kod prověrki izbrisanja poslan",
+    "sentFailed": "Posylanje koda prověrki izbrisanja ne uspělo",
+    "tip1": "Jesli ste si jisty, že hočete prodòlžiti s izbrisanjem projekta <strong>{{name}}</strong>, prosimo, prodòlžite niže.",
+    "tip2": "Imajte na umě, že tota operacija je nezvratna i nezvratno izliše vsě danne svęzane s tymto projektom.",
+    "tip3": "Kogda potvrdite izbrisanje projekta, vy uže ne budete mogli pristupiti k dannym projekta.",
+    "code": {
+      "label": "Vvedite kod izbrisanja poslany na <strong>{{email}}</strong>.",
+      "required": "Kod prověrki ne smě byti prazny"
+    },
+    "confirm": "Izbrisati projekt"
   },
   "form": {
     "menuTip": "Prěimenovati, dublikovati i druže...",

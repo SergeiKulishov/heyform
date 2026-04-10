@@ -31,7 +31,8 @@ export class DuplicateFormResolver {
       'settings',
       'teamId',
       'projectId',
-      'themeSettings'
+      'themeSettings',
+      'folderId'
     ]
     const newForm: any = pickValidValues(form as any, fields)
 

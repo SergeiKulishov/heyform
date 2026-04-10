@@ -1,6 +1,7 @@
 export * from './app'
 export * from './auth'
 export * from './changelog'
+export * from './folder'
 export * from './form'
 export * from './integration'
 export * from './payment'

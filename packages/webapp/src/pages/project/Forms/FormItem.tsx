@@ -1,6 +1,7 @@
 import {
   IconCopy,
   IconDots,
+  IconFolder,
   IconPencil,
   IconRestore,
   IconShare,
@@ -13,7 +14,7 @@ import { FC, MouseEvent, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 
-import { FormService } from '@/services'
+import { FolderService, FormService } from '@/services'
 import {
   canCreateForms,
   canDeleteForms,
@@ -27,7 +28,7 @@ import IconLink from '@/assets/link.svg?react'
 import IconMoveTo from '@/assets/move-to.svg?react'
 import { Badge, Button, Dropdown, Tooltip, useAlert, usePrompt } from '@/components'
 import { useAppStore, useWorkspaceStore } from '@/store'
-import { FormType } from '@/types'
+import { FolderType, FormType } from '@/types'
 
 interface FormItemLinkProps extends ComponentProps {
   to: string
@@ -94,10 +95,21 @@ const FormItemLink: FC<FormItemLinkProps> = ({
 interface FormItemProps {
   form: FormType
   isInTrash?: boolean
-  onChange?: (type: 'rename' | 'trash' | 'restore' | 'delete' | 'move', form: FormType) => void
+  folders?: FolderType[]
+  onChange?: (
+    type: 'rename' | 'trash' | 'restore' | 'delete' | 'move' | 'moveToFolder',
+    form: FormType
+  ) => void
+  onFolderChange?: () => void
 }
 
-const FormItem: FC<FormItemProps> = ({ form, isInTrash, onChange }) => {
+const FormItem: FC<FormItemProps> = ({
+  form,
+  isInTrash,
+  folders = [],
+  onChange,
+  onFolderChange
+}) => {
   const { t, i18n } = useTranslation()
 
   const alert = useAlert()
@@ -105,6 +117,24 @@ const FormItem: FC<FormItemProps> = ({ form, isInTrash, onChange }) => {
   const router = useRouter()
   const { workspace, sharingURLPrefix } = useWorkspaceStore()
   const { openModal } = useAppStore()
+
+  const folderOptions = useMemo(() => {
+    const opts = [
+      {
+        value: '__none__',
+        label: t('folder.noFolder')
+      }
+    ]
+
+    folders.forEach(folder => {
+      opts.push({
+        value: folder.id,
+        label: folder.parentId ? `  ${folder.name}` : folder.name
+      })
+    })
+
+    return opts
+  }, [folders, t])
 
   const options = useMemo(
     () =>
@@ -146,6 +176,11 @@ const FormItem: FC<FormItemProps> = ({ form, isInTrash, onChange }) => {
               value: 'moveto',
               icon: <IconMoveTo className="h-4 w-4" />,
               label: 'components.moveto'
+            },
+            canEditForms(workspace) && {
+              value: 'moveToFolder',
+              icon: <IconFolder className="h-4 w-4" />,
+              label: 'components.moveToFolder'
             },
             canEditForms(workspace) && {
               value: 'saveAsTemplate',
@@ -251,6 +286,50 @@ const FormItem: FC<FormItemProps> = ({ form, isInTrash, onChange }) => {
     })
   }
 
+  function handleMoveToFolder() {
+    prompt({
+      value: {
+        folderId: form.folderId || '__none__'
+      },
+      title: t('folder.moveToFolder', { name: form.name }),
+      selectProps: {
+        className: 'w-full',
+        name: 'folderId',
+        rules: [
+          {
+            required: true,
+            message: t('folder.select.required')
+          }
+        ],
+        options: folderOptions,
+        labelKey: 'label',
+        valueKey: 'value'
+      },
+      submitProps: {
+        className: '!mt-4 px-5 min-w-24',
+        size: 'md',
+        label: t('components.save')
+      },
+      submitOnChangedOnly: true,
+      fetch: async values => {
+        const targetFolderId = values.folderId === '__none__' ? null : values.folderId
+        const result = await FolderService.moveFormsToFolder(
+          form.projectId,
+          [form.id],
+          targetFolderId
+        )
+
+        if (result) {
+          onChange?.('moveToFolder', {
+            ...form,
+            folderId: targetFolderId
+          })
+          onFolderChange?.()
+        }
+      }
+    })
+  }
+
   const { runAsync } = useRequest(
     async (type: string) => {
       switch (type) {
@@ -306,6 +385,9 @@ const FormItem: FC<FormItemProps> = ({ form, isInTrash, onChange }) => {
       case 'moveto':
         return handleMoveTo()
 
+      case 'moveToFolder':
+        return handleMoveToFolder()
+
       case 'saveAsTemplate':
         return openModal('SaveAsTemplateModal', {
           formId: form.id,
@@ -339,6 +421,21 @@ const FormItem: FC<FormItemProps> = ({ form, isInTrash, onChange }) => {
                 date: timeFromNow(form.updatedAt, i18n.language)
               })}
         </div>
+        {form.tags && form.tags.length > 0 && (
+          <div className="mt-1 flex flex-wrap gap-1">
+            {form.tags.slice(0, 5).map((tag, index) => (
+              <span
+                key={index}
+                className="bg-secondary-light text-secondary rounded px-1.5 py-0.5 text-xs"
+              >
+                {tag}
+              </span>
+            ))}
+            {form.tags.length > 5 && (
+              <span className="text-secondary px-1.5 py-0.5 text-xs">+{form.tags.length - 5}</span>
+            )}
+          </div>
+        )}
       </div>
 
       <div className="flex items-center gap-4">

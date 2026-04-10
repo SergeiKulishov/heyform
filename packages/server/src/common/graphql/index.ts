@@ -1,4 +1,5 @@
 export * from './auth.graphql'
+export * from './folder.graphql'
 export * from './form-link.graphql'
 export * from './endpoint.graphql'
 export * from './form.graphql'

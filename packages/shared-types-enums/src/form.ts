@@ -266,6 +266,8 @@ export interface FormModel {
     facebookpixel: string
   }
   updatedAt: number
+  folderId?: string | null
+  tags?: string[]
 }
 
 export interface ChoiceValue {

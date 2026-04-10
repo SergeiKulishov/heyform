@@ -100,7 +100,7 @@ export default function LinkSettings() {
               id="meta-description"
               rows={6}
               maxLength={156}
-              value={form?.settings?.metaDescription}
+              value={form?.settings?.metaDescription ?? ''}
               onChange={value => run('metaDescription', value)}
             />
           </div>

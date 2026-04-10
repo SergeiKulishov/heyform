@@ -450,7 +450,8 @@
       "message": "请稍候再试。如果错误仍然存在，请联系我们。",
       "retry": "重试"
     },
-    "moveto": "移动到"
+    "moveto": "移动到",
+    "moveToFolder": "移动到文件夹"
   },
   "login": {
     "title": "登录",
@@ -813,6 +814,26 @@
       "project": {
         "required": "项目不能为空"
       }
+    }
+  },
+  "folder": {
+    "create": "新建文件夹",
+    "rename": "重命名文件夹",
+    "delete": "删除文件夹",
+    "createSub": "创建子文件夹",
+    "moveToFolder": "移动到文件夹",
+    "noFolder": "无文件夹",
+    "select": {
+      "required": "请选择一个文件夹"
+    },
+    "name": {
+      "label": "文件夹名称",
+      "placeholder": "输入文件夹名称",
+      "required": "文件夹名称不能为空"
+    },
+    "parent": {
+      "label": "父文件夹",
+      "none": "无（根目录）"
     }
   },
   "form": {

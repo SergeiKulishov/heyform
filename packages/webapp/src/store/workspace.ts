@@ -7,12 +7,13 @@ import { createJSONStorage, persist } from 'zustand/middleware'
 import { immer } from 'zustand/middleware/immer'
 
 import { HOMEPAGE_URL, WEBSITE_URL, WORKSPACE_STORAGE_KEY } from '@/consts'
-import { FormType, MemberType, ProjectType, WorkspaceType } from '@/types'
+import { FolderType, FormType, MemberType, ProjectType, WorkspaceType } from '@/types'
 
 type WorkspaceStoreType = {
   workspaces: WorkspaceType[]
   _memberMap: AnyMap<string, MemberType[]>
   _formMap: AnyMap<string, FormType[]>
+  _folderMap: AnyMap<string, FolderType[]>
 
   currentWorkspaceId?: string
   currentProjectId?: string
@@ -38,6 +39,10 @@ type WorkspaceStoreType = {
   removeMember: (workspaceId: string, memberId: string) => void
   updateMemberRole: (workspaceId: string, memberId: string, role: number) => void
   updatePermissionMatrix: (workspaceId: string, permissionMatrix: Record<string, number[]>) => void
+  setFolders: (projectId: string, folders: FolderType[]) => void
+  addFolder: (projectId: string, folder: FolderType) => void
+  updateFolder: (projectId: string, folderId: string, updates: Partial<FolderType>) => void
+  removeFolder: (projectId: string, folderId: string) => void
 }
 
 interface ComputedStoreType {
@@ -46,12 +51,14 @@ interface ComputedStoreType {
   project?: ProjectType
   members: MemberType[]
   forms: FormType[]
+  folders: FolderType[]
 }
 
 const computeState = (state: WorkspaceStoreType): ComputedStoreType => {
   let project: ProjectType | undefined
   let members: MemberType[] = []
   let forms: FormType[] = []
+  let folders: FolderType[] = []
 
   const workspace = state.workspaces.find(w => w.id === state.currentWorkspaceId)
   let sharingURLPrefix = (workspace?.customSharingURL || window?.location?.origin) ?? WEBSITE_URL
@@ -62,6 +69,7 @@ const computeState = (state: WorkspaceStoreType): ComputedStoreType => {
 
     if (project) {
       forms = state._formMap[project.id] || []
+      folders = state._folderMap[project.id] || []
     }
   }
 
@@ -70,6 +78,7 @@ const computeState = (state: WorkspaceStoreType): ComputedStoreType => {
     project,
     members,
     forms,
+    folders,
     sharingURLPrefix
   }
 }
@@ -81,6 +90,7 @@ export const useWorkspaceStore = create<WorkspaceStoreType>()(
         workspaces: [],
         _memberMap: {},
         _formMap: {},
+        _folderMap: {},
         currentWorkspaceId: undefined,
         currentProjectId: undefined,
         currentFormId: undefined,
@@ -272,6 +282,45 @@ export const useWorkspaceStore = create<WorkspaceStoreType>()(
 
             if (workspace) {
               workspace.permissionMatrix = permissionMatrix
+            }
+          })
+        },
+
+        setFolders: (projectId, folders) => {
+          set(state => {
+            state._folderMap[projectId] = folders
+          })
+        },
+
+        addFolder: (projectId, folder) => {
+          set(state => {
+            if (!state._folderMap[projectId]) {
+              state._folderMap[projectId] = []
+            }
+            state._folderMap[projectId].push(folder)
+          })
+        },
+
+        updateFolder: (projectId, folderId, updates) => {
+          set(state => {
+            const folders = state._folderMap[projectId]
+
+            if (helper.isValidArray(folders)) {
+              const folder = folders.find(f => f.id === folderId)
+
+              if (folder) {
+                Object.assign(folder, updates)
+              }
+            }
+          })
+        },
+
+        removeFolder: (projectId, folderId) => {
+          set(state => {
+            const folders = state._folderMap[projectId]
+
+            if (helper.isValidArray(folders)) {
+              state._folderMap[projectId] = folders.filter(f => f.id !== folderId)
             }
           })
         }

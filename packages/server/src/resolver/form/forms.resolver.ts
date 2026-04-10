@@ -16,7 +16,13 @@ export class FormsResolver {
   @Query(returns => [FormType])
   @ProjectGuard()
   async forms(@Args('input') input: FormsInput): Promise<FormModel[]> {
-    const forms = await this.formService.findAll(input.projectId, input.status, input.keyword)
+    const forms = await this.formService.findAll(
+      input.projectId,
+      input.status,
+      input.keyword,
+      input.folderId,
+      input.tags
+    )
 
     if (helper.isEmpty(forms)) {
       return []

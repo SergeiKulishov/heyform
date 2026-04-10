@@ -450,7 +450,8 @@
       "message": "Zrób chwilę przerwy i spróbuj ponownie. Jeśli błąd będzie się powtarzał, skontaktuj się z nami.",
       "retry": "Spróbuj ponownie"
     },
-    "moveto": "Przenieś do"
+    "moveto": "Przenieś do",
+    "moveToFolder": "Przenieś do folderu"
   },
   "login": {
     "title": "Logowanie",
@@ -813,6 +814,26 @@
       "project": {
         "required": "Projekt nie może być pusty"
       }
+    }
+  },
+  "folder": {
+    "create": "Nowy folder",
+    "rename": "Zmień nazwę folderu",
+    "delete": "Usuń folder",
+    "createSub": "Utwórz podfolder",
+    "moveToFolder": "Przenieś do folderu",
+    "noFolder": "Bez folderu",
+    "select": {
+      "required": "Wybierz folder"
+    },
+    "name": {
+      "label": "Nazwa folderu",
+      "placeholder": "Wprowadź nazwę folderu",
+      "required": "Nazwa folderu jest wymagana"
+    },
+    "parent": {
+      "label": "Folder nadrzędny",
+      "none": "Brak (poziom główny)"
     }
   },
   "form": {

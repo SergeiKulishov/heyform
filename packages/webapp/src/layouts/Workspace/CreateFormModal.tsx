@@ -35,7 +35,7 @@ const FORM_TYPES = [
   }
 ]
 
-const CreateFormComponent = () => {
+const CreateFormComponent: React.FC<{ folderId?: string }> = ({ folderId }) => {
   const { t } = useTranslation()
 
   const router = useRouter()
@@ -51,14 +51,15 @@ const CreateFormComponent = () => {
         name: t('form.creation.defaultName'),
         nameSchema: [],
         interactiveMode: InteractiveModeEnum.GENERAL,
-        kind: FormKindEnum.SURVEY
+        kind: FormKindEnum.SURVEY,
+        folderId
       })
 
       closeModal('CreateFormModal')
       router.push(`/workspace/${workspaceId}/project/${projectId}/form/${formId}/create`)
     },
     {
-      refreshDeps: [projectId, t],
+      refreshDeps: [projectId, t, folderId],
       manual: true
     }
   )
@@ -114,7 +115,7 @@ const CreateFormComponent = () => {
 }
 
 export default function CreateFormModal() {
-  const { isOpen, onOpenChange } = useModal('CreateFormModal')
+  const { isOpen, onOpenChange, payload } = useModal<{ folderId?: string }>('CreateFormModal')
 
   return (
     <Modal
@@ -125,7 +126,7 @@ export default function CreateFormModal() {
       }}
       onOpenChange={onOpenChange}
     >
-      <CreateFormComponent />
+      <CreateFormComponent folderId={payload?.folderId} />
     </Modal>
   )
 }

@@ -450,7 +450,8 @@
       "message": "少し時間を置いて再試行してください。エラーが続く場合は、お問い合わせください。",
       "retry": "再試行する"
     },
-    "moveto": "移動する"
+    "moveto": "移動する",
+    "moveToFolder": "フォルダに移動"
   },
   "login": {
     "title": "ログイン",
@@ -813,6 +814,26 @@
       "project": {
         "required": "プロジェクトは空にできません"
       }
+    }
+  },
+  "folder": {
+    "create": "新しいフォルダ",
+    "rename": "フォルダ名を変更",
+    "delete": "フォルダを削除",
+    "createSub": "サブフォルダを作成",
+    "moveToFolder": "フォルダに移動",
+    "noFolder": "フォルダなし",
+    "select": {
+      "required": "フォルダを選択してください"
+    },
+    "name": {
+      "label": "フォルダ名",
+      "placeholder": "フォルダ名を入力",
+      "required": "フォルダ名は必須です"
+    },
+    "parent": {
+      "label": "親フォルダ",
+      "none": "なし（ルート）"
     }
   },
   "form": {

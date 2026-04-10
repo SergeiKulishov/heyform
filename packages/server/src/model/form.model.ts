@@ -114,6 +114,12 @@ export class FormModel extends Document {
     default: FormStatusEnum.NORMAL
   })
   status: FormStatusEnum
+
+  @Prop({ default: null })
+  folderId?: string | null
+
+  @Prop({ type: [String], default: [] })
+  tags?: string[]
 }
 
 export const FormSchema = SchemaFactory.createForClass(FormModel)
@@ -141,4 +147,5 @@ FormSchema.virtual('canPublish').get(function () {
   return helper.isValid(this._drafts) && this._drafts !== JSON.stringify(this.fields)
 })
 
-FormSchema.index({ teamId: 1, projectId: 1 }, { unique: false })
+FormSchema.index({ teamId: 1, projectId: 1, folderId: 1 }, { unique: false })
+FormSchema.index({ projectId: 1, tags: 1 })

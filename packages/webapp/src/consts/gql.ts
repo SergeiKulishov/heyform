@@ -480,6 +480,8 @@ export const FORMS_GQL = gql`
       suspended
       status
       updatedAt
+      folderId
+      tags
     }
   }
 `

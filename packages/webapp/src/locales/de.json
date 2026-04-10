@@ -450,7 +450,8 @@
       "message": "Nehmen Sie sich einen Moment Zeit und versuchen Sie es erneut. Wenn der Fehler weiterhin besteht, kontaktieren Sie uns bitte.",
       "retry": "Erneut versuchen"
     },
-    "moveto": "Verschieben nach"
+    "moveto": "Verschieben nach",
+    "moveToFolder": "In Ordner verschieben"
   },
   "login": {
     "title": "Anmelden",
@@ -813,6 +814,26 @@
       "project": {
         "required": "Das Projekt darf nicht leer sein"
       }
+    }
+  },
+  "folder": {
+    "create": "Neuer Ordner",
+    "rename": "Ordner umbenennen",
+    "delete": "Ordner löschen",
+    "createSub": "Unterordner erstellen",
+    "moveToFolder": "In Ordner verschieben",
+    "noFolder": "Kein Ordner",
+    "select": {
+      "required": "Bitte wählen Sie einen Ordner aus"
+    },
+    "name": {
+      "label": "Ordnername",
+      "placeholder": "Ordnernamen eingeben",
+      "required": "Ordnername ist erforderlich"
+    },
+    "parent": {
+      "label": "Übergeordneter Ordner",
+      "none": "Keiner (Stammverzeichnis)"
     }
   },
   "form": {
