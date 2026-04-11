@@ -41,6 +41,7 @@ COPY --from=base $APP_PATH/packages/server/src ./src
 COPY --from=base $APP_PATH/packages/server/tsconfig.json ./tsconfig.json
 COPY --from=base $APP_PATH/packages/server/package.json ./package.json
 COPY --from=base $APP_PATH/packages/webapp/dist ./view
+COPY --from=base $APP_PATH/packages/server/view/index.html ./view/index.html
 
 RUN pnpm install --prod
 

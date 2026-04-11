@@ -12,7 +12,7 @@ const distContent = fs.readFileSync(distIndexPath, 'utf8')
 
 // Заменяем пустой объект heyform на Handlebars переменную
 const updatedContent = distContent.replace(
-  'const heyform = {};',
+  /const heyform = \{\};?/,
   'const heyform = {{{json heyform}}};'
 )
 
