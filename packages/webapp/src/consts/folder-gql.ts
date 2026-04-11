@@ -8,6 +8,7 @@ export const FOLDERS_GQL = gql`
       projectId
       parentId
       name
+      color
       order
     }
   }
@@ -21,6 +22,7 @@ export const CREATE_FOLDER_GQL = gql`
       projectId
       parentId
       name
+      color
       order
     }
   }

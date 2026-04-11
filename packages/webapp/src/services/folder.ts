@@ -28,6 +28,7 @@ export class FolderService {
     projectId: string
     name: string
     parentId?: string
+    color?: string
   }): Promise<FolderType> {
     return apollo.mutate<FolderType>({
       mutation: CREATE_FOLDER_GQL,
@@ -37,14 +38,18 @@ export class FolderService {
     })
   }
 
-  static async update(projectId: string, folderId: string, name: string): Promise<boolean> {
+  static async update(
+    projectId: string,
+    folderId: string,
+    updates: { name?: string; color?: string }
+  ): Promise<boolean> {
     const result = await apollo.mutate<boolean>({
       mutation: UPDATE_FOLDER_GQL,
       variables: {
         input: {
           projectId,
           folderId,
-          name
+          ...updates
         }
       }
     })

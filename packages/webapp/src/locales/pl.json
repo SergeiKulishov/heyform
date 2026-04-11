@@ -834,6 +834,9 @@
     "parent": {
       "label": "Folder nadrzędny",
       "none": "Brak (poziom główny)"
+    },
+    "color": {
+      "label": "Kolor ikony"
     }
   },
   "form": {

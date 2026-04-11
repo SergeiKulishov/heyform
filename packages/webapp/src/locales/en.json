@@ -848,6 +848,9 @@
     "parent": {
       "label": "Parent Folder",
       "none": "None (root level)"
+    },
+    "color": {
+      "label": "Icon Color"
     }
   },
   "form": {

@@ -833,6 +833,9 @@
     "parent": {
       "label": "Roditelska papka",
       "none": "Nijedna (koreněvyj urověnь)"
+    },
+    "color": {
+      "label": "Boja ikone"
     }
   },
   "delete": {

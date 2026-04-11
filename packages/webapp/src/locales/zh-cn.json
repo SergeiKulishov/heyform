@@ -834,6 +834,9 @@
     "parent": {
       "label": "父文件夹",
       "none": "无（根目录）"
+    },
+    "color": {
+      "label": "图标颜色"
     }
   },
   "form": {

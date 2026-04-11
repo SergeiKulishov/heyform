@@ -14,6 +14,9 @@ export class UpdateFolderResolver {
   @ProjectGuard()
   @RequirePermission(PermissionKey.FORM_EDIT)
   async updateFolder(@Args('input') input: UpdateFolderInput): Promise<boolean> {
-    return this.folderService.update(input.projectId, input.folderId, { name: input.name })
+    return this.folderService.update(input.projectId, input.folderId, {
+      name: input.name,
+      color: input.color
+    })
   }
 }

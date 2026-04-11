@@ -10,6 +10,7 @@ export interface FolderType {
   projectId: string
   parentId: string | null
   name: string
+  color?: string
   order: number
 }
 

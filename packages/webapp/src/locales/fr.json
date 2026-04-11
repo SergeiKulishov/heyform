@@ -834,6 +834,9 @@
     "parent": {
       "label": "Dossier parent",
       "none": "Aucun (racine)"
+    },
+    "color": {
+      "label": "Couleur de l'icône"
     }
   },
   "form": {

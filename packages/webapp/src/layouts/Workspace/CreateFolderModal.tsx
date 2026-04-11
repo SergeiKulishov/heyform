@@ -1,3 +1,4 @@
+import { IconCheck } from '@tabler/icons-react'
 import { useRequest } from 'ahooks'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -7,6 +8,19 @@ import { useParam } from '@/utils'
 
 import { Button, Input, Modal, Select } from '@/components'
 import { useAppStore, useModal, useWorkspaceStore } from '@/store'
+
+const FOLDER_COLORS: Array<string | null> = [
+  null,
+  '#6b7280',
+  '#ef4444',
+  '#f97316',
+  '#eab308',
+  '#22c55e',
+  '#14b8a6',
+  '#3b82f6',
+  '#8b5cf6',
+  '#ec4899'
+]
 
 interface CreateFolderComponentProps {
   parentId?: string | null
@@ -26,13 +40,15 @@ const CreateFolderComponent: React.FC<CreateFolderComponentProps> = ({
 
   const [name, setName] = useState('')
   const [selectedParentId, setSelectedParentId] = useState<string | undefined>(undefined)
+  const [selectedColor, setSelectedColor] = useState<string | null>(null)
 
   const { loading, run } = useRequest(
     async () => {
       const newFolder = await FolderService.create({
         projectId,
         name: name.trim(),
-        parentId: parentId ?? selectedParentId
+        parentId: parentId ?? selectedParentId,
+        color: selectedColor ?? undefined
       })
       if (newFolder) {
         addFolder(projectId, newFolder)
@@ -80,6 +96,25 @@ const CreateFolderComponent: React.FC<CreateFolderComponentProps> = ({
             />
           </div>
         )}
+
+        <div>
+          <label className="mb-1.5 block text-sm font-medium">{t('folder.color.label')}</label>
+          <div className="flex flex-wrap gap-1.5">
+            {FOLDER_COLORS.map((color, i) => (
+              <button
+                key={i}
+                type="button"
+                className="relative flex h-6 w-6 items-center justify-center rounded-full border border-transparent transition-transform hover:scale-110"
+                style={{ backgroundColor: color ?? '#e5e7eb' }}
+                onClick={() => setSelectedColor(color)}
+              >
+                {color === selectedColor && (
+                  <IconCheck className="h-3.5 w-3.5 text-white drop-shadow" />
+                )}
+              </button>
+            ))}
+          </div>
+        </div>
 
         <div className="flex justify-end gap-2 pt-2">
           {onBack && <Button.Ghost onClick={onBack}>{t('components.cancel')}</Button.Ghost>}

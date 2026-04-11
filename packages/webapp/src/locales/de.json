@@ -834,6 +834,9 @@
     "parent": {
       "label": "Übergeordneter Ordner",
       "none": "Keiner (Stammverzeichnis)"
+    },
+    "color": {
+      "label": "Symbolfarbe"
     }
   },
   "form": {

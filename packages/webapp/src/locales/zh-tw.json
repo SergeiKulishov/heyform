@@ -834,6 +834,9 @@
     "parent": {
       "label": "父資料夾",
       "none": "無（根目錄）"
+    },
+    "color": {
+      "label": "圖示顏色"
     }
   },
   "form": {

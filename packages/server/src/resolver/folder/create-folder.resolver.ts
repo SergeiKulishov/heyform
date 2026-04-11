@@ -18,6 +18,12 @@ export class CreateFolderResolver {
     @Team() team: TeamModel,
     @Args('input') input: CreateFolderInput
   ): Promise<FolderModel> {
-    return this.folderService.create(team.id, input.projectId, input.name, input.parentId)
+    return this.folderService.create(
+      team.id,
+      input.projectId,
+      input.name,
+      input.parentId,
+      input.color
+    )
   }
 }

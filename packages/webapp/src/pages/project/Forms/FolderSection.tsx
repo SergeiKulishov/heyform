@@ -1,12 +1,47 @@
-import { IconChevronDown, IconChevronRight, IconFolder } from '@tabler/icons-react'
+import { IconCheck, IconChevronDown, IconChevronRight, IconFolder } from '@tabler/icons-react'
 import { FC, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { FolderService } from '@/services'
 
 import { Badge, Dropdown, usePrompt } from '@/components'
-import { useAppStore } from '@/store'
+import { useAppStore, useWorkspaceStore } from '@/store'
 import { FolderType, FormType } from '@/types'
+
+const FOLDER_COLORS: Array<string | null> = [
+  null,
+  '#6b7280',
+  '#ef4444',
+  '#f97316',
+  '#eab308',
+  '#22c55e',
+  '#14b8a6',
+  '#3b82f6',
+  '#8b5cf6',
+  '#ec4899'
+]
+
+interface FolderColorPickerProps {
+  currentColor?: string
+  onSelect: (color: string | null) => void
+}
+
+const FolderColorPicker: FC<FolderColorPickerProps> = ({ currentColor, onSelect }) => (
+  <div className="flex flex-wrap gap-1.5 p-1">
+    {FOLDER_COLORS.map((color, i) => (
+      <button
+        key={i}
+        className="relative flex h-5 w-5 items-center justify-center rounded-full border border-transparent transition-transform hover:scale-110"
+        style={{ backgroundColor: color ?? '#e5e7eb' }}
+        onClick={() => onSelect(color)}
+      >
+        {color === (currentColor ?? null) && (
+          <IconCheck className="h-3 w-3 text-white drop-shadow" />
+        )}
+      </button>
+    ))}
+  </div>
+)
 
 interface FolderSectionProps {
   folder: FolderType
@@ -27,6 +62,7 @@ export const FolderSection: FC<FolderSectionProps> = ({
   const { t } = useTranslation()
   const prompt = usePrompt()
   const { openModal } = useAppStore()
+  const { updateFolder } = useWorkspaceStore()
   const [isExpanded, setIsExpanded] = useState(
     localStorage.getItem(`folder-${folder.id}-expanded`) === 'true'
   )
@@ -57,7 +93,7 @@ export const FolderSection: FC<FolderSectionProps> = ({
         label: t('components.save')
       },
       fetch: async (values: any) => {
-        await FolderService.update(folder.projectId, folder.id, values.name)
+        await FolderService.update(folder.projectId, folder.id, { name: values.name })
         onFolderChange()
       }
     })
@@ -72,6 +108,11 @@ export const FolderSection: FC<FolderSectionProps> = ({
     openModal('CreateFolderModal', { parentId: folder.id })
   }
 
+  const handleColorSelect = async (color: string | null) => {
+    await FolderService.update(folder.projectId, folder.id, { color: color ?? '' })
+    updateFolder(folder.projectId, folder.id, { color: color ?? undefined })
+  }
+
   const options = [
     {
       value: 'rename',
@@ -82,6 +123,11 @@ export const FolderSection: FC<FolderSectionProps> = ({
       value: 'createSub',
       icon: <IconFolder className="h-4 w-4" />,
       label: t('folder.createSub')
+    },
+    {
+      value: 'color',
+      label: <FolderColorPicker currentColor={folder.color} onSelect={handleColorSelect} />,
+      type: 'custom'
     },
     {
       value: 'delete',
@@ -101,7 +147,10 @@ export const FolderSection: FC<FolderSectionProps> = ({
         ) : (
           <IconChevronRight className="text-secondary h-4 w-4" />
         )}
-        <IconFolder className="text-secondary h-5 w-5" />
+        <IconFolder
+          className={folder.color ? 'h-5 w-5' : 'text-secondary h-5 w-5'}
+          style={folder.color ? { color: folder.color } : undefined}
+        />
         <span className="text-sm font-medium">{folder.name}</span>
         <Badge color="zinc">{forms.length + subFolders.length}</Badge>
         <div className="ml-auto" onClick={e => e.stopPropagation()}>
