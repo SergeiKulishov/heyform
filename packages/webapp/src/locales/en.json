@@ -851,6 +851,9 @@
     },
     "color": {
       "label": "Icon Color"
+    },
+    "icon": {
+      "label": "Icon"
     }
   },
   "form": {

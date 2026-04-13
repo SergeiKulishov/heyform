@@ -30,7 +30,8 @@ export class FolderService {
     projectId: string,
     name: string,
     parentId?: string | null,
-    color?: string
+    color?: string,
+    icon?: string
   ): Promise<FolderModel> {
     const trimmedName = name.trim().slice(0, MAX_FOLDER_NAME_LENGTH)
 
@@ -65,6 +66,7 @@ export class FolderService {
       parentId: parentId || null,
       name: trimmedName,
       color: color || undefined,
+      icon: icon || undefined,
       order: siblingCount
     })
   }
@@ -72,7 +74,7 @@ export class FolderService {
   async update(
     projectId: string,
     folderId: string,
-    updates: { name?: string; color?: string }
+    updates: { name?: string; color?: string; icon?: string }
   ): Promise<boolean> {
     const updateData: Record<string, any> = {}
 
@@ -88,6 +90,10 @@ export class FolderService {
 
     if (updates.color !== undefined) {
       updateData.color = updates.color || null
+    }
+
+    if (updates.icon !== undefined) {
+      updateData.icon = updates.icon || null
     }
 
     if (Object.keys(updateData).length === 0) {

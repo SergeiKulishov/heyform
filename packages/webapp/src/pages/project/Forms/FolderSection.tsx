@@ -1,10 +1,11 @@
-import { IconCheck, IconChevronDown, IconChevronRight, IconFolder } from '@tabler/icons-react'
+import { IconCheck, IconChevronDown, IconChevronRight } from '@tabler/icons-react'
 import { FC, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { FolderService } from '@/services'
 
 import { Badge, Dropdown, usePrompt } from '@/components'
+import { FOLDER_ICON_MAP, FolderIconName, getFolderIcon } from '@/consts'
 import { useAppStore, useWorkspaceStore } from '@/store'
 import { FolderType, FormType } from '@/types'
 
@@ -38,6 +39,28 @@ const FolderColorPicker: FC<FolderColorPickerProps> = ({ currentColor, onSelect 
         {color === (currentColor ?? null) && (
           <IconCheck className="h-3 w-3 text-white drop-shadow" />
         )}
+      </button>
+    ))}
+  </div>
+)
+
+interface FolderIconPickerProps {
+  currentIcon?: string
+  currentColor?: string
+  onSelect: (icon: FolderIconName) => void
+}
+
+const FolderIconPicker: FC<FolderIconPickerProps> = ({ currentIcon, currentColor, onSelect }) => (
+  <div className="flex flex-wrap gap-1.5 p-1" style={{ width: 160 }}>
+    {(Object.entries(FOLDER_ICON_MAP) as [FolderIconName, any][]).map(([name, Icon]) => (
+      <button
+        key={name}
+        className={`relative flex h-6 w-6 items-center justify-center rounded border transition-transform hover:scale-110 ${
+          name === (currentIcon ?? 'Folder') ? 'border-blue-500 bg-blue-50' : 'border-transparent'
+        }`}
+        onClick={() => onSelect(name)}
+      >
+        <Icon className="h-4 w-4" style={currentColor ? { color: currentColor } : undefined} />
       </button>
     ))}
   </div>
@@ -113,15 +136,22 @@ export const FolderSection: FC<FolderSectionProps> = ({
     updateFolder(folder.projectId, folder.id, { color: color ?? undefined })
   }
 
+  const handleIconSelect = async (icon: FolderIconName) => {
+    await FolderService.update(folder.projectId, folder.id, { icon })
+    updateFolder(folder.projectId, folder.id, { icon })
+  }
+
+  const FolderIcon = getFolderIcon(folder.icon)
+
   const options = [
     {
       value: 'rename',
-      icon: <IconFolder className="h-4 w-4" />,
+      icon: <FolderIcon className="h-4 w-4" />,
       label: t('folder.rename')
     },
     folder.parentId === null && {
       value: 'createSub',
-      icon: <IconFolder className="h-4 w-4" />,
+      icon: <FolderIcon className="h-4 w-4" />,
       label: t('folder.createSub')
     },
     {
@@ -130,8 +160,19 @@ export const FolderSection: FC<FolderSectionProps> = ({
       type: 'custom'
     },
     {
+      value: 'icon',
+      label: (
+        <FolderIconPicker
+          currentIcon={folder.icon}
+          currentColor={folder.color}
+          onSelect={handleIconSelect}
+        />
+      ),
+      type: 'custom'
+    },
+    {
       value: 'delete',
-      icon: <IconFolder className="h-4 w-4" />,
+      icon: <FolderIcon className="h-4 w-4" />,
       label: t('folder.delete')
     }
   ].filter(Boolean) as any[]
@@ -147,7 +188,7 @@ export const FolderSection: FC<FolderSectionProps> = ({
         ) : (
           <IconChevronRight className="text-secondary h-4 w-4" />
         )}
-        <IconFolder
+        <FolderIcon
           className={folder.color ? 'h-5 w-5' : 'text-secondary h-5 w-5'}
           style={folder.color ? { color: folder.color } : undefined}
         />

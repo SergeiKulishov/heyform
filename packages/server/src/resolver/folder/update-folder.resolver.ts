@@ -16,7 +16,8 @@ export class UpdateFolderResolver {
   async updateFolder(@Args('input') input: UpdateFolderInput): Promise<boolean> {
     return this.folderService.update(input.projectId, input.folderId, {
       name: input.name,
-      color: input.color
+      color: input.color,
+      icon: input.icon
     })
   }
 }

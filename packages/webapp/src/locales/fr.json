@@ -837,6 +837,9 @@
     },
     "color": {
       "label": "Couleur de l'icône"
+    },
+    "icon": {
+      "label": "Icône"
     }
   },
   "form": {

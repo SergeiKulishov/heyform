@@ -22,6 +22,9 @@ export class FolderType {
   @Field({ nullable: true })
   color?: string
 
+  @Field({ nullable: true })
+  icon?: string
+
   @Field()
   order: number
 }
@@ -47,6 +50,10 @@ export class CreateFolderInput {
   @Field({ nullable: true })
   @IsOptional()
   color?: string
+
+  @Field({ nullable: true })
+  @IsOptional()
+  icon?: string
 }
 
 @InputType()
@@ -64,6 +71,10 @@ export class UpdateFolderInput {
   @Field({ nullable: true })
   @IsOptional()
   color?: string
+
+  @Field({ nullable: true })
+  @IsOptional()
+  icon?: string
 }
 
 @InputType()

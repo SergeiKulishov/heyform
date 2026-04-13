@@ -837,6 +837,9 @@
     },
     "color": {
       "label": "Kolor ikony"
+    },
+    "icon": {
+      "label": "Ikona"
     }
   },
   "form": {

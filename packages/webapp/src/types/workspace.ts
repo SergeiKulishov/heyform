@@ -11,6 +11,7 @@ export interface FolderType {
   parentId: string | null
   name: string
   color?: string
+  icon?: string
   order: number
 }
 

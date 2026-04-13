@@ -7,6 +7,7 @@ import { FolderService } from '@/services'
 import { useParam } from '@/utils'
 
 import { Button, Input, Modal, Select } from '@/components'
+import { FOLDER_ICON_MAP, FolderIconName, getFolderIcon } from '@/consts'
 import { useAppStore, useModal, useWorkspaceStore } from '@/store'
 
 const FOLDER_COLORS: Array<string | null> = [
@@ -41,6 +42,7 @@ const CreateFolderComponent: React.FC<CreateFolderComponentProps> = ({
   const [name, setName] = useState('')
   const [selectedParentId, setSelectedParentId] = useState<string | undefined>(undefined)
   const [selectedColor, setSelectedColor] = useState<string | null>(null)
+  const [selectedIcon, setSelectedIcon] = useState<FolderIconName | undefined>(undefined)
 
   const { loading, run } = useRequest(
     async () => {
@@ -48,7 +50,8 @@ const CreateFolderComponent: React.FC<CreateFolderComponentProps> = ({
         projectId,
         name: name.trim(),
         parentId: parentId ?? selectedParentId,
-        color: selectedColor ?? undefined
+        color: selectedColor ?? undefined,
+        icon: selectedIcon
       })
       if (newFolder) {
         addFolder(projectId, newFolder)
@@ -57,7 +60,7 @@ const CreateFolderComponent: React.FC<CreateFolderComponentProps> = ({
       onSuccess?.()
     },
     {
-      refreshDeps: [name, parentId, selectedParentId],
+      refreshDeps: [name, parentId, selectedParentId, selectedIcon],
       manual: true
     }
   )
@@ -113,6 +116,30 @@ const CreateFolderComponent: React.FC<CreateFolderComponentProps> = ({
                 )}
               </button>
             ))}
+          </div>
+        </div>
+
+        <div>
+          <label className="mb-1.5 block text-sm font-medium">{t('folder.icon.label')}</label>
+          <div className="flex flex-wrap gap-1.5">
+            {(Object.entries(FOLDER_ICON_MAP) as [FolderIconName, any][]).map(([name, Icon]) => {
+              const isSelected = name === (selectedIcon ?? 'Folder')
+              return (
+                <button
+                  key={name}
+                  type="button"
+                  className={`relative flex h-6 w-6 items-center justify-center rounded border transition-transform hover:scale-110 ${
+                    isSelected ? 'border-blue-500 bg-blue-50' : 'border-transparent'
+                  }`}
+                  onClick={() => setSelectedIcon(name)}
+                >
+                  <Icon
+                    className="h-4 w-4"
+                    style={selectedColor ? { color: selectedColor } : undefined}
+                  />
+                </button>
+              )
+            })}
           </div>
         </div>
 

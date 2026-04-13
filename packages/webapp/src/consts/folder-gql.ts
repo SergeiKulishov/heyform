@@ -9,6 +9,7 @@ export const FOLDERS_GQL = gql`
       parentId
       name
       color
+      icon
       order
     }
   }
@@ -23,6 +24,7 @@ export const CREATE_FOLDER_GQL = gql`
       parentId
       name
       color
+      icon
       order
     }
   }

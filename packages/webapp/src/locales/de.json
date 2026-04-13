@@ -837,6 +837,9 @@
     },
     "color": {
       "label": "Symbolfarbe"
+    },
+    "icon": {
+      "label": "Symbol"
     }
   },
   "form": {

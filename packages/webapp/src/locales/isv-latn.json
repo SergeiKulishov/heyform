@@ -836,6 +836,9 @@
     },
     "color": {
       "label": "Boja ikone"
+    },
+    "icon": {
+      "label": "Ikonka"
     }
   },
   "delete": {

@@ -25,6 +25,9 @@ export class FolderModel extends Document {
   @Prop()
   color?: string
 
+  @Prop()
+  icon?: string
+
   @Prop({ default: 0 })
   order: number
 }

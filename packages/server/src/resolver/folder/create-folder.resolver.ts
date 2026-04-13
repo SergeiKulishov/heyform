@@ -23,7 +23,8 @@ export class CreateFolderResolver {
       input.projectId,
       input.name,
       input.parentId,
-      input.color
+      input.color,
+      input.icon
     )
   }
 }
