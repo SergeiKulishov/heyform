@@ -5,7 +5,16 @@ import { alpha, helper, hexToRgb, isDarkColor } from '@voxly/utils'
 export const SYSTEM_FONTS =
   '-apple-system, BlinkMacSystemFont, Helvetica, Roboto, Tahoma, Arial, "PingFang SC", "Hiragino Sans GB", "Heiti SC", STXihei, "Microsoft YaHei", SimHei, "WenQuanYi Micro Hei", serif'
 
+export const SELF_HOSTED_FONTS: Record<string, string[]> = {
+  Mont: [
+    '/static/fonts/Mont-Regular.ttf',
+    '/static/fonts/Mont-SemiBold.ttf',
+    '/static/fonts/Mont-Bold.ttf'
+  ]
+}
+
 export const GOOGLE_FONTS = [
+  'Mont',
   'Inter',
   'Public Sans',
   'Montserrat',
@@ -54,7 +63,7 @@ export const GOOGLE_FONTS = [
 ]
 
 export const DEFAULT_THEME: FormTheme = {
-  fontFamily: GOOGLE_FONTS[0],
+  fontFamily: 'Inter',
   questionTextColor: '#000',
   answerTextColor: '#0445AF',
   buttonBackground: '#0445AF',
@@ -64,11 +73,11 @@ export const DEFAULT_THEME: FormTheme = {
 
 export function getWebFontURL(name?: string | string[]) {
   const fontNames = ((helper.isArray(name) ? name : [name]) as string[]).filter(
-    row => row && GOOGLE_FONTS.includes(row)
+    row => row && GOOGLE_FONTS.includes(row) && !SELF_HOSTED_FONTS[row]
   )
 
   if (helper.isEmpty(fontNames)) {
-    fontNames.push(DEFAULT_THEME.fontFamily!)
+    return ''
   }
 
   const families = fontNames.map(
@@ -78,7 +87,41 @@ export function getWebFontURL(name?: string | string[]) {
   return `https://fonts.googleapis.com/css2?${families.join('&')}&display=swap`
 }
 
+export function insertSelfHostedFonts(names: string[], id = 'heyform-self-hosted-fonts') {
+  const weights: Record<string, number> = {
+    Regular: 400,
+    SemiBold: 600,
+    Bold: 700
+  }
+
+  const faces = names
+    .filter(name => SELF_HOSTED_FONTS[name])
+    .flatMap(name =>
+      SELF_HOSTED_FONTS[name].map(url => {
+        const weightKey = Object.keys(weights).find(k => url.includes(k)) ?? 'Regular'
+        return `@font-face { font-family: '${name}'; src: url('${url}') format('truetype'); font-weight: ${weights[weightKey]}; font-display: swap; }`
+      })
+    )
+    .join('\n')
+
+  if (!faces) return
+
+  let style = document.getElementById(id)
+
+  if (!style) {
+    style = document.createElement('style')
+    style.id = id
+    document.head.appendChild(style)
+  }
+
+  style.textContent = faces
+}
+
 export function insertWebFont(name?: string | string[], id = 'heyform-webfont') {
+  const names = (helper.isArray(name) ? name : [name]) as string[]
+
+  insertSelfHostedFonts(names)
+
   const href = getWebFontURL(name)
 
   if (!href) {

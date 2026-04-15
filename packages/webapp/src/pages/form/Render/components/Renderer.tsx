@@ -1,8 +1,10 @@
 import {
   FormRenderer,
+  SELF_HOSTED_FONTS,
   getTheme,
   getThemeStyle,
   getWebFontURL,
+  insertSelfHostedFonts,
   sendMessageToParent
 } from '@voxly/form-renderer/src'
 import {
@@ -168,9 +170,13 @@ export const Renderer: FC<RendererProps> = ({ form, query, locale, contactId }) 
   const theme = getTheme(form.themeSettings?.theme)
   const fontURL = getWebFontURL(theme.fontFamily)
 
+  if (theme.fontFamily && SELF_HOSTED_FONTS[theme.fontFamily]) {
+    insertSelfHostedFonts([theme.fontFamily])
+  }
+
   return (
     <>
-      <link href={fontURL} rel="stylesheet" />
+      {fontURL && <link href={fontURL} rel="stylesheet" />}
       <style dangerouslySetInnerHTML={{ __html: getThemeStyle(theme, query) }} />
 
       {form.settings?.captchaKind === CaptchaKindEnum.GOOGLE_RECAPTCHA && (
