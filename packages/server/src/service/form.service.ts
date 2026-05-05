@@ -7,13 +7,11 @@ import { Model } from 'mongoose'
 
 import { RedisService } from './redis.service'
 import { TeamService } from './team.service'
-import { GOOGLE_RECAPTCHA_KEY } from '@environments'
+import { GOOGLE_RECAPTCHA_KEY, PUBLIC_FORM_CACHE_TTL } from '@environments'
 import { FormModel } from '@model'
 import { mapToObject } from '@utils'
 import { getUpdateQuery } from '@utils'
 import { helper, pickObject, timestamp } from '@voxly/utils'
-
-const PUBLIC_FORM_CACHE_TTL = '1m'
 
 function publicFormCacheKey(formId: string): string {
   return `public-form:${formId}`
