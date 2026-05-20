@@ -76,3 +76,5 @@ export class SubmissionModel extends Document {
 }
 
 export const SubmissionSchema = SchemaFactory.createForClass(SubmissionModel)
+
+SubmissionSchema.index({ updatedAt: -1 }, { background: true })

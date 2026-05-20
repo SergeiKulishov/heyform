@@ -124,6 +124,8 @@ export class FormModel extends Document {
 
 export const FormSchema = SchemaFactory.createForClass(FormModel)
 
+FormSchema.index({ updatedAt: -1 }, { background: true })
+
 FormSchema.virtual('drafts').get(function () {
   if (helper.isValid(this._drafts)) {
     const drafts = parseJson(this._drafts)
