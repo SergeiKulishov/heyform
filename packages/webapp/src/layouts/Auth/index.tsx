@@ -13,7 +13,7 @@ export const AuthLayout: FC<LayoutProps> = ({ options, children }) => {
 
   useEffect(() => {
     if (helper.isValid(options?.title)) {
-      document.title = `${t(options!.title)} - HeyForm`
+      document.title = `${t(options!.title)} - Voxly`
     }
   }, [options, t])
 

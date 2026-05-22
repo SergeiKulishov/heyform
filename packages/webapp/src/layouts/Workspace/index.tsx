@@ -72,7 +72,7 @@ export const LoginGuard: FC<LayoutProps> = ({ options, children }) => {
 
   useEffect(() => {
     if (helper.isValid(options?.title)) {
-      document.title = `${t(options!.title)} - HeyForm`
+      document.title = `${t(options!.title)} - Voxly`
     }
   }, [options, t])
 
@@ -159,7 +159,7 @@ export const WorkspaceGuard: FC<LayoutProps> = ({ options, children }) => {
     selectWorkspace(workspaceId)
 
     if (workspaceId) {
-      let title = `${workspace?.name} - HeyForm`
+      let title = `${workspace?.name} - Voxly`
 
       if (helper.isValid(options?.title)) {
         title = `${t(options!.title)} · ` + title
@@ -183,7 +183,7 @@ export const WorkspaceGuard: FC<LayoutProps> = ({ options, children }) => {
     selectProject(projectId)
 
     if (projectId) {
-      let title = `${workspace?.name}/${project?.name} - HeyForm`
+      let title = `${workspace?.name}/${project?.name} - Voxly`
 
       if (helper.isValid(options?.title)) {
         title = `${t(options!.title)} · ` + title
