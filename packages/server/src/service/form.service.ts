@@ -7,7 +7,7 @@ import { Model } from 'mongoose'
 
 import { RedisService } from './redis.service'
 import { TeamService } from './team.service'
-import { GOOGLE_RECAPTCHA_KEY, PUBLIC_FORM_CACHE_TTL } from '@environments'
+import { GOOGLE_RECAPTCHA_KEY, INTERNAL_FORM_CACHE_TTL, PUBLIC_FORM_CACHE_TTL } from '@environments'
 import { FormModel } from '@model'
 import { mapToObject } from '@utils'
 import { getUpdateQuery } from '@utils'
@@ -17,10 +17,43 @@ function publicFormCacheKey(formId: string): string {
   return `public-form:${formId}`
 }
 
+function internalFormCacheKey(formId: string): string {
+  return `form-internal:${formId}`
+}
+
 interface UpdateFiledOptions {
   formId: string
   fieldId: string
   updates: Record<string, any>
+}
+
+export interface CachedForm {
+  id: string
+  teamId: string
+  projectId: string
+  memberId: string
+  name: string
+  interactiveMode: number
+  kind: number
+  settings?: Record<string, any>
+  fields?: any[]
+  hiddenFields?: any[]
+  translations?: Record<string, any>
+  logics?: any[]
+  variables?: any[]
+  fieldsUpdatedAt?: number
+  themeSettings?: Record<string, any>
+  stripeAccount?: Record<string, any>
+  retentionAt?: number
+  suspended?: boolean
+  status: number
+  folderId?: string | null
+  tags?: string[]
+  drafts?: any[]
+  isDraft?: boolean
+  canPublish?: boolean
+  createdAt?: any
+  updatedAt?: any
 }
 
 @Injectable()
@@ -36,6 +69,55 @@ export class FormService {
 
   async findById(id: string): Promise<FormModel | null> {
     return this.formModel.findById(id)
+  }
+
+  async findByIdCached(id: string): Promise<CachedForm | null> {
+    const cacheKey = internalFormCacheKey(id)
+    const cached = await this.redisService.get(cacheKey)
+
+    if (cached) {
+      try {
+        return JSON.parse(cached) as CachedForm
+      } catch {
+        await this.redisService.del(cacheKey)
+      }
+    }
+
+    const form = await this.formModel.findById(id)
+
+    if (!form) {
+      return null
+    }
+
+    const plainForm = form.toJSON({ virtuals: true }) as CachedForm
+    await this.redisService.set({
+      key: cacheKey,
+      value: JSON.stringify(plainForm),
+      duration: INTERNAL_FORM_CACHE_TTL
+    })
+
+    return plainForm
+  }
+
+  public async invalidateInternalFormCache(formId: string | string[]): Promise<void> {
+    const ids = Array.isArray(formId) ? formId : [formId]
+    await Promise.all(ids.map(id => this.redisService.del(internalFormCacheKey(id))))
+  }
+
+  public async updateManyFolderIds(formIds: string[], folderId: string | null): Promise<boolean> {
+    const result = await this.formModel.updateMany(
+      {
+        _id: {
+          $in: formIds
+        }
+      },
+      {
+        folderId: folderId || null
+      }
+    )
+    await this.invalidateInternalFormCache(formIds)
+    await Promise.all(formIds.map(id => this.redisService.del(publicFormCacheKey(id))))
+    return !!result?.ok
   }
 
   async findByIdInTeam(id: string, teamId: string) {
@@ -146,6 +228,17 @@ export class FormService {
     })
   }
 
+  async findIdsByFolderIds(folderIds: string[]): Promise<string[]> {
+    const forms = await this.formModel
+      .find({
+        folderId: {
+          $in: folderIds
+        }
+      })
+      .select('_id')
+    return forms.map(f => f.id)
+  }
+
   async findAllByFieldLength(maxLength = 2) {
     return this.formModel.find({
       $where: `this.fields.length <= ${maxLength}`
@@ -229,6 +322,7 @@ export class FormService {
       },
       updates
     )
+    await this.invalidateInternalFormCache(formId)
     await this.redisService.del(publicFormCacheKey(formId))
     return !!result?.ok
   }
@@ -242,6 +336,7 @@ export class FormService {
       },
       updates
     )
+    await this.invalidateInternalFormCache(formIds)
     await Promise.all(formIds.map(id => this.redisService.del(publicFormCacheKey(id))))
     return !!result?.ok
   }
@@ -256,6 +351,7 @@ export class FormService {
         },
         status: FormStatusEnum.TRASH
       })
+      await this.invalidateInternalFormCache(formId as string[])
       await Promise.all(
         (formId as string[]).map(id => this.redisService.del(publicFormCacheKey(id)))
       )
@@ -264,6 +360,7 @@ export class FormService {
         _id: formId as string,
         status: FormStatusEnum.TRASH
       })
+      await this.invalidateInternalFormCache(formId as string)
       await this.redisService.del(publicFormCacheKey(formId as string))
     }
 
@@ -281,6 +378,7 @@ export class FormService {
         }
       }
     )
+    await this.invalidateInternalFormCache(formId)
     await this.redisService.del(publicFormCacheKey(formId))
     return !!result?.ok
   }
@@ -295,6 +393,7 @@ export class FormService {
         $set: getUpdateQuery(updates, 'fields.$')
       }
     )
+    await this.invalidateInternalFormCache(formId)
     await this.redisService.del(publicFormCacheKey(formId))
     return !!result?.ok
   }
@@ -317,6 +416,7 @@ export class FormService {
         multi: true
       }
     )
+    await this.invalidateInternalFormCache(formId)
     await this.redisService.del(publicFormCacheKey(formId))
     return !!result?.ok
   }

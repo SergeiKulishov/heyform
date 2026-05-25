@@ -2,7 +2,7 @@ import { BadRequestException, Injectable } from '@nestjs/common'
 import { InjectModel } from '@nestjs/mongoose'
 import { Model } from 'mongoose'
 
-import { FormModel, SubmissionIpLimitModel } from '@model'
+import { SubmissionIpLimitModel } from '@model'
 import { helper, timestamp } from '@voxly/utils'
 
 @Injectable()
@@ -12,7 +12,7 @@ export class SubmissionIpLimitService {
     private readonly submissionIpLimitModel: Model<SubmissionIpLimitModel>
   ) {}
 
-  async checkIp(form: FormModel, ip: string): Promise<void> {
+  async checkIp(form: { id: string; settings?: any }, ip: string): Promise<void> {
     let expiredAt = 0
     const now = timestamp()
 

@@ -44,7 +44,7 @@ export class CompleteSubmissionResolver {
     @GqlClient() client: ClientInfo,
     @Args('input') input: CompleteSubmissionInput
   ): Promise<CompleteSubmissionType> {
-    const form = await this.formService.findById(input.formId)
+    const form = await this.formService.findByIdCached(input.formId)
 
     if (!form) {
       throw new BadRequestException('The form does not exist')

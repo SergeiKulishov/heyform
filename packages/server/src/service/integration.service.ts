@@ -5,7 +5,7 @@ import { Queue } from 'bull'
 import { Model } from 'mongoose'
 import * as apps from 'src/apps'
 
-import { FormModel, IntegrationModel, IntegrationStatusEnum } from '@model'
+import { IntegrationModel, IntegrationStatusEnum } from '@model'
 
 @Injectable()
 export class IntegrationService {
@@ -87,7 +87,7 @@ export class IntegrationService {
     return result?.n > 0
   }
 
-  public async addQueue(form: FormModel, submissionId: string): Promise<void> {
+  public async addQueue(form: { id: string; settings?: any }, submissionId: string): Promise<void> {
     // Email notification Queue
     if ((form.settings as any)?.enableEmailNotification) {
       this.submissionNotificationQueue.add({

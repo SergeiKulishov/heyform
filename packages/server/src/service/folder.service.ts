@@ -2,8 +2,8 @@ import { BadRequestException, Injectable } from '@nestjs/common'
 import { InjectModel } from '@nestjs/mongoose'
 import { Model } from 'mongoose'
 
+import { FormService } from './form.service'
 import { FolderModel } from '@model'
-import { FormModel } from '@model'
 
 const MAX_FOLDER_NAME_LENGTH = 100
 const MAX_FOLDER_DEPTH = 2
@@ -13,8 +13,7 @@ export class FolderService {
   constructor(
     @InjectModel(FolderModel.name)
     private readonly folderModel: Model<FolderModel>,
-    @InjectModel(FormModel.name)
-    private readonly formModel: Model<FormModel>
+    private readonly formService: FormService
   ) {}
 
   async findById(folderId: string): Promise<FolderModel | null> {
@@ -115,7 +114,10 @@ export class FolderService {
     const subFolderIds = subFolders.map(f => f.id)
     const allFolderIds = [folderId, ...subFolderIds]
 
-    await this.formModel.updateMany({ folderId: { $in: allFolderIds } }, { folderId: null })
+    const affectedFormIds = await this.formService.findIdsByFolderIds(allFolderIds)
+    if (affectedFormIds.length > 0) {
+      await this.formService.updateManyFolderIds(affectedFormIds, null)
+    }
 
     if (subFolderIds.length > 0) {
       await this.folderModel.deleteMany({ _id: { $in: subFolderIds } })
@@ -151,10 +153,7 @@ export class FolderService {
       }
     }
 
-    await this.formModel.updateMany(
-      { _id: { $in: formIds }, projectId },
-      { folderId: folderId || null }
-    )
+    await this.formService.updateManyFolderIds(formIds, folderId)
 
     return true
   }

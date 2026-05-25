@@ -127,6 +127,9 @@ export const FORM_REPORT_RATE: string = process.env.FORM_REPORT_RATE || '5s'
 // Public form cache TTL
 export const PUBLIC_FORM_CACHE_TTL: string = process.env.PUBLIC_FORM_CACHE_TTL || '10m'
 
+// Internal form cache TTL for endpoint resolvers
+export const INTERNAL_FORM_CACHE_TTL: string = process.env.INTERNAL_FORM_CACHE_TTL || '1h'
+
 // Verification code
 export const VERIFICATION_CODE_EXPIRE: string = process.env.VERIFICATION_CODE_EXPIRE || '10m'
 export const VERIFICATION_CODE_LIMIT: number = +process.env.VERIFICATION_CODE_LIMIT || 5

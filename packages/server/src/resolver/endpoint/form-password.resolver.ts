@@ -18,7 +18,7 @@ export class FormPasswordResolver {
     @Headers('x-anonymous-id') anonymousId: string,
     @Args('input') input: VerifyPasswordInput
   ): Promise<string> {
-    const form = await this.formService.findById(input.formId)
+    const form = await this.formService.findByIdCached(input.formId)
 
     if (!form) {
       throw new BadRequestException('The form does not exist')
