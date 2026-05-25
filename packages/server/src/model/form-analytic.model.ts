@@ -21,3 +21,5 @@ export class FormAnalyticModel extends Document {
 }
 
 export const FormAnalyticSchema = SchemaFactory.createForClass(FormAnalyticModel)
+
+FormAnalyticSchema.index({ formId: 1, createdAt: 1 }, { background: true })

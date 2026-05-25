@@ -82,37 +82,23 @@ export class FormAnalyticService {
   }
 
   public async updateTotalVisits(formId: string): Promise<void> {
-    const formAnalytic = await this.findFormAnalyticInToday(formId)
-
-    if (formAnalytic) {
-      await this.formAnalyticModel.updateOne(
-        {
-          _id: formAnalytic.id
-        },
-        {
-          $inc: {
-            totalVisits: 1
-          }
-        }
-      )
-    } else {
-      await this.formAnalyticModel.create({
-        formId,
-        totalVisits: 1
-      } as any)
-    }
-  }
-
-  private async findFormAnalyticInToday(formId: string): Promise<FormAnalyticModel> {
     const today = date()
 
-    return this.formAnalyticModel.findOne({
-      formId,
-      createdAt: {
-        $gte: today.startOf('day'),
-        $lte: today.endOf('day')
-      }
-    })
+    await this.formAnalyticModel.updateOne(
+      {
+        formId,
+        createdAt: {
+          $gte: today.startOf('day'),
+          $lte: today.endOf('day')
+        }
+      },
+      {
+        $inc: {
+          totalVisits: 1
+        }
+      },
+      { upsert: true }
+    )
   }
 
   public async delete(formId: string | string[]): Promise<boolean> {
