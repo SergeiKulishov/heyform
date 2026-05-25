@@ -163,19 +163,6 @@ export const Renderer: FC<RendererProps> = ({ form, query, locale, contactId }) 
     }
   }, [])
 
-  useEffect(() => {
-    if (!locale) {
-      return
-    }
-
-    document.documentElement.lang = locale
-
-    const meta = document.createElement('meta')
-    meta.name = 'google'
-    meta.content = 'notranslate'
-    document.head.appendChild(meta)
-  }, [locale])
-
   if (form.settings?.requirePassword && !isPasswordChecked) {
     return <PasswordCheck form={form} onFinish={handlePasswordFinish} />
   }
