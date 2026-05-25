@@ -17,7 +17,7 @@ export default function FormRender() {
   const query = useQuery()
 
   const [form, setForm] = useState<FormModel | null>(null)
-  const [locale, setLocale] = useState<string>()
+  const [locale, setLocale] = useState<string>(LANGUAGES[0])
 
   async function fetchData() {
     const result = await FormService.publicForm(formId)
@@ -32,7 +32,7 @@ export default function FormRender() {
     <Async fetch={fetchData}>
       {form && (
         <div id="heyform-render-root">
-          <Renderer form={form} query={query} locale={locale!} />
+          <Renderer form={form} query={query} locale={locale} />
         </div>
       )}
     </Async>
