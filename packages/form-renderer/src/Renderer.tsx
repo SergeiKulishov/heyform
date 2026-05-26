@@ -197,6 +197,7 @@ export const FormRenderer: FC<FormRendererProps> = ({
     <StoreContext.Provider value={{ state, dispatch }}>
       <Tooltip.Provider delayDuration={100}>
         <div
+          translate="no"
           className={clsx(
             'heyform-root',
             {
