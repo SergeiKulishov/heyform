@@ -1,6 +1,6 @@
 {
   "name": "@voxly/form-renderer",
-  "version": "0.6.0",
+  "version": "0.6.1",
   "publishConfig": {
     "registry": "https://nexus.nlnano.ru/repository/npm-hosted/"
   },
