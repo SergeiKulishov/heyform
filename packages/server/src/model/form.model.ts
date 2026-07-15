@@ -151,3 +151,4 @@ FormSchema.virtual('canPublish').get(function () {
 
 FormSchema.index({ teamId: 1, projectId: 1, folderId: 1 }, { unique: false })
 FormSchema.index({ projectId: 1, tags: 1 })
+FormSchema.index({ projectId: 1, status: 1, updatedAt: -1 }, { background: true })

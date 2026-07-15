@@ -5,11 +5,12 @@ import { resolve } from 'path'
 import { bytes, commonFileMimeTypes, helper, mime, toBool } from '@voxly/utils'
 
 // environment
-export const NODE_ENV: string = process.env.NODE_ENV || 'development'
 export const ROOT_PATH = process.cwd()
 
-// Load environment
-loadEnv(NODE_ENV, ROOT_PATH)
+// Load environment before reading NODE_ENV
+loadEnv(process.env.NODE_ENV || 'development', ROOT_PATH)
+
+export const NODE_ENV: string = process.env.NODE_ENV || 'development'
 
 // App serve
 export const APP_LISTEN_PORT: number = +process.env.APP_LISTEN_PORT || 9157

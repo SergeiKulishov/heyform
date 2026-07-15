@@ -81,14 +81,16 @@ export class PermissionGuard implements CanActivate {
     }
 
     if (scope >= PermissionScopeEnum.project) {
-      const project = await this.projectService.findById(projectId)
+      const [project, projectMember] = await Promise.all([
+        this.projectService.findById(projectId),
+        this.projectService.findMemberById(projectId, user.id)
+      ])
 
       if (!project) {
         throw new BadRequestException('Please make sure you have permission to access this project')
       }
 
-      const member = await this.projectService.findMemberById(projectId, user.id)
-      if (!member) {
+      if (!projectMember) {
         throw new BadRequestException("You don't have permission to access the workspace")
       }
 
@@ -101,14 +103,16 @@ export class PermissionGuard implements CanActivate {
       teamId = project.teamId
     }
 
-    const team = await this.teamService.findById(teamId)
+    const [team, teamMember] = await Promise.all([
+      this.teamService.findById(teamId),
+      this.teamService.findMemberById(teamId, user.id)
+    ])
 
     if (!team) {
       throw new BadRequestException("You don't have permission to access the workspace")
     }
 
-    const member = await this.teamService.findMemberById(teamId, user.id)
-    if (!member) {
+    if (!teamMember) {
       throw new BadRequestException("You don't have permission to access the workspace")
     }
 
@@ -117,7 +121,7 @@ export class PermissionGuard implements CanActivate {
     const requiredRoles = this.reflector.get<TeamRoleEnum[]>(ROLES_KEY, context.getHandler())
 
     if (requiredRoles && requiredRoles.length > 0) {
-      if (!isOwner && !requiredRoles.includes(member.role)) {
+      if (!isOwner && !requiredRoles.includes(teamMember.role)) {
         throw new ForbiddenException("You don't have permission for this operation")
       }
     }
@@ -134,7 +138,7 @@ export class PermissionGuard implements CanActivate {
         const allowedRoles =
           matrix[requiredPermission] || DEFAULT_PERMISSION_MATRIX[requiredPermission] || []
 
-        if (!allowedRoles.includes(member.role)) {
+        if (!allowedRoles.includes(teamMember.role)) {
           throw new ForbiddenException({
             statusCode: 403,
             message: "You don't have permission for this operation",
@@ -149,15 +153,19 @@ export class PermissionGuard implements CanActivate {
       ownerId: team.ownerId,
       isOwner,
       name: team.name,
-      role: member.role,
+      role: teamMember.role,
       storageQuota: team.storageQuota,
       inviteCode: team.inviteCode,
       permissionMatrix: team.permissionMatrix
     }
 
-    this.teamService.updateMember(teamId, user.id, {
-      lastSeenAt: timestamp()
-    })
+    this.teamService
+      .updateMember(teamId, user.id, {
+        lastSeenAt: timestamp()
+      })
+      .catch(() => {
+        // lastSeenAt is not critical for authorization
+      })
 
     return true
   }
