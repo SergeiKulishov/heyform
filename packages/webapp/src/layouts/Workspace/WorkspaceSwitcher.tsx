@@ -27,12 +27,7 @@ const WorkspaceItem: FC<WorkspaceItemProps> = ({ workspace, isActive, onClick })
       onClick={handleClick}
     >
       <div className="flex max-w-[calc(100%-1rem)] flex-1 items-center gap-x-2.5">
-        <Avatar
-          className="h-6 w-6"
-          src={workspace.avatar}
-          fallback={workspace.name}
-          resize={{ width: 100, height: 100 }}
-        />
+        <Avatar className="h-6 w-6" src={workspace.avatar} fallback={workspace.name} />
         <div className="max-w-[calc(100%-2rem)] truncate font-medium">{workspace.name}</div>
       </div>
 
@@ -57,12 +52,7 @@ export default function WorkspaceSwitcher() {
       <DropdownMenu.Trigger asChild>
         <Button.Link className="data-[state=open]:bg-accent-light w-full px-3 py-2.5 sm:px-2 sm:py-1.5 [&_[data-slot=button]]:justify-between">
           <div className="flex max-w-[calc(100%-1.25rem)] flex-1 items-center gap-x-2">
-            <Avatar
-              className="h-6 w-6"
-              src={workspace?.avatar}
-              fallback={workspace?.name}
-              resize={{ width: 100, height: 100 }}
-            />
+            <Avatar className="h-6 w-6" src={workspace?.avatar} fallback={workspace?.name} />
             <div className="max-w-[calc(100%-2rem)] truncate font-medium">{workspace?.name}</div>
           </div>
           <IconChevronDown className="text-secondary h-[1.125rem] w-[1.125rem]" />

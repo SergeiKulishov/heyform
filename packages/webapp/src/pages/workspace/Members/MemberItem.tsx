@@ -173,12 +173,7 @@ const MemberItem: FC<{ member: MemberType }> = ({ member }) => {
     <tr className="hover:bg-primary/[2.5%]">
       <td className="border-accent border-b p-4 sm:first:pl-1 sm:last:pr-1">
         <div className="flex items-center gap-4">
-          <Avatar
-            className="flex-shrink-0"
-            src={member.avatar}
-            fallback={member.name}
-            resize={{ width: 100, height: 100 }}
-          />
+          <Avatar className="flex-shrink-0" src={member.avatar} fallback={member.name} />
           <div className="text-sm">
             <div className="font-medium">
               <span>{member.name}</span>

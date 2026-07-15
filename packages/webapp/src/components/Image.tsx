@@ -31,11 +31,20 @@ const Background: FC<BackgroundProps> = ({
   const { width, height } = resize
 
   const src = useMemo(() => {
-    if (helper.isURL(rawSrc) && (helper.isNumber(width) || helper.isNumber(height))) {
+    const srcString = rawSrc as string
+
+    if (helper.isURL(srcString) && srcString.includes('secure.gravatar.com')) {
+      const size = width || height || 120
+      const url = new URL(srcString)
+      url.searchParams.set('s', String(size))
+      return url.toString()
+    }
+
+    if (helper.isURL(srcString) && (helper.isNumber(width) || helper.isNumber(height))) {
       return getDecoratedURL(
         '/api/image',
         removeObjectNil({
-          url: rawSrc as string,
+          url: srcString,
           w: width,
           h: height
         })
@@ -75,15 +84,24 @@ const ImageComponent: FC<ImageProps> = ({
   const { width, height } = resize
 
   const src = useMemo(() => {
-    if (!isURL(rawSrc as string)) {
+    const srcString = rawSrc as string
+
+    if (!isURL(srcString)) {
       return
+    }
+
+    if (srcString.includes('secure.gravatar.com')) {
+      const size = width || height || 120
+      const url = new URL(srcString)
+      url.searchParams.set('s', String(size))
+      return url.toString()
     }
 
     if (helper.isNumber(width) || helper.isNumber(height)) {
       return getDecoratedURL(
         '/api/image',
         removeObjectNil({
-          url: rawSrc as string,
+          url: srcString,
           w: width,
           h: height
         })

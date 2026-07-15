@@ -47,7 +47,6 @@ export default function ProjectMembers() {
                   className="ring-foreground h-9 w-9 rounded-full ring-2"
                   src={m.avatar}
                   fallback={m.name}
-                  resize={{ width: 100, height: 100 }}
                 />
               </div>
             </Tooltip>

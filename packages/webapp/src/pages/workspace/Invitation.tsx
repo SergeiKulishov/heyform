@@ -70,12 +70,7 @@ export default function WorkspaceInvitation() {
 
         <div className="mt-8 space-y-3">
           <div className="flex items-center gap-3">
-            <Avatar
-              className=""
-              src={workspace?.avatar}
-              fallback={workspace?.name}
-              resize={{ width: 100, height: 100 }}
-            />
+            <Avatar className="" src={workspace?.avatar} fallback={workspace?.name} />
             <div className="flex-1 truncate">{workspace?.name}</div>
             <Button className="min-w-20" size="md" loading={loading} onClick={run}>
               {t('workspace.invitation.join')}

@@ -82,7 +82,6 @@ export default function WorkspaceAccount({
               src={user?.avatar}
               fallback={user?.name}
               data-slot="avatar"
-              resize={{ width: 100, height: 100 }}
             />
             {isNameVisible && (
               <div className="flex-1 text-left">
