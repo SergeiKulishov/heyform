@@ -1,16 +1,19 @@
 import { Choice, Column, FieldKindEnum } from '@voxly/shared-types-enums'
 import { useBoolean } from 'ahooks'
+import Big from 'big.js'
 import { FC, useCallback, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { SubmissionService } from '@/services'
 import { timeFromNow, useParam } from '@/utils'
+import { CURRENCY_SYMBOLS } from '@voxly/answer-utils'
 import { helper } from '@voxly/utils'
 
 import { Pagination, useToast } from '@/components'
 
 interface SubmissionItemProps {
   answers: AnyMap[]
+  choices?: Choice[]
 }
 
 interface InputTableItemProps extends SubmissionItemProps {
@@ -180,7 +183,7 @@ const RankingAnalyticsItem: FC<RankingItemProps> = ({ choices, answers: rawAnswe
   )
 }
 
-const AnswerValue: FC<{ answer: AnyMap }> = ({ answer }) => {
+const AnswerValue: FC<{ answer: AnyMap; choices?: Choice[] }> = ({ answer, choices = [] }) => {
   const { t } = useTranslation()
 
   switch (answer.kind) {
@@ -202,12 +205,43 @@ const AnswerValue: FC<{ answer: AnyMap }> = ({ answer }) => {
     case FieldKindEnum.SIGNATURE:
       return <div>{t('form.builder.question.signature')}</div>
 
+    case FieldKindEnum.PAYMENT:
+      if (!helper.isObject(answer.value)) {
+        return answer.value
+      }
+
+      return (
+        CURRENCY_SYMBOLS[answer.value.currency] +
+        Big(answer.value.amount || 0)
+          .div(100)
+          .toFixed(2)
+      )
+
+    case FieldKindEnum.MULTIPLE_CHOICE:
+    case FieldKindEnum.PICTURE_CHOICE:
+    case FieldKindEnum.CUSTOM_MULTIPLE: {
+      const raw = answer.value
+
+      if (!helper.isObject(raw)) {
+        return raw
+      }
+
+      const selectedIds = helper.isValidArray(raw.value) ? raw.value : []
+      const labels = choices.filter(c => selectedIds.includes(c.id)).map(c => c.label)
+
+      if (helper.isValid(raw.other)) {
+        labels.push(raw.other)
+      }
+
+      return labels.length > 0 ? labels.join(', ') : null
+    }
+
     default:
-      return answer.value
+      return helper.isObject(answer.value) ? null : answer.value
   }
 }
 
-const SubmissionItem: FC<SubmissionItemProps> = ({ answers = [] }) => {
+const SubmissionItem: FC<SubmissionItemProps> = ({ answers = [], choices }) => {
   const { i18n } = useTranslation()
 
   return (
@@ -215,7 +249,7 @@ const SubmissionItem: FC<SubmissionItemProps> = ({ answers = [] }) => {
       {answers.map(row => (
         <div className="heyform-report-answer" key={row.submissionId}>
           <div className="heyform-report-value">
-            <AnswerValue answer={row} />
+            <AnswerValue answer={row} choices={choices} />
           </div>
           <div className="heyform-report-datetime">{timeFromNow(row.endAt, i18n.language)}</div>
         </div>
@@ -279,7 +313,7 @@ export default function FormReportSubmissions({ response }: any) {
       ) : response.kind === FieldKindEnum.RANKING || response.kind === 'ranking' ? (
         <RankingAnalyticsItem answers={answers} choices={response.properties?.choices || []} />
       ) : (
-        <SubmissionItem answers={answers} />
+        <SubmissionItem answers={answers} choices={response.properties?.choices} />
       )}
 
       {total > 10 && (
