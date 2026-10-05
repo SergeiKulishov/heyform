@@ -3,7 +3,7 @@ import type { FC } from 'react'
 import { useEffect, useMemo, useState } from 'react'
 import { useTransition } from 'react-transition-state'
 
-import { questionNumber, sliceFieldsByLogics, treeFields, useTranslation } from '../utils'
+import { questionNumber, treeFields, useTranslation } from '../utils'
 import { helper } from '@voxly/utils'
 
 import { Button, CollapseIcon, XIcon } from '../components'
@@ -81,10 +81,7 @@ const Question: FC<QuestionProps> = ({ field, parent, selectedId, onClick }) => 
 export const Sidebar: FC = () => {
   const { state, dispatch } = useStore()
   const { t } = useTranslation()
-  const fields = useMemo(
-    () => treeFields(sliceFieldsByLogics(state.fields, state.jumpFieldIds)),
-    [state.fields, state.logics]
-  )
+  const fields = useMemo(() => treeFields(state.fields), [state.fields])
 
   function handleClick(fieldId: string) {
     dispatch({

@@ -1,11 +1,10 @@
 import { IconPlus } from '@tabler/icons-react'
 import { flattenFieldsWithGroups } from '@voxly/form-renderer'
 import { ActionEnum, LogicAction, Variable } from '@voxly/shared-types-enums'
-import { type FC, useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { cn } from '@/utils'
-import { htmlUtils } from '@voxly/answer-utils'
 import { helper } from '@voxly/utils'
 
 import { Button, Input, Select } from '@/components'
@@ -13,13 +12,7 @@ import { ACTIONS, OPERATORS } from '@/consts'
 import { useAppStore } from '@/store'
 import { FormFieldType } from '@/types'
 
-import { QuestionIcon } from '../LeftSidebar/QuestionList'
-
-interface QuestionSelectProps {
-  fields: FormFieldType[]
-  value?: string
-  onChange?: (value: string) => void
-}
+import { QuestionSelect } from './QuestionSelect'
 
 interface ActionProps {
   fields: FormFieldType[]
@@ -27,26 +20,6 @@ interface ActionProps {
   variables?: Variable[]
   value?: LogicAction
   onChange?: (value: LogicAction) => void
-}
-
-const QuestionSelect: FC<QuestionSelectProps> = ({ fields, value, onChange }) => {
-  const options = useMemo(
-    () =>
-      fields.map(row => ({
-        value: row.id,
-        label: (
-          <div className="flex w-full items-center gap-x-2">
-            <QuestionIcon kind={row.kind} index={row.index} parentIndex={row.parent?.index} />
-            <span className="flex-1 truncate text-left">
-              {htmlUtils.plain(row.title as string)}
-            </span>
-          </div>
-        )
-      })),
-    [fields]
-  )
-
-  return <Select options={options} value={value} onChange={onChange} />
 }
 
 export default function Action({

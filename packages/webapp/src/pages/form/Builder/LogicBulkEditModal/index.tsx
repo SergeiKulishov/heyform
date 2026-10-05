@@ -100,6 +100,7 @@ function LogicBulkEditComponent() {
               className="payload-list"
               key={field.id}
               name={field.id}
+              form={rcForm}
               fields={rawFields}
               currentField={field}
               variables={variables}

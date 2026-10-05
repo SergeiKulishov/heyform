@@ -450,13 +450,20 @@ export interface StringCalculateAction extends Omit<NumberCalculateAction, 'oper
 
 export type LogicAction = NavigateAction | NumberCalculateAction | StringCalculateAction
 
+export type LogicConnector = 'and' | 'or'
+
 export interface LogicPayload {
   id: string
   condition: LogicCondition
   action: LogicAction
+  conditions?: LogicCondition[]
+  connector?: LogicConnector
 }
 
 export interface Logic {
   fieldId: string
   payloads: LogicPayload[]
+  defaultNavigate?: {
+    fieldId: string
+  }
 }

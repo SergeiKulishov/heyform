@@ -1,10 +1,11 @@
 import { FieldKindEnum, LogicCondition } from '@voxly/shared-types-enums'
+import dayjs, { type Dayjs } from 'dayjs'
 import { type FC, useCallback, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { helper } from '@voxly/utils'
 
-import { Input, Select } from '@/components'
+import { DatePicker, Input, Select } from '@/components'
 import {
   DATE_CONDITIONS,
   DEFAULT_COMPARISONS,
@@ -15,6 +16,13 @@ import {
   TRUE_FALSE_CONDITIONS
 } from '@/consts'
 import { FormFieldType } from '@/types'
+
+interface ConditionFieldsProps {
+  field: FormFieldType
+  value?: LogicCondition
+  onComparisonChange: (value: any) => void
+  onExpectedChange?: (value: any) => void
+}
 
 interface ConditionProps {
   field: FormFieldType
@@ -92,6 +100,15 @@ const MultipleChoiceCondition: FC<DefaultProps & { field: FormFieldType }> = ({
   onComparisonChange,
   onExpectedChange
 }) => {
+  const options = useMemo(() => {
+    if (!field.properties?.allowMultiple) {
+      return MULTIPLE_CHOICE_CONDITIONS.filter(
+        option => option.value !== 'contains' && option.value !== 'does_not_contain'
+      )
+    }
+    return MULTIPLE_CHOICE_CONDITIONS
+  }, [field.properties?.allowMultiple])
+
   const MemoSelect = useMemo(() => {
     if (field.properties?.allowMultiple && SINGLE_CHOICE_CONDITIONS.includes(value?.comparison)) {
       const currValue = helper.isArray(value?.expected)
@@ -126,7 +143,7 @@ const MultipleChoiceCondition: FC<DefaultProps & { field: FormFieldType }> = ({
     <>
       <Select
         className="w-auto flex-1"
-        options={MULTIPLE_CHOICE_CONDITIONS}
+        options={options}
         value={value?.comparison}
         multiLanguage
         onChange={onComparisonChange}
@@ -158,7 +175,28 @@ const BoolCondition: FC<DefaultProps> = ({ value, onComparisonChange, onExpected
   )
 }
 
-const DateCondition: FC<DefaultProps> = ({ value, onComparisonChange, onExpectedChange }) => {
+const DateCondition: FC<DefaultProps & { field: FormFieldType }> = ({
+  value,
+  field,
+  onComparisonChange,
+  onExpectedChange
+}) => {
+  const { t } = useTranslation()
+  const allowTime = field.properties?.allowTime
+  const expectedFormat = `YYYY-MM-DD${allowTime ? ' HH:mm' : ''}`
+  const dateValue = useMemo(() => {
+    const expected = (value as Any)?.expected
+    if (!expected) {
+      return undefined
+    }
+    const parsed = dayjs(expected, expectedFormat)
+    return parsed.isValid() ? parsed : undefined
+  }, [(value as Any)?.expected, expectedFormat])
+
+  function handleChange(date: Dayjs | null) {
+    onExpectedChange?.(date ? dayjs(date).format(expectedFormat) : undefined)
+  }
+
   return (
     <>
       <Select
@@ -168,12 +206,12 @@ const DateCondition: FC<DefaultProps> = ({ value, onComparisonChange, onExpected
         multiLanguage
         onChange={onComparisonChange}
       />
-      <Input
+      <DatePicker
         className="flex-1"
-        type="number"
-        value={(value as Any).expected}
-        placeholder="Value"
-        onChange={onExpectedChange}
+        showTimeSelect={allowTime}
+        placeholder={t('form.builder.logic.rule.dateValue')}
+        value={dateValue}
+        onChange={handleChange}
       />
     </>
   )
@@ -198,6 +236,86 @@ const NumberCondition: FC<DefaultProps> = ({ value, onComparisonChange, onExpect
       />
     </>
   )
+}
+
+export const ConditionFields: FC<ConditionFieldsProps> = ({
+  field,
+  value,
+  onComparisonChange,
+  onExpectedChange
+}) => {
+  const Element = useMemo(() => {
+    switch (field.kind) {
+      case FieldKindEnum.SHORT_TEXT:
+      case FieldKindEnum.LONG_TEXT:
+      case FieldKindEnum.EMAIL:
+      case FieldKindEnum.PHONE_NUMBER:
+      case FieldKindEnum.URL:
+        return (
+          <TextCondition
+            value={value}
+            onComparisonChange={onComparisonChange}
+            onExpectedChange={onExpectedChange}
+          />
+        )
+
+      case FieldKindEnum.YES_NO:
+        return (
+          <SingleChoiceCondition
+            field={field}
+            value={value}
+            onComparisonChange={onComparisonChange}
+            onExpectedChange={onExpectedChange}
+          />
+        )
+
+      case FieldKindEnum.LEGAL_TERMS:
+        return (
+          <BoolCondition
+            value={value}
+            onComparisonChange={onComparisonChange}
+            onExpectedChange={onExpectedChange}
+          />
+        )
+
+      case FieldKindEnum.MULTIPLE_CHOICE:
+      case FieldKindEnum.PICTURE_CHOICE:
+        return (
+          <MultipleChoiceCondition
+            field={field}
+            value={value}
+            onComparisonChange={onComparisonChange}
+            onExpectedChange={onExpectedChange}
+          />
+        )
+
+      case FieldKindEnum.DATE:
+        return (
+          <DateCondition
+            field={field}
+            value={value}
+            onComparisonChange={onComparisonChange}
+            onExpectedChange={onExpectedChange}
+          />
+        )
+
+      case FieldKindEnum.NUMBER:
+      case FieldKindEnum.RATING:
+      case FieldKindEnum.OPINION_SCALE:
+        return (
+          <NumberCondition
+            value={value}
+            onComparisonChange={onComparisonChange}
+            onExpectedChange={onExpectedChange}
+          />
+        )
+
+      default:
+        return <DefaultCondition value={value} onComparisonChange={onComparisonChange} />
+    }
+  }, [field, onComparisonChange, onExpectedChange, value])
+
+  return <>{Element}</>
 }
 
 export default function Condition({ field, value: rawValue, onChange }: ConditionProps) {
@@ -226,80 +344,15 @@ export default function Condition({ field, value: rawValue, onChange }: Conditio
     [handleChange, value]
   )
 
-  const Element = useMemo(() => {
-    switch (field.kind) {
-      case FieldKindEnum.SHORT_TEXT:
-      case FieldKindEnum.LONG_TEXT:
-      case FieldKindEnum.EMAIL:
-      case FieldKindEnum.PHONE_NUMBER:
-      case FieldKindEnum.URL:
-        return (
-          <TextCondition
-            value={value}
-            onComparisonChange={handleComparisonChange}
-            onExpectedChange={handleExpectedChange}
-          />
-        )
-
-      case FieldKindEnum.YES_NO:
-        return (
-          <SingleChoiceCondition
-            field={field}
-            value={value}
-            onComparisonChange={handleComparisonChange}
-            onExpectedChange={handleExpectedChange}
-          />
-        )
-
-      case FieldKindEnum.LEGAL_TERMS:
-        return (
-          <BoolCondition
-            value={value}
-            onComparisonChange={handleComparisonChange}
-            onExpectedChange={handleExpectedChange}
-          />
-        )
-
-      case FieldKindEnum.MULTIPLE_CHOICE:
-      case FieldKindEnum.PICTURE_CHOICE:
-        return (
-          <MultipleChoiceCondition
-            field={field}
-            value={value}
-            onComparisonChange={handleComparisonChange}
-            onExpectedChange={handleExpectedChange}
-          />
-        )
-
-      case FieldKindEnum.DATE:
-        return (
-          <DateCondition
-            value={value}
-            onComparisonChange={handleComparisonChange}
-            onExpectedChange={handleExpectedChange}
-          />
-        )
-
-      case FieldKindEnum.NUMBER:
-      case FieldKindEnum.RATING:
-      case FieldKindEnum.OPINION_SCALE:
-        return (
-          <NumberCondition
-            value={value}
-            onComparisonChange={handleComparisonChange}
-            onExpectedChange={handleExpectedChange}
-          />
-        )
-
-      default:
-        return <DefaultCondition value={value} onComparisonChange={handleComparisonChange} />
-    }
-  }, [field, handleComparisonChange, handleExpectedChange, value])
-
   return (
     <div className="rule-condition">
       <div className="text-sm leading-10">{t('form.builder.logic.rule.when')}</div>
-      {Element}
+      <ConditionFields
+        field={field}
+        value={value}
+        onComparisonChange={handleComparisonChange}
+        onExpectedChange={handleExpectedChange}
+      />
     </div>
   )
 }

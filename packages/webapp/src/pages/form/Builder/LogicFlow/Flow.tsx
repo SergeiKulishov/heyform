@@ -15,6 +15,7 @@ import { useAppStore } from '@/store'
 
 import { useStoreContext } from '../store'
 import { ConnectionLine } from './ConnectionLine'
+import { CustomEdge } from './CustomEdge'
 import { CustomNode } from './CustomNode'
 
 const snapGrid: [number, number] = [16, 16]
@@ -22,7 +23,7 @@ const nodeTypes = {
   customNode: CustomNode
 }
 const edgeTypes = {
-  customEdge: null
+  customEdge: CustomEdge
 }
 
 export const Flow = () => {

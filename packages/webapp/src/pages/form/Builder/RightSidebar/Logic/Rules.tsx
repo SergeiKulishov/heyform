@@ -1,13 +1,19 @@
-import { IconArrowUpRight, IconChevronRight, IconDots } from '@tabler/icons-react'
+import {
+  IconAlertTriangle,
+  IconArrowUpRight,
+  IconChevronRight,
+  IconDots
+} from '@tabler/icons-react'
 import { Logic } from '@voxly/shared-types-enums'
 import type { FC } from 'react'
 import { useMemo } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
 
+import { findBrokenNavigatePayloadIds } from '../../utils'
 import { htmlUtils } from '@voxly/answer-utils'
 import { helper } from '@voxly/utils'
 
-import { Button, Dropdown } from '@/components'
+import { Button, Dropdown, Tooltip } from '@/components'
 import { useAppStore } from '@/store'
 import { FormFieldType } from '@/types'
 
@@ -38,6 +44,10 @@ const LogicItem: FC<LogicItemProps> = ({ fields, logic }) => {
 
   const field = useMemo(() => fields.find(f => f.id === logic.fieldId), [fields, logic.fieldId])
   const count = useMemo(() => logic.payloads.length, [logic])
+  const invalidPayloadIds = useMemo(
+    () => findBrokenNavigatePayloadIds(fields, [logic]),
+    [fields, logic]
+  )
 
   function handleMenuClick(name?: string) {
     switch (name) {
@@ -74,8 +84,13 @@ const LogicItem: FC<LogicItemProps> = ({ fields, logic }) => {
           <QuestionIcon kind={field.kind} index={field.index} parentIndex={field.parent?.index} />
           <span className="text-sm/6 font-medium">{htmlUtils.plain(field.title as string)}</span>
         </div>
-        <div className="text-secondary text-xs/6">
+        <div className="text-secondary flex items-center gap-1.5 text-xs/6">
           {t('form.builder.logic.rule.ruleCount', { count })}
+          {invalidPayloadIds.size > 0 && (
+            <Tooltip label={t('form.builder.logic.rule.invalidRulesWarning')}>
+              <IconAlertTriangle className="h-4 w-4 text-amber-500" />
+            </Tooltip>
+          )}
         </div>
       </div>
 

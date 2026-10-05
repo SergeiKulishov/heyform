@@ -15,7 +15,7 @@ import { helper } from '@voxly/utils'
 
 import { calculateAction } from './calculate-action'
 import { validateRequiredField } from './validate'
-import { validateCondition } from './validate-condition'
+import { evaluatePayloadCondition } from './validate-condition'
 
 interface IFormField extends FormField {
   parent?: FormField
@@ -104,8 +104,8 @@ export function applyLogicToFields(
       const calculates = payloads.filter(p => p.action.kind === ActionEnum.CALCULATE)
 
       for (const calculate of calculates) {
-        const { action, condition } = calculate
-        const isValidated = validateCondition(field, condition, values)
+        const { action } = calculate
+        const isValidated = evaluatePayloadCondition(field, calculate, values)
 
         if (isValidated) {
           result.variables = calculateAction(
@@ -119,19 +119,16 @@ export function applyLogicToFields(
 
       const navigates = payloads.filter(p => p.action.kind === ActionEnum.NAVIGATE)
 
-      // Find the first navigate which meets the jump rule
       for (const navigate of navigates) {
-        const { action, condition } = navigate
+        const { action } = navigate
 
-        // Whether the jump logic in this field has been verified or not
-        field.isTouched = validateCondition(field, condition, values)
+        field.isTouched = evaluatePayloadCondition(field, navigate, values)
 
         if (field.isTouched) {
           const jumpFieldId = (action as NavigateAction).fieldId
           const jumpIndex = fields!.findIndex(f => f.id === jumpFieldId)
           const isExists = !!result.fields.find(f => f.id === jumpFieldId)
 
-          // Logic jump only works when sending the respondent forward in the form
           if (!isExists && jumpIndex > index) {
             index = jumpIndex
             isNavigateValidated = true
@@ -141,6 +138,19 @@ export function applyLogicToFields(
           }
         } else {
           field.isTouched = validateRequiredField(field, values)
+        }
+      }
+
+      if (!isNavigateValidated && logic.defaultNavigate?.fieldId) {
+        const jumpFieldId = logic.defaultNavigate.fieldId
+        const jumpIndex = fields!.findIndex(f => f.id === jumpFieldId)
+        const isExists = !!result.fields.find(f => f.id === jumpFieldId)
+
+        if (!isExists && jumpIndex > index) {
+          index = jumpIndex
+          isNavigateValidated = true
+
+          result.fields.push(field)
         }
       }
     }

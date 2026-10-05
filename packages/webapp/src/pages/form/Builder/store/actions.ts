@@ -6,7 +6,7 @@ import {
   type Variable
 } from '@voxly/shared-types-enums'
 
-import { getValidLogics, serializeFields } from '../utils'
+import { getValidLogics, sanitizeLogics, serializeFields } from '../utils'
 import { FormService } from '@/services'
 import { htmlUtils } from '@voxly/answer-utils'
 import { clone, helper, nanoid } from '@voxly/utils'
@@ -328,7 +328,16 @@ export function deleteField(state: IState, { id, parentId }: DeleteFieldAction['
     }
   }
 
-  const newState = setFields(state, { fields })
+  let newState = setFields(state, { fields })
+  const sanitizedLogics = sanitizeLogics(newState.fields, state.logics)
+
+  if (sanitizedLogics !== state.logics) {
+    FormService.updateLogics(state.formId, sanitizedLogics)
+    newState = {
+      ...newState,
+      logics: sanitizedLogics
+    }
+  }
 
   return selectField(newState, {
     id: currentId,

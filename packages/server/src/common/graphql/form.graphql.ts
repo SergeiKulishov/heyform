@@ -655,8 +655,21 @@ class LogicPayloadInput {
   @Field(type => LogicConditionInput)
   condition: LogicCondition
 
+  @Field(type => [LogicConditionInput], { nullable: true })
+  conditions?: LogicCondition[]
+
+  @Field({ nullable: true })
+  @IsIn(['and', 'or'])
+  connector?: string
+
   @Field(type => LogicActionInput)
   action: LogicAction
+}
+
+@InputType()
+class NavigateTargetInput {
+  @Field()
+  fieldId: string
 }
 
 @InputType()
@@ -666,6 +679,9 @@ class LogicInput {
 
   @Field(type => [LogicPayloadInput])
   payloads: LogicPayload[]
+
+  @Field(type => NavigateTargetInput, { nullable: true })
+  defaultNavigate?: { fieldId: string }
 }
 
 @InputType()

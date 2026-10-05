@@ -1,4 +1,10 @@
-import { IconPlus, IconTrash } from '@tabler/icons-react'
+import {
+  IconAlertTriangle,
+  IconGripVertical,
+  IconPlus,
+  IconTrash,
+  IconX
+} from '@tabler/icons-react'
 import {
   ActionEnum,
   Choice,
@@ -6,20 +12,23 @@ import {
   FieldKindEnum,
   LogicAction,
   LogicCondition,
+  LogicConnector,
   LogicPayload,
   Variable
 } from '@voxly/shared-types-enums'
 import { type FC, type ReactNode, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
+import { ReactSortable } from 'react-sortablejs'
 
 import { validatePayload } from '@voxly/answer-utils'
-import { nanoid } from '@voxly/utils'
+import { excludeObject, nanoid } from '@voxly/utils'
 
-import { Button, Form, Tooltip } from '@/components'
+import { Button, Form, Select, Tooltip } from '@/components'
+import { LOGIC_CONNECTORS } from '@/consts'
 import { FormFieldType } from '@/types'
 
 import Action from './Action'
-import Condition from './Condition'
+import { ConditionFields } from './Condition'
 
 interface PayloadFormProps {
   form: any
@@ -27,6 +36,7 @@ interface PayloadFormProps {
   currentField: FormFieldType
   variables?: Variable[]
   payloads: LogicPayload[]
+  invalidPayloadIds?: Set<string>
   onFinish?: (values: any) => void
 }
 
@@ -35,6 +45,8 @@ interface PayloadItemProps {
   variables?: Variable[]
   currentField?: FormFieldType
   value?: LogicPayload
+  invalidPayloadIds?: Set<string>
+  enableDrag?: boolean
   onDelete?: () => void
   onChange?: (value: LogicPayload) => void
 }
@@ -45,18 +57,13 @@ const validator = async (rule: any, value: any) => {
   }
 }
 
-function getPayload(
+function getDefaultCondition(
   kind?: FieldKindEnum,
   choices: Choice[] = [],
   allowMultiple = false
-): LogicPayload {
-  const payload: any = {
-    id: nanoid(12),
-    condition: {},
-    action: {
-      kind: ActionEnum.NAVIGATE
-    }
-  }
+): LogicCondition {
+  let comparison: ComparisonEnum | string = ComparisonEnum.IS_NOT_EMPTY
+  let expected: any
 
   switch (kind) {
     case FieldKindEnum.SHORT_TEXT:
@@ -69,29 +76,50 @@ function getPayload(
     case FieldKindEnum.DATE:
     case FieldKindEnum.MULTIPLE_CHOICE:
     case FieldKindEnum.PICTURE_CHOICE:
-      payload.condition.comparison = ComparisonEnum.IS
+      comparison = ComparisonEnum.IS
       break
 
     case FieldKindEnum.NUMBER:
     case FieldKindEnum.RATING:
     case FieldKindEnum.OPINION_SCALE:
-      payload.condition.comparison = ComparisonEnum.EQUAL
+      comparison = ComparisonEnum.EQUAL
       break
 
     default:
-      payload.condition.comparison = ComparisonEnum.IS_NOT_EMPTY
+      comparison = ComparisonEnum.IS_NOT_EMPTY
       break
   }
 
   if (FieldKindEnum.LEGAL_TERMS === kind) {
-    payload.condition.expected = true
+    expected = true
   } else if (FieldKindEnum.YES_NO === kind) {
-    payload.condition.expected = choices[0]?.id
+    expected = choices[0]?.id
   } else if (FieldKindEnum.MULTIPLE_CHOICE === kind || FieldKindEnum.PICTURE_CHOICE === kind) {
-    payload.condition.expected = allowMultiple ? [choices[0]?.id] : choices[0]?.id
+    expected = allowMultiple ? [choices[0]?.id] : choices[0]?.id
   }
 
-  return payload
+  return { comparison: comparison as ComparisonEnum, expected } as LogicCondition
+}
+
+function getPayload(
+  kind?: FieldKindEnum,
+  choices: Choice[] = [],
+  allowMultiple = false
+): LogicPayload {
+  return {
+    id: nanoid(12),
+    condition: getDefaultCondition(kind, choices, allowMultiple),
+    action: {
+      kind: ActionEnum.NAVIGATE
+    }
+  } as LogicPayload
+}
+
+function getConditions(value?: LogicPayload): LogicCondition[] {
+  if (value?.conditions && value.conditions.length > 0) {
+    return value.conditions
+  }
+  return value?.condition ? [value.condition] : []
 }
 
 export const PayloadItem: FC<PayloadItemProps> = ({
@@ -99,13 +127,61 @@ export const PayloadItem: FC<PayloadItemProps> = ({
   variables = [],
   currentField,
   value,
+  invalidPayloadIds,
+  enableDrag,
   onDelete,
   onChange
 }) => {
   const { t } = useTranslation()
 
-  function handleConditionChange(condition: LogicCondition) {
-    onChange?.({ ...value, condition } as LogicPayload)
+  const conds = getConditions(value)
+
+  function updateConditions(nextConds: LogicCondition[], connector?: LogicConnector) {
+    if (nextConds.length === 1) {
+      onChange?.({
+        ...value,
+        condition: nextConds[0],
+        conditions: undefined,
+        connector: undefined
+      } as LogicPayload)
+      return
+    }
+
+    onChange?.({
+      ...value,
+      condition: nextConds[0],
+      conditions: nextConds,
+      connector: connector || value?.connector || 'and'
+    } as LogicPayload)
+  }
+
+  function handleConditionChange(index: number, condition: LogicCondition) {
+    const nextConds = [...conds]
+    nextConds[index] = condition
+    updateConditions(nextConds, value?.connector)
+  }
+
+  function handleConnectorChange(connector: LogicConnector) {
+    if ((value?.conditions?.length || 0) > 1) {
+      onChange?.({ ...value, connector } as LogicPayload)
+    }
+  }
+
+  function handleAddCondition() {
+    const nextConds = [
+      ...conds,
+      getDefaultCondition(
+        currentField?.kind,
+        currentField?.properties?.choices,
+        currentField?.properties?.allowMultiple
+      )
+    ]
+    updateConditions(nextConds, value?.connector)
+  }
+
+  function handleRemoveCondition(index: number) {
+    const nextConds = conds.filter((_, i) => i !== index)
+    updateConditions(nextConds, value?.connector)
   }
 
   function handleActionChange(action: LogicAction) {
@@ -119,12 +195,55 @@ export const PayloadItem: FC<PayloadItemProps> = ({
   return (
     <div className="payload-item">
       <div className="payload-item-content">
+        {enableDrag && (
+          <IconGripVertical className="rule-drag-handle text-secondary h-5 w-5 cursor-grab" />
+        )}
         <div className="flex-1 space-y-2">
-          <Condition
-            field={currentField!}
-            value={value?.condition}
-            onChange={handleConditionChange}
-          />
+          <div className="space-y-2">
+            {conds.map((condition, index) => (
+              <div key={index} className="flex items-center gap-2">
+                {index === 0 ? (
+                  <div className="text-sm leading-10">{t('form.builder.logic.rule.when')}</div>
+                ) : (
+                  <Select
+                    className="w-20"
+                    options={LOGIC_CONNECTORS}
+                    value={value?.connector || 'and'}
+                    multiLanguage
+                    onChange={handleConnectorChange}
+                  />
+                )}
+                <div className="flex-1">
+                  <ConditionFields
+                    field={currentField!}
+                    value={condition}
+                    onComparisonChange={comparison =>
+                      handleConditionChange(index, { ...condition, comparison })
+                    }
+                    onExpectedChange={expected =>
+                      handleConditionChange(index, { ...condition, expected } as LogicCondition)
+                    }
+                  />
+                </div>
+                {conds.length > 1 && (
+                  <Tooltip label={t('form.builder.logic.rule.removeCondition')}>
+                    <Button.Link
+                      className="text-secondary hover:text-primary"
+                      size="sm"
+                      iconOnly
+                      onClick={() => handleRemoveCondition(index)}
+                    >
+                      <IconX className="h-4 w-4" />
+                    </Button.Link>
+                  </Tooltip>
+                )}
+              </div>
+            ))}
+            <Button.Link size="sm" onClick={handleAddCondition}>
+              <IconPlus className="h-4 w-4" />
+              {t('form.builder.logic.rule.addCondition')}
+            </Button.Link>
+          </div>
           <Action
             fields={fields}
             currentField={currentField!}
@@ -132,6 +251,12 @@ export const PayloadItem: FC<PayloadItemProps> = ({
             value={value?.action}
             onChange={handleActionChange}
           />
+          {value?.id && invalidPayloadIds?.has(value.id) && (
+            <div className="flex items-start gap-1.5 text-xs text-amber-600">
+              <IconAlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-amber-500" />
+              <span>{t('form.builder.logic.rule.invalidTargetWarning')}</span>
+            </div>
+          )}
         </div>
 
         <Tooltip label={t('form.builder.logic.rule.deleteRule')}>
@@ -153,21 +278,24 @@ interface PayloadListProps extends PayloadItemProps {
   name: string
   className?: string
   children?: ReactNode
+  form?: any
 }
 
 export const PayloadList: FC<PayloadListProps> = ({
   className,
   name,
+  form,
   fields,
   variables = [],
   currentField,
+  invalidPayloadIds,
   children
 }) => {
   const { t } = useTranslation()
 
   return (
     <Form.List name={name}>
-      {(listFields, { add, remove }) => {
+      {(listFields, { add, remove, move }) => {
         function handleAdd() {
           add(
             getPayload(
@@ -178,45 +306,76 @@ export const PayloadList: FC<PayloadListProps> = ({
           )
         }
 
+        const ruleItems = listFields.map((listField, index) => {
+          function handleDelete() {
+            remove(index)
+          }
+
+          return (
+            <Form.Item
+              {...listField}
+              key={listField.key}
+              rules={[
+                {
+                  required: true,
+                  validator,
+                  message: t('form.builder.logic.rule.required')
+                }
+              ]}
+            >
+              {({ value, onChange }) => {
+                return (
+                  <PayloadItem
+                    value={value}
+                    fields={fields}
+                    currentField={currentField}
+                    variables={variables}
+                    invalidPayloadIds={invalidPayloadIds}
+                    enableDrag={!!form}
+                    onDelete={handleDelete}
+                    onChange={onChange}
+                  />
+                )
+              }}
+            </Form.Item>
+          )
+        })
+
         return (
           <div className={className}>
             {children}
 
             {listFields.length > 0 && (
-              <div className="mb-4 space-y-6">
-                {listFields.map((listField, index) => {
-                  function handleDelete() {
-                    remove(index)
-                  }
-
-                  return (
-                    <Form.Item
-                      {...listField}
-                      key={listField.key}
-                      rules={[
-                        {
-                          required: true,
-                          validator,
-                          message: t('form.builder.logic.rule.required')
-                        }
-                      ]}
-                    >
-                      {({ value, onChange }) => {
-                        return (
-                          <PayloadItem
-                            value={value}
-                            fields={fields}
-                            currentField={currentField}
-                            variables={variables}
-                            onDelete={handleDelete}
-                            onChange={onChange}
-                          />
-                        )
-                      }}
-                    </Form.Item>
-                  )
-                })}
-              </div>
+              <>
+                {form ? (
+                  <ReactSortable
+                    className="mb-4 space-y-6"
+                    handle=".rule-drag-handle"
+                    animation={200}
+                    list={(form.getFieldValue(name) || []).map((p: any) =>
+                      excludeObject(p, ['chosen', 'selected'])
+                    )}
+                    setList={() => {}}
+                    onEnd={event => {
+                      if (
+                        event.oldIndex === undefined ||
+                        event.newIndex === undefined ||
+                        event.oldIndex === event.newIndex
+                      ) {
+                        return
+                      }
+                      move(event.oldIndex, event.newIndex)
+                    }}
+                  >
+                    {ruleItems}
+                  </ReactSortable>
+                ) : (
+                  <div className="mb-4 space-y-6">{ruleItems}</div>
+                )}
+                <div className="text-secondary text-xs">
+                  {t('form.builder.logic.rule.orderHint')}
+                </div>
+              </>
             )}
 
             <Button.Ghost size="md" onClick={handleAdd}>
@@ -236,6 +395,7 @@ export const PayloadForm: FC<PayloadFormProps> = ({
   currentField,
   variables = [],
   payloads,
+  invalidPayloadIds,
   onFinish
 }) => {
   useEffect(() => {
@@ -254,9 +414,11 @@ export const PayloadForm: FC<PayloadFormProps> = ({
     >
       <PayloadList
         name="payloads"
+        form={form}
         fields={fields}
         currentField={currentField}
         variables={variables}
+        invalidPayloadIds={invalidPayloadIds}
       />
     </Form>
   )

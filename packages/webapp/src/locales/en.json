@@ -1679,7 +1679,35 @@
           "division": "Divide (÷)",
           "assignment": "Assign (=)",
           "navigate": "Jump to",
-          "calculate": "Calculate"
+          "calculate": "Calculate",
+          "invalidRulesWarning": "Some rules are broken and won't work",
+          "invalidTargetWarning": "This rule points to a deleted question or jumps backward — it will be ignored",
+          "orderHint": "Rules are checked from top to bottom. The first matching rule is applied.",
+          "dateValue": "Select a date",
+          "fallbackNext": "If no rule matches, go to the next question:",
+          "fallbackSubmit": "If no rule matches, the form will be submitted",
+          "coverage": "Covered {{covered}} of {{total}} answer options",
+          "true": "True",
+          "false": "False",
+          "addCondition": "Add condition",
+          "removeCondition": "Remove condition",
+          "otherwise": "Otherwise",
+          "fallbackElse": "If no rule matches, jump to:"
+        },
+        "connector": {
+          "and": "And",
+          "or": "Or"
+        },
+        "flow": {
+          "legend": {
+            "defaultFlow": "Default flow",
+            "backwardJump": "Backward jump (ignored)",
+            "brokenJump": "Broken jump"
+          }
+        },
+        "reorderWarning": {
+          "title": "Logic rules affected",
+          "description": "Moving this question made some jump rules point backward. Backward jumps are ignored."
         }
       },
       "preview": {

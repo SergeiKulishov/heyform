@@ -61,6 +61,22 @@ import {
 } from '@/consts'
 import { TemplateType } from '@/types'
 
+function sanitizeLogicsForSave(logics: Logic[]): Logic[] {
+  return logics.map(logic => ({
+    fieldId: logic.fieldId,
+    payloads: (logic.payloads || []).map(payload => ({
+      id: payload.id,
+      condition: payload.condition,
+      ...(payload.conditions ? { conditions: payload.conditions } : {}),
+      ...(payload.connector ? { connector: payload.connector } : {}),
+      action: payload.action
+    })),
+    ...(logic.defaultNavigate
+      ? { defaultNavigate: { fieldId: logic.defaultNavigate.fieldId } }
+      : {})
+  })) as Logic[]
+}
+
 export class FormService {
   static async forms(projectId: string, status = FormStatusEnum.NORMAL) {
     return apollo.query({
@@ -341,12 +357,14 @@ export class FormService {
   }
 
   static updateLogics(formId: string, logics: Logic[]) {
+    const sanitizedLogics = sanitizeLogicsForSave(logics)
+
     return apollo.mutate({
       mutation: UPDATE_FORM_LOGICS_GQL,
       variables: {
         input: {
           formId,
-          logics
+          logics: sanitizedLogics
         }
       }
     })

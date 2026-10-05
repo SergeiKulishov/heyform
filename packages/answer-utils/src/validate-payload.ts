@@ -5,10 +5,14 @@ import { helper } from '@voxly/utils'
 const OTHER_COMPARISONS = [ComparisonEnum.IS_EMPTY, ComparisonEnum.IS_NOT_EMPTY]
 
 export function validatePayload(payload: LogicPayload): boolean {
+  if (!payload.action.kind) {
+    return false
+  }
+
   if (
-    !payload.action.kind ||
-    (!OTHER_COMPARISONS.includes(payload.condition.comparison) &&
-      helper.isEmpty((payload.condition as any).expected))
+    !helper.isValid(payload.conditions) &&
+    !OTHER_COMPARISONS.includes(payload.condition.comparison) &&
+    helper.isEmpty((payload.condition as any).expected)
   ) {
     return false
   }

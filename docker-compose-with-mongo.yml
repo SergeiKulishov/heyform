@@ -1,0 +1,126 @@
+services:
+  heyform:
+    image: 'sigurtholegsson/heyform-alpha:85-opt'
+    depends_on:
+      keydb:
+        condition: service_healthy
+      mongo:
+        condition: service_healthy
+    environment:
+      - SERVICE_URL_HEYFORM_8000
+      - 'VITE_HOMEPAGE_URL=https://voxly.rencredit.ru'
+      - APP_LISTEN_PORT=8000
+      - 'APP_HOMEPAGE_URL=https://voxly.rencredit.ru'
+      - 'COOKIE_DOMAIN=voxly.rencredit.ru'
+      - 'SESSION_KEY=SERVICE_BASE64_64_SESSIONasdasdasd'
+      - 'FORM_ENCRYPTION_KEY=SERVICE_BASE64_64_SESSIONasdasdasd'
+      - 'MONGO_URI=mongodb://mongo:27017/voxly'
+      - REDIS_HOST=keydb
+      - REDIS_PORT=6379
+      - 'REDIS_PASSWORD=keydbpss'
+      - BULL_JOB_ATTEMPTS=3
+      - BULL_JOB_BACKOFF_DELAY=3000
+      - BULL_JOB_BACKOFF_TYPE=fixed
+      - 'UPLOAD_FILE_TYPES=.jpg,.png,.bmp,.gif,.txt,.md,.doc,.docx,.xls,.xlsx,.csv,.ppt,.pptx,.pdf,.mp4,.wmv,.zip,.rar,.7z'
+      - SMTP_FROM=Voxly <voxly@rencredit.ru>
+      - SMTP_HOST=smtp.rccf.ru
+      - SMTP_PORT=25
+      - SMTP_SECURE=false
+      - SMTP_IGNORE_CERT=false
+      - COOKIE_MAX_AGE=1y
+      - SESSION_MAX_AGE=15d
+      - 'KUTT_API_URL=http://kutt:8085/api/v2'
+      - KUTT_API_KEY=gBYtZOz9OzdXLdNevRkEXegidM6wG8v2ZvDx_vog
+      #- 'OPENAI_BASE_URL=https://openrouter.ai/api/v1'
+      #- OPENAI_API_KEY=
+      #- OPENAI_GPT_MODEL=
+      - APP_DISABLE_REGISTRATION=false
+      - DISABLE_LOGIN_WITH_GOOGLE=true
+      - DISABLE_LOGIN_WITH_APPLE=true
+      - PUBLIC_FORM_CACHE_TTL=20m
+      - INTERNAL_FORM_CACHE_TTL=20m
+    volumes:
+      - 'heyform_uploads:/app/static/upload'
+    ports:
+      - 8000:8000
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - 'wget -qO- http://0.0.0.0:8000 || exit 1'
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+  keydb:
+    image: 'eqalpha/keydb:latest'
+    command: 'keydb-server --appendonly yes'
+    environment:
+      - 'KEYDB_PASSWORD=keydbpss'
+    volumes:
+      - 'heyform-keydb-data:/data'
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - keydb-cli
+        - '--pass'
+        - 'keydbpss'
+        - ping
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+  mongo:
+    image: 'mongo:5'
+    restart: always
+    volumes:
+      - 'heyform-mongo-data:/data/db'
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - 'mongosh --eval "db.adminCommand({ ping: 1 })" --quiet || exit 1'
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+  kutt:
+    image: 'kutt/kutt:v3.2.3'
+    container_name: kutt
+    restart: always
+    ports:
+      - '8085:8085'
+    environment:
+      SITE_NAME: Kutt
+      DEFAULT_DOMAIN: voxly.rencredit.ru/kutt
+      APP_URL: 'https://voxly.rencredit.ru/'
+      PORT: 8085
+      DB_TYPE: sqlite
+      DB_FILENAME: /var/lib/kutt/data.sqlite
+      REDIS_ENABLED: 'true'
+      REDIS_HOST: keydb
+      REDIS_PORT: 6379
+      REDIS_PASSWORD: keydbpss
+      JWT_SECRET: Super_secret_string_change_me
+      NODE_ENV: production
+      DISALLOW_ANONYMOUS_LINKS: 'false'
+      DISALLOW_REGISTRATION: 'true'
+    volumes:
+      - 'db_data_sqlite:/var/lib/kutt'
+      - 'custom:/kutt/custom'
+    depends_on:
+      keydb:
+        condition: service_healthy
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - 'wget -qO- http://0.0.0.0:8085 || exit 1'
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+volumes:
+  heyform-keydb-data:
+  heyform-assets:
+  heyform_uploads:
+  heyform-mongo-data:
+  db_data_sqlite:
+  custom:

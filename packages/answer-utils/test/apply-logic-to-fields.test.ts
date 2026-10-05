@@ -79,13 +79,15 @@ const variables: Variable[] = [
     id: 'number_var',
     name: 'Score',
     kind: 'number',
-    value: 0
+    value: 0,
+    logics: []
   },
   {
     id: 'string_var',
     name: 'Name',
     kind: 'string',
-    value: 'Your name is: '
+    value: 'Your name is: ',
+    logics: []
   }
 ]
 

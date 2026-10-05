@@ -16,8 +16,7 @@ import {
   createStoreReducer,
   isFile,
   progressPercentage,
-  replaceHTML,
-  validateLogicField
+  replaceHTML
 } from './utils'
 import { applyLogicToFields } from '@voxly/answer-utils'
 import { helper } from '@voxly/utils'
@@ -159,8 +158,7 @@ const actions: any = {
     const questionCount = fields.filter(f => QUESTION_FIELD_KINDS.includes(f.kind)).length
     const percentage = progressPercentage(Object.keys(newValues).length, questionCount)
 
-    const isTouched = validateLogicField(fields[state.scrollIndex!], state.jumpFieldIds, values)
-    const isScrollNextDisabled = !isTouched || state.scrollIndex! >= fields.length - 1
+    const isScrollNextDisabled = state.scrollIndex! >= fields.length - 1
 
     return {
       ...state,
@@ -222,10 +220,9 @@ const actions: any = {
   },
 
   scrollNext: (state: IState) => {
-    const { scrollIndex, fields, values, jumpFieldIds } = state
-    const isTouched = validateLogicField(fields[scrollIndex!], jumpFieldIds, values)
+    const { scrollIndex, fields } = state
 
-    if (!isTouched || scrollIndex! >= fields.length - 1) {
+    if (scrollIndex! >= fields.length - 1) {
       return {
         ...state,
         isScrollNextDisabled: true

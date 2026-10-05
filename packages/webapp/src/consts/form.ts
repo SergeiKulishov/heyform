@@ -1188,6 +1188,17 @@ export const DEFAULT_COMPARISONS = [
   }
 ]
 
+export const LOGIC_CONNECTORS = [
+  {
+    value: 'and',
+    label: 'form.builder.logic.connector.and'
+  },
+  {
+    value: 'or',
+    label: 'form.builder.logic.connector.or'
+  }
+]
+
 export const ACTIONS = [
   {
     value: 'navigate',

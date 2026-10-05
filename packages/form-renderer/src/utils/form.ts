@@ -10,9 +10,9 @@ import {
 } from '@voxly/shared-types-enums'
 
 import {
+  evaluatePayloadCondition,
   htmlUtils,
   parsePlainAnswer,
-  validateCondition,
   validateRequiredField
 } from '@voxly/answer-utils'
 import { helper, type } from '@voxly/utils'
@@ -267,8 +267,8 @@ export function getNavigateFieldId(
     const result = payloads.filter(p => p.action.kind === ActionEnum.NAVIGATE)
 
     for (const payload of result) {
-      const { condition, action } = payload
-      const isValidated = validateCondition(field, condition, fieldValues)
+      const { action } = payload
+      const isValidated = evaluatePayloadCondition(field, payload, fieldValues)
 
       if (isValidated) {
         const { fieldId } = action as NavigateAction
@@ -284,13 +284,14 @@ export function getNavigateFieldId(
   // Check variables
   for (const variable of variables) {
     if (helper.isValidArray(variable.logics)) {
-      for (const { condition, action } of variable.logics) {
+      for (const payload of variable.logics) {
         const _field: any = {
           id: variable.id,
           kind: variable.kind === 'number' ? FieldKindEnum.NUMBER : FieldKindEnum.SHORT_TEXT
         }
 
-        const isValidated = validateCondition(_field, condition, variableValues)
+        const isValidated = evaluatePayloadCondition(_field, payload, variableValues)
+        const { action } = payload
 
         if (isValidated) {
           const { fieldId } = action as NavigateAction
