@@ -1257,15 +1257,51 @@
   }
 }
 
+@keyframes logic-flow-handle-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.45);
+  }
+
+  50% {
+    box-shadow: 0 0 0 6px rgba(255, 255, 255, 0);
+  }
+}
+
 .logic-flow {
   @apply relative h-full flex-1;
 
   .react-flow__handle {
-    @apply pointer-events-none #{!important};
+    @apply h-3 w-3 cursor-crosshair rounded-full border-2 border-gray-300 bg-white transition-all;
+  }
 
-    &.connectable {
-      @apply cursor-default;
-    }
+  .react-flow__handle:hover {
+    @apply scale-125 border-gray-500;
+  }
+
+  .react-flow__handle-right {
+    animation: logic-flow-handle-pulse 2s ease-in-out 3;
+  }
+
+  .react-flow__handle-connecting {
+    @apply border-primary;
+  }
+
+  .react-flow__edge.selected .react-flow__edge-path {
+    stroke-width: 3;
+  }
+
+  .react-flow__node.flow-node-valid-target .flow-custom-node {
+    @apply ring-2 ring-emerald-500/70;
+  }
+
+  .react-flow__edge .edge-delete-button {
+    @apply opacity-0 transition-opacity;
+  }
+
+  .react-flow__edge:hover .edge-delete-button,
+  .react-flow__edge.selected .edge-delete-button {
+    @apply opacity-100;
   }
 }
 
@@ -1321,6 +1357,10 @@
   @apply border-l-4 border-accent-light pl-2;
 }
 
+.payload-item-focused {
+  @apply rounded-r-lg ring-2 ring-gray-700;
+}
+
 .payload-item-content {
   @apply flex items-center;
 }
@@ -1341,7 +1381,7 @@
 }
 
 .flow-custom-node {
-  @apply h-28 w-56 rounded-lg border border-accent-light bg-foreground p-4 text-sm text-primary transition-all;
+  @apply relative h-28 w-56 rounded-lg border border-accent-light bg-foreground p-4 text-sm text-primary transition-all;
   box-shadow: rgba(0, 0, 0, 0.08) 0 0.125rem 0.25rem,
   rgba(0, 0, 0, 0.06) 0 0.125rem 0.75rem;
 }

@@ -873,6 +873,8 @@
     "suspended": "Suspended",
     "closed": "Closed",
     "duplicate": "{{name}} (Copy)",
+    "export": "Export to file",
+    "exportSuccess": "Form exported",
     "saveAsTemplate": "Save as Template",
     "moveToTrash": "Move to trash",
     "copyLinkToShare": "Copy link to share",
@@ -1702,7 +1704,28 @@
           "legend": {
             "defaultFlow": "Default flow",
             "backwardJump": "Backward jump (ignored)",
-            "brokenJump": "Broken jump"
+            "brokenJump": "Broken jump",
+            "otherwise": "Otherwise branch",
+            "fallback": "Fallback (uncovered answers)"
+          },
+          "connect": {
+            "dragHint": "Drag to create a logic rule",
+            "backwardJump": {
+              "title": "Jump back not allowed",
+              "description": "Logic can only jump to questions after the current one"
+            },
+            "invalid": {
+              "title": "Invalid connection",
+              "description": "This connection cannot be used for logic"
+            },
+            "ruleDeleted": {
+              "title": "Rule deleted",
+              "description": "The logic rule has been removed"
+            },
+            "elseCreated": {
+              "title": "Branch connection created",
+              "description": "This question will now always continue to the selected one"
+            }
           }
         },
         "reorderWarning": {

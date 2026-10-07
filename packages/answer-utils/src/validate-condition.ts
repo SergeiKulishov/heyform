@@ -6,6 +6,7 @@ import {
   FormField,
   LogicCondition,
   LogicPayload,
+  OTHER_ITEM_ID,
   STATEMENT_FIELD_KINDS,
   TextCondition
 } from '@voxly/shared-types-enums'
@@ -122,7 +123,10 @@ function validateChoice(
   const { expected: rawExpected } = condition as TextCondition
 
   const expected = helper.isArray(rawExpected) ? rawExpected : [rawExpected]
-  const value = [...(rawValue?.value || []), rawValue?.other].filter(helper.isValid)
+  const value = [
+    ...(rawValue?.value || []),
+    ...(helper.isValid(rawValue?.other) ? [OTHER_ITEM_ID] : [])
+  ]
 
   switch (condition.comparison) {
     case ComparisonEnum.IS:

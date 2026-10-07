@@ -1,4 +1,4 @@
-import { FieldKindEnum, LogicCondition } from '@voxly/shared-types-enums'
+import { FieldKindEnum, LogicCondition, OTHER_ITEM_ID } from '@voxly/shared-types-enums'
 import dayjs, { type Dayjs } from 'dayjs'
 import { type FC, useCallback, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -100,6 +100,8 @@ const MultipleChoiceCondition: FC<DefaultProps & { field: FormFieldType }> = ({
   onComparisonChange,
   onExpectedChange
 }) => {
+  const { t } = useTranslation()
+
   const options = useMemo(() => {
     if (!field.properties?.allowMultiple) {
       return MULTIPLE_CHOICE_CONDITIONS.filter(
@@ -108,6 +110,24 @@ const MultipleChoiceCondition: FC<DefaultProps & { field: FormFieldType }> = ({
     }
     return MULTIPLE_CHOICE_CONDITIONS
   }, [field.properties?.allowMultiple])
+
+  const expectedOptions = useMemo(() => {
+    const list: AnyMap[] = [...(field.properties?.choices || [])]
+
+    if (field.properties?.allowOther) {
+      list.push({
+        id: OTHER_ITEM_ID,
+        label: field.properties?.otherChoiceLabel || t('form.builder.compose.otherChoice')
+      })
+    }
+
+    return list
+  }, [
+    field.properties?.allowOther,
+    field.properties?.choices,
+    field.properties?.otherChoiceLabel,
+    t
+  ])
 
   const MemoSelect = useMemo(() => {
     if (field.properties?.allowMultiple && SINGLE_CHOICE_CONDITIONS.includes(value?.comparison)) {
@@ -118,7 +138,7 @@ const MultipleChoiceCondition: FC<DefaultProps & { field: FormFieldType }> = ({
       return (
         <Select.Multi
           className="flex-1"
-          options={(field.properties?.choices || []) as AnyMap[]}
+          options={expectedOptions}
           valueKey="id"
           value={currValue}
           onChange={onExpectedChange}
@@ -131,13 +151,13 @@ const MultipleChoiceCondition: FC<DefaultProps & { field: FormFieldType }> = ({
     return (
       <Select
         className="flex-1"
-        options={(field.properties?.choices || []) as AnyMap[]}
+        options={expectedOptions}
         valueKey="id"
         value={currValue}
         onChange={onExpectedChange}
       />
     )
-  }, [field.properties?.allowMultiple, onExpectedChange, value])
+  }, [expectedOptions, field.properties?.allowMultiple, onExpectedChange, value])
 
   return (
     <>

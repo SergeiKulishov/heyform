@@ -8,6 +8,8 @@ import { FormFieldType } from '@/types'
 
 import { QuestionIcon } from '../LeftSidebar/QuestionList'
 
+const EMPTY_VALUE = '__empty__'
+
 interface QuestionSelectProps {
   fields: FormFieldType[]
   value?: string
@@ -37,7 +39,7 @@ export const QuestionSelect: FC<QuestionSelectProps> = ({
     if (allowEmpty) {
       return [
         {
-          value: '',
+          value: EMPTY_VALUE,
           label: placeholder || '—'
         },
         ...list
@@ -47,5 +49,12 @@ export const QuestionSelect: FC<QuestionSelectProps> = ({
     return list
   }, [fields, allowEmpty, placeholder])
 
-  return <Select options={options} value={value} placeholder={placeholder} onChange={onChange} />
+  return (
+    <Select
+      options={options}
+      value={value}
+      placeholder={placeholder}
+      onChange={v => onChange?.(v === EMPTY_VALUE ? '' : v)}
+    />
+  )
 }

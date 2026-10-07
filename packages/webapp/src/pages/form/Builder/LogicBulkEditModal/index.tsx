@@ -48,9 +48,24 @@ function LogicBulkEditComponent() {
       const payloads = values[fieldId]
 
       if (helper.isValidArray(payloads)) {
+        const existing = state.logics?.find(l => l.fieldId === fieldId)
+
         logics.push({
           fieldId,
-          payloads
+          payloads,
+          ...(existing?.defaultNavigate?.fieldId
+            ? { defaultNavigate: { fieldId: existing.defaultNavigate.fieldId } }
+            : {})
+        })
+      }
+    })
+
+    state.logics?.forEach(logic => {
+      if (logic.defaultNavigate?.fieldId && !logics.some(l => l.fieldId === logic.fieldId)) {
+        logics.push({
+          fieldId: logic.fieldId,
+          payloads: [],
+          defaultNavigate: logic.defaultNavigate
         })
       }
     })

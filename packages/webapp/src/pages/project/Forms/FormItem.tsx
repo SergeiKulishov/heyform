@@ -1,6 +1,7 @@
 import {
   IconCopy,
   IconDots,
+  IconDownload,
   IconFolder,
   IconPencil,
   IconRestore,
@@ -19,6 +20,7 @@ import {
   canCreateForms,
   canDeleteForms,
   canEditForms,
+  downloadJson,
   timeFromNow,
   timeToNow,
   useRouter
@@ -26,7 +28,7 @@ import {
 
 import IconLink from '@/assets/link.svg?react'
 import IconMoveTo from '@/assets/move-to.svg?react'
-import { Badge, Button, Dropdown, Tooltip, useAlert, usePrompt } from '@/components'
+import { Badge, Button, Dropdown, Tooltip, useAlert, usePrompt, useToast } from '@/components'
 import { useAppStore, useWorkspaceStore } from '@/store'
 import { FolderType, FormType } from '@/types'
 
@@ -103,6 +105,25 @@ interface FormItemProps {
   onFolderChange?: () => void
 }
 
+function sanitizeFormName(name?: string): string {
+  if (!name) {
+    return ''
+  }
+
+  const cleaned = name
+    .trim()
+    .replace(/\s+/g, '-')
+    .replace(/[/\\]+/g, '')
+
+  return Array.from(cleaned)
+    .filter(char => {
+      const code = char.charCodeAt(0)
+      return code >= 32 && code !== 127
+    })
+    .join('')
+    .slice(0, 60)
+}
+
 const FormItem: FC<FormItemProps> = ({
   form,
   isInTrash,
@@ -115,6 +136,7 @@ const FormItem: FC<FormItemProps> = ({
   const alert = useAlert()
   const prompt = usePrompt()
   const router = useRouter()
+  const toast = useToast()
   const { workspace, sharingURLPrefix } = useWorkspaceStore()
   const { openModal } = useAppStore()
 
@@ -173,6 +195,11 @@ const FormItem: FC<FormItemProps> = ({
               label: 'components.duplicate'
             },
             canEditForms(workspace) && {
+              value: 'export',
+              icon: <IconDownload className="h-4 w-4" />,
+              label: 'form.export'
+            },
+            canEditForms(workspace) && {
               value: 'moveto',
               icon: <IconMoveTo className="h-4 w-4" />,
               label: 'components.moveto'
@@ -212,6 +239,22 @@ const FormItem: FC<FormItemProps> = ({
       const id = await FormService.duplicate(form.id, name)
 
       router.push(`/workspace/${form.teamId}/project/${form.projectId}/form/${id}/create`)
+    },
+    {
+      refreshDeps: [form],
+      manual: true
+    }
+  )
+
+  const { runAsync: handleExport } = useRequest(
+    async () => {
+      const data = await FormService.exportToJSON(form.id)
+      const filename = sanitizeFormName(form.name) || form.id
+
+      downloadJson(data, filename)
+      toast({
+        title: t('form.exportSuccess')
+      })
     },
     {
       refreshDeps: [form],
@@ -381,6 +424,9 @@ const FormItem: FC<FormItemProps> = ({
 
       case 'duplicate':
         return handleDuplicate()
+
+      case 'export':
+        return handleExport()
 
       case 'moveto':
         return handleMoveTo()

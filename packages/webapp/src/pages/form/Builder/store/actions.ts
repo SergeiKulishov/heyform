@@ -26,7 +26,9 @@ import {
   SelectVariableAction,
   SetActiveDesignTabNameAction,
   SetActiveTabNameAction,
+  SetDraftPayloadAction,
   SetFieldsAction,
+  SetFocusPayloadAction,
   SetSyncingAction,
   UpdateFieldAction,
   UpdateNestFieldsAction,
@@ -355,7 +357,7 @@ export function setLogics(state: IState, logics: Logic[] = []): IState {
 }
 
 export function setLogic(state: IState, logic: Logic): IState {
-  if (!helper.isValidArray(logic.payloads)) {
+  if (!helper.isValidArray(logic.payloads) && !logic.defaultNavigate?.fieldId) {
     return deleteLogic(state, logic)
   }
 
@@ -502,5 +504,47 @@ export function setSyncing(state: IState, { isSyncing }: SetSyncingAction['paylo
   return {
     ...state,
     isSyncing
+  }
+}
+
+export function setDraftPayload(
+  state: IState,
+  { fieldId, payload }: SetDraftPayloadAction['payload']
+): IState {
+  return {
+    ...state,
+    draftPayload: { fieldId, payload }
+  }
+}
+
+export function clearDraftPayload(state: IState): IState {
+  if (!state.draftPayload) {
+    return state
+  }
+
+  return {
+    ...state,
+    draftPayload: undefined
+  }
+}
+
+export function setFocusPayload(
+  state: IState,
+  { payloadId }: SetFocusPayloadAction['payload']
+): IState {
+  return {
+    ...state,
+    focusPayloadId: payloadId
+  }
+}
+
+export function clearFocusPayload(state: IState): IState {
+  if (!state.focusPayloadId) {
+    return state
+  }
+
+  return {
+    ...state,
+    focusPayloadId: undefined
   }
 }

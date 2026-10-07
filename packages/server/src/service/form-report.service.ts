@@ -1,7 +1,7 @@
 import { InjectQueue } from '@nestjs/bull'
 import { Injectable } from '@nestjs/common'
 import { InjectModel } from '@nestjs/mongoose'
-import { FieldKindEnum } from '@voxly/shared-types-enums'
+import { FieldKindEnum, OTHER_ITEM_ID } from '@voxly/shared-types-enums'
 import { Queue } from 'bull'
 import { Model } from 'mongoose'
 
@@ -99,6 +99,10 @@ export class FormReportService {
                 values = [answer.value]
               }
 
+              const other = (answer.value as any).other
+              const prevOtherChoice = response.chooses.find(row => row.id === OTHER_ITEM_ID)
+              const prevOtherCount = prevOtherChoice?.count ?? 0
+
               response.chooses = choices!.map(choice => {
                 const count = values.includes(choice.id) ? 1 : 0
                 const prevChoice = response.chooses.find(row => row.id === choice.id)
@@ -109,6 +113,13 @@ export class FormReportService {
                   count: prevCount + count
                 } as any
               })
+
+              if (field.properties?.allowOther) {
+                response.chooses.push({
+                  id: OTHER_ITEM_ID,
+                  count: prevOtherCount + (helper.isValid(other) ? 1 : 0)
+                } as any)
+              }
             }
             break
 

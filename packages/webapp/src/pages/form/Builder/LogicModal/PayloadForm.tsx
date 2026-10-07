@@ -6,10 +6,6 @@ import {
   IconX
 } from '@tabler/icons-react'
 import {
-  ActionEnum,
-  Choice,
-  ComparisonEnum,
-  FieldKindEnum,
   LogicAction,
   LogicCondition,
   LogicConnector,
@@ -20,8 +16,9 @@ import { type FC, type ReactNode, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ReactSortable } from 'react-sortablejs'
 
+import { getDefaultCondition, getLogicPayload } from '../utils'
 import { validatePayload } from '@voxly/answer-utils'
-import { excludeObject, nanoid } from '@voxly/utils'
+import { excludeObject } from '@voxly/utils'
 
 import { Button, Form, Select, Tooltip } from '@/components'
 import { LOGIC_CONNECTORS } from '@/consts'
@@ -55,64 +52,6 @@ const validator = async (rule: any, value: any) => {
   if (!validatePayload(value)) {
     throw new Error(rule.message as string)
   }
-}
-
-function getDefaultCondition(
-  kind?: FieldKindEnum,
-  choices: Choice[] = [],
-  allowMultiple = false
-): LogicCondition {
-  let comparison: ComparisonEnum | string = ComparisonEnum.IS_NOT_EMPTY
-  let expected: any
-
-  switch (kind) {
-    case FieldKindEnum.SHORT_TEXT:
-    case FieldKindEnum.LONG_TEXT:
-    case FieldKindEnum.EMAIL:
-    case FieldKindEnum.PHONE_NUMBER:
-    case FieldKindEnum.URL:
-    case FieldKindEnum.YES_NO:
-    case FieldKindEnum.LEGAL_TERMS:
-    case FieldKindEnum.DATE:
-    case FieldKindEnum.MULTIPLE_CHOICE:
-    case FieldKindEnum.PICTURE_CHOICE:
-      comparison = ComparisonEnum.IS
-      break
-
-    case FieldKindEnum.NUMBER:
-    case FieldKindEnum.RATING:
-    case FieldKindEnum.OPINION_SCALE:
-      comparison = ComparisonEnum.EQUAL
-      break
-
-    default:
-      comparison = ComparisonEnum.IS_NOT_EMPTY
-      break
-  }
-
-  if (FieldKindEnum.LEGAL_TERMS === kind) {
-    expected = true
-  } else if (FieldKindEnum.YES_NO === kind) {
-    expected = choices[0]?.id
-  } else if (FieldKindEnum.MULTIPLE_CHOICE === kind || FieldKindEnum.PICTURE_CHOICE === kind) {
-    expected = allowMultiple ? [choices[0]?.id] : choices[0]?.id
-  }
-
-  return { comparison: comparison as ComparisonEnum, expected } as LogicCondition
-}
-
-function getPayload(
-  kind?: FieldKindEnum,
-  choices: Choice[] = [],
-  allowMultiple = false
-): LogicPayload {
-  return {
-    id: nanoid(12),
-    condition: getDefaultCondition(kind, choices, allowMultiple),
-    action: {
-      kind: ActionEnum.NAVIGATE
-    }
-  } as LogicPayload
 }
 
 function getConditions(value?: LogicPayload): LogicCondition[] {
@@ -193,7 +132,7 @@ export const PayloadItem: FC<PayloadItemProps> = ({
   }
 
   return (
-    <div className="payload-item">
+    <div className="payload-item" data-payload-id={value?.id}>
       <div className="payload-item-content">
         {enableDrag && (
           <IconGripVertical className="rule-drag-handle text-secondary h-5 w-5 cursor-grab" />
@@ -298,7 +237,7 @@ export const PayloadList: FC<PayloadListProps> = ({
       {(listFields, { add, remove, move }) => {
         function handleAdd() {
           add(
-            getPayload(
+            getLogicPayload(
               currentField?.kind,
               currentField?.properties?.choices,
               currentField?.properties?.allowMultiple

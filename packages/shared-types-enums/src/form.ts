@@ -80,6 +80,8 @@ export interface Choice {
   isExpected?: boolean
 }
 
+export const OTHER_ITEM_ID = 'other'
+
 export interface Column {
   id: string
   label: string
@@ -116,6 +118,7 @@ export interface Property {
   choices?: Choice[]
   randomize?: boolean
   other?: string
+  otherChoiceLabel?: string
   badge?: ChoiceBadgeEnum // default is ChoiceBadgeEnum.LETTER
   verticalAlignment?: boolean
 

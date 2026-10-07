@@ -7,6 +7,8 @@ import { cn } from '@/utils'
 import { Modal, Tabs } from '@/components'
 import { useFormStore, useModal } from '@/store'
 
+import { useStoreContext } from '../store'
+
 interface PreviewComponentProps {
   onClose: () => void
 }
@@ -15,18 +17,20 @@ const PreviewComponent: FC<PreviewComponentProps> = () => {
   const { t } = useTranslation()
 
   const { form: rawForm } = useFormStore()
+  const { state } = useStoreContext()
   const [platform, setPlatform] = useState('mobile')
 
   const form: any = useMemo(
     () => ({
       ...rawForm,
       fields: rawForm?.drafts || [],
+      logics: state.logics || rawForm?.logics || [],
       settings: {
         ...rawForm?.settings,
         removeBranding: true
       }
     }),
-    [rawForm]
+    [rawForm, state.logics]
   )
 
   const tabs = useMemo(

@@ -1,10 +1,9 @@
 import { IconAlertTriangle, IconCircleCheck } from '@tabler/icons-react'
 import { flattenFieldsWithGroups } from '@voxly/form-renderer'
-import { FieldKindEnum } from '@voxly/shared-types-enums'
 import { useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { findBrokenNavigatePayloadIds } from '../utils'
+import { findBrokenNavigatePayloadIds, getChoiceCoverage } from '../utils'
 import { htmlUtils } from '@voxly/answer-utils'
 
 import { Button, Form, Modal } from '@/components'
@@ -28,7 +27,16 @@ const LogicComponent = () => {
     [currentField, logics]
   )
 
-  const payloads = useMemo(() => logic?.payloads || [], [logic])
+  const payloads = useMemo(() => {
+    const base = logic?.payloads || []
+    const draft = state.draftPayload
+
+    if (draft && draft.fieldId === currentField?.id && !base.some(p => p.id === draft.payload.id)) {
+      return [...base, draft.payload]
+    }
+
+    return base
+  }, [logic, state.draftPayload, currentField])
   const invalidPayloadIds = useMemo(
     () => findBrokenNavigatePayloadIds(fields, logic ? [logic] : []),
     [fields, logic]
@@ -51,6 +59,28 @@ const LogicComponent = () => {
     setDefaultNavigate(logic?.defaultNavigate?.fieldId)
   }, [logic])
 
+  useEffect(() => {
+    const payloadId = state.focusPayloadId
+
+    if (!payloadId) {
+      return
+    }
+
+    const timer = setTimeout(() => {
+      const el = document.querySelector(`[data-payload-id="${payloadId}"]`)
+
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'center' })
+        el.classList.add('payload-item-focused')
+        setTimeout(() => el.classList.remove('payload-item-focused'), 2000)
+      }
+
+      dispatch({ type: 'clearFocusPayload' })
+    }, 100)
+
+    return () => clearTimeout(timer)
+  }, [state.focusPayloadId, dispatch])
+
   const fallbackText = useMemo(() => {
     if (defaultNavigate) {
       const field = flatFields.find(f => f.id === defaultNavigate)
@@ -66,61 +96,14 @@ const LogicComponent = () => {
     return `${t('form.builder.logic.rule.fallbackNext')} ${htmlUtils.plain(nextField.title as string)}`
   }, [defaultNavigate, flatFields, nextField, t])
 
-  const coverage = useMemo(() => {
-    if (!currentField) {
-      return null
-    }
-
-    const coverageKinds = [
-      FieldKindEnum.MULTIPLE_CHOICE,
-      FieldKindEnum.PICTURE_CHOICE,
-      FieldKindEnum.YES_NO
-    ]
-
-    if (!coverageKinds.includes(currentField.kind)) {
-      return null
-    }
-
-    const choices = currentField.properties?.choices || []
-    const total = currentField.kind === FieldKindEnum.YES_NO ? 2 : choices.length
-
-    if (total === 0) {
-      return null
-    }
-
-    const choiceIds = new Set(choices.map(choice => choice.id))
-    const coveredIds = new Set<string>()
-
-    payloads.forEach(payload => {
-      const conditions = payload.conditions?.length ? payload.conditions : [payload.condition]
-
-      conditions.forEach(condition => {
-        const comparison = condition?.comparison
-
-        if (comparison !== 'is' && comparison !== 'contains') {
-          return
-        }
-
-        const expected = condition?.expected
-        const values = (Array.isArray(expected) ? expected : [expected]).filter(
-          (value): value is string => typeof value === 'string'
-        )
-
-        values.forEach(value => {
-          if (choiceIds.has(value)) {
-            coveredIds.add(value)
-          }
-        })
-      })
-    })
-
-    return {
-      covered: coveredIds.size,
-      total
-    }
-  }, [currentField, payloads])
+  const coverage = useMemo(
+    () => (currentField ? getChoiceCoverage(currentField, payloads) : null),
+    [currentField, payloads]
+  )
 
   function handleClose() {
+    dispatch({ type: 'clearDraftPayload' })
+    dispatch({ type: 'clearFocusPayload' })
     closeModal('LogicModal')
   }
 
@@ -131,6 +114,7 @@ const LogicComponent = () => {
         fieldId: state.currentField!.id
       }
     })
+    dispatch({ type: 'clearDraftPayload' })
   }
 
   function handleSave() {
@@ -147,6 +131,7 @@ const LogicComponent = () => {
         ...(defaultNavigate ? { defaultNavigate: { fieldId: defaultNavigate } } : {})
       }
     })
+    dispatch({ type: 'clearDraftPayload' })
   }
 
   return (

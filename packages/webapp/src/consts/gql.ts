@@ -814,6 +814,12 @@ export const DUPLICATE_FORM_GQL = gql`
   }
 `
 
+export const EXPORT_FORM_GQL = gql`
+  query exportForm($input: ExportFormToJSONInput!) {
+    exportForm(input: $input)
+  }
+`
+
 export const SEARCH_FORM_GQL = gql`
   query searchForms($input: SearchFormInput!) {
     searchForms(input: $input) {

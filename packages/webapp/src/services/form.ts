@@ -26,6 +26,7 @@ import {
   DELETE_FORM_LINK_GQL,
   DELETE_TEAM_TEMPLATE_GQL,
   DUPLICATE_FORM_GQL,
+  EXPORT_FORM_GQL,
   FORMS_GQL,
   FORM_ANALYTIC_GQL,
   FORM_DETAIL_GQL,
@@ -490,6 +491,18 @@ export class FormService {
           name
         }
       }
+    })
+  }
+
+  static async exportToJSON(formId: string) {
+    return apollo.query({
+      query: EXPORT_FORM_GQL,
+      variables: {
+        input: {
+          formId
+        }
+      },
+      fetchPolicy: 'network-only'
     })
   }
 

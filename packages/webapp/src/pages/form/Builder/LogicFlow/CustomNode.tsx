@@ -2,6 +2,7 @@ import { FieldKindEnum } from '@voxly/shared-types-enums'
 import type { FC } from 'react'
 import { memo, useMemo } from 'react'
 import { Handle, Node, Position } from 'react-flow-renderer'
+import { useTranslation } from 'react-i18next'
 
 import { htmlUtils } from '@voxly/answer-utils'
 
@@ -20,19 +21,13 @@ interface CustomNodeProps extends Node {
 const CustomNodeComponent: FC<CustomNodeProps> = ({
   data: { field, isFirstField, isLastField }
 }) => {
+  const { t } = useTranslation()
   const TargetHandle = useMemo(() => {
     if (isFirstField || field.kind === FieldKindEnum.WELCOME) {
       return null
     }
 
-    return (
-      <Handle
-        type="target"
-        position={Position.Left}
-        onConnect={params => console.log('handle onConnect', params)}
-        isConnectable={true}
-      />
-    )
+    return <Handle type="target" position={Position.Left} isConnectable={true} />
   }, [field.kind])
 
   const SourceHandle = useMemo(() => {
@@ -44,11 +39,11 @@ const CustomNodeComponent: FC<CustomNodeProps> = ({
       <Handle
         type="source"
         position={Position.Right}
-        onConnect={params => console.log('handle onConnect', params)}
         isConnectable={true}
+        title={t('form.builder.logic.flow.connect.dragHint')}
       />
     )
-  }, [field.kind])
+  }, [field.kind, t])
 
   return (
     <div className="flow-custom-node">

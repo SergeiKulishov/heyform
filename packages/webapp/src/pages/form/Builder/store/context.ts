@@ -1,4 +1,4 @@
-import type { HiddenField, Logic, Variable } from '@voxly/shared-types-enums'
+import type { HiddenField, Logic, LogicPayload, Variable } from '@voxly/shared-types-enums'
 import { createContext } from 'react'
 
 import { deepEqual } from '@voxly/utils'
@@ -25,6 +25,8 @@ export interface IState {
   parentField?: FormFieldType
 
   logics?: Logic[]
+  draftPayload?: { fieldId: string; payload: LogicPayload }
+  focusPayloadId?: string
   variables?: Variable[]
   selectedVariable?: Variable
 
@@ -112,6 +114,29 @@ export interface DeleteLogicAction {
 export interface ClearLogicAction {
   type: 'cleanLogics'
   payload: any
+}
+
+export interface SetDraftPayloadAction {
+  type: 'setDraftPayload'
+  payload: {
+    fieldId: string
+    payload: LogicPayload
+  }
+}
+
+export interface ClearDraftPayloadAction {
+  type: 'clearDraftPayload'
+}
+
+export interface SetFocusPayloadAction {
+  type: 'setFocusPayload'
+  payload: {
+    payloadId: string
+  }
+}
+
+export interface ClearFocusPayloadAction {
+  type: 'clearFocusPayload'
 }
 
 interface AddVariableAction {
@@ -210,6 +235,10 @@ export type IAction =
   | SetLogicsAction
   | DeleteLogicAction
   | ClearLogicAction
+  | SetDraftPayloadAction
+  | ClearDraftPayloadAction
+  | SetFocusPayloadAction
+  | ClearFocusPayloadAction
   | SetActiveTabNameAction
   | SetActiveDesignTabNameAction
   | CreateHiddenFieldAction
@@ -228,7 +257,10 @@ const SYNC_ACTIONS = [
 ]
 
 function handleAction(state: IState, action: IAction): IState {
-  const result: IState = (actions as Any)[action.type](state, action.payload as unknown as Any)
+  const result: IState = (actions as Any)[action.type](
+    state,
+    'payload' in action ? (action.payload as unknown as Any) : undefined
+  )
 
   if (deepEqual(result, state)) {
     return state
@@ -254,6 +286,10 @@ export const storeReducer = (state: IState, action: IAction) => {
     case 'setLogics':
     case 'deleteLogic':
     case 'cleanLogics':
+    case 'setDraftPayload':
+    case 'clearDraftPayload':
+    case 'setFocusPayload':
+    case 'clearFocusPayload':
     case 'selectVariable':
     case 'addVariable':
     case 'updateVariable':

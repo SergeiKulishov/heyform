@@ -1,4 +1,9 @@
-import { CHOICES_FIELD_KINDS, FieldKindEnum, QUESTION_FIELD_KINDS } from '@voxly/shared-types-enums'
+import {
+  CHOICES_FIELD_KINDS,
+  FieldKindEnum,
+  OTHER_ITEM_ID,
+  QUESTION_FIELD_KINDS
+} from '@voxly/shared-types-enums'
 import { FC, useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
@@ -41,6 +46,8 @@ export const ReportList: FC<ReportListProps> = ({ isHideFieldEnabled }) => {
           row.answers = result.submissions.find((row: any) => row._id === field.id)?.answers
 
           if (choiceKinds.includes(field.kind)) {
+            const otherChoose = (row.chooses || []).find((row: any) => row.id === OTHER_ITEM_ID)
+
             row.chooses = field.properties?.choices?.map(choice => {
               const choose = row.chooses.find((row: any) => row.id === choice.id)
 
@@ -49,6 +56,14 @@ export const ReportList: FC<ReportListProps> = ({ isHideFieldEnabled }) => {
                 ...choice
               }
             })
+
+            if (field.properties?.allowOther) {
+              row.chooses.push({
+                id: OTHER_ITEM_ID,
+                label: t('form.builder.compose.otherChoice'),
+                count: otherChoose?.count ?? 0
+              })
+            }
           }
 
           if (helper.isEmpty(row.chooses)) {
