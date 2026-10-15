@@ -66,13 +66,13 @@ export const RadioGroup: FC<RadioGroupProps> = ({
       )}
       {...restProps}
     >
-      {options.map(option => (
+      {options.map((option, index) => (
         <Radio
-          key={option.value as string}
+          key={option.keyName ?? index}
           {...option}
           enableImage={enableImage}
           isHotkeyShow={isHotkeyShow}
-          isChecked={values.includes(option.value)}
+          isChecked={option.value !== undefined && values.includes(option.value)}
           onClick={handleClickCallback}
         />
       ))}

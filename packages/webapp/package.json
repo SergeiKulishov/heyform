@@ -14,9 +14,9 @@
   "dependencies": {
     "@apollo/client": "^3.11.8",
     "@fortaine/fetch-event-source": "^3.0.6",
-    "@voxly/answer-utils": "https://nexus.nlnano.ru/repository/npm-hosted/@voxly/answer-utils/-/answer-utils-1.4.1.tgz",
-    "@voxly/form-renderer": "https://nexus.nlnano.ru/repository/npm-hosted/@voxly/form-renderer/-/form-renderer-0.8.1.tgz",
-    "@voxly/shared-types-enums": "https://nexus.nlnano.ru/repository/npm-hosted/@voxly/shared-types-enums/-/shared-types-enums-1.4.1.tgz",
+    "@voxly/answer-utils": "https://nexus.nlnano.ru/repository/npm-hosted/@voxly/answer-utils/-/answer-utils-1.4.2.tgz",
+    "@voxly/form-renderer": "https://nexus.nlnano.ru/repository/npm-hosted/@voxly/form-renderer/-/form-renderer-0.8.4.tgz",
+    "@voxly/shared-types-enums": "https://nexus.nlnano.ru/repository/npm-hosted/@voxly/shared-types-enums/-/shared-types-enums-1.4.2.tgz",
     "@voxly/utils": "https://nexus.nlnano.ru/repository/npm-hosted/@voxly/utils/-/utils-1.2.6.tgz",
     "@heyooo-inc/react-router": "^0.0.5",
     "@popperjs/core": "^2.11.8",
@@ -98,11 +98,5 @@
     "vite-bundle-analyzer": "^0.12.1",
     "vite-plugin-svgr": "^4.2.0",
     "vite-plugin-webfont-dl": "^3.9.4"
-  },
-  "pnpm": {
-    "overrides": {
-      "react": "^19.0.0",
-      "react-dom": "^19.0.0"
-    }
   }
 }

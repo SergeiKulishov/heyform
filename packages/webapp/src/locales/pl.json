@@ -1464,6 +1464,8 @@
         "multipleSelection": "Wielokrotny wybór",
         "randomize": "Losuj",
         "allowOther": "Opcja \"Inne\"",
+        "otherChoiceLabel": "Etykieta opcji \"Inne\"",
+        "otherChoiceLabelPlaceholder": "Inne",
         "total": "Razem",
         "labels": "Etykiety",
         "leftLabel": "Lewa etykieta",

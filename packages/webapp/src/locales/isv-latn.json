@@ -1543,6 +1543,8 @@
         "multipleSelection": "Mnòžstveny izbor",
         "randomize": "Nahodne",
         "allowOther": "Opcija \"Ino\"",
+        "otherChoiceLabel": "Tekst opcije \"Ino\"",
+        "otherChoiceLabelPlaceholder": "Ino",
         "total": "Celkovo",
         "labels": "Nadpisy",
         "leftLabel": "Lěvy nadpis",

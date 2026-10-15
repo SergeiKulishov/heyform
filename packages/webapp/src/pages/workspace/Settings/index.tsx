@@ -2,6 +2,8 @@ import { useTranslation } from 'react-i18next'
 
 import { AnchorNavigation } from '@/components'
 
+import ApiTokenModal from './ApiTokenModal'
+import WorkspaceApiTokens from './ApiTokens'
 import BrandKitModal from './BrandKitModal'
 import WorkspaceBranding from './Branding'
 import WorkspaceDeletion from './Deletion'
@@ -37,6 +39,10 @@ export default function WorkspaceSettings() {
                     value: 'permissions'
                   },
                   {
+                    label: t('settings.apiTokens.title'),
+                    value: 'apiTokens'
+                  },
+                  {
                     label: t('settings.deletion.title'),
                     value: 'deletion'
                   }
@@ -48,6 +54,7 @@ export default function WorkspaceSettings() {
               <WorkspaceGeneral />
               <WorkspaceBranding />
               <WorkspacePermissions />
+              <WorkspaceApiTokens />
               <WorkspaceDeletion />
             </div>
           </div>
@@ -55,6 +62,7 @@ export default function WorkspaceSettings() {
       </div>
 
       <BrandKitModal />
+      <ApiTokenModal />
       <WorkspaceDeletionModal />
     </>
   )

@@ -12,16 +12,20 @@ export const YesNo: FC<BlockProps> = ({ field, ...restProps }) => {
   const { state } = useStore()
   const { t } = useTranslation()
 
+  const choices = field.properties?.choices || []
+  const yesId = choices.find(c => c.label === 'Yes')?.id ?? choices[0]?.id
+  const noId = choices.find(c => c.label === 'No')?.id ?? choices[1]?.id
+
   const options = [
     {
       keyName: 'Y',
       label: t('Yes'),
-      value: field.properties?.choices?.find(c => c.label === 'Yes')?.id
+      value: yesId
     },
     {
       keyName: 'N',
       label: t('No'),
-      value: field.properties?.choices?.find(c => c.label === 'No')?.id
+      value: noId
     }
   ]
 

@@ -1464,6 +1464,8 @@
         "multipleSelection": "Sélection multiple",
         "randomize": "Aléatoire",
         "allowOther": "Option \"Autre\"",
+        "otherChoiceLabel": "Libellé de l'option \"Autre\"",
+        "otherChoiceLabelPlaceholder": "Autre",
         "total": "Total",
         "labels": "Étiquettes",
         "leftLabel": "Étiquette gauche",

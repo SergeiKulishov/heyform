@@ -1460,6 +1460,8 @@
         "multipleSelection": "Mehrfachauswahl",
         "randomize": "Zufällig anordnen",
         "allowOther": "\"Andere\" Option",
+        "otherChoiceLabel": "Beschriftung der Option \"Andere\"",
+        "otherChoiceLabelPlaceholder": "Andere",
         "total": "Gesamt",
         "labels": "Beschriftungen",
         "leftLabel": "Linke Beschriftung",

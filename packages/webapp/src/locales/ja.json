@@ -1460,6 +1460,8 @@
         "multipleSelection": "複数選択",
         "randomize": "ランダム化",
         "allowOther": "「その他」オプション",
+        "otherChoiceLabel": "「その他」オプションのラベル",
+        "otherChoiceLabelPlaceholder": "その他",
         "total": "合計",
         "labels": "ラベル",
         "leftLabel": "左ラベル",

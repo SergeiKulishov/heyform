@@ -261,6 +261,20 @@ export default function MultipleChoiceSettings({ field }: RequiredSettingsProps)
         />
       </div>
 
+      {field.properties?.allowOther && (
+        <div className="space-y-1">
+          <label className="text-sm/6" htmlFor="#">
+            {t('form.builder.settings.otherChoiceLabel')}
+          </label>
+          <Input
+            placeholder={t('form.builder.settings.otherChoiceLabelPlaceholder')}
+            maxLength={24}
+            value={field.properties?.otherChoiceLabel}
+            onChange={value => handleChange('otherChoiceLabel', value || undefined)}
+          />
+        </div>
+      )}
+
       <div className="flex items-center justify-between">
         <label className="text-sm/6" htmlFor="#">
           {t('form.builder.settings.multipleChoice.verticalAlignment')}

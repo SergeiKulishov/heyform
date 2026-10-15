@@ -124,6 +124,9 @@ class SharedPropertyInput {
   other?: string
 
   @Field({ nullable: true })
+  otherChoiceLabel?: string
+
+  @Field({ nullable: true })
   numberPreRow?: number
 
   @Field({ nullable: true })
@@ -613,6 +616,9 @@ export class UpdateFormArchiveInput extends FormDetailInput {
 
 @InputType()
 class LogicConditionInput {
+  @Field({ nullable: true })
+  fieldId?: string
+
   @Field()
   @IsEnum(Object.values(ComparisonEnum))
   comparison: string
@@ -893,6 +899,9 @@ export class PropertyType {
 
   @Field({ nullable: true })
   other?: string
+
+  @Field({ nullable: true })
+  otherChoiceLabel?: string
 
   @Field({ nullable: true })
   numberPreRow?: number

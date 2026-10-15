@@ -24,6 +24,7 @@ export { UpdateBrandKitResolver } from './team/update-brand-kit.resolver'
 export { SearchTeamResolver } from './team/search-team.resolver'
 export { UpdatePermissionMatrixResolver } from './team/update-permission-matrix.resolver'
 export { TeamPermissionsResolver } from './team/team-permissions.resolver'
+export { ApiTokenResolver } from './team/api-token.resolver'
 
 export { ProjectsResolver } from './project/projects.resolver'
 export { DeleteProjectCodeResolver } from './project/delete-project-code.resolver'

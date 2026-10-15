@@ -1,6 +1,8 @@
 import { MongooseModule } from '@nestjs/mongoose'
 
 import {
+  ApiTokenModel,
+  ApiTokenSchema,
   AppCodeModel,
   AppCodeSchema,
   AppModel,
@@ -76,6 +78,7 @@ export const ModelModule = MongooseModule.forFeature([
     name: UserSocialAccountModel.name,
     schema: UserSocialAccountSchema
   },
+  { name: ApiTokenModel.name, schema: ApiTokenSchema },
   { name: AppModel.name, schema: AppSchema },
   { name: AppCodeModel.name, schema: AppCodeSchema },
   { name: AppTokenModel.name, schema: AppTokenSchema },

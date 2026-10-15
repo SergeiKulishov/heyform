@@ -1541,6 +1541,39 @@ export const PUBLIC_FORM_GQL = gql`
   }
 `
 
+export const API_TOKENS_GQL = gql`
+  query apiTokens($input: ApiTokenListInput!) {
+    apiTokens(input: $input) {
+      id
+      name
+      prefix
+      scope
+      lastUsedAt
+      createdAt
+    }
+  }
+`
+
+export const CREATE_API_TOKEN_GQL = gql`
+  mutation createApiToken($input: CreateApiTokenInput!) {
+    createApiToken(input: $input) {
+      id
+      name
+      prefix
+      scope
+      lastUsedAt
+      createdAt
+      token
+    }
+  }
+`
+
+export const REVOKE_API_TOKEN_GQL = gql`
+  mutation revokeApiToken($input: RevokeApiTokenInput!) {
+    revokeApiToken(input: $input)
+  }
+`
+
 export const VERIFY_FORM_PASSWORD_GQL = gql`
   query verifyFormPassword($input: VerifyPasswordInput!) {
     verifyFormPassword(input: $input)

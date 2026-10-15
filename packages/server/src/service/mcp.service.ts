@@ -1,0 +1,2139 @@
+import { BadRequestException, Injectable } from '@nestjs/common'
+import {
+  ActionEnum,
+  CHOICES_FIELD_KINDS,
+  ComparisonEnum,
+  FieldKindEnum,
+  FormField,
+  FormStatusEnum,
+  OTHER_ITEM_ID,
+  SubmissionCategoryEnum,
+  SubmissionStatusEnum
+} from '@voxly/shared-types-enums'
+import { Request, Response } from 'express'
+import { z } from 'zod'
+
+import { ApiTokenModel, TeamModel } from '@model'
+import { FormReportService, FormService, ProjectService, SubmissionService } from '@service'
+import { parseUserAgent } from '@utils'
+import { applyLogicToFields, fieldValuesToAnswers, flattenFields } from '@voxly/answer-utils'
+import { nanoid, timestamp } from '@voxly/utils'
+
+interface McpRequest {
+  jsonrpc?: string
+  id?: string | number | null
+  method?: string
+  params?: Record<string, any>
+}
+
+interface McpToolDefinition {
+  name: string
+  description: string
+  inputSchema: Record<string, any>
+  handler: (args: Record<string, any>, context: ToolContext) => Promise<Record<string, any>>
+}
+
+interface ToolContext {
+  teamId: string
+  userId: string
+  tokenScope: string
+}
+
+interface ToolCallResult {
+  content: Array<{ type: 'text'; text: string }>
+  isError?: boolean
+}
+
+const listFormsSchema = z.object({})
+
+const listProjectsSchema = z.object({})
+
+const getFormSchemaSchema = z.object({
+  formId: z.string(),
+  source: z.enum(['published', 'drafts']).optional()
+})
+
+const getFormReportSchema = z.object({
+  formId: z.string()
+})
+
+const listSubmissionsSchema = z.object({
+  formId: z.string(),
+  page: z.number().int().min(1).optional(),
+  limit: z.number().int().min(1).max(100).optional(),
+  isCompleted: z.boolean().optional()
+})
+
+const getSubmissionsSummarySchema = z.object({
+  formId: z.string()
+})
+
+const fieldInputSchema = z.object({
+  id: z.string().optional(),
+  kind: z.string(),
+  title: z.any().optional(),
+  description: z.any().optional(),
+  properties: z.any().optional(),
+  validations: z.any().optional()
+})
+
+const logicPayloadSchema = z.object({
+  id: z.string().optional(),
+  condition: z.record(z.any()).optional(),
+  conditions: z.array(z.record(z.any())).optional(),
+  connector: z.enum(['and', 'or']).optional(),
+  action: z.record(z.any())
+})
+
+const logicRuleSchema = z.object({
+  fieldId: z.string(),
+  payloads: z.array(logicPayloadSchema),
+  defaultNavigate: z.object({ fieldId: z.string() }).optional()
+})
+
+const updateFormLogicSchema = z.object({
+  formId: z.string(),
+  logics: z.array(logicRuleSchema)
+})
+
+const createFormSchema = z.object({
+  name: z.string().min(1),
+  projectId: z.string().optional(),
+  fields: z.array(fieldInputSchema).optional(),
+  logics: z.array(logicRuleSchema).optional()
+})
+
+const submitResponseSchema = z.object({
+  formId: z.string(),
+  answers: z.array(
+    z.object({
+      id: z.string(),
+      value: z.any()
+    })
+  )
+})
+
+const updateFormStatusSchema = z.object({
+  formId: z.string(),
+  status: z.union([z.literal(1), z.literal(2)])
+})
+
+const updateFormFieldsSchema = z.object({
+  formId: z.string(),
+  fields: z.array(fieldInputSchema).min(1)
+})
+
+const updateFormFieldSchema = z.object({
+  formId: z.string(),
+  fieldId: z.string(),
+  title: z.any().optional(),
+  description: z.any().optional(),
+  properties: z.any().optional(),
+  validations: z.any().optional()
+})
+
+const publishFormSchema = z.object({
+  formId: z.string()
+})
+
+const FIELD_KIND_ENUM_VALUES = [
+  'group',
+  'welcome',
+  'thank_you',
+  'statement',
+  'short_text',
+  'long_text',
+  'number',
+  'yes_no',
+  'multiple_choice',
+  'picture_choice',
+  'file_upload',
+  'opinion_scale',
+  'rating',
+  'date',
+  'date_range',
+  'time',
+  'input_table',
+  'matrix',
+  'ranking',
+  'payment',
+  'full_name',
+  'address',
+  'email',
+  'url',
+  'phone_number',
+  'country_selector',
+  'signature',
+  'legal_terms',
+  'submit_date',
+  'hidden_fields',
+  'variable',
+  'hidden_checkbox',
+  'custom_text',
+  'custom_single',
+  'custom_multiple',
+  'custom_date',
+  'custom_number',
+  'custom_checkbox'
+]
+
+const FIELD_KINDS_REFERENCE = {
+  titleFormat: 'string OR array of strings (translations). Example: ["Hello", "Привет"]',
+  answerValueFormat: {
+    common: 'Each answer is { id: fieldId, value: <format below> }',
+    opinion_scale: 'number within [start .. start+total-1], e.g. 4',
+    rating: 'number within [1 .. total]',
+    yes_no: 'boolean true|false',
+    short_text: 'string',
+    long_text: 'string',
+    email: 'string',
+    url: 'string',
+    phone_number: 'string',
+    number: 'number',
+    multiple_choice:
+      'object { value: string[] of choice ids, other?: string } — plain array of ids is also accepted and auto-wrapped',
+    picture_choice: 'same as multiple_choice',
+    date: 'string YYYY-MM-DD',
+    date_range: 'object { start: string, end: string }',
+    time: 'string HH:mm',
+    full_name: 'object { firstName: string, lastName: string }',
+    ranking: 'object { value: string[] of choice ids in ranked order }',
+    matrix: 'object { [rowId]: columnId | columnId[] }',
+    file_upload: 'array of { url or id }'
+  },
+  commonField: {
+    id: 'auto-generated if omitted',
+    kind: 'required, see kinds',
+    title: 'string | string[], required for question kinds',
+    description: 'string | string[], optional',
+    validations: 'object { required?: boolean, min?: number, max?: number }'
+  },
+  systemKinds: [
+    'group',
+    'variable',
+    'hidden_fields',
+    'hidden_checkbox',
+    'submit_date',
+    'custom_text',
+    'custom_single',
+    'custom_multiple',
+    'custom_date',
+    'custom_number',
+    'custom_checkbox'
+  ],
+  kinds: {
+    multiple_choice: {
+      properties: {
+        choices: 'array of { id?: string (auto), label: string }',
+        allowMultiple: 'boolean',
+        allowOther: 'boolean',
+        otherChoiceLabel: 'string, label for Other option',
+        randomize: 'boolean',
+        verticalAlignment: 'boolean',
+        badge: 'string',
+        choiceStyle: 'string'
+      },
+      validations: 'object { required?: boolean, min?: number, max?: number }'
+    },
+    picture_choice: {
+      properties: {
+        choices: 'array of { id?: string (auto), label: string }',
+        allowMultiple: 'boolean',
+        allowOther: 'boolean',
+        otherChoiceLabel: 'string, label for Other option',
+        randomize: 'boolean',
+        verticalAlignment: 'boolean',
+        badge: 'string',
+        choiceStyle: 'string'
+      },
+      validations: 'object { required?: boolean, min?: number, max?: number }'
+    },
+    opinion_scale: {
+      properties: {
+        total: 'number 5-10, default 5 (NOT steps!)',
+        start: 'number 0|1, default 1',
+        leftLabel: 'string (NOT labels array!)',
+        centerLabel: 'string',
+        rightLabel: 'string',
+        shape: 'string',
+        hideMarks: 'boolean'
+      },
+      validations: 'object { required?: boolean }'
+    },
+    rating: {
+      properties: {
+        shape: 'string, e.g. star|circle',
+        total: 'number, default 5'
+      },
+      validations: 'object { required?: boolean }'
+    },
+    yes_no: {
+      properties: {},
+      validations: 'object { required?: boolean }'
+    },
+    short_text: {
+      properties: {},
+      validations: 'object { required?: boolean, min?: number, max?: number }'
+    },
+    long_text: {
+      properties: {},
+      validations: 'object { required?: boolean, min?: number, max?: number }'
+    },
+    email: {
+      properties: {},
+      validations: 'object { required?: boolean }'
+    },
+    url: {
+      properties: {},
+      validations: 'object { required?: boolean }'
+    },
+    number: {
+      properties: {},
+      validations: 'object { required?: boolean, min?: number, max?: number }'
+    },
+    date: {
+      properties: {
+        format: 'string',
+        allowTime: 'boolean',
+        use12Hours: 'boolean'
+      },
+      validations: 'object { required?: boolean }'
+    },
+    date_range: {
+      properties: {
+        format: 'string',
+        allowTime: 'boolean',
+        use12Hours: 'boolean'
+      },
+      validations: 'object { required?: boolean }'
+    },
+    time: {
+      properties: {},
+      validations: 'object { required?: boolean }'
+    },
+    matrix: {
+      properties: {
+        rows: 'array of {id?, label}',
+        matrixColumns: 'array of {id?, label}',
+        matrixType: "'single' | 'multi'"
+      },
+      validations: 'object { required?: boolean }'
+    },
+    ranking: {
+      properties: {
+        choices: 'array of {id?, label}'
+      },
+      validations: 'object { required?: boolean }'
+    },
+    payment: {
+      properties: {
+        currency: 'string',
+        price: 'number'
+      },
+      validations: 'object { required?: boolean }'
+    },
+    phone_number: {
+      properties: {
+        defaultCountryCode: 'string'
+      },
+      validations: 'object { required?: boolean }'
+    },
+    full_name: {
+      properties: {},
+      validations: 'object { required?: boolean }'
+    },
+    address: {
+      properties: {},
+      validations: 'object { required?: boolean }'
+    },
+    country_selector: {
+      properties: {},
+      validations: 'object { required?: boolean }'
+    },
+    signature: {
+      properties: {},
+      validations: 'object { required?: boolean }'
+    },
+    file_upload: {
+      properties: {},
+      validations: 'object { required?: boolean }'
+    },
+    input_table: {
+      properties: {},
+      validations: 'object { required?: boolean }'
+    },
+    legal_terms: {
+      properties: {},
+      validations: 'object { required?: boolean }'
+    },
+    welcome: {
+      properties: {
+        buttonText: 'string',
+        buttonLinkUrl: 'string'
+      },
+      validations: 'object { required?: boolean }'
+    },
+    statement: {
+      properties: {
+        buttonText: 'string'
+      },
+      validations: 'object { required?: boolean }'
+    },
+    thank_you: {
+      properties: {
+        buttonText: 'string',
+        redirectUrl: 'string'
+      },
+      validations: 'object { required?: boolean }'
+    },
+    group: {
+      properties: {},
+      validations: 'object { required?: boolean }'
+    },
+    variable: {
+      properties: {},
+      validations: 'object { required?: boolean }'
+    },
+    hidden_fields: {
+      properties: {},
+      validations: 'object { required?: boolean }'
+    },
+    hidden_checkbox: {
+      properties: {},
+      validations: 'object { required?: boolean }'
+    },
+    submit_date: {
+      properties: {},
+      validations: 'object { required?: boolean }'
+    },
+    custom_text: {
+      properties: {},
+      validations: 'object { required?: boolean }'
+    },
+    custom_single: {
+      properties: {},
+      validations: 'object { required?: boolean }'
+    },
+    custom_multiple: {
+      properties: {},
+      validations: 'object { required?: boolean }'
+    },
+    custom_date: {
+      properties: {},
+      validations: 'object { required?: boolean }'
+    },
+    custom_number: {
+      properties: {},
+      validations: 'object { required?: boolean }'
+    },
+    custom_checkbox: {
+      properties: {},
+      validations: 'object { required?: boolean }'
+    }
+  }
+}
+
+const LOGIC_REFERENCE = {
+  ruleStructure:
+    'One logic rule per source field: { fieldId, payloads: LogicPayload[], defaultNavigate?: { fieldId } }. When a respondent answers the source field, payloads are evaluated in order; the FIRST match navigates. If none match, defaultNavigate applies. No rule = go to next field in order.',
+  payloadStructure:
+    '{ id (auto-generated), condition: { fieldId, comparison, expected }, conditions?: LogicCondition[] (multi-condition, connector "and"|"or"), action: { kind: "navigate", fieldId: destination } }',
+  conditionSourceNote:
+    'condition.fieldId is usually the source field itself (branch on its answer); it may also reference any EARLIER field. Answer values format: see answerValueFormat in get_field_kinds_reference',
+  expectedByKind: {
+    multiple_choice:
+      'choice id OR choice label (auto-resolved to id, case-insensitive); string or string[] for contains/is_not comparisons',
+    picture_choice:
+      'choice id OR choice label (auto-resolved to id, case-insensitive); string or string[] for contains/is_not comparisons',
+    yes_no: 'choice id or label "Yes"/"No" (case-insensitive, auto-resolved)',
+    legal_terms: 'boolean true | false',
+    date: 'string YYYY-MM-DD',
+    number: 'number',
+    rating: 'number',
+    opinion_scale: 'number',
+    short_text: 'string',
+    long_text: 'string',
+    email: 'string',
+    url: 'string',
+    phone_number: 'string',
+    country_selector: 'string',
+    otherKinds: 'no expected (is_empty/is_not_empty only)'
+  },
+  comparisonsByKind: {
+    text: ['is', 'is_not', 'contains', 'does_not_contain', 'starts_with', 'ends_with'],
+    choice: ['is', 'is_not', 'contains', 'does_not_contain'],
+    yes_no_legal_terms: ['is', 'is_not'],
+    date: ['is', 'is_not', 'is_before', 'is_after'],
+    number: [
+      'equal',
+      'not_equal',
+      'greater_than',
+      'less_than',
+      'greater_or_equal_than',
+      'less_or_equal_than'
+    ],
+    other: ['is_empty', 'is_not_empty'],
+    note: 'is_empty/is_not_empty (no expected) are allowed for any question kind'
+  },
+  navigateRules:
+    'Destination must be an EXISTING field AFTER the source field (forward-only: backward targets are ignored at runtime → warning). thank_you is a valid terminator destination. Skipped fields are excluded from submissions.',
+  calcNote: 'CALCULATE actions and variables are not supported yet',
+  example: {
+    fieldId: 'q1',
+    payloads: [
+      {
+        id: 'pl1',
+        condition: {
+          fieldId: 'q1',
+          comparison: 'is',
+          expected: 'yes'
+        },
+        action: {
+          kind: 'navigate',
+          fieldId: 'q2'
+        }
+      },
+      {
+        id: 'pl2',
+        condition: {
+          fieldId: 'q1',
+          comparison: 'is',
+          expected: 'no'
+        },
+        action: {
+          kind: 'navigate',
+          fieldId: 'q3'
+        }
+      }
+    ],
+    defaultNavigate: {
+      fieldId: 'q3'
+    }
+  }
+}
+
+const ALLOWED_PROPERTY_KEYS = [
+  'showButton',
+  'buttonText',
+  'hideMarks',
+  'allowOther',
+  'allowMultiple',
+  'badge',
+  'verticalAlignment',
+  'choices',
+  'randomize',
+  'choiceStyle',
+  'other',
+  'otherChoiceLabel',
+  'numberPreRow',
+  'shape',
+  'total',
+  'start',
+  'leftLabel',
+  'centerLabel',
+  'rightLabel',
+  'defaultCountryCode',
+  'currency',
+  'price',
+  'format',
+  'allowTime',
+  'use12Hours',
+  'tableColumns',
+  'matrixType',
+  'rows',
+  'matrixColumns',
+  'score',
+  'sourceUrl',
+  'buttonLinkUrl',
+  'redirectUrl',
+  'fields'
+]
+
+@Injectable()
+export class McpService {
+  constructor(
+    private readonly formService: FormService,
+    private readonly submissionService: SubmissionService,
+    private readonly formReportService: FormReportService,
+    private readonly projectService: ProjectService
+  ) {}
+
+  async handlePost(req: Request, res: Response): Promise<void> {
+    let requestId: string | number | null = null
+
+    try {
+      const contentType = req.get('content-type') || ''
+      if (!contentType.includes('application/json')) {
+        res.status(415).json({
+          jsonrpc: '2.0',
+          error: { code: -32600, message: 'Unsupported media type' },
+          id: null
+        })
+        return
+      }
+
+      const sessionId = req.headers['mcp-session-id']
+      if (sessionId) {
+        res.status(400).json({
+          jsonrpc: '2.0',
+          error: { code: -32600, message: 'Session ID not allowed in stateless mode' },
+          id: null
+        })
+        return
+      }
+
+      const body = req.body as McpRequest
+      requestId = body?.id ?? null
+
+      if (body.jsonrpc !== '2.0') {
+        res.status(400).json({
+          jsonrpc: '2.0',
+          error: { code: -32600, message: 'Invalid JSON-RPC request' },
+          id: requestId
+        })
+        return
+      }
+
+      if (body.id === undefined) {
+        res.status(202).send()
+        return
+      }
+
+      const team = (req as any).team as TeamModel
+      const apiToken = (req as any).apiToken as ApiTokenModel
+      const context: ToolContext = {
+        teamId: team._id.toString(),
+        userId: apiToken.userId,
+        tokenScope: apiToken.scope
+      }
+
+      const result = await this.handleJsonRpc(body, context)
+      res.set('Content-Type', 'application/json')
+      res.json({
+        jsonrpc: '2.0',
+        result,
+        id: requestId
+      })
+    } catch (err) {
+      if (err instanceof McpError) {
+        res.set('Content-Type', 'application/json')
+        res.json({
+          jsonrpc: '2.0',
+          error: { code: err.code, message: err.message },
+          id: requestId
+        })
+        return
+      }
+
+      const message = err instanceof Error ? err.message : 'Internal error'
+      res.status(500).json({
+        jsonrpc: '2.0',
+        error: { code: -32603, message },
+        id: requestId
+      })
+    }
+  }
+
+  private async handleJsonRpc(
+    request: McpRequest,
+    context: ToolContext
+  ): Promise<Record<string, any> | null> {
+    const method = request.method
+    const params = request.params || {}
+
+    switch (method) {
+      case 'initialize':
+        return {
+          protocolVersion: '2025-03-26',
+          capabilities: { tools: {} },
+          serverInfo: { name: 'heyform-mcp', version: '1.0.0' }
+        }
+
+      case 'ping':
+        return {}
+
+      case 'tools/list':
+        return {
+          tools: this.getTools().map(tool => ({
+            name: tool.name,
+            description: tool.description,
+            inputSchema: tool.inputSchema
+          }))
+        }
+
+      case 'tools/call':
+        return this.handleToolCall(params, context)
+
+      default:
+        throw new McpError(-32601, 'Method not found')
+    }
+  }
+
+  private async handleToolCall(
+    params: Record<string, any>,
+    context: ToolContext
+  ): Promise<ToolCallResult> {
+    const name = params.name
+    const args = params.arguments || {}
+    const tool = this.getTools().find(t => t.name === name)
+
+    if (!tool) {
+      throw new McpError(-32602, `Tool not found: ${name}`)
+    }
+
+    try {
+      const data = await tool.handler(args, context)
+      return {
+        content: [{ type: 'text', text: JSON.stringify(data) }]
+      }
+    } catch (err) {
+      const message = err instanceof Error ? err.message : 'Tool execution failed'
+      return {
+        content: [{ type: 'text', text: JSON.stringify({ error: message }) }],
+        isError: true
+      }
+    }
+  }
+
+  private getTools(): McpToolDefinition[] {
+    return [
+      {
+        name: 'get_field_kinds_reference',
+        description:
+          'Get canonical field kinds reference: valid properties, validations and title format for each field kind. Call this BEFORE create_form or update_form_fields to learn the exact property names.',
+        inputSchema: { type: 'object', properties: {} },
+        handler: async () => FIELD_KINDS_REFERENCE
+      },
+      {
+        name: 'get_logic_reference',
+        description:
+          'Get canonical branching logic reference: rule/payload/condition structure, comparisons and expected value formats per field kind, forward-only navigation rules, and a full example.',
+        inputSchema: { type: 'object', properties: {} },
+        handler: async () => LOGIC_REFERENCE
+      },
+      {
+        name: 'list_projects',
+        description:
+          'List all projects in the workspace with their names and form counts. Use project names to disambiguate forms in list_forms.',
+        inputSchema: { type: 'object', properties: {} },
+        handler: this.listProjects.bind(this)
+      },
+      {
+        name: 'list_forms',
+        description:
+          'List all forms in the team with response counts, each form includes its project name and id',
+        inputSchema: { type: 'object', properties: {} },
+        handler: this.listForms.bind(this)
+      },
+      {
+        name: 'get_form_schema',
+        description:
+          'Get the schema (questions/fields) of a form, including logics (branching rules). Use source=drafts to read unpublished edits',
+        inputSchema: {
+          type: 'object',
+          properties: {
+            formId: { type: 'string', description: 'The form ID' },
+            source: {
+              type: 'string',
+              enum: ['published', 'drafts'],
+              description:
+                "'drafts' returns the exact unpublished state; echo field ids back in update_form_fields to keep submissions linked"
+            }
+          },
+          required: ['formId']
+        },
+        handler: this.getFormSchema.bind(this)
+      },
+      {
+        name: 'get_form_report',
+        description: 'Get aggregated report data for a form',
+        inputSchema: {
+          type: 'object',
+          properties: {
+            formId: { type: 'string', description: 'The form ID' }
+          },
+          required: ['formId']
+        },
+        handler: this.getFormReport.bind(this)
+      },
+      {
+        name: 'list_submissions',
+        description: 'List submissions for a form with pagination',
+        inputSchema: {
+          type: 'object',
+          properties: {
+            formId: { type: 'string', description: 'The form ID' },
+            page: { type: 'integer', minimum: 1, default: 1 },
+            limit: { type: 'integer', minimum: 1, maximum: 100, default: 50 },
+            isCompleted: { type: 'boolean', description: 'Filter by completion status' }
+          },
+          required: ['formId']
+        },
+        handler: this.listSubmissions.bind(this)
+      },
+      {
+        name: 'get_submissions_summary',
+        description: 'Get submission counts and completion rate for a form',
+        inputSchema: {
+          type: 'object',
+          properties: {
+            formId: { type: 'string', description: 'The form ID' }
+          },
+          required: ['formId']
+        },
+        handler: this.getSubmissionsSummary.bind(this)
+      },
+      {
+        name: 'create_form',
+        description:
+          'Create a new form in the team, optionally with full question fields and logics[] for branching. IMPORTANT: call get_field_kinds_reference first — property names are canonical (e.g. opinion_scale uses total/start/leftLabel, not steps/labels) (read_write tokens only)',
+        inputSchema: {
+          type: 'object',
+          properties: {
+            name: { type: 'string', description: 'The form name' },
+            projectId: { type: 'string', description: 'Optional project ID' },
+            fields: {
+              type: 'array',
+              description: 'Optional array of form fields',
+              items: {
+                type: 'object',
+                properties: {
+                  kind: { type: 'string', enum: FIELD_KIND_ENUM_VALUES, description: 'Field kind' },
+                  title: { description: 'Field title' },
+                  description: { description: 'Field description' },
+                  properties: {
+                    type: 'object',
+                    description:
+                      'Field-type-specific properties. See get_field_kinds_reference. Common: choices/allowOther/total/start/leftLabel/rightLabel',
+                    additionalProperties: true
+                  },
+                  validations: { description: 'Field validations' }
+                },
+                required: ['kind']
+              }
+            },
+            logics: {
+              type: 'array',
+              description: 'Optional array of branching logic rules. See get_logic_reference.',
+              items: {
+                type: 'object',
+                properties: {
+                  fieldId: { type: 'string', description: 'Source field id' },
+                  payloads: {
+                    type: 'array',
+                    description: 'Payloads evaluated in order',
+                    items: {
+                      type: 'object',
+                      properties: {
+                        id: {
+                          type: 'string',
+                          description: 'Optional payload id (auto-generated if omitted)'
+                        },
+                        condition: {
+                          type: 'object',
+                          properties: {
+                            fieldId: {
+                              type: 'string',
+                              description: 'Field id to evaluate (source or earlier field)'
+                            },
+                            comparison: { type: 'string', description: 'Comparison operator' },
+                            expected: { description: 'Expected value' }
+                          },
+                          required: ['fieldId', 'comparison']
+                        },
+                        conditions: {
+                          type: 'array',
+                          description: 'Additional conditions for multi-condition logic',
+                          items: {
+                            type: 'object',
+                            properties: {
+                              fieldId: { type: 'string', description: 'Field id to evaluate' },
+                              comparison: { type: 'string', description: 'Comparison operator' },
+                              expected: { description: 'Expected value' }
+                            },
+                            required: ['fieldId', 'comparison']
+                          }
+                        },
+                        connector: {
+                          type: 'string',
+                          enum: ['and', 'or'],
+                          description: 'Connector for multiple conditions'
+                        },
+                        action: {
+                          type: 'object',
+                          properties: {
+                            kind: {
+                              type: 'string',
+                              enum: ['navigate'],
+                              description: 'Action kind'
+                            },
+                            fieldId: { type: 'string', description: 'Destination field id' }
+                          },
+                          required: ['kind', 'fieldId']
+                        }
+                      },
+                      required: ['action']
+                    }
+                  },
+                  defaultNavigate: {
+                    type: 'object',
+                    properties: {
+                      fieldId: { type: 'string', description: 'Default destination field id' }
+                    },
+                    required: ['fieldId']
+                  }
+                },
+                required: ['fieldId', 'payloads']
+              }
+            }
+          },
+          required: ['name']
+        },
+        handler: this.createForm.bind(this)
+      },
+      {
+        name: 'submit_response',
+        description:
+          'Submit answers to a form programmatically (read_write tokens only). Answer value formats per field kind are documented in get_field_kinds_reference (answerValueFormat)',
+        inputSchema: {
+          type: 'object',
+          properties: {
+            formId: { type: 'string', description: 'The form ID' },
+            answers: {
+              type: 'array',
+              items: {
+                type: 'object',
+                properties: {
+                  id: { type: 'string', description: 'Field ID' },
+                  value: { description: 'Answer value' }
+                },
+                required: ['id', 'value']
+              },
+              description: 'Array of answer objects'
+            }
+          },
+          required: ['formId', 'answers']
+        },
+        handler: this.submitResponse.bind(this)
+      },
+      {
+        name: 'update_form_status',
+        description: 'Update form status (1 = normal, 2 = trash) (read_write tokens only)',
+        inputSchema: {
+          type: 'object',
+          properties: {
+            formId: { type: 'string', description: 'The form ID' },
+            status: {
+              type: 'integer',
+              enum: [1, 2],
+              description: '1 for normal, 2 for trash'
+            }
+          },
+          required: ['formId', 'status']
+        },
+        handler: this.updateFormStatus.bind(this)
+      },
+      {
+        name: 'update_form_fields',
+        description:
+          'Replace all form questions (drafts) with provided fields. IMPORTANT: call get_field_kinds_reference first — property names are canonical (read_write tokens only)',
+        inputSchema: {
+          type: 'object',
+          properties: {
+            formId: { type: 'string', description: 'The form ID' },
+            fields: {
+              type: 'array',
+              description: 'Array of form fields',
+              items: {
+                type: 'object',
+                properties: {
+                  kind: { type: 'string', enum: FIELD_KIND_ENUM_VALUES, description: 'Field kind' },
+                  title: { description: 'Field title' },
+                  description: { description: 'Field description' },
+                  properties: {
+                    type: 'object',
+                    description:
+                      'Field-type-specific properties. See get_field_kinds_reference. Common: choices/allowOther/total/start/leftLabel/rightLabel',
+                    additionalProperties: true
+                  },
+                  validations: { description: 'Field validations' }
+                },
+                required: ['kind']
+              }
+            }
+          },
+          required: ['formId', 'fields']
+        },
+        handler: this.updateFormFields.bind(this)
+      },
+      {
+        name: 'update_form_field',
+        description:
+          'Update a single field in form drafts by id (title, description, properties, validations). Properties and validations are shallow-merged: provided keys override, others untouched. Read current state via get_form_schema with source=drafts (read_write tokens only)',
+        inputSchema: {
+          type: 'object',
+          properties: {
+            formId: { type: 'string', description: 'The form ID' },
+            fieldId: { type: 'string', description: 'The field ID' },
+            title: { description: 'Field title' },
+            description: { description: 'Field description' },
+            properties: {
+              type: 'object',
+              description:
+                'Field-type-specific properties. Shallow-merged with existing properties.',
+              additionalProperties: true
+            },
+            validations: {
+              type: 'object',
+              description: 'Field validations. Shallow-merged with existing validations.'
+            }
+          },
+          required: ['formId', 'fieldId']
+        },
+        handler: this.updateFormField.bind(this)
+      },
+      {
+        name: 'update_form_logic',
+        description:
+          'Replace the entire form logic (branching rules). Semantic validation: field/choice references, per-kind comparisons, forward-only navigation. Answer value formats: get_field_kinds_reference. Logic rules reference: get_logic_reference. (read_write tokens only)',
+        inputSchema: {
+          type: 'object',
+          properties: {
+            formId: { type: 'string', description: 'The form ID' },
+            logics: {
+              type: 'array',
+              description: 'Array of logic rules',
+              items: {
+                type: 'object',
+                properties: {
+                  fieldId: { type: 'string', description: 'Source field id' },
+                  payloads: {
+                    type: 'array',
+                    description: 'Payloads evaluated in order',
+                    items: {
+                      type: 'object',
+                      properties: {
+                        id: {
+                          type: 'string',
+                          description: 'Optional payload id (auto-generated if omitted)'
+                        },
+                        condition: {
+                          type: 'object',
+                          properties: {
+                            fieldId: {
+                              type: 'string',
+                              description: 'Field id to evaluate (source or earlier field)'
+                            },
+                            comparison: { type: 'string', description: 'Comparison operator' },
+                            expected: { description: 'Expected value' }
+                          },
+                          required: ['fieldId', 'comparison']
+                        },
+                        conditions: {
+                          type: 'array',
+                          description: 'Additional conditions for multi-condition logic',
+                          items: {
+                            type: 'object',
+                            properties: {
+                              fieldId: { type: 'string', description: 'Field id to evaluate' },
+                              comparison: { type: 'string', description: 'Comparison operator' },
+                              expected: { description: 'Expected value' }
+                            },
+                            required: ['fieldId', 'comparison']
+                          }
+                        },
+                        connector: {
+                          type: 'string',
+                          enum: ['and', 'or'],
+                          description: 'Connector for multiple conditions'
+                        },
+                        action: {
+                          type: 'object',
+                          properties: {
+                            kind: {
+                              type: 'string',
+                              enum: ['navigate'],
+                              description: 'Action kind'
+                            },
+                            fieldId: { type: 'string', description: 'Destination field id' }
+                          },
+                          required: ['kind', 'fieldId']
+                        }
+                      },
+                      required: ['action']
+                    }
+                  },
+                  defaultNavigate: {
+                    type: 'object',
+                    properties: {
+                      fieldId: { type: 'string', description: 'Default destination field id' }
+                    },
+                    required: ['fieldId']
+                  }
+                },
+                required: ['fieldId', 'payloads']
+              }
+            }
+          },
+          required: ['formId', 'logics']
+        },
+        handler: this.updateFormLogic.bind(this)
+      },
+      {
+        name: 'publish_form',
+        description:
+          'Publish a form: activate it and copy drafts to published fields (read_write tokens only)',
+        inputSchema: {
+          type: 'object',
+          properties: {
+            formId: { type: 'string', description: 'The form ID' }
+          },
+          required: ['formId']
+        },
+        handler: this.publishForm.bind(this)
+      }
+    ]
+  }
+
+  private async findFormInTeam(formId: string, teamId: string) {
+    const form = await this.formService.findById(formId)
+    if (!form || form.teamId !== teamId) {
+      throw new Error('Form not found')
+    }
+    return form
+  }
+
+  private requireWriteScope(scope: string): void {
+    if (scope !== 'read_write') {
+      throw new Error('Token is read-only')
+    }
+  }
+
+  private buildFormFields(
+    fields: any[],
+    existingDrafts: any[] = []
+  ): { fields: any[]; warnings: string[] } {
+    const validKinds = Object.values(FieldKindEnum)
+    const warnings: string[] = []
+
+    const getTitle = (title: any): any => (Array.isArray(title) ? title[0] : title)
+
+    const builtFields = fields.map(field => {
+      const kind = field.kind
+      const fieldRef = field.id || kind
+
+      if (!kind || !validKinds.includes(kind)) {
+        throw new Error(`Invalid field kind: ${kind}`)
+      }
+
+      if (kind !== FieldKindEnum.WELCOME && kind !== FieldKindEnum.THANK_YOU && !field.title) {
+        throw new Error('Field title is required')
+      }
+
+      let fieldId = field.id
+      if (!fieldId) {
+        const existingField = existingDrafts.find(
+          (f: any) => f.kind === kind && getTitle(f.title) === getTitle(field.title)
+        )
+        if (existingField) {
+          fieldId = existingField.id
+          warnings.push(`field '${kind}': matched existing field by kind+title, preserved id`)
+        } else {
+          fieldId = nanoid(12)
+        }
+      }
+
+      let properties = { ...(field.properties || {}) }
+
+      if (kind === FieldKindEnum.OPINION_SCALE || kind === FieldKindEnum.RATING) {
+        if (properties.steps !== undefined && properties.total === undefined) {
+          properties.total = properties.steps
+          delete properties.steps
+          warnings.push(`field '${fieldRef}': 'steps' normalized to 'total'`)
+        }
+
+        if (
+          Array.isArray(properties.labels) &&
+          properties.labels.length === 2 &&
+          typeof properties.labels[0] === 'string' &&
+          typeof properties.labels[1] === 'string' &&
+          properties.leftLabel === undefined &&
+          properties.rightLabel === undefined
+        ) {
+          properties.leftLabel = properties.labels[0]
+          properties.rightLabel = properties.labels[1]
+          delete properties.labels
+          warnings.push(`field '${fieldRef}': 'labels' normalized to 'leftLabel'/'rightLabel'`)
+        }
+
+        if (kind === FieldKindEnum.OPINION_SCALE && properties.start === undefined) {
+          properties.start = 1
+        }
+      }
+
+      if (
+        properties.choices &&
+        (kind === FieldKindEnum.MULTIPLE_CHOICE || kind === FieldKindEnum.PICTURE_CHOICE)
+      ) {
+        const existingField = existingDrafts.find((f: any) => f.id === fieldId)
+        const existingChoices = existingField?.properties?.choices || []
+        properties = {
+          ...properties,
+          choices: properties.choices.map((choice: any) => {
+            if (choice.id) {
+              return choice
+            }
+            const existingChoice = existingChoices.find((c: any) => c.label === choice.label)
+            if (existingChoice) {
+              warnings.push(
+                `field '${kind}': choice '${choice.label}' matched existing choice, preserved id`
+              )
+              return { ...choice, id: existingChoice.id }
+            }
+            return { ...choice, id: nanoid(12) }
+          })
+        }
+      }
+
+      if (kind === FieldKindEnum.YES_NO) {
+        const hasChoices = Array.isArray(properties.choices) && properties.choices.length > 0
+        if (!hasChoices) {
+          properties.choices = [
+            { id: nanoid(8), label: 'Yes' },
+            { id: nanoid(8), label: 'No' }
+          ]
+          warnings.push(
+            `field '${field.id || getTitle(field.title) || fieldRef}': auto-provisioned Yes/No choices`
+          )
+        }
+      }
+
+      const whitelisted: Record<string, any> = {}
+      for (const key of Object.keys(properties)) {
+        if (ALLOWED_PROPERTY_KEYS.includes(key)) {
+          whitelisted[key] = properties[key]
+        } else {
+          warnings.push(`field '${fieldRef}': dropped unknown property '${key}'`)
+        }
+      }
+
+      return {
+        ...field,
+        id: fieldId,
+        properties: whitelisted,
+        validations: field.validations || { required: false }
+      }
+    })
+
+    return { fields: builtFields, warnings }
+  }
+
+  private validateAndNormalizeLogics(logics: any[], fields: any[], warnings: string[]): any[] {
+    const flatFields = flattenFields(fields, true)
+    const fieldMap = new Map<string, { field: any; index: number }>()
+    flatFields.forEach((field, index) => fieldMap.set(field.id, { field, index }))
+
+    const seenSourceIds = new Set<string>()
+    const normalizedLogics: any[] = []
+
+    for (const rule of logics) {
+      if (!rule || typeof rule !== 'object') {
+        throw new BadRequestException('Logic rule must be an object')
+      }
+
+      const sourceFieldInfo = fieldMap.get(rule.fieldId)
+      if (!sourceFieldInfo) {
+        throw new BadRequestException(`Source field ${rule.fieldId} not found`)
+      }
+
+      if (seenSourceIds.has(rule.fieldId)) {
+        throw new BadRequestException(`Duplicate logic rule for field ${rule.fieldId}`)
+      }
+      seenSourceIds.add(rule.fieldId)
+
+      const sourceIndex = sourceFieldInfo.index
+      const normalizedPayloads: any[] = []
+
+      for (const payload of rule.payloads || []) {
+        if (!payload || typeof payload !== 'object') {
+          throw new BadRequestException('Logic payload must be an object')
+        }
+
+        if (!payload.id) {
+          payload.id = nanoid(8)
+        }
+
+        let condition = payload.condition
+        let conditions = payload.conditions
+        let connector = payload.connector
+
+        if (
+          (!condition || typeof condition !== 'object') &&
+          Array.isArray(conditions) &&
+          conditions.length > 0
+        ) {
+          condition = conditions[0]
+        }
+
+        if (Array.isArray(conditions) && conditions.length > 0) {
+          connector = connector === 'or' ? 'or' : 'and'
+        } else {
+          conditions = undefined
+          connector = undefined
+        }
+
+        this.validateLogicCondition(condition, sourceIndex, fieldMap, warnings)
+
+        if (conditions) {
+          for (const c of conditions) {
+            this.validateLogicCondition(c, sourceIndex, fieldMap, warnings)
+          }
+        }
+
+        const action = payload.action
+        if (!action || typeof action !== 'object') {
+          throw new BadRequestException('Payload action is required')
+        }
+
+        if (action.kind !== ActionEnum.NAVIGATE) {
+          throw new BadRequestException('Only navigate actions are supported for now')
+        }
+
+        this.validateNavigateTarget(action.fieldId, sourceIndex, fieldMap, rule.fieldId, warnings)
+
+        const normalizedPayload: Record<string, any> = {
+          id: payload.id,
+          condition,
+          action: {
+            kind: ActionEnum.NAVIGATE,
+            fieldId: action.fieldId
+          }
+        }
+
+        if (Array.isArray(conditions) && conditions.length > 0) {
+          normalizedPayload.conditions = conditions
+          normalizedPayload.connector = connector
+        }
+
+        normalizedPayloads.push(normalizedPayload)
+      }
+
+      let defaultNavigate = undefined
+      if (rule.defaultNavigate && typeof rule.defaultNavigate === 'object') {
+        this.validateNavigateTarget(
+          rule.defaultNavigate.fieldId,
+          sourceIndex,
+          fieldMap,
+          rule.fieldId,
+          warnings
+        )
+        defaultNavigate = { fieldId: rule.defaultNavigate.fieldId }
+      }
+
+      normalizedLogics.push({
+        fieldId: rule.fieldId,
+        payloads: normalizedPayloads,
+        defaultNavigate
+      })
+    }
+
+    return normalizedLogics
+  }
+
+  private validateLogicCondition(
+    condition: any,
+    sourceIndex: number,
+    fieldMap: Map<string, { field: any; index: number }>,
+    warnings: string[]
+  ): void {
+    if (!condition || typeof condition !== 'object') {
+      throw new BadRequestException('Logic condition is required')
+    }
+
+    const conditionFieldInfo = fieldMap.get(condition.fieldId)
+    if (!conditionFieldInfo) {
+      throw new BadRequestException(`Condition field ${condition.fieldId} not found`)
+    }
+
+    if (conditionFieldInfo.index > sourceIndex) {
+      throw new BadRequestException(
+        `Condition field ${condition.fieldId} must be the source field or an earlier field`
+      )
+    }
+
+    const kind = conditionFieldInfo.field.kind as FieldKindEnum
+    if (!this.isQuestionKind(kind)) {
+      throw new BadRequestException(`Logic conditions are not supported for field kind ${kind}`)
+    }
+
+    const comparison = condition.comparison
+    const allowedComparisons = this.getAllowedComparisons(kind)
+    if (!allowedComparisons.includes(comparison)) {
+      throw new BadRequestException(
+        `Invalid comparison '${comparison}' for kind ${kind}. Allowed: ${allowedComparisons.join(', ')}`
+      )
+    }
+
+    if (kind === FieldKindEnum.YES_NO) {
+      const field = conditionFieldInfo.field
+      if (
+        !field.properties?.choices ||
+        !Array.isArray(field.properties.choices) ||
+        field.properties.choices.length === 0
+      ) {
+        if (!field.properties) {
+          field.properties = {}
+        }
+        field.properties.choices = [
+          { id: nanoid(8), label: 'Yes' },
+          { id: nanoid(8), label: 'No' }
+        ]
+        warnings.push(`field '${field.id}': auto-provisioned Yes/No choices for logic`)
+      }
+    }
+
+    if (comparison === ComparisonEnum.IS_EMPTY || comparison === ComparisonEnum.IS_NOT_EMPTY) {
+      delete condition.expected
+      return
+    }
+
+    const expected = condition.expected
+
+    if (kind === FieldKindEnum.MULTIPLE_CHOICE || kind === FieldKindEnum.PICTURE_CHOICE) {
+      const values = Array.isArray(expected) ? expected : [expected]
+      const resolved: string[] = []
+      for (const val of values) {
+        if (typeof val !== 'string') {
+          throw new BadRequestException(
+            `Expected choice value must be a string in field ${condition.fieldId}`
+          )
+        }
+        const choice = this.resolveChoice(conditionFieldInfo.field, val)
+        if (!choice) {
+          throw new BadRequestException(
+            `Choice "${val}" not found in field ${condition.fieldId} (use get_form_schema to see choice ids/labels)`
+          )
+        }
+        if (choice.resolvedByLabel) {
+          warnings.push(`choice label "${val}" resolved to id ${choice.id}`)
+        }
+        resolved.push(choice.id)
+      }
+      condition.expected = Array.isArray(expected) ? resolved : resolved[0]
+    } else if (kind === FieldKindEnum.YES_NO) {
+      if (typeof expected === 'boolean') {
+        const yesChoice = conditionFieldInfo.field.properties.choices.find(
+          (c: any) => c.label?.toLowerCase() === 'yes'
+        )
+        const noChoice = conditionFieldInfo.field.properties.choices.find(
+          (c: any) => c.label?.toLowerCase() === 'no'
+        )
+        condition.expected = expected ? yesChoice?.id : noChoice?.id
+      } else if (typeof expected === 'string') {
+        const lower = expected.toLowerCase()
+        if (lower === 'yes' || lower === 'no') {
+          const targetLabel = lower === 'yes' ? 'yes' : 'no'
+          const choice = conditionFieldInfo.field.properties.choices.find(
+            (c: any) => c.label?.toLowerCase() === targetLabel
+          )
+          if (!choice) {
+            throw new BadRequestException(
+              `Choice "${expected}" not found in field ${condition.fieldId}`
+            )
+          }
+          warnings.push(`choice label "${expected}" resolved to id ${choice.id}`)
+          condition.expected = choice.id
+        } else {
+          const choice = this.resolveChoice(conditionFieldInfo.field, expected)
+          if (!choice) {
+            throw new BadRequestException(
+              `Choice "${expected}" not found in field ${condition.fieldId} (use get_form_schema to see choice ids/labels)`
+            )
+          }
+          if (choice.resolvedByLabel) {
+            warnings.push(`choice label "${expected}" resolved to id ${choice.id}`)
+          }
+          condition.expected = choice.id
+        }
+      } else {
+        throw new BadRequestException(
+          `Expected value for yes_no must be a boolean or string in field ${condition.fieldId}`
+        )
+      }
+    } else if (kind === FieldKindEnum.LEGAL_TERMS) {
+      if (typeof expected !== 'boolean') {
+        throw new BadRequestException(
+          `Expected value for legal_terms must be a boolean in field ${condition.fieldId}`
+        )
+      }
+    } else if (kind === FieldKindEnum.DATE) {
+      if (typeof expected !== 'string' || !/^\d{4}-\d{2}-\d{2}$/.test(expected)) {
+        throw new BadRequestException(
+          `Expected value for date must be YYYY-MM-DD in field ${condition.fieldId}`
+        )
+      }
+    } else if (
+      [FieldKindEnum.NUMBER, FieldKindEnum.RATING, FieldKindEnum.OPINION_SCALE].includes(kind)
+    ) {
+      if (typeof expected === 'string' && !isNaN(Number(expected))) {
+        warnings.push(
+          `expected value "${expected}" converted to number for field ${condition.fieldId}`
+        )
+        condition.expected = Number(expected)
+      } else if (typeof expected !== 'number' || isNaN(expected)) {
+        throw new BadRequestException(
+          `Expected value for ${kind} must be a number in field ${condition.fieldId}`
+        )
+      }
+    } else if (this.isTextKind(kind)) {
+      if (typeof expected !== 'string') {
+        throw new BadRequestException(
+          `Expected value for ${kind} must be a string in field ${condition.fieldId}`
+        )
+      }
+    } else {
+      throw new BadRequestException(
+        `Expected value not supported for kind ${kind} (use is_empty/is_not_empty only)`
+      )
+    }
+  }
+
+  private resolveChoice(
+    field: any,
+    value: string
+  ): { id: string; resolvedByLabel: boolean } | null {
+    const choices = field.properties?.choices || []
+    const byId = choices.find((c: any) => c.id === value)
+    if (byId) {
+      return { id: byId.id, resolvedByLabel: false }
+    }
+    const byLabel = choices.find(
+      (c: any) => c.label && c.label.toLowerCase() === value.toLowerCase()
+    )
+    if (byLabel) {
+      return { id: byLabel.id, resolvedByLabel: true }
+    }
+    return null
+  }
+
+  private isQuestionKind(kind: FieldKindEnum): boolean {
+    const nonQuestionKinds = [
+      FieldKindEnum.GROUP,
+      FieldKindEnum.WELCOME,
+      FieldKindEnum.THANK_YOU,
+      FieldKindEnum.STATEMENT,
+      FieldKindEnum.VARIABLE,
+      FieldKindEnum.HIDDEN_FIELDS,
+      FieldKindEnum.HIDDEN_CHECKBOX,
+      FieldKindEnum.SUBMIT_DATE,
+      FieldKindEnum.CUSTOM_TEXT,
+      FieldKindEnum.CUSTOM_SINGLE,
+      FieldKindEnum.CUSTOM_MULTIPLE,
+      FieldKindEnum.CUSTOM_DATE,
+      FieldKindEnum.CUSTOM_NUMBER,
+      FieldKindEnum.CUSTOM_CHECKBOX
+    ]
+    return !nonQuestionKinds.includes(kind)
+  }
+
+  private isTextKind(kind: FieldKindEnum): boolean {
+    return [
+      FieldKindEnum.SHORT_TEXT,
+      FieldKindEnum.LONG_TEXT,
+      FieldKindEnum.EMAIL,
+      FieldKindEnum.URL,
+      FieldKindEnum.PHONE_NUMBER,
+      FieldKindEnum.COUNTRY
+    ].includes(kind)
+  }
+
+  private getAllowedComparisons(kind: FieldKindEnum): ComparisonEnum[] {
+    if (this.isTextKind(kind)) {
+      return [
+        ComparisonEnum.IS,
+        ComparisonEnum.IS_NOT,
+        ComparisonEnum.CONTAINS,
+        ComparisonEnum.DOES_NOT_CONTAIN,
+        ComparisonEnum.STARTS_WITH,
+        ComparisonEnum.ENDS_WITH,
+        ComparisonEnum.IS_EMPTY,
+        ComparisonEnum.IS_NOT_EMPTY
+      ]
+    }
+
+    if (kind === FieldKindEnum.MULTIPLE_CHOICE || kind === FieldKindEnum.PICTURE_CHOICE) {
+      return [
+        ComparisonEnum.IS,
+        ComparisonEnum.IS_NOT,
+        ComparisonEnum.CONTAINS,
+        ComparisonEnum.DOES_NOT_CONTAIN,
+        ComparisonEnum.IS_EMPTY,
+        ComparisonEnum.IS_NOT_EMPTY
+      ]
+    }
+
+    if (kind === FieldKindEnum.YES_NO || kind === FieldKindEnum.LEGAL_TERMS) {
+      return [
+        ComparisonEnum.IS,
+        ComparisonEnum.IS_NOT,
+        ComparisonEnum.IS_EMPTY,
+        ComparisonEnum.IS_NOT_EMPTY
+      ]
+    }
+
+    if (kind === FieldKindEnum.DATE) {
+      return [
+        ComparisonEnum.IS,
+        ComparisonEnum.IS_NOT,
+        ComparisonEnum.IS_BEFORE,
+        ComparisonEnum.IS_AFTER,
+        ComparisonEnum.IS_EMPTY,
+        ComparisonEnum.IS_NOT_EMPTY
+      ]
+    }
+
+    if (
+      kind === FieldKindEnum.NUMBER ||
+      kind === FieldKindEnum.RATING ||
+      kind === FieldKindEnum.OPINION_SCALE
+    ) {
+      return [
+        ComparisonEnum.EQUAL,
+        ComparisonEnum.NOT_EQUAL,
+        ComparisonEnum.GREATER_THAN,
+        ComparisonEnum.LESS_THAN,
+        ComparisonEnum.GREATER_OR_EQUAL_THAN,
+        ComparisonEnum.LESS_OR_EQUAL_THAN,
+        ComparisonEnum.IS_EMPTY,
+        ComparisonEnum.IS_NOT_EMPTY
+      ]
+    }
+
+    return [ComparisonEnum.IS_EMPTY, ComparisonEnum.IS_NOT_EMPTY]
+  }
+
+  private validateNavigateTarget(
+    targetId: string,
+    sourceIndex: number,
+    fieldMap: Map<string, { field: any; index: number }>,
+    sourceFieldId: string,
+    warnings: string[]
+  ): void {
+    if (!targetId) {
+      throw new BadRequestException('Navigate target is required')
+    }
+
+    const targetInfo = fieldMap.get(targetId)
+    if (!targetInfo) {
+      throw new BadRequestException(`Navigate target ${targetId} not found`)
+    }
+
+    if (targetInfo.index <= sourceIndex) {
+      warnings.push(
+        `Navigate from ${sourceFieldId} to ${targetId} goes backward, it will be ignored at runtime`
+      )
+    }
+  }
+
+  private async listProjects(
+    args: Record<string, any>,
+    context: ToolContext
+  ): Promise<Record<string, any>> {
+    listProjectsSchema.parse(args)
+    const [projects, forms] = await Promise.all([
+      this.projectService.findAllInTeam(context.teamId),
+      this.formService.findAllInTeam(context.teamId)
+    ])
+    const formCountMap = new Map<string, number>()
+    for (const form of forms) {
+      const count = formCountMap.get(form.projectId) || 0
+      formCountMap.set(form.projectId, count + 1)
+    }
+    return projects.map(project => ({
+      id: project.id,
+      name: project.name,
+      icon: project.icon,
+      formCount: formCountMap.get(project.id) || 0,
+      createdAt: (project as any).createdAt
+    }))
+  }
+
+  private async listForms(
+    args: Record<string, any>,
+    context: ToolContext
+  ): Promise<Record<string, any>> {
+    listFormsSchema.parse(args)
+    const [forms, projects] = await Promise.all([
+      this.formService.findAllInTeam(context.teamId),
+      this.projectService.findAllInTeam(context.teamId)
+    ])
+    const projectMap = new Map(projects.map(project => [project.id, project.name]))
+    const result = await Promise.all(
+      forms.map(async form => ({
+        id: form.id,
+        name: form.name,
+        projectId: form.projectId,
+        projectName: projectMap.get(form.projectId) || null,
+        status: form.status,
+        updatedAt: (form as any).updatedAt,
+        responsesCount: await this.submissionService.countInForm(form.id)
+      }))
+    )
+    return result
+  }
+
+  private async getFormSchema(
+    args: Record<string, any>,
+    context: ToolContext
+  ): Promise<Record<string, any>> {
+    const { formId, source } = getFormSchemaSchema.parse(args)
+    const form = await this.findFormInTeam(formId, context.teamId)
+    const projects = await this.projectService.findAllInTeam(context.teamId)
+    const projectMap = new Map(projects.map(project => [project.id, project.name]))
+    const resolvedSource = source || 'published'
+    const rawFields =
+      resolvedSource === 'drafts' ? JSON.parse((form as any)._drafts || '[]') : form.fields
+    const fields = flattenFields(rawFields)
+
+    return {
+      formId,
+      formName: form.name,
+      projectId: form.projectId,
+      projectName: projectMap.get(form.projectId) || null,
+      source: resolvedSource,
+      fields: fields.map((field: FormField) => ({
+        id: field.id,
+        kind: field.kind,
+        title: field.title,
+        description: field.description ?? undefined,
+        properties: field.properties,
+        validations: field.validations
+      })),
+      logics: form.logics || []
+    }
+  }
+
+  private async getFormReport(
+    args: Record<string, any>,
+    context: ToolContext
+  ): Promise<Record<string, any>> {
+    const { formId } = getFormReportSchema.parse(args)
+    const form = await this.findFormInTeam(formId, context.teamId)
+    const report = await this.formReportService.findById(formId)
+
+    if (!report) {
+      return { responses: [], note: 'No report yet, submissions may be pending' }
+    }
+
+    const fields = flattenFields(form.fields || [])
+    const choiceLabelMap = new Map<string, Map<string, string>>()
+
+    for (const field of fields) {
+      if (field.properties?.choices) {
+        const map = new Map<string, string>()
+        for (const choice of field.properties.choices) {
+          map.set(choice.id, choice.label)
+        }
+        map.set(OTHER_ITEM_ID, 'Other')
+        choiceLabelMap.set(field.id, map)
+      }
+    }
+
+    const responses = (report.responses || []).map(response => {
+      const labelMap = choiceLabelMap.get(response.id)
+      if (!labelMap || !Array.isArray(response.chooses)) {
+        return response
+      }
+
+      return {
+        ...response,
+        chooses: response.chooses.map((choice: any) => ({
+          ...choice,
+          label: labelMap.get(choice.id) || choice.id
+        }))
+      }
+    })
+
+    return {
+      total: report.responses?.[0]?.total ?? 0,
+      responses
+    }
+  }
+
+  private async listSubmissions(
+    args: Record<string, any>,
+    context: ToolContext
+  ): Promise<Record<string, any>> {
+    const { formId, page, limit, isCompleted } = listSubmissionsSchema.parse(args)
+    await this.findFormInTeam(formId, context.teamId)
+
+    const [total, submissions] = await Promise.all([
+      this.submissionService.count({ formId }),
+      this.submissionService.findAll({ formId, page, limit, isCompleted })
+    ])
+
+    return {
+      total,
+      page,
+      limit,
+      submissions: submissions.map(submission => ({
+        id: submission.id,
+        createdAt: (submission as any).createdAt,
+        isCompleted: submission.isCompleted,
+        answers: submission.answers.map(answer => ({
+          id: answer.id,
+          kind: answer.kind,
+          value: answer.value
+        }))
+      }))
+    }
+  }
+
+  private async getSubmissionsSummary(
+    args: Record<string, any>,
+    context: ToolContext
+  ): Promise<Record<string, any>> {
+    const { formId } = getSubmissionsSummarySchema.parse(args)
+    await this.findFormInTeam(formId, context.teamId)
+
+    const [total, { completed, partial }] = await Promise.all([
+      this.submissionService.countInForm(formId),
+      this.submissionService.countByCompletion(formId)
+    ])
+
+    const completionRate = total > 0 ? parseFloat(((completed / total) * 100).toFixed(2)) : 0
+
+    return {
+      total,
+      completed,
+      incomplete: partial,
+      completionRate
+    }
+  }
+
+  private async createForm(
+    args: Record<string, any>,
+    context: ToolContext
+  ): Promise<Record<string, any>> {
+    this.requireWriteScope(context.tokenScope)
+    const {
+      name,
+      projectId,
+      fields: inputFields,
+      logics: inputLogics
+    } = createFormSchema.parse(args)
+
+    let drafts: any[]
+    let buildWarnings: string[] = []
+
+    if (inputFields) {
+      const built = this.buildFormFields(inputFields)
+      drafts = built.fields
+      buildWarnings = built.warnings
+    } else {
+      drafts = [
+        {
+          id: nanoid(12),
+          title: null,
+          description: null,
+          kind: FieldKindEnum.SHORT_TEXT,
+          validations: { required: false },
+          layout: {
+            mediaType: 'image',
+            mediaUrl:
+              'https://images.unsplash.com/photo-1646013532943-d5b86e8689b8?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1080&q=80',
+            align: 'split_right',
+            brightness: 0
+          }
+        },
+        {
+          id: nanoid(12),
+          title: ['Thank you!'],
+          description: ['Thanks for completing this form. Now create your own form.'],
+          kind: FieldKindEnum.THANK_YOU
+        }
+      ]
+    }
+
+    let normalizedLogics: any[] | undefined
+    if (inputLogics) {
+      normalizedLogics = this.validateAndNormalizeLogics(inputLogics, drafts, buildWarnings)
+    }
+
+    const projects = await this.projectService.findAllInTeam(context.teamId)
+    const resolvedProjectId = projectId
+      ? projects.find(project => project.id === projectId)?.id
+      : projects[0]?.id
+
+    if (!resolvedProjectId) {
+      throw new Error('Project not found in workspace')
+    }
+
+    const formId = await this.formService.create({
+      id: nanoid(12),
+      teamId: context.teamId,
+      projectId: resolvedProjectId,
+      memberId: context.userId,
+      name,
+      kind: 1,
+      interactiveMode: 1,
+      fields: [],
+      _drafts: JSON.stringify(drafts),
+      fieldsUpdatedAt: 0,
+      settings: {
+        active: false,
+        captchaKind: 0,
+        filterSpam: false,
+        allowArchive: true,
+        requirePassword: false,
+        locale: 'en',
+        enableQuestionList: true,
+        enableNavigationArrows: true,
+        enableEmailNotification: true
+      },
+      hiddenFields: [],
+      logics: normalizedLogics,
+      version: 0,
+      status: FormStatusEnum.NORMAL
+    })
+
+    const result: Record<string, any> = { id: formId, name }
+
+    if (inputFields) {
+      result.fieldsCount = drafts.length
+    }
+
+    if (normalizedLogics) {
+      result.rulesCount = normalizedLogics.length
+    }
+
+    if (buildWarnings.length > 0) {
+      result.warnings = buildWarnings
+    }
+
+    return result
+  }
+
+  private async submitResponse(
+    args: Record<string, any>,
+    context: ToolContext
+  ): Promise<Record<string, any>> {
+    this.requireWriteScope(context.tokenScope)
+    const { formId, answers } = submitResponseSchema.parse(args)
+    const form = await this.findFormInTeam(formId, context.teamId)
+
+    if (form.suspended) {
+      throw new Error('The form is suspended')
+    }
+
+    if (form.settings?.active !== true) {
+      throw new Error('The form is not active')
+    }
+
+    const fieldKindMap = new Map<string, FieldKindEnum>()
+    for (const field of flattenFields(form.fields, true)) {
+      fieldKindMap.set(field.id, field.kind)
+    }
+
+    const answerMap: Record<string, any> = {}
+    for (const answer of answers) {
+      const kind = fieldKindMap.get(answer.id)
+      let value = answer.value
+      if (kind && CHOICES_FIELD_KINDS.includes(kind) && Array.isArray(value)) {
+        value = { value }
+      }
+      answerMap[answer.id] = value
+    }
+
+    let processedAnswers: any[] = []
+
+    try {
+      const { fields } = applyLogicToFields(
+        flattenFields(form.fields, true),
+        form.logics,
+        form.variables,
+        answerMap
+      )
+      processedAnswers = fieldValuesToAnswers(fields, answerMap, false)
+    } catch (err) {
+      const message = err instanceof Error ? err.message : 'Invalid answers'
+      throw new Error(message)
+    }
+
+    const acceptedFieldIds = processedAnswers.map(answer => answer.id)
+    const endAt = timestamp()
+
+    const submissionId = await this.submissionService.create({
+      teamId: form.teamId,
+      formId: form.id,
+      category: SubmissionCategoryEnum.INBOX,
+      title: form.name,
+      answers: processedAnswers,
+      hiddenFields: [],
+      variables: [],
+      startAt: endAt,
+      endAt,
+      ip: '',
+      userAgent: parseUserAgent(''),
+      status:
+        form.settings?.allowArchive === false
+          ? SubmissionStatusEnum.PRIVATE
+          : SubmissionStatusEnum.PUBLIC,
+      isCompleted: true
+    })
+
+    this.formReportService.addQueue(form.id)
+
+    return {
+      submissionId,
+      acceptedFields: acceptedFieldIds
+    }
+  }
+
+  private async updateFormStatus(
+    args: Record<string, any>,
+    context: ToolContext
+  ): Promise<Record<string, any>> {
+    this.requireWriteScope(context.tokenScope)
+    const { formId, status } = updateFormStatusSchema.parse(args)
+    await this.findFormInTeam(formId, context.teamId)
+
+    await this.formService.update(formId, { status })
+
+    return { id: formId, status }
+  }
+
+  private async updateFormFields(
+    args: Record<string, any>,
+    context: ToolContext
+  ): Promise<Record<string, any>> {
+    this.requireWriteScope(context.tokenScope)
+    const { formId, fields } = updateFormFieldsSchema.parse(args)
+    const form = await this.findFormInTeam(formId, context.teamId)
+
+    const existingDrafts = JSON.parse((form as any)._drafts || '[]')
+    const validated = this.buildFormFields(fields, existingDrafts)
+    await this.formService.update(formId, { _drafts: JSON.stringify(validated.fields) })
+
+    return { id: formId, fieldsCount: validated.fields.length, warnings: validated.warnings }
+  }
+
+  private async updateFormField(
+    args: Record<string, any>,
+    context: ToolContext
+  ): Promise<Record<string, any>> {
+    this.requireWriteScope(context.tokenScope)
+    const input = updateFormFieldSchema.parse(args)
+    const { formId, fieldId } = input
+    const form = await this.findFormInTeam(formId, context.teamId)
+
+    const drafts = JSON.parse((form as any)._drafts || '[]')
+    const index = drafts.findIndex((f: any) => f.id === fieldId)
+    if (index < 0) {
+      throw new Error('Field not found')
+    }
+
+    const field = { ...drafts[index] }
+    const warnings: string[] = []
+
+    if (input.title !== undefined) {
+      field.title = input.title
+    }
+
+    if (input.description !== undefined) {
+      field.description = input.description
+    }
+
+    if (input.properties !== undefined) {
+      const mergedProperties = { ...field.properties, ...input.properties }
+      const whitelisted: Record<string, any> = {}
+      for (const key of Object.keys(mergedProperties)) {
+        if (ALLOWED_PROPERTY_KEYS.includes(key)) {
+          whitelisted[key] = mergedProperties[key]
+        } else {
+          warnings.push(`dropped unknown property '${key}'`)
+        }
+      }
+
+      if (whitelisted.choices && Array.isArray(whitelisted.choices)) {
+        whitelisted.choices = whitelisted.choices.map((choice: any) => ({
+          ...choice,
+          id: choice.id || nanoid(12)
+        }))
+      }
+
+      field.properties = whitelisted
+    }
+
+    if (input.validations !== undefined) {
+      field.validations = { ...field.validations, ...input.validations }
+    }
+
+    const updatedDrafts = [...drafts]
+    updatedDrafts[index] = field
+
+    await this.formService.update(formId, { _drafts: JSON.stringify(updatedDrafts) })
+
+    return { id: formId, fieldId, warnings: warnings.length ? warnings : [] }
+  }
+
+  private async updateFormLogic(
+    args: Record<string, any>,
+    context: ToolContext
+  ): Promise<Record<string, any>> {
+    this.requireWriteScope(context.tokenScope)
+    const { formId, logics } = updateFormLogicSchema.parse(args)
+    const form = await this.findFormInTeam(formId, context.teamId)
+
+    const drafts = JSON.parse((form as any)._drafts || '[]')
+    const warnings: string[] = []
+    const normalizedLogics = this.validateAndNormalizeLogics(logics, drafts, warnings)
+
+    await this.formService.update(formId, {
+      _drafts: JSON.stringify(drafts),
+      logics: normalizedLogics
+    })
+
+    return { formId, rulesCount: normalizedLogics.length, warnings }
+  }
+
+  private async publishForm(
+    args: Record<string, any>,
+    context: ToolContext
+  ): Promise<Record<string, any>> {
+    this.requireWriteScope(context.tokenScope)
+    const { formId } = publishFormSchema.parse(args)
+    const form = await this.findFormInTeam(formId, context.teamId)
+
+    const drafts = JSON.parse((form as any)._drafts || '[]')
+
+    if (!Array.isArray(drafts) || drafts.length === 0) {
+      throw new Error('Form has no draft fields')
+    }
+
+    const updates: Record<string, any> = {
+      fields: drafts,
+      _drafts: JSON.stringify(drafts),
+      fieldsUpdatedAt: timestamp(),
+      version: form.version + 1,
+      'settings.active': true
+    }
+
+    if (!form.publishedAt) {
+      updates.publishedAt = updates.fieldsUpdatedAt
+    }
+
+    await this.formService.update(formId, updates)
+
+    return { id: formId, published: true }
+  }
+}
+
+class McpError extends Error {
+  constructor(
+    public readonly code: number,
+    message: string
+  ) {
+    super(message)
+  }
+}

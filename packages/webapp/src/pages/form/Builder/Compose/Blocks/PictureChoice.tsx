@@ -334,7 +334,7 @@ export const PictureChoice: FC<BlockProps> = ({ field, locale, ...restProps }) =
               choice={
                 {
                   id: 'other',
-                  label: t('form.builder.compose.otherChoice')
+                  label: field.properties?.otherChoiceLabel || t('form.builder.compose.otherChoice')
                 } as Choice
               }
               badge={field.properties!.badge}

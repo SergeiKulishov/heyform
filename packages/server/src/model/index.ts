@@ -1,5 +1,6 @@
 export * from './app.model'
 export * from './app-code.model'
+export * from './api-token.model'
 export * from './app-token.model'
 export * from './email-template.model'
 export * from './folder.model'

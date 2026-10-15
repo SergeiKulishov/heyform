@@ -1460,6 +1460,8 @@
         "multipleSelection": "多選",
         "randomize": "隨機化",
         "allowOther": "“其他”選項",
+        "otherChoiceLabel": "“其他”選項標籤",
+        "otherChoiceLabelPlaceholder": "其他",
         "total": "總計",
         "labels": "標籤",
         "leftLabel": "左標籤",

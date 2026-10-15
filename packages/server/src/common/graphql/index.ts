@@ -1,3 +1,4 @@
+export * from './api-token.graphql'
 export * from './auth.graphql'
 export * from './folder.graphql'
 export * from './form-link.graphql'

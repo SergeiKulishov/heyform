@@ -17,6 +17,7 @@ interface ChoiceRadioGroupProps extends Omit<IComponentProps, 'onChange'> {
   verticalAlignment?: boolean
   isOtherFilled?: boolean
   isHotkeyShow?: boolean
+  otherChoiceLabel?: string
   max?: number
   enableImage?: boolean
   value?: any
@@ -36,6 +37,7 @@ export const ChoiceRadioGroup: FC<ChoiceRadioGroupProps> = ({
   verticalAlignment = true,
   isOtherFilled = false,
   isHotkeyShow = true,
+  otherChoiceLabel,
   max = 0,
   enableImage,
   value: rawValue,
@@ -148,7 +150,7 @@ export const ChoiceRadioGroup: FC<ChoiceRadioGroupProps> = ({
           className="heyform-radio-other"
           keyName={getChoiceKeyName(badge, options.length)}
           enableImage={enableImage}
-          label={t('Other')}
+          label={otherChoiceLabel || t('Other')}
           value={otherValue}
           isHotkeyShow={isHotkeyShow}
           isChecked={isOtherSelected}

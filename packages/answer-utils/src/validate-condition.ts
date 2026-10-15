@@ -128,18 +128,20 @@ function validateChoice(
     ...(helper.isValid(rawValue?.other) ? [OTHER_ITEM_ID] : [])
   ]
 
+  const expectedIds = expected.map(e => String(e))
+
   switch (condition.comparison) {
     case ComparisonEnum.IS:
-      return isEqual(value, expected)
+      return expectedIds.every(id => value.includes(id))
 
     case ComparisonEnum.IS_NOT:
-      return !isEqual(value, expected)
+      return !expectedIds.every(id => value.includes(id))
 
     case ComparisonEnum.CONTAINS:
-      return isContains(value, expected)
+      return expectedIds.some(id => value.includes(id))
 
     case ComparisonEnum.DOES_NOT_CONTAIN:
-      return !isContains(value, expected)
+      return !expectedIds.some(id => value.includes(id))
   }
 
   return false

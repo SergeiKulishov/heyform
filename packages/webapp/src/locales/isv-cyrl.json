@@ -1543,6 +1543,8 @@
         "multipleSelection": "Мнòжественны избор",
         "randomize": "Находне",
         "allowOther": "Опција \"Ино\"",
+        "otherChoiceLabel": "Текст опције \"Ино\"",
+        "otherChoiceLabelPlaceholder": "Ино",
         "total": "Целково",
         "labels": "Надписы",
         "leftLabel": "Лєвы надпис",

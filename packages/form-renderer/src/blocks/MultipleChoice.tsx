@@ -98,6 +98,7 @@ export const MultipleChoice: FC<BlockProps> = ({ field, ...restProps }) => {
             allowOther={field.properties?.allowOther}
             badge={field.properties?.badge}
             verticalAlignment={field.properties?.verticalAlignment}
+            otherChoiceLabel={field.properties?.otherChoiceLabel}
             isOtherFilled={isOtherFilled}
             max={field.validations?.max ?? 0}
           />

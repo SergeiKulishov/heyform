@@ -97,6 +97,7 @@ export const PictureChoice: FC<BlockProps> = ({ field, ...restProps }) => {
             allowMultiple={field.properties?.allowMultiple}
             allowOther={field.properties?.allowOther}
             badge={field.properties?.badge}
+            otherChoiceLabel={field.properties?.otherChoiceLabel}
             isOtherFilled={isOtherFilled}
             max={field.validations?.max}
             enableImage={true}
