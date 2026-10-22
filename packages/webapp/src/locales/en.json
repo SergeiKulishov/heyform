@@ -1736,6 +1736,7 @@
           "legend": {
             "defaultFlow": "Default flow",
             "backwardJump": "Backward jump",
+            "continuation": "Continuation after a backward jump",
             "brokenJump": "Broken jump",
             "otherwise": "Otherwise branch",
             "fallback": "Fallback (uncovered answers)",

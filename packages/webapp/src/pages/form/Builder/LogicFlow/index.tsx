@@ -34,6 +34,10 @@ export default function LogicFlow() {
             <span>{t('form.builder.logic.flow.legend.backwardJump')}</span>
           </div>
           <div className="flex items-center gap-1.5">
+            <div className="h-0.5 w-4 border-t border-dotted border-gray-400/40" />
+            <span>{t('form.builder.logic.flow.legend.continuation')}</span>
+          </div>
+          <div className="flex items-center gap-1.5">
             <div className="w-4 text-center leading-none text-red-500">⊘</div>
             <span>{t('form.builder.logic.flow.legend.cycle')}</span>
           </div>

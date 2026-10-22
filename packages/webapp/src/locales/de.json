@@ -1604,7 +1604,8 @@
         },
         "flow": {
           "legend": {
-            "cycle": "Zyklus nicht erlaubt"
+            "cycle": "Zyklus nicht erlaubt",
+            "continuation": "Fortsetzung nach Rücksprung"
           },
           "connect": {
             "cycle": {

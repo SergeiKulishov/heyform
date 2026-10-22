@@ -1608,7 +1608,8 @@
         },
         "flow": {
           "legend": {
-            "cycle": "Cycle interdit"
+            "cycle": "Cycle interdit",
+            "continuation": "Suite après un saut arrière"
           },
           "connect": {
             "cycle": {

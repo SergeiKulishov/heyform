@@ -1604,7 +1604,8 @@
         },
         "flow": {
           "legend": {
-            "cycle": "不允许循环"
+            "cycle": "不允许循环",
+            "continuation": "返回跳转后的延续"
           },
           "connect": {
             "cycle": {

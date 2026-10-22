@@ -408,13 +408,33 @@ export function fieldLogicToNodesEdges(
   const fields = flattenFieldsWithGroups(rawFields)
   const indexMap = new Map<string, number>()
 
+  fields.forEach((field, index) => indexMap.set(field.id, index))
+
+  const hasBackwardJumps = (logics || []).some(logic => {
+    const sourceIndex = indexMap.get(logic.fieldId)
+
+    if (sourceIndex === undefined) {
+      return false
+    }
+
+    const targets = [
+      ...(logic.payloads || []).flatMap(p =>
+        p.action.kind === ActionEnum.NAVIGATE ? [p.action.fieldId] : []
+      ),
+      logic.defaultNavigate?.fieldId
+    ].filter(Boolean) as string[]
+
+    return targets.some(targetId => {
+      const targetIndex = indexMap.get(targetId)
+      return targetIndex !== undefined && targetIndex <= sourceIndex
+    })
+  })
+
   const logicsMap = new Map<string, Logic>()
   logics?.forEach(logic => logicsMap.set(logic.fieldId, logic))
   const fieldIdSet = new Set(fields.map(f => f.id))
 
   fields.forEach((field, index) => {
-    indexMap.set(field.id, index)
-
     nodes.push({
       id: field.id,
       type: 'customNode',
@@ -440,6 +460,7 @@ export function fieldLogicToNodesEdges(
 
       let drawSequential = true
       let isFallback = false
+      let suppressedByCoverage = false
 
       if (hasDefault) {
         drawSequential = false
@@ -448,6 +469,7 @@ export function fieldLogicToNodesEdges(
 
         if (coverage && coverage.covered >= coverage.total) {
           drawSequential = false
+          suppressedByCoverage = true
         } else {
           isFallback = true
         }
@@ -467,6 +489,18 @@ export function fieldLogicToNodesEdges(
             : {
                 stroke: 'rgba(var(--hf-secondary))'
               },
+          markerEnd: 'edge-marker-arrow'
+        })
+      } else if (!drawSequential && suppressedByCoverage && hasBackwardJumps) {
+        edges.push({
+          id: `continuation-${field.id}-${nextField.id}`,
+          source: field.id,
+          target: nextField.id,
+          style: {
+            stroke: 'rgba(var(--hf-secondary), 0.3)',
+            strokeWidth: 1,
+            strokeDasharray: '2 4'
+          },
           markerEnd: 'edge-marker-arrow'
         })
       }

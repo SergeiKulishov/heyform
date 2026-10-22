@@ -1604,7 +1604,8 @@
         },
         "flow": {
           "legend": {
-            "cycle": "循環は禁止されています"
+            "cycle": "循環は禁止されています",
+            "continuation": "戻り遷移後の続き"
           },
           "connect": {
             "cycle": {

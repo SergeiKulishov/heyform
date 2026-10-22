@@ -1687,7 +1687,8 @@
         },
         "flow": {
           "legend": {
-            "cycle": "Cykl ne dozvoljen"
+            "cycle": "Cykl ne dozvoljen",
+            "continuation": "Prodolženje posli vozvrata"
           },
           "connect": {
             "cycle": {
