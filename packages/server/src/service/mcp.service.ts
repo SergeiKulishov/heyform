@@ -96,11 +96,36 @@ const updateFormLogicSchema = z.object({
   logics: z.array(logicRuleSchema)
 })
 
+const variableInputSchema = z.object({
+  id: z.string().optional(),
+  name: z.string(),
+  kind: z.enum(['string', 'number']),
+  value: z.union([z.string(), z.number()]).optional(),
+  logics: z.array(z.any()).optional()
+})
+
+const hiddenFieldInputSchema = z.object({
+  id: z.string().optional(),
+  name: z.string()
+})
+
 const createFormSchema = z.object({
   name: z.string().min(1),
   projectId: z.string().optional(),
   fields: z.array(fieldInputSchema).optional(),
-  logics: z.array(logicRuleSchema).optional()
+  logics: z.array(logicRuleSchema).optional(),
+  variables: z.array(variableInputSchema).optional(),
+  hiddenFields: z.array(hiddenFieldInputSchema).optional()
+})
+
+const updateFormVariablesSchema = z.object({
+  formId: z.string(),
+  variables: z.array(variableInputSchema)
+})
+
+const updateFormHiddenFieldsSchema = z.object({
+  formId: z.string(),
+  hiddenFields: z.array(hiddenFieldInputSchema)
 })
 
 const submitResponseSchema = z.object({
@@ -110,7 +135,8 @@ const submitResponseSchema = z.object({
       id: z.string(),
       value: z.any()
     })
-  )
+  ),
+  hiddenFields: z.record(z.string(), z.union([z.string(), z.number()])).optional()
 })
 
 const updateFormStatusSchema = z.object({
@@ -439,7 +465,7 @@ const LOGIC_REFERENCE = {
   payloadStructure:
     '{ id (auto-generated), condition: { fieldId, comparison, expected }, conditions?: LogicCondition[] (multi-condition, connector "and"|"or"), action: { kind: "navigate", fieldId: destination } }',
   conditionSourceNote:
-    'condition.fieldId is usually the source field itself (branch on its answer); it may also reference any EARLIER field. Answer values format: see answerValueFormat in get_field_kinds_reference',
+    'condition.fieldId MUST be the rule source field itself: conditions are always evaluated against the SOURCE field answer at runtime, any other value is ignored (a warning is returned). Answer values format: see answerValueFormat in get_field_kinds_reference',
   expectedByKind: {
     multiple_choice:
       'choice id OR choice label (auto-resolved to id, case-insensitive); string or string[] for contains/is_not comparisons',
@@ -477,7 +503,26 @@ const LOGIC_REFERENCE = {
   },
   navigateRules:
     'Destination must be an EXISTING field AFTER the source field (forward-only: backward targets are ignored at runtime → warning). thank_you is a valid terminator destination. Skipped fields are excluded from submissions.',
-  calcNote: 'CALCULATE actions and variables are not supported yet',
+  hiddenFields:
+    'Hidden fields are not visible to respondents: values are captured from URL query params (?utm_source=newsletter) and saved to submission.hiddenFields. Insert them in texts via <span data-hiddenfield="<name>"> — the attribute is the hidden field NAME, not its id. Manage them via update_form_hidden_fields.',
+  variables: {
+    structure:
+      'form.variables: [{ id, name, kind: "string"|"number", value: <default>, logics?: LogicPayload[] }]. Manage via update_form_variables.',
+    defaults:
+      'value is the initial accumulator and is REQUIRED for calculation: number → 0, string → "". If omitted, defaults are auto-added.',
+    calculateAction:
+      '{ kind: "calculate", variable: <variableId>, operator, value?, ref? } — value: literal (number for number vars, string for string vars); ref: fieldId to take the answer value instead of a literal. Either value or ref is required.',
+    operators: {
+      number: ['addition', 'subtraction', 'multiplication', 'division', 'assignment'],
+      string: ['addition', 'assignment']
+    },
+    evaluation:
+      'Per field, matching CALCULATE actions run in payload order and update accumulators, then NAVIGATE rules apply. Variables are available in texts via <span data-variable="<id>"> and saved to submission.variables.',
+    logics:
+      'variable.logics are stored for round-trip fidelity but are NOT executed: calculations must be defined in form.logics as field rules with calculate actions (update_form_logic). Calculate payloads inside variable.logics produce a warning.',
+    conditions:
+      'Conditions use the same syntax as navigate rules; condition.fieldId must be a question field (not a variable or hidden field); it must equal the rule source field'
+  },
   example: {
     fieldId: 'q1',
     payloads: [
@@ -511,6 +556,16 @@ const LOGIC_REFERENCE = {
     }
   }
 }
+
+const NUMBER_CALCULATE_OPERATORS = [
+  'addition',
+  'subtraction',
+  'multiplication',
+  'division',
+  'assignment'
+]
+
+const STRING_CALCULATE_OPERATORS = ['addition', 'assignment']
 
 const ALLOWED_PROPERTY_KEYS = [
   'showButton',
@@ -728,7 +783,7 @@ export class McpService {
       {
         name: 'get_form_schema',
         description:
-          'Get the schema (questions/fields) of a form, including logics (branching rules). Use source=drafts to read unpublished edits',
+          'Get the schema (questions/fields) of a form, including logics (branching rules), variables and hiddenFields. Use source=drafts to read unpublished edits',
         inputSchema: {
           type: 'object',
           properties: {
@@ -786,7 +841,7 @@ export class McpService {
       {
         name: 'create_form',
         description:
-          'Create a new form in the team, optionally with full question fields and logics[] for branching. IMPORTANT: call get_field_kinds_reference first — property names are canonical (e.g. opinion_scale uses total/start/leftLabel, not steps/labels) (read_write tokens only)',
+          'Create a new form in the team, optionally with full question fields, logics[] for branching, variables[] (calculated values) and hiddenFields[] captured from URL query params. IMPORTANT: call get_field_kinds_reference first — property names are canonical (e.g. opinion_scale uses total/start/leftLabel, not steps/labels) (read_write tokens only)',
         inputSchema: {
           type: 'object',
           properties: {
@@ -864,12 +919,41 @@ export class McpService {
                           properties: {
                             kind: {
                               type: 'string',
-                              enum: ['navigate'],
-                              description: 'Action kind'
+                              enum: ['navigate', 'calculate'],
+                              description:
+                                'Action kind: navigate (branching) or calculate (update a variable accumulator)'
                             },
-                            fieldId: { type: 'string', description: 'Destination field id' }
+                            fieldId: {
+                              type: 'string',
+                              description: 'navigate only: destination field id'
+                            },
+                            variable: {
+                              type: 'string',
+                              description: 'calculate only: target variable id'
+                            },
+                            operator: {
+                              type: 'string',
+                              enum: [
+                                'addition',
+                                'subtraction',
+                                'multiplication',
+                                'division',
+                                'assignment'
+                              ],
+                              description:
+                                'calculate only: string variables allow addition and assignment only'
+                            },
+                            value: {
+                              description:
+                                'calculate only: literal value (number for number variables, string for string variables)'
+                            },
+                            ref: {
+                              type: 'string',
+                              description:
+                                'calculate only: field id to take the answer value from instead of a literal'
+                            }
                           },
-                          required: ['kind', 'fieldId']
+                          required: ['kind']
                         }
                       },
                       required: ['action']
@@ -885,6 +969,49 @@ export class McpService {
                 },
                 required: ['fieldId', 'payloads']
               }
+            },
+            variables: {
+              type: 'array',
+              description:
+                'Optional array of variables (calculated values). See get_logic_reference.',
+              items: {
+                type: 'object',
+                properties: {
+                  id: { type: 'string', description: 'Optional variable id (auto-generated)' },
+                  name: { type: 'string', description: 'Variable name, unique within the form' },
+                  kind: {
+                    type: 'string',
+                    enum: ['string', 'number'],
+                    description: 'Variable kind'
+                  },
+                  value: {
+                    description:
+                      'Initial value (default): number → 0, string → "". Must match kind.'
+                  },
+                  logics: {
+                    type: 'array',
+                    description: 'Optional calculate/navigate payloads owned by this variable',
+                    items: { type: 'object', additionalProperties: true }
+                  }
+                },
+                required: ['name', 'kind']
+              }
+            },
+            hiddenFields: {
+              type: 'array',
+              description:
+                'Optional array of hidden fields. Values are captured from URL query params (?name=value) and saved to submission.hiddenFields',
+              items: {
+                type: 'object',
+                properties: {
+                  id: { type: 'string', description: 'Optional hidden field id (auto-generated)' },
+                  name: {
+                    type: 'string',
+                    description: 'Query param name, unique within the form'
+                  }
+                },
+                required: ['name']
+              }
             }
           },
           required: ['name']
@@ -894,7 +1021,7 @@ export class McpService {
       {
         name: 'submit_response',
         description:
-          'Submit answers to a form programmatically (read_write tokens only). Answer value formats per field kind are documented in get_field_kinds_reference (answerValueFormat)',
+          'Submit answers to a form programmatically (read_write tokens only). Answer value formats per field kind are documented in get_field_kinds_reference (answerValueFormat). Optional hiddenFields: { [name]: value } is saved to submission.hiddenFields; calculated variables are evaluated and saved to submission.variables',
         inputSchema: {
           type: 'object',
           properties: {
@@ -910,6 +1037,12 @@ export class McpService {
                 required: ['id', 'value']
               },
               description: 'Array of answer objects'
+            },
+            hiddenFields: {
+              type: 'object',
+              description:
+                'Optional hidden field values by name, e.g. { "utm_source": "newsletter" }. Saved to submission.hiddenFields',
+              additionalProperties: { type: ['string', 'number'] }
             }
           },
           required: ['formId', 'answers']
@@ -993,6 +1126,31 @@ export class McpService {
         handler: this.updateFormField.bind(this)
       },
       {
+        name: 'update_form_hidden_fields',
+        description:
+          'Replace the entire set of hidden fields. Hidden fields are not visible to respondents: values are captured from URL query params (e.g. ?utm_source=newsletter) and saved to submission.hiddenFields. They can be shown in texts via <span data-hiddenfield="<id>">. (read_write tokens only)',
+        inputSchema: {
+          type: 'object',
+          properties: {
+            formId: { type: 'string', description: 'The form ID' },
+            hiddenFields: {
+              type: 'array',
+              description: 'Array of hidden fields (replaces the current set)',
+              items: {
+                type: 'object',
+                properties: {
+                  id: { type: 'string', description: 'Optional hidden field id (auto-generated)' },
+                  name: { type: 'string', description: 'Query param name, unique within the form' }
+                },
+                required: ['name']
+              }
+            }
+          },
+          required: ['formId', 'hiddenFields']
+        },
+        handler: this.updateFormHiddenFields.bind(this)
+      },
+      {
         name: 'update_form_logic',
         description:
           'Replace the entire form logic (branching rules). Semantic validation: field/choice references, per-kind comparisons, forward-only navigation. Answer value formats: get_field_kinds_reference. Logic rules reference: get_logic_reference. (read_write tokens only)',
@@ -1052,12 +1210,41 @@ export class McpService {
                           properties: {
                             kind: {
                               type: 'string',
-                              enum: ['navigate'],
-                              description: 'Action kind'
+                              enum: ['navigate', 'calculate'],
+                              description:
+                                'Action kind: navigate (branching) or calculate (update a variable accumulator)'
                             },
-                            fieldId: { type: 'string', description: 'Destination field id' }
+                            fieldId: {
+                              type: 'string',
+                              description: 'navigate only: destination field id'
+                            },
+                            variable: {
+                              type: 'string',
+                              description: 'calculate only: target variable id'
+                            },
+                            operator: {
+                              type: 'string',
+                              enum: [
+                                'addition',
+                                'subtraction',
+                                'multiplication',
+                                'division',
+                                'assignment'
+                              ],
+                              description:
+                                'calculate only: string variables allow addition and assignment only'
+                            },
+                            value: {
+                              description:
+                                'calculate only: literal value (number for number variables, string for string variables)'
+                            },
+                            ref: {
+                              type: 'string',
+                              description:
+                                'calculate only: field id to take the answer value from instead of a literal'
+                            }
                           },
-                          required: ['kind', 'fieldId']
+                          required: ['kind']
                         }
                       },
                       required: ['action']
@@ -1078,6 +1265,107 @@ export class McpService {
           required: ['formId', 'logics']
         },
         handler: this.updateFormLogic.bind(this)
+      },
+      {
+        name: 'update_form_variables',
+        description:
+          'Replace the entire set of variables (calculated values). Each variable has a default value and optional logic rules with calculate actions. Variables are available in texts via <span data-variable="<id>"> and saved to submission.variables. Format and operator rules: get_logic_reference. (read_write tokens only)',
+        inputSchema: {
+          type: 'object',
+          properties: {
+            formId: { type: 'string', description: 'The form ID' },
+            variables: {
+              type: 'array',
+              description: 'Array of variables (replaces the current set)',
+              items: {
+                type: 'object',
+                properties: {
+                  id: { type: 'string', description: 'Optional variable id (auto-generated)' },
+                  name: { type: 'string', description: 'Variable name, unique within the form' },
+                  kind: {
+                    type: 'string',
+                    enum: ['string', 'number'],
+                    description: 'Variable kind'
+                  },
+                  value: {
+                    description:
+                      'Initial value (default): number → 0, string → "". Must match kind.'
+                  },
+                  logics: {
+                    type: 'array',
+                    description:
+                      'Optional calculate/navigate payloads owned by this variable. Calculates run before navigates.',
+                    items: {
+                      type: 'object',
+                      properties: {
+                        id: { type: 'string', description: 'Optional payload id' },
+                        condition: {
+                          type: 'object',
+                          properties: {
+                            fieldId: { type: 'string', description: 'Question field id' },
+                            comparison: { type: 'string', description: 'Comparison operator' },
+                            expected: { description: 'Expected value' }
+                          },
+                          required: ['fieldId', 'comparison']
+                        },
+                        conditions: {
+                          type: 'array',
+                          description: 'Additional conditions (connector and/or)',
+                          items: { type: 'object', additionalProperties: true }
+                        },
+                        connector: { type: 'string', enum: ['and', 'or'] },
+                        action: {
+                          type: 'object',
+                          properties: {
+                            kind: {
+                              type: 'string',
+                              enum: ['navigate', 'calculate'],
+                              description: 'Action kind'
+                            },
+                            fieldId: {
+                              type: 'string',
+                              description: 'navigate only: destination field id'
+                            },
+                            variable: {
+                              type: 'string',
+                              description: 'calculate only: target variable id'
+                            },
+                            operator: {
+                              type: 'string',
+                              enum: [
+                                'addition',
+                                'subtraction',
+                                'multiplication',
+                                'division',
+                                'assignment'
+                              ],
+                              description:
+                                'calculate only: string variables allow addition and assignment only'
+                            },
+                            value: {
+                              description:
+                                'calculate only: literal value (number for number variables, string for string variables)'
+                            },
+                            ref: {
+                              type: 'string',
+                              description:
+                                'calculate only: field id to take the answer value from instead of a literal'
+                            }
+                          },
+                          required: ['kind']
+                        }
+                      },
+                      required: ['action']
+                    }
+                  }
+                },
+                required: ['name', 'kind']
+              }
+            }
+          },
+          required: ['formId', 'variables']
+        },
+        handler: this.updateFormVariables.bind(this)
       },
       {
         name: 'publish_form',
@@ -1228,7 +1516,12 @@ export class McpService {
     return { fields: builtFields, warnings }
   }
 
-  private validateAndNormalizeLogics(logics: any[], fields: any[], warnings: string[]): any[] {
+  private validateAndNormalizeLogics(
+    logics: any[],
+    fields: any[],
+    warnings: string[],
+    variables: any[] = []
+  ): any[] {
     const flatFields = flattenFields(fields, true)
     const fieldMap = new Map<string, { field: any; index: number }>()
     flatFields.forEach((field, index) => fieldMap.set(field.id, { field, index }))
@@ -1282,11 +1575,11 @@ export class McpService {
           connector = undefined
         }
 
-        this.validateLogicCondition(condition, sourceIndex, fieldMap, warnings)
+        this.validateLogicCondition(condition, sourceIndex, fieldMap, warnings, rule.fieldId)
 
         if (conditions) {
           for (const c of conditions) {
-            this.validateLogicCondition(c, sourceIndex, fieldMap, warnings)
+            this.validateLogicCondition(c, sourceIndex, fieldMap, warnings, rule.fieldId)
           }
         }
 
@@ -1295,19 +1588,35 @@ export class McpService {
           throw new BadRequestException('Payload action is required')
         }
 
-        if (action.kind !== ActionEnum.NAVIGATE) {
-          throw new BadRequestException('Only navigate actions are supported for now')
-        }
+        const contextLabel = `field ${rule.fieldId} payload ${payload.id}`
+        let normalizedAction: Record<string, any>
 
-        this.validateNavigateTarget(action.fieldId, sourceIndex, fieldMap, rule.fieldId, warnings)
+        if (action.kind === ActionEnum.CALCULATE) {
+          normalizedAction = this.normalizeCalculateAction(
+            action,
+            variables,
+            fieldMap,
+            sourceIndex,
+            contextLabel,
+            warnings
+          )
+        } else if (action.kind === ActionEnum.NAVIGATE) {
+          this.validateNavigateTarget(action.fieldId, sourceIndex, fieldMap, rule.fieldId, warnings)
+
+          normalizedAction = {
+            kind: ActionEnum.NAVIGATE,
+            fieldId: action.fieldId
+          }
+        } else {
+          throw new BadRequestException(
+            `${contextLabel}: unsupported action kind '${action.kind}'. Allowed: navigate, calculate`
+          )
+        }
 
         const normalizedPayload: Record<string, any> = {
           id: payload.id,
           condition,
-          action: {
-            kind: ActionEnum.NAVIGATE,
-            fieldId: action.fieldId
-          }
+          action: normalizedAction
         }
 
         if (Array.isArray(conditions) && conditions.length > 0) {
@@ -1344,7 +1653,8 @@ export class McpService {
     condition: any,
     sourceIndex: number,
     fieldMap: Map<string, { field: any; index: number }>,
-    warnings: string[]
+    warnings: string[],
+    sourceFieldId?: string
   ): void {
     if (!condition || typeof condition !== 'object') {
       throw new BadRequestException('Logic condition is required')
@@ -1359,6 +1669,13 @@ export class McpService {
       throw new BadRequestException(
         `Condition field ${condition.fieldId} must be the source field or an earlier field`
       )
+    }
+
+    if (sourceFieldId && condition.fieldId !== sourceFieldId) {
+      const note = `condition.fieldId ${condition.fieldId} differs from the rule source field ${sourceFieldId}; it is ignored at runtime (conditions are evaluated against the source field)`
+      if (!warnings.includes(note)) {
+        warnings.push(note)
+      }
     }
 
     const kind = conditionFieldInfo.field.kind as FieldKindEnum
@@ -1514,6 +1831,386 @@ export class McpService {
       return { id: byLabel.id, resolvedByLabel: true }
     }
     return null
+  }
+
+  private getEditableFields(form: any): any[] {
+    let drafts: any[] = []
+    try {
+      drafts = JSON.parse((form as any)._drafts || '[]')
+    } catch {
+      drafts = []
+    }
+    return Array.isArray(drafts) && drafts.length > 0 ? drafts : form.fields || []
+  }
+
+  private normalizeCalculateAction(
+    action: any,
+    variables: any[],
+    fieldMap: Map<string, { field: any; index: number }>,
+    sourceIndex: number | null,
+    contextLabel: string,
+    warnings: string[]
+  ): Record<string, any> {
+    if (!action.variable) {
+      throw new BadRequestException(`${contextLabel}: calculate action requires variable`)
+    }
+
+    const variable = variables.find(v => v.id === action.variable)
+    if (!variable) {
+      throw new BadRequestException(`${contextLabel}: variable ${action.variable} not found`)
+    }
+
+    const allowedOperators =
+      variable.kind === 'number' ? NUMBER_CALCULATE_OPERATORS : STRING_CALCULATE_OPERATORS
+    if (!allowedOperators.includes(action.operator)) {
+      throw new BadRequestException(
+        `${contextLabel}: invalid operator '${action.operator}' for ${variable.kind} variable ${variable.id}. Allowed: ${allowedOperators.join(', ')}`
+      )
+    }
+
+    const hasValue = action.value !== undefined && action.value !== null
+    const hasRef = typeof action.ref === 'string' && action.ref.length > 0
+
+    if (!hasValue && !hasRef) {
+      throw new BadRequestException(`${contextLabel}: calculate action requires value or ref`)
+    }
+
+    if (hasValue) {
+      if (variable.kind === 'number') {
+        if (typeof action.value !== 'number' || !isFinite(action.value)) {
+          throw new BadRequestException(
+            `${contextLabel}: value must be a finite number for number variable ${variable.id}`
+          )
+        }
+      } else if (typeof action.value !== 'string') {
+        throw new BadRequestException(
+          `${contextLabel}: value must be a string for string variable ${variable.id}`
+        )
+      }
+    }
+
+    if (action.ref !== undefined && action.ref !== null && !hasRef) {
+      throw new BadRequestException(`${contextLabel}: ref must be a non-empty field id`)
+    }
+
+    if (hasRef) {
+      const refInfo = fieldMap.get(action.ref)
+      if (!refInfo) {
+        throw new BadRequestException(
+          `${contextLabel}: ref field ${action.ref} not found (ref must be an existing question field id)`
+        )
+      }
+      if (!this.isQuestionKind(refInfo.field.kind)) {
+        throw new BadRequestException(
+          `${contextLabel}: ref field ${action.ref} is not a question field (kind ${refInfo.field.kind})`
+        )
+      }
+      if (sourceIndex !== null && refInfo.index > sourceIndex) {
+        warnings.push(
+          `${contextLabel}: ref field ${action.ref} comes after the source field; its answer may be empty at evaluation time`
+        )
+      }
+    }
+
+    const normalized: Record<string, any> = {
+      kind: ActionEnum.CALCULATE,
+      variable: variable.id,
+      operator: action.operator
+    }
+
+    if (hasValue) {
+      normalized.value = action.value
+    }
+
+    if (hasRef) {
+      normalized.ref = action.ref
+    }
+
+    return normalized
+  }
+
+  private buildVariableLogics(
+    payloads: any[],
+    owner: any,
+    variables: any[],
+    fieldMap: Map<string, { field: any; index: number }>,
+    warnings: string[]
+  ): any[] {
+    return payloads.map(payload => {
+      if (!payload || typeof payload !== 'object') {
+        throw new BadRequestException(`variable '${owner.name}': logic payload must be an object`)
+      }
+
+      const id = payload.id || nanoid(8)
+      const contextLabel = `variable ${owner.id} payload ${id}`
+
+      let condition = payload.condition
+      let conditions = payload.conditions
+      let connector = payload.connector
+
+      if (
+        (!condition || typeof condition !== 'object') &&
+        Array.isArray(conditions) &&
+        conditions.length > 0
+      ) {
+        condition = conditions[0]
+      }
+
+      if (Array.isArray(conditions) && conditions.length > 0) {
+        connector = connector === 'or' ? 'or' : 'and'
+      } else {
+        conditions = undefined
+        connector = undefined
+      }
+
+      const maxIndex = fieldMap.size
+      this.validateLogicCondition(condition, maxIndex, fieldMap, warnings)
+
+      if (conditions) {
+        for (const c of conditions) {
+          this.validateLogicCondition(c, maxIndex, fieldMap, warnings)
+        }
+      }
+
+      const action = payload.action
+      if (!action || typeof action !== 'object') {
+        throw new BadRequestException(`${contextLabel}: payload action is required`)
+      }
+
+      let normalizedAction: Record<string, any>
+
+      if (action.kind === ActionEnum.CALCULATE) {
+        normalizedAction = this.normalizeCalculateAction(
+          action,
+          variables,
+          fieldMap,
+          null,
+          contextLabel,
+          warnings
+        )
+      } else if (action.kind === ActionEnum.NAVIGATE) {
+        const destination = fieldMap.get(action.fieldId)
+        if (!destination) {
+          throw new BadRequestException(
+            `${contextLabel}: destination field ${action.fieldId} not found`
+          )
+        }
+        normalizedAction = {
+          kind: ActionEnum.NAVIGATE,
+          fieldId: action.fieldId
+        }
+      } else {
+        throw new BadRequestException(
+          `${contextLabel}: unsupported action kind '${action.kind}'. Allowed: navigate, calculate`
+        )
+      }
+
+      const normalizedPayload: Record<string, any> = {
+        id,
+        condition,
+        action: normalizedAction
+      }
+
+      if (conditions) {
+        normalizedPayload.conditions = conditions
+        normalizedPayload.connector = connector
+      }
+
+      return normalizedPayload
+    })
+  }
+
+  private buildVariables(
+    inputs: any[],
+    fields: any[],
+    existingLogics: any[] | undefined,
+    previousVariables: any[] | undefined,
+    warnings: string[]
+  ): any[] {
+    const errors: string[] = []
+    const flatFields = flattenFields(fields, true)
+    const fieldMap = new Map<string, { field: any; index: number }>()
+    flatFields.forEach((field, index) => fieldMap.set(field.id, { field, index }))
+
+    const built: any[] = []
+    const seenNames = new Set<string>()
+    const seenIds = new Set<string>()
+    const validInputs: any[] = []
+
+    for (const input of inputs) {
+      const name = typeof input.name === 'string' ? input.name.trim() : ''
+      if (!name) {
+        errors.push('variable name must be a non-empty string')
+        continue
+      }
+
+      if (seenNames.has(name)) {
+        errors.push(`duplicate variable name: ${name}`)
+        continue
+      }
+      seenNames.add(name)
+
+      const kind = input.kind
+      if (kind !== 'string' && kind !== 'number') {
+        errors.push(`variable '${name}': kind must be 'string' or 'number'`)
+        continue
+      }
+
+      let value = input.value
+      if (value === undefined || value === null) {
+        value = kind === 'number' ? 0 : ''
+      } else if (kind === 'number') {
+        if (typeof value !== 'number' || !isFinite(value)) {
+          errors.push(`variable '${name}': value must be a finite number for kind number`)
+          continue
+        }
+      } else if (typeof value !== 'string') {
+        errors.push(`variable '${name}': value must be a string for kind string`)
+        continue
+      }
+
+      const id = input.id || nanoid(12)
+      if (seenIds.has(id)) {
+        errors.push(`duplicate variable id: ${id}`)
+        continue
+      }
+      seenIds.add(id)
+
+      const hasCalculateRules =
+        Array.isArray(input.logics) &&
+        input.logics.some((payload: any) => payload?.action?.kind === 'calculate')
+
+      if (hasCalculateRules) {
+        const note = `variable "${name}" has calculate rules in variable.logics, but they are NOT executed at runtime; define calculations in form.logics instead (update_form_logic)`
+        if (!warnings.includes(note)) {
+          warnings.push(note)
+        }
+      }
+
+      built.push({ id, name, kind, value, logics: [] })
+      validInputs.push(input)
+    }
+
+    if (errors.length > 0) {
+      throw new BadRequestException(errors.join('; '))
+    }
+
+    const newIds = new Set(built.map(variable => variable.id))
+    const removedIds = new Set(
+      (previousVariables || []).map(variable => variable.id).filter(id => !newIds.has(id))
+    )
+    const removedRefs = this.findRemovedVariableReferences(
+      removedIds,
+      existingLogics,
+      built.map((variable, index) => ({ id: variable.id, logics: validInputs[index].logics }))
+    )
+
+    if (removedRefs.length > 0) {
+      throw new BadRequestException(
+        `cannot remove variables referenced by calculate actions: ${removedRefs.join('; ')}`
+      )
+    }
+
+    for (let index = 0; index < built.length; index++) {
+      const input = validInputs[index]
+      if (Array.isArray(input.logics) && input.logics.length > 0) {
+        built[index].logics = this.buildVariableLogics(
+          input.logics,
+          built[index],
+          built,
+          fieldMap,
+          warnings
+        )
+      }
+    }
+
+    return built
+  }
+
+  private buildHiddenFields(inputs: any[], warnings: string[]): any[] {
+    const errors: string[] = []
+    const seenNames = new Set<string>()
+    const seenIds = new Set<string>()
+    const hiddenFields: any[] = []
+
+    for (const input of inputs) {
+      const name = typeof input.name === 'string' ? input.name.trim() : ''
+      if (!name) {
+        errors.push('hidden field name must be a non-empty string')
+        continue
+      }
+
+      if (seenNames.has(name)) {
+        errors.push(`duplicate hidden field name: ${name}`)
+        continue
+      }
+      seenNames.add(name)
+
+      if (/\s/.test(name)) {
+        warnings.push(`hidden field '${name}' contains whitespace; URL query keys usually do not`)
+      }
+
+      const id = input.id || nanoid(12)
+      if (seenIds.has(id)) {
+        errors.push(`duplicate hidden field id: ${id}`)
+        continue
+      }
+      seenIds.add(id)
+
+      hiddenFields.push({ id, name })
+    }
+
+    if (errors.length > 0) {
+      throw new BadRequestException(errors.join('; '))
+    }
+
+    if (hiddenFields.length > 20) {
+      warnings.push(
+        `hidden fields count ${hiddenFields.length} exceeds the recommended limit of 20; they are stored but may be hard to manage`
+      )
+    }
+
+    return hiddenFields
+  }
+
+  private findRemovedVariableReferences(
+    removedIds: Set<string>,
+    logics: any[] | undefined,
+    variables: any[] | undefined
+  ): string[] {
+    if (removedIds.size === 0) {
+      return []
+    }
+
+    const refs: string[] = []
+
+    for (const rule of logics || []) {
+      for (const payload of rule?.payloads || []) {
+        if (
+          payload?.action?.kind === ActionEnum.CALCULATE &&
+          removedIds.has(payload.action.variable)
+        ) {
+          refs.push(
+            `fieldId ${rule.fieldId} payload ${payload.id} → variable ${payload.action.variable}`
+          )
+        }
+      }
+    }
+
+    for (const variable of variables || []) {
+      for (const payload of variable?.logics || []) {
+        if (
+          payload?.action?.kind === ActionEnum.CALCULATE &&
+          removedIds.has(payload.action.variable)
+        ) {
+          refs.push(
+            `variable ${variable.id} payload ${payload.id} → variable ${payload.action.variable}`
+          )
+        }
+      }
+    }
+
+    return refs
   }
 
   private isQuestionKind(kind: FieldKindEnum): boolean {
@@ -1709,7 +2406,14 @@ export class McpService {
         properties: field.properties,
         validations: field.validations
       })),
-      logics: form.logics || []
+      logics: form.logics || [],
+      variables: (form.variables || []).map(({ id, name, kind, value }) => ({
+        id,
+        name,
+        kind,
+        value
+      })),
+      hiddenFields: (form.hiddenFields || []).map(({ id, name }) => ({ id, name }))
     }
   }
 
@@ -1820,7 +2524,9 @@ export class McpService {
       name,
       projectId,
       fields: inputFields,
-      logics: inputLogics
+      logics: inputLogics,
+      variables: inputVariables,
+      hiddenFields: inputHiddenFields
     } = createFormSchema.parse(args)
 
     let drafts: any[]
@@ -1855,9 +2561,30 @@ export class McpService {
       ]
     }
 
+    let normalizedVariables: any[] | undefined
+    if (inputVariables) {
+      normalizedVariables = this.buildVariables(
+        inputVariables,
+        drafts,
+        undefined,
+        undefined,
+        buildWarnings
+      )
+    }
+
+    let normalizedHiddenFields: any[] | undefined
+    if (inputHiddenFields) {
+      normalizedHiddenFields = this.buildHiddenFields(inputHiddenFields, buildWarnings)
+    }
+
     let normalizedLogics: any[] | undefined
     if (inputLogics) {
-      normalizedLogics = this.validateAndNormalizeLogics(inputLogics, drafts, buildWarnings)
+      normalizedLogics = this.validateAndNormalizeLogics(
+        inputLogics,
+        drafts,
+        buildWarnings,
+        normalizedVariables || []
+      )
     }
 
     const projects = await this.projectService.findAllInTeam(context.teamId)
@@ -1891,8 +2618,9 @@ export class McpService {
         enableNavigationArrows: true,
         enableEmailNotification: true
       },
-      hiddenFields: [],
+      hiddenFields: normalizedHiddenFields || [],
       logics: normalizedLogics,
+      variables: normalizedVariables,
       version: 0,
       status: FormStatusEnum.NORMAL
     })
@@ -1907,6 +2635,14 @@ export class McpService {
       result.rulesCount = normalizedLogics.length
     }
 
+    if (normalizedVariables) {
+      result.variables = normalizedVariables
+    }
+
+    if (normalizedHiddenFields) {
+      result.hiddenFields = normalizedHiddenFields
+    }
+
     if (buildWarnings.length > 0) {
       result.warnings = buildWarnings
     }
@@ -1919,7 +2655,7 @@ export class McpService {
     context: ToolContext
   ): Promise<Record<string, any>> {
     this.requireWriteScope(context.tokenScope)
-    const { formId, answers } = submitResponseSchema.parse(args)
+    const { formId, answers, hiddenFields: inputHiddenFields } = submitResponseSchema.parse(args)
     const form = await this.findFormInTeam(formId, context.teamId)
 
     if (form.suspended) {
@@ -1946,19 +2682,41 @@ export class McpService {
     }
 
     let processedAnswers: any[] = []
+    let computedVariables: any[] = []
 
     try {
-      const { fields } = applyLogicToFields(
+      const { fields, variables: variableValues } = applyLogicToFields(
         flattenFields(form.fields, true),
         form.logics,
         form.variables,
         answerMap
       )
       processedAnswers = fieldValuesToAnswers(fields, answerMap, false)
+      computedVariables = (form.variables || []).map(variable => ({
+        ...variable,
+        value: (variableValues as Record<string, any>)[variable.id]
+      }))
     } catch (err) {
       const message = err instanceof Error ? err.message : 'Invalid answers'
       throw new Error(message)
     }
+
+    const warnings: string[] = []
+    const declaredHiddenFields = form.hiddenFields || []
+    const providedHiddenFields = inputHiddenFields || {}
+    const declaredHiddenNames = new Set(declaredHiddenFields.map(field => field.name))
+
+    for (const key of Object.keys(providedHiddenFields)) {
+      if (!declaredHiddenNames.has(key)) {
+        warnings.push(`unknown hidden field: ${key}`)
+      }
+    }
+
+    const computedHiddenFields = declaredHiddenFields.map(field => ({
+      id: field.id,
+      name: field.name,
+      value: String(providedHiddenFields[field.name] ?? '')
+    }))
 
     const acceptedFieldIds = processedAnswers.map(answer => answer.id)
     const endAt = timestamp()
@@ -1969,8 +2727,8 @@ export class McpService {
       category: SubmissionCategoryEnum.INBOX,
       title: form.name,
       answers: processedAnswers,
-      hiddenFields: [],
-      variables: [],
+      hiddenFields: computedHiddenFields,
+      variables: computedVariables,
       startAt: endAt,
       endAt,
       ip: '',
@@ -1986,7 +2744,10 @@ export class McpService {
 
     return {
       submissionId,
-      acceptedFields: acceptedFieldIds
+      acceptedFields: acceptedFieldIds,
+      variables: computedVariables,
+      hiddenFields: computedHiddenFields,
+      warnings
     }
   }
 
@@ -2087,7 +2848,12 @@ export class McpService {
 
     const drafts = JSON.parse((form as any)._drafts || '[]')
     const warnings: string[] = []
-    const normalizedLogics = this.validateAndNormalizeLogics(logics, drafts, warnings)
+    const normalizedLogics = this.validateAndNormalizeLogics(
+      logics,
+      drafts,
+      warnings,
+      form.variables || []
+    )
 
     await this.formService.update(formId, {
       _drafts: JSON.stringify(drafts),
@@ -2095,6 +2861,45 @@ export class McpService {
     })
 
     return { formId, rulesCount: normalizedLogics.length, warnings }
+  }
+
+  private async updateFormVariables(
+    args: Record<string, any>,
+    context: ToolContext
+  ): Promise<Record<string, any>> {
+    this.requireWriteScope(context.tokenScope)
+    const { formId, variables } = updateFormVariablesSchema.parse(args)
+    const form = await this.findFormInTeam(formId, context.teamId)
+
+    const fields = this.getEditableFields(form)
+    const warnings: string[] = []
+    const normalizedVariables = this.buildVariables(
+      variables,
+      fields,
+      form.logics,
+      form.variables,
+      warnings
+    )
+
+    await this.formService.update(formId, { variables: normalizedVariables })
+
+    return { formId, variables: normalizedVariables, warnings }
+  }
+
+  private async updateFormHiddenFields(
+    args: Record<string, any>,
+    context: ToolContext
+  ): Promise<Record<string, any>> {
+    this.requireWriteScope(context.tokenScope)
+    const { formId, hiddenFields } = updateFormHiddenFieldsSchema.parse(args)
+    await this.findFormInTeam(formId, context.teamId)
+
+    const warnings: string[] = []
+    const normalizedHiddenFields = this.buildHiddenFields(hiddenFields, warnings)
+
+    await this.formService.update(formId, { hiddenFields: normalizedHiddenFields })
+
+    return { formId, hiddenFields: normalizedHiddenFields, warnings }
   }
 
   private async publishForm(
