@@ -3,10 +3,11 @@ import { Logic, QUESTION_FIELD_KINDS, UNSELECTABLE_FIELD_KINDS } from '@voxly/sh
 import { useEffect, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 
+import { formatCyclePath, hasCycleLogics } from '../utils'
 import { htmlUtils } from '@voxly/answer-utils'
 import { helper } from '@voxly/utils'
 
-import { Button, Form, Modal } from '@/components'
+import { Button, Form, Modal, useToast } from '@/components'
 import { useAppStore, useModal } from '@/store'
 
 import { QuestionIcon } from '../LeftSidebar/QuestionList'
@@ -15,6 +16,7 @@ import { useStoreContext } from '../store'
 
 function LogicBulkEditComponent() {
   const { t } = useTranslation()
+  const toast = useToast()
 
   const [rcForm] = Form.useForm()
   const { closeModal } = useAppStore()
@@ -69,6 +71,18 @@ function LogicBulkEditComponent() {
         })
       }
     })
+
+    const cycle = hasCycleLogics(logics, state.fields)
+
+    if (cycle) {
+      toast({
+        title: t('form.builder.logic.rule.cycle.title'),
+        message: t('form.builder.logic.rule.cycle.description', {
+          path: formatCyclePath(cycle, state.fields)
+        })
+      })
+      return
+    }
 
     dispatch({
       type: 'setLogics',

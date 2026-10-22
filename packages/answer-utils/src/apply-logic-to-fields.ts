@@ -82,16 +82,52 @@ export function applyLogicToFields(
     }
   }
 
-  let index = 0
+  const visited = new Set<string>()
 
-  while (index < fields!.length) {
-    const field = fields![index]
+  function nextUnvisited(from: number): number {
+    for (let i = from + 1; i < fields!.length; i++) {
+      if (!visited.has(fields![i].id)) {
+        return i
+      }
+    }
+
+    return fields!.length
+  }
+
+  function jumpIndex(fieldId?: string): number {
+    if (!fieldId) {
+      return -1
+    }
+
+    const index = fields!.findIndex(f => f.id === fieldId)
+
+    if (index < 0 || visited.has(fieldId)) {
+      return -1
+    }
+
+    return index
+  }
+
+  let current = 0
+  let steps = 0
+  const maxSteps = fields!.length + 1
+
+  while (current >= 0 && current < fields!.length && steps++ < maxSteps) {
+    const field = fields![current]
 
     if (field.kind === FieldKindEnum.THANK_YOU) {
       break
     }
 
+    if (visited.has(field.id)) {
+      current = nextUnvisited(current)
+      continue
+    }
+
+    visited.add(field.id)
+
     let isNavigateValidated = false
+    let nextIndex = nextUnvisited(current)
     const logic = logics!.find(l => l.fieldId === field.id)
 
     // Add parent field if needed to present SubGroup fields
@@ -125,15 +161,11 @@ export function applyLogicToFields(
         field.isTouched = evaluatePayloadCondition(field, navigate, values)
 
         if (field.isTouched) {
-          const jumpFieldId = (action as NavigateAction).fieldId
-          const jumpIndex = fields!.findIndex(f => f.id === jumpFieldId)
-          const isExists = !!result.fields.find(f => f.id === jumpFieldId)
+          const index = jumpIndex((action as NavigateAction).fieldId)
 
-          if (!isExists && jumpIndex > index) {
-            index = jumpIndex
+          if (index >= 0) {
+            nextIndex = index
             isNavigateValidated = true
-
-            result.fields.push(field)
             break
           }
         } else {
@@ -142,23 +174,16 @@ export function applyLogicToFields(
       }
 
       if (!isNavigateValidated && logic.defaultNavigate?.fieldId) {
-        const jumpFieldId = logic.defaultNavigate.fieldId
-        const jumpIndex = fields!.findIndex(f => f.id === jumpFieldId)
-        const isExists = !!result.fields.find(f => f.id === jumpFieldId)
+        const index = jumpIndex(logic.defaultNavigate.fieldId)
 
-        if (!isExists && jumpIndex > index) {
-          index = jumpIndex
-          isNavigateValidated = true
-
-          result.fields.push(field)
+        if (index >= 0) {
+          nextIndex = index
         }
       }
     }
 
-    if (!isNavigateValidated) {
-      index += 1
-      result.fields.push(field)
-    }
+    result.fields.push(field)
+    current = nextIndex
   }
 
   // Add indexes to every field

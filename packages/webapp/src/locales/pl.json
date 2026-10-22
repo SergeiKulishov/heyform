@@ -1600,7 +1600,22 @@
           "assignment": "Przypisz (=)",
           "navigate": "Skocz do",
           "calculate": "Oblicz",
-          "emptyState": "Logika pozwala formularzom reagować na odpowiedzi. <a>Przeczytaj więcej <icon /></a>"
+          "emptyState": "Logika pozwala formularzom reagować na odpowiedzi. <a>Przeczytaj więcej <icon /></a>",
+          "cycle": {
+            "title": "Wykryto cykl",
+            "description": "Ta reguła zamyka pętlę: {{path}}. Przejścia logiki muszą pozostać acykliczne."
+          }
+        },
+        "flow": {
+          "legend": {
+            "cycle": "Cykl niedozwolony"
+          },
+          "connect": {
+            "cycle": {
+              "title": "Cykl niedozwolony",
+              "description": "To połączenie utworzy pętlę: {{path}}"
+            }
+          }
         }
       },
       "preview": {

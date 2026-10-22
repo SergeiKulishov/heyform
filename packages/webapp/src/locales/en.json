@@ -1711,7 +1711,7 @@
           "navigate": "Jump to",
           "calculate": "Calculate",
           "invalidRulesWarning": "Some rules are broken and won't work",
-          "invalidTargetWarning": "This rule points to a deleted question or jumps backward — it will be ignored",
+          "invalidTargetWarning": "This rule points to a deleted question — it will be ignored",
           "orderHint": "Rules are checked from top to bottom. The first matching rule is applied.",
           "dateValue": "Select a date",
           "fallbackNext": "If no rule matches, go to the next question:",
@@ -1722,7 +1722,11 @@
           "addCondition": "Add condition",
           "removeCondition": "Remove condition",
           "otherwise": "Otherwise",
-          "fallbackElse": "If no rule matches, jump to:"
+          "fallbackElse": "If no rule matches, jump to:",
+          "cycle": {
+            "title": "Cycle detected",
+            "description": "This rule closes a loop: {{path}}. Logic jumps must stay acyclic."
+          }
         },
         "connector": {
           "and": "And",
@@ -1731,16 +1735,17 @@
         "flow": {
           "legend": {
             "defaultFlow": "Default flow",
-            "backwardJump": "Backward jump (ignored)",
+            "backwardJump": "Backward jump",
             "brokenJump": "Broken jump",
             "otherwise": "Otherwise branch",
-            "fallback": "Fallback (uncovered answers)"
+            "fallback": "Fallback (uncovered answers)",
+            "cycle": "Cycle not allowed"
           },
           "connect": {
             "dragHint": "Drag to create a logic rule",
-            "backwardJump": {
-              "title": "Jump back not allowed",
-              "description": "Logic can only jump to questions after the current one"
+            "cycle": {
+              "title": "Cycle not allowed",
+              "description": "This connection would create a loop: {{path}}"
             },
             "invalid": {
               "title": "Invalid connection",
@@ -1755,10 +1760,6 @@
               "description": "This question will now always continue to the selected one"
             }
           }
-        },
-        "reorderWarning": {
-          "title": "Logic rules affected",
-          "description": "Moving this question made some jump rules point backward. Backward jumps are ignored."
         }
       },
       "preview": {

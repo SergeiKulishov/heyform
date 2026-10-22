@@ -1,7 +1,7 @@
 {
   "name": "@voxly/answer-utils",
   "description": "HeyForm Answer Utils",
-  "version": "1.4.2",
+  "version": "1.4.3",
   "publishConfig": {
     "registry": "https://nexus.nlnano.ru/repository/npm-hosted/"
   },

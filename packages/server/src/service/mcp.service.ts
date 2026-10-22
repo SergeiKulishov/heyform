@@ -502,7 +502,7 @@ const LOGIC_REFERENCE = {
     note: 'is_empty/is_not_empty (no expected) are allowed for any question kind'
   },
   navigateRules:
-    'Destination must be an EXISTING field AFTER the source field (forward-only: backward targets are ignored at runtime → warning). thank_you is a valid terminator destination. Skipped fields are excluded from submissions.',
+    'Destination must be an EXISTING question or thank_you field. Jumps may go backward, forward, or to a parallel branch, but the logic graph MUST stay acyclic: a cycle (q1 → q2 → q1) or a self-loop (q1 → q1) is rejected with an error. thank_you is a valid terminator destination. Skipped fields are excluded from submissions.',
   hiddenFields:
     'Hidden fields are not visible to respondents: values are captured from URL query params (?utm_source=newsletter) and saved to submission.hiddenFields. Insert them in texts via <span data-hiddenfield="<name>"> — the attribute is the hidden field NAME, not its id. Manage them via update_form_hidden_fields.',
   variables: {
@@ -762,7 +762,7 @@ export class McpService {
       {
         name: 'get_logic_reference',
         description:
-          'Get canonical branching logic reference: rule/payload/condition structure, comparisons and expected value formats per field kind, forward-only navigation rules, and a full example.',
+          'Get canonical branching logic reference: rule/payload/condition structure, comparisons and expected value formats per field kind, navigation rules for an acyclic graph, and a full example.',
         inputSchema: { type: 'object', properties: {} },
         handler: async () => LOGIC_REFERENCE
       },
@@ -1153,7 +1153,7 @@ export class McpService {
       {
         name: 'update_form_logic',
         description:
-          'Replace the entire form logic (branching rules). Semantic validation: field/choice references, per-kind comparisons, forward-only navigation. Answer value formats: get_field_kinds_reference. Logic rules reference: get_logic_reference. (read_write tokens only)',
+          'Replace the entire form logic (branching rules). Semantic validation: field/choice references, per-kind comparisons, acyclic navigation graph (cycles are rejected). Answer value formats: get_field_kinds_reference. Logic rules reference: get_logic_reference. (read_write tokens only)',
         inputSchema: {
           type: 'object',
           properties: {
@@ -1601,7 +1601,7 @@ export class McpService {
             warnings
           )
         } else if (action.kind === ActionEnum.NAVIGATE) {
-          this.validateNavigateTarget(action.fieldId, sourceIndex, fieldMap, rule.fieldId, warnings)
+          this.validateNavigateTarget(action.fieldId, fieldMap, rule.fieldId)
 
           normalizedAction = {
             kind: ActionEnum.NAVIGATE,
@@ -1629,13 +1629,7 @@ export class McpService {
 
       let defaultNavigate = undefined
       if (rule.defaultNavigate && typeof rule.defaultNavigate === 'object') {
-        this.validateNavigateTarget(
-          rule.defaultNavigate.fieldId,
-          sourceIndex,
-          fieldMap,
-          rule.fieldId,
-          warnings
-        )
+        this.validateNavigateTarget(rule.defaultNavigate.fieldId, fieldMap, rule.fieldId)
         defaultNavigate = { fieldId: rule.defaultNavigate.fieldId }
       }
 
@@ -1645,6 +1639,8 @@ export class McpService {
         defaultNavigate
       })
     }
+
+    this.assertAcyclicLogics(normalizedLogics)
 
     return normalizedLogics
   }
@@ -2311,10 +2307,8 @@ export class McpService {
 
   private validateNavigateTarget(
     targetId: string,
-    sourceIndex: number,
     fieldMap: Map<string, { field: any; index: number }>,
-    sourceFieldId: string,
-    warnings: string[]
+    sourceFieldId: string
   ): void {
     if (!targetId) {
       throw new BadRequestException('Navigate target is required')
@@ -2325,10 +2319,72 @@ export class McpService {
       throw new BadRequestException(`Navigate target ${targetId} not found`)
     }
 
-    if (targetInfo.index <= sourceIndex) {
-      warnings.push(
-        `Navigate from ${sourceFieldId} to ${targetId} goes backward, it will be ignored at runtime`
+    const targetKind = targetInfo.field?.kind
+    if (targetKind !== FieldKindEnum.THANK_YOU && !this.isQuestionKind(targetKind)) {
+      throw new BadRequestException(
+        `Navigate from ${sourceFieldId} to ${targetId}: destination must be a question or thank_you field`
       )
+    }
+  }
+
+  private assertAcyclicLogics(logics: any[]): void {
+    const edges = new Map<string, string[]>()
+
+    for (const rule of logics) {
+      const targets = edges.get(rule.fieldId) || []
+
+      for (const payload of rule.payloads || []) {
+        if (payload.action?.kind === ActionEnum.NAVIGATE && payload.action.fieldId) {
+          targets.push(payload.action.fieldId)
+        }
+      }
+
+      if (rule.defaultNavigate?.fieldId) {
+        targets.push(rule.defaultNavigate.fieldId)
+      }
+
+      edges.set(rule.fieldId, targets)
+    }
+
+    const states = new Map<string, number>()
+    const stack: string[] = []
+
+    const visit = (fieldId: string): string[] | null => {
+      states.set(fieldId, 1)
+      stack.push(fieldId)
+
+      for (const targetId of edges.get(fieldId) || []) {
+        const state = states.get(targetId) || 0
+
+        if (state === 1) {
+          return [...stack.slice(stack.indexOf(targetId)), targetId]
+        }
+
+        if (state === 0) {
+          const cycle = visit(targetId)
+
+          if (cycle) {
+            return cycle
+          }
+        }
+      }
+
+      states.set(fieldId, 2)
+      stack.pop()
+
+      return null
+    }
+
+    for (const fieldId of edges.keys()) {
+      if (states.get(fieldId)) {
+        continue
+      }
+
+      const cycle = visit(fieldId)
+
+      if (cycle) {
+        throw new BadRequestException(`logic graph contains a cycle: ${cycle.join(' → ')}`)
+      }
     }
   }
 

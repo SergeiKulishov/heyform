@@ -1596,7 +1596,22 @@
           "assignment": "Zuweisen (=)",
           "navigate": "Springen zu",
           "calculate": "Berechnen",
-          "emptyState": "Logik ermöglicht es Formularen, auf Antworten zu reagieren. <a>Mehr erfahren <icon /></a>"
+          "emptyState": "Logik ermöglicht es Formularen, auf Antworten zu reagieren. <a>Mehr erfahren <icon /></a>",
+          "cycle": {
+            "title": "Zyklus erkannt",
+            "description": "Diese Regel schließt einen Kreis: {{path}}. Logiksprünge müssen schleifenfrei bleiben."
+          }
+        },
+        "flow": {
+          "legend": {
+            "cycle": "Zyklus nicht erlaubt"
+          },
+          "connect": {
+            "cycle": {
+              "title": "Zyklus nicht erlaubt",
+              "description": "Diese Verbindung würde einen Kreis erzeugen: {{path}}"
+            }
+          }
         }
       },
       "preview": {

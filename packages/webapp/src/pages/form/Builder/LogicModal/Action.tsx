@@ -1,9 +1,9 @@
 import { IconPlus } from '@tabler/icons-react'
-import { flattenFieldsWithGroups } from '@voxly/form-renderer'
 import { ActionEnum, LogicAction, Variable } from '@voxly/shared-types-enums'
 import { useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
+import { getNavigateTargetFields } from '../utils'
 import { cn } from '@/utils'
 import { helper } from '@voxly/utils'
 
@@ -37,10 +37,7 @@ export default function Action({
   const [htmlType, setHtmlType] = useState<string>('text')
 
   const fields = useMemo(() => {
-    const tmpFields = flattenFieldsWithGroups(rawFields)
-    const index = tmpFields.findIndex(f => f.id === currentField.id)
-
-    return tmpFields.slice(index + 1)
+    return getNavigateTargetFields(rawFields, currentField.id)
   }, [rawFields, currentField])
 
   function handleKindChange(kind: any) {

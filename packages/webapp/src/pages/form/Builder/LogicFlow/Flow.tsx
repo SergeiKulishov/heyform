@@ -14,7 +14,13 @@ import ReactFlow, {
 } from 'react-flow-renderer'
 import { useTranslation } from 'react-i18next'
 
-import { fieldLogicToNodesEdges, getLogicPayload, removePayloadFromLogics } from '../utils'
+import {
+  fieldLogicToNodesEdges,
+  formatCyclePath,
+  getLogicPayload,
+  hasCycleLogics,
+  removePayloadFromLogics
+} from '../utils'
 
 import { useToast } from '@/components'
 import { useAppStore } from '@/store'
@@ -42,11 +48,6 @@ export const Flow = () => {
   const [edges, setEdges, onEdgesChange] = useEdgesState([])
 
   const flatFields = useMemo(() => flattenFieldsWithGroups(state.fields), [state.fields])
-  const fieldIndexMap = useMemo(() => {
-    const m = new Map<string, number>()
-    flatFields.forEach((f, i) => m.set(f.id, i))
-    return m
-  }, [flatFields])
 
   function handleInit() {
     setTimeout(() => {
@@ -71,7 +72,7 @@ export const Flow = () => {
     }
   }
 
-  function validateConnection(connection: Connection): 'ok' | 'backward' | 'invalid' {
+  function validateConnection(connection: Connection): 'ok' | 'cycle' | 'invalid' {
     if (!connection.source || !connection.target || connection.source === connection.target) {
       return 'invalid'
     }
@@ -91,11 +92,13 @@ export const Flow = () => {
       return 'invalid'
     }
 
-    const sourceIndex = fieldIndexMap.get(connection.source)!
-    const targetIndex = fieldIndexMap.get(connection.target)!
-
-    if (targetIndex <= sourceIndex) {
-      return 'backward'
+    if (
+      hasCycleLogics(state.logics, state.fields, {
+        source: connection.source,
+        target: connection.target
+      })
+    ) {
+      return 'cycle'
     }
 
     return 'ok'
@@ -106,16 +109,20 @@ export const Flow = () => {
       return false
     }
 
+    const sourceField = flatFields.find(f => f.id === sourceId)
     const targetField = flatFields.find(f => f.id === targetId)
 
-    if (!targetField || targetField.kind === FieldKindEnum.WELCOME) {
+    if (
+      !sourceField ||
+      !targetField ||
+      sourceField.kind === FieldKindEnum.WELCOME ||
+      sourceField.kind === FieldKindEnum.THANK_YOU ||
+      targetField.kind === FieldKindEnum.WELCOME
+    ) {
       return false
     }
 
-    const sourceIndex = fieldIndexMap.get(sourceId)
-    const targetIndex = fieldIndexMap.get(targetId)
-
-    return sourceIndex !== undefined && targetIndex !== undefined && targetIndex > sourceIndex
+    return !hasCycleLogics(state.logics, state.fields, { source: sourceId, target: targetId })
   }
 
   function handleConnectStart(
@@ -163,13 +170,22 @@ export const Flow = () => {
 
     if (validity !== 'ok') {
       const key =
-        validity === 'backward'
-          ? 'form.builder.logic.flow.connect.backwardJump'
+        validity === 'cycle'
+          ? 'form.builder.logic.flow.connect.cycle'
           : 'form.builder.logic.flow.connect.invalid'
+      const cycle =
+        validity === 'cycle'
+          ? hasCycleLogics(state.logics, state.fields, {
+              source: connection.source as string,
+              target: connection.target as string
+            })
+          : null
 
       toast({
         title: t(`${key}.title`),
-        message: t(`${key}.description`)
+        message: cycle
+          ? t(`${key}.description`, { path: formatCyclePath(cycle, state.fields) })
+          : t(`${key}.description`)
       })
       return
     }

@@ -1596,7 +1596,22 @@
           "assignment": "賦值 (=)",
           "navigate": "跳轉到",
           "calculate": "計算",
-          "emptyState": "邏輯使表單能對回應做出反應。 <a>了解更多 <icon /></a>"
+          "emptyState": "邏輯使表單能對回應做出反應。 <a>了解更多 <icon /></a>",
+          "cycle": {
+            "title": "偵測到循環",
+            "description": "此規則會形成循環：{{path}}。邏輯跳轉必須保持無環。"
+          }
+        },
+        "flow": {
+          "legend": {
+            "cycle": "不允許循環"
+          },
+          "connect": {
+            "cycle": {
+              "title": "不允許循環",
+              "description": "此連接會形成循環：{{path}}"
+            }
+          }
         }
       },
       "preview": {

@@ -1,12 +1,19 @@
 import { IconAlertTriangle, IconCircleCheck } from '@tabler/icons-react'
 import { flattenFieldsWithGroups } from '@voxly/form-renderer'
+import { Logic } from '@voxly/shared-types-enums'
 import { useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { findBrokenNavigatePayloadIds, getChoiceCoverage } from '../utils'
+import {
+  findBrokenNavigatePayloadIds,
+  formatCyclePath,
+  getChoiceCoverage,
+  getNavigateTargetFields,
+  hasCycleLogics
+} from '../utils'
 import { htmlUtils } from '@voxly/answer-utils'
 
-import { Button, Form, Modal } from '@/components'
+import { Button, Form, Modal, useToast } from '@/components'
 import { useAppStore, useModal } from '@/store'
 
 import { QuestionIcon } from '../LeftSidebar/QuestionList'
@@ -16,6 +23,7 @@ import { QuestionSelect } from './QuestionSelect'
 
 const LogicComponent = () => {
   const { t } = useTranslation()
+  const toast = useToast()
 
   const [rcForm] = Form.useForm()
   const { closeModal } = useAppStore()
@@ -49,8 +57,8 @@ const LogicComponent = () => {
   )
   const nextField = currentIndex > -1 ? flatFields[currentIndex + 1] : undefined
   const targetFields = useMemo(
-    () => (currentIndex > -1 ? flatFields.slice(currentIndex + 1) : []),
-    [flatFields, currentIndex]
+    () => getNavigateTargetFields(state.fields, currentField?.id),
+    [state.fields, currentField]
   )
 
   const [defaultNavigate, setDefaultNavigate] = useState(logic?.defaultNavigate?.fieldId)
@@ -122,11 +130,30 @@ const LogicComponent = () => {
   }
 
   function handleFinish({ payloads }: AnyMap) {
+    const fieldId = state.currentField!.id
+    const logic: Logic = {
+      fieldId,
+      payloads,
+      ...(defaultNavigate ? { defaultNavigate: { fieldId: defaultNavigate } } : {})
+    } as Logic
+    const nextLogics = [...(state.logics || []).filter(l => l.fieldId !== fieldId), logic]
+    const cycle = hasCycleLogics(nextLogics, state.fields)
+
+    if (cycle) {
+      toast({
+        title: t('form.builder.logic.rule.cycle.title'),
+        message: t('form.builder.logic.rule.cycle.description', {
+          path: formatCyclePath(cycle, state.fields)
+        })
+      })
+      return
+    }
+
     handleClose()
     dispatch({
       type: 'setLogic',
       payload: {
-        fieldId: state.currentField!.id,
+        fieldId,
         payloads,
         ...(defaultNavigate ? { defaultNavigate: { fieldId: defaultNavigate } } : {})
       }

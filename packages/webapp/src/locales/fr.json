@@ -1600,7 +1600,22 @@
           "assignment": "Attribuer (=)",
           "navigate": "Aller à",
           "calculate": "Calculer",
-          "emptyState": "La logique permet aux formulaires de réagir aux réponses. <a>En savoir plus <icon /></a>"
+          "emptyState": "La logique permet aux formulaires de réagir aux réponses. <a>En savoir plus <icon /></a>",
+          "cycle": {
+            "title": "Cycle détecté",
+            "description": "Cette règle crée une boucle : {{path}}. Les sauts logiques doivent rester acycliques."
+          }
+        },
+        "flow": {
+          "legend": {
+            "cycle": "Cycle interdit"
+          },
+          "connect": {
+            "cycle": {
+              "title": "Cycle interdit",
+              "description": "Cette connexion créerait une boucle : {{path}}"
+            }
+          }
         }
       },
       "preview": {

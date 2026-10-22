@@ -1679,7 +1679,22 @@
           "division": "Děliti (÷)",
           "assignment": "Prisvojiti (=)",
           "navigate": "Skočiti do",
-          "calculate": "Vyčisliti"
+          "calculate": "Vyčisliti",
+          "cycle": {
+            "title": "Najdeny cykl",
+            "description": "To pravilo zatvara krug: {{path}}. Logične prehody morajut ostati aciklične."
+          }
+        },
+        "flow": {
+          "legend": {
+            "cycle": "Cykl ne dozvoljen"
+          },
+          "connect": {
+            "cycle": {
+              "title": "Cykl ne dozvoljen",
+              "description": "To sojednenje stvori krug: {{path}}"
+            }
+          }
         }
       },
       "preview": {

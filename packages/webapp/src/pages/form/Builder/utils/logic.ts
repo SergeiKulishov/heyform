@@ -13,6 +13,7 @@ import {
 import * as dagre from 'dagre'
 import { Edge, Node } from 'react-flow-renderer'
 
+import { htmlUtils } from '@voxly/answer-utils'
 import { nanoid } from '@voxly/utils'
 
 import { FormFieldType } from '@/types'
@@ -191,36 +192,141 @@ export function findBrokenNavigatePayloadIds(
   logics?: Logic[]
 ): Set<string> {
   const flattened = flattenFieldsWithGroups(fields)
-  const indexMap = new Map<string, number>()
-
-  flattened.forEach((field, index) => {
-    indexMap.set(field.id, index)
-  })
+  const fieldIds = new Set(flattened.map(field => field.id))
 
   const brokenIds = new Set<string>()
 
   logics?.forEach(logic => {
-    const sourceIndex = indexMap.get(logic.fieldId)
-
-    if (sourceIndex === undefined) {
-      return
-    }
-
     logic.payloads.forEach(payload => {
       if (payload.action.kind !== ActionEnum.NAVIGATE) {
         return
       }
 
-      const targetId = payload.action.fieldId
-      const targetIndex = indexMap.get(targetId)
-
-      if (targetIndex === undefined || targetIndex <= sourceIndex) {
+      if (!fieldIds.has(payload.action.fieldId)) {
         brokenIds.add(payload.id)
       }
     })
   })
 
   return brokenIds
+}
+
+export function getNavigateTargetFields(
+  fields: FormFieldType[],
+  currentFieldId?: string
+): FormFieldType[] {
+  return flattenFieldsWithGroups(fields).filter(
+    field =>
+      field.id !== currentFieldId &&
+      field.kind !== FieldKindEnum.WELCOME &&
+      field.kind !== FieldKindEnum.GROUP
+  )
+}
+
+export function getLogicEdges(logics?: Logic[], fields?: FormFieldType[]): Map<string, string[]> {
+  const fieldIds = new Set(flattenFieldsWithGroups(fields || []).map(field => field.id))
+  const edges = new Map<string, string[]>()
+
+  logics?.forEach(logic => {
+    if (!fieldIds.has(logic.fieldId)) {
+      return
+    }
+
+    const targets = edges.get(logic.fieldId) || []
+
+    logic.payloads.forEach(payload => {
+      if (payload.action?.kind !== ActionEnum.NAVIGATE) {
+        return
+      }
+
+      const targetId = payload.action.fieldId
+
+      if (!targetId || !fieldIds.has(targetId) || targets.includes(targetId)) {
+        return
+      }
+
+      targets.push(targetId)
+    })
+
+    const defaultTargetId = logic.defaultNavigate?.fieldId
+
+    if (defaultTargetId && fieldIds.has(defaultTargetId) && !targets.includes(defaultTargetId)) {
+      targets.push(defaultTargetId)
+    }
+
+    edges.set(logic.fieldId, targets)
+  })
+
+  return edges
+}
+
+export function findLogicCycle(edges: Map<string, string[]>): string[] | null {
+  const states = new Map<string, number>()
+  const stack: string[] = []
+
+  function visit(fieldId: string): string[] | null {
+    states.set(fieldId, 1)
+    stack.push(fieldId)
+
+    for (const targetId of edges.get(fieldId) || []) {
+      const state = states.get(targetId) || 0
+
+      if (state === 1) {
+        return [...stack.slice(stack.indexOf(targetId)), targetId]
+      }
+
+      if (state === 0) {
+        const cycle = visit(targetId)
+
+        if (cycle) {
+          return cycle
+        }
+      }
+    }
+
+    states.set(fieldId, 2)
+    stack.pop()
+
+    return null
+  }
+
+  for (const fieldId of edges.keys()) {
+    if (!states.get(fieldId)) {
+      const cycle = visit(fieldId)
+
+      if (cycle) {
+        return cycle
+      }
+    }
+  }
+
+  return null
+}
+
+export function hasCycleLogics(
+  logics?: Logic[],
+  fields?: FormFieldType[],
+  extraEdge?: { source: string; target: string }
+): string[] | null {
+  const edges = getLogicEdges(logics, fields)
+
+  if (extraEdge) {
+    const targets = edges.get(extraEdge.source) || []
+    edges.set(extraEdge.source, [...targets, extraEdge.target])
+  }
+
+  return findLogicCycle(edges)
+}
+
+export function formatCyclePath(cycle: string[], fields: FormFieldType[]): string {
+  const titleMap = new Map(
+    flattenFieldsWithGroups(fields).map(field => [
+      field.id,
+      htmlUtils.plain((field.title as string) || field.id)
+    ])
+  )
+
+  return cycle.map(fieldId => titleMap.get(fieldId) || fieldId).join(' → ')
 }
 
 export function sanitizeLogics(fields: FormFieldType[], logics?: Logic[]): Logic[] {

@@ -18,6 +18,10 @@ allowBuilds:
   simple-git-hooks: true
   utf-8-validate: true
 
+minimumReleaseAgeExclude:
+  - '@voxly/answer-utils@1.4.3'
+  - '@voxly/form-renderer@0.8.5'
+
 overrides:
   apollo-upload-client: 17.0.0
   fs-capacitor: 6.2.0

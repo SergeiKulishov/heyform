@@ -1,11 +1,6 @@
 import { IconCaretDownFilled, IconDotsVertical, IconPlus } from '@tabler/icons-react'
-import { flattenFieldsWithGroups, numberToChar, questionNumber } from '@voxly/form-renderer'
-import {
-  ActionEnum,
-  FieldKindEnum,
-  OTHER_FIELD_KINDS,
-  QUESTION_FIELD_KINDS
-} from '@voxly/shared-types-enums'
+import { numberToChar, questionNumber } from '@voxly/form-renderer'
+import { FieldKindEnum, OTHER_FIELD_KINDS, QUESTION_FIELD_KINDS } from '@voxly/shared-types-enums'
 import { FC, MouseEvent, useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Panel, PanelGroup, PanelResizeHandle } from 'react-resizable-panels'
@@ -16,7 +11,7 @@ import { cn, nextTick } from '@/utils'
 import { htmlUtils } from '@voxly/answer-utils'
 import { helper } from '@voxly/utils'
 
-import { Button, Dropdown, Tooltip, useToast } from '@/components'
+import { Button, Dropdown, Tooltip } from '@/components'
 import { ALL_FIELD_CONFIGS } from '@/consts'
 import { FormFieldType } from '@/types'
 
@@ -311,7 +306,6 @@ const Question: FC<QuestionProps> = ({
 
 export default function QuestionList() {
   const { t } = useTranslation()
-  const toast = useToast()
   const { state, dispatch } = useStoreContext()
 
   const isDeleteEnabled = useMemo(() => state.questions.length > 1, [state.questions])
@@ -360,50 +354,6 @@ export default function QuestionList() {
         const newFields = ([data.welcome, ...fields, ...data.thankYous] as FormFieldType[]).filter(
           helper.isValid
         )
-        const oldFlat = flattenFieldsWithGroups(state.fields)
-        const newFlat = flattenFieldsWithGroups(newFields)
-        const oldIndexMap = new Map(oldFlat.map((f, i) => [f.id, i]))
-        const newIndexMap = new Map(newFlat.map((f, i) => [f.id, i]))
-        let hasBackwardJump = false
-
-        state.logics?.forEach(logic => {
-          const oldSourceIndex = oldIndexMap.get(logic.fieldId)
-
-          if (oldSourceIndex === undefined) {
-            return
-          }
-
-          logic.payloads.forEach(payload => {
-            if (payload.action.kind !== ActionEnum.NAVIGATE) {
-              return
-            }
-
-            const targetId = payload.action.fieldId
-            const oldTargetIndex = oldIndexMap.get(targetId)
-
-            if (oldTargetIndex === undefined || oldTargetIndex <= oldSourceIndex) {
-              return
-            }
-
-            const newSourceIndex = newIndexMap.get(logic.fieldId)
-            const newTargetIndex = newIndexMap.get(targetId)
-
-            if (newSourceIndex === undefined || newTargetIndex === undefined) {
-              return
-            }
-
-            if (newTargetIndex <= newSourceIndex) {
-              hasBackwardJump = true
-            }
-          })
-        })
-
-        if (hasBackwardJump) {
-          toast({
-            title: t('form.builder.logic.reorderWarning.title'),
-            message: t('form.builder.logic.reorderWarning.description')
-          })
-        }
 
         dispatch({
           type: 'setFields',
@@ -413,7 +363,7 @@ export default function QuestionList() {
         })
       }
     },
-    [data.thankYous, data.welcome, dispatch, state.fields, state.logics, t, toast]
+    [data.thankYous, data.welcome, dispatch]
   )
 
   function handleAddEnding() {

@@ -1596,7 +1596,22 @@
           "assignment": "代入 (=)",
           "navigate": "移動する",
           "calculate": "計算する",
-          "emptyState": "ロジックは回答に応じてフォームが反応するようにします。 <a>詳細はこちら <icon /></a>"
+          "emptyState": "ロジックは回答に応じてフォームが反応するようにします。 <a>詳細はこちら <icon /></a>",
+          "cycle": {
+            "title": "循環を検出しました",
+            "description": "このルールはループを作成します: {{path}}。ロジックのジャンプは非循環である必要があります。"
+          }
+        },
+        "flow": {
+          "legend": {
+            "cycle": "循環は禁止されています"
+          },
+          "connect": {
+            "cycle": {
+              "title": "循環は禁止されています",
+              "description": "この接続はループを作成します: {{path}}"
+            }
+          }
         }
       },
       "preview": {
