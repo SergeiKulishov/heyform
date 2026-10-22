@@ -1,49 +1,48 @@
-FROM node:18.20.0-alpine3.19 AS base
+# syntax=docker/dockerfile:1
 
+FROM node:18.20.0-alpine3.19 AS base
 ARG APP_PATH=/app
 WORKDIR $APP_PATH
-#ARG NPM_TOKEN
+RUN apk add --no-cache python3 make g++ \
+ && npm install -g pnpm@12
 
-RUN npm install -g pnpm
-RUN apk add --no-cache python3 make g++
-
-# npm auth (ВАЖНО: до pnpm install)
-#RUN echo "//nexus.nlnano.ru/repository/npm-hosted/:_authToken=${NPM_TOKEN}" > /root/.npmrc
-
+FROM base AS deps
 COPY .npmrc /root/.npmrc
-COPY package.json $APP_PATH/package.json
-COPY pnpm-lock.yaml $APP_PATH/pnpm-lock.yaml
-COPY pnpm-workspace.yaml $APP_PATH/pnpm-workspace.yaml
-COPY packages/server $APP_PATH/packages/server
-COPY packages/webapp $APP_PATH/packages/webapp
-COPY scripts $APP_PATH/scripts
+RUN echo "inject-workspace-packages=true" >> /root/.npmrc
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
+COPY packages/server/package.json ./packages/server/package.json
+COPY packages/webapp/package.json ./packages/webapp/package.json
+RUN --mount=type=cache,id=pnpm,target=/root/.local/share/pnpm/store \
+    pnpm install --frozen-lockfile
 
-RUN pnpm install
-RUN pnpm build:server
-RUN pnpm build:webapp
-RUN node scripts/update-index.html.js
+FROM deps AS server-builder
+COPY packages/server ./packages/server
+RUN pnpm build:server \
+ && pnpm --filter ./packages/server deploy --prod /prod/server
+
+FROM deps AS webapp-builder
+COPY packages/webapp ./packages/webapp
+COPY packages/server/view ./packages/server/view
+COPY scripts ./scripts
+RUN pnpm build:webapp \
+ && node scripts/update-index.html.js
 
 FROM node:18.20.0-alpine3.19 AS runner
-
 ARG APP_PATH=/app
 WORKDIR $APP_PATH
-#ARG NPM_TOKEN
+ENV NODE_ENV=production
 
-RUN npm install -g pnpm
-RUN apk add --no-cache python3 make g++
+COPY --from=server-builder --chown=node:node /prod/server/node_modules ./node_modules
+COPY --from=server-builder --chown=node:node /prod/server/package.json ./package.json
+COPY --from=server-builder --chown=node:node $APP_PATH/packages/server/dist ./dist
+COPY --from=server-builder --chown=node:node $APP_PATH/packages/server/resources ./resources
+COPY --from=server-builder --chown=node:node $APP_PATH/packages/server/static ./static
+COPY --from=server-builder --chown=node:node $APP_PATH/packages/server/src ./src
+COPY --from=server-builder --chown=node:node $APP_PATH/packages/server/tsconfig.json ./tsconfig.json
+COPY --from=webapp-builder --chown=node:node $APP_PATH/packages/webapp/dist ./view
+COPY --from=webapp-builder --chown=node:node $APP_PATH/packages/server/view/index.html ./view/index.html
+COPY --chown=node:node packages/server/view/social-login.html packages/server/view/connect-stripe.html ./view/
 
-COPY .npmrc /root/.npmrc
-
-COPY --from=base $APP_PATH/packages/server/dist ./dist
-COPY --from=base $APP_PATH/packages/server/resources ./resources
-COPY --from=base $APP_PATH/packages/server/static ./static
-COPY --from=base $APP_PATH/packages/server/src ./src
-COPY --from=base $APP_PATH/packages/server/tsconfig.json ./tsconfig.json
-COPY --from=base $APP_PATH/packages/server/package.json ./package.json
-COPY --from=base $APP_PATH/packages/webapp/dist ./view
-COPY --from=base $APP_PATH/packages/server/view/index.html ./view/index.html
-
-RUN pnpm install --prod
-
+USER node
 EXPOSE 8000
-CMD ["npm", "start"]
+CMD ["node", "--enable-source-maps", "dist/main.js"]
