@@ -738,6 +738,9 @@ class VariableInput {
 
   @Field(type => GraphQLJSON)
   value: any
+
+  @Field(type => [GraphQLJSONObject], { nullable: true })
+  logics?: any[]
 }
 
 @InputType()
