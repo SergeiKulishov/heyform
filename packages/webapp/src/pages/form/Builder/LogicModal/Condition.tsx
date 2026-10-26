@@ -1,6 +1,11 @@
-import { FieldKindEnum, LogicCondition, OTHER_ITEM_ID } from '@voxly/shared-types-enums'
+import {
+  ComparisonEnum,
+  FieldKindEnum,
+  LogicCondition,
+  OTHER_ITEM_ID
+} from '@voxly/shared-types-enums'
 import dayjs, { type Dayjs } from 'dayjs'
-import { type FC, useCallback, useMemo, useState } from 'react'
+import { type FC, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { helper } from '@voxly/utils'
@@ -45,6 +50,27 @@ const DefaultCondition: FC<DefaultProps> = ({ value, onComparisonChange }) => {
       multiLanguage
       onChange={onComparisonChange}
     />
+  )
+}
+
+const StatementCondition: FC<DefaultProps> = ({ value, onComparisonChange }) => {
+  const { t } = useTranslation()
+  const handlerRef = useRef(onComparisonChange)
+  handlerRef.current = onComparisonChange
+
+  const comparison = value?.comparison
+  const hasExpected = value ? (value as Any).expected !== undefined : false
+
+  useEffect(() => {
+    if (comparison !== ComparisonEnum.IS_EMPTY || hasExpected) {
+      handlerRef.current({ comparison: ComparisonEnum.IS_EMPTY })
+    }
+  }, [comparison, hasExpected])
+
+  return (
+    <div className="text-secondary flex-1 text-sm leading-10">
+      {t('form.builder.logic.rule.always')}
+    </div>
   )
 }
 
@@ -329,6 +355,9 @@ export const ConditionFields: FC<ConditionFieldsProps> = ({
             onExpectedChange={onExpectedChange}
           />
         )
+
+      case FieldKindEnum.STATEMENT:
+        return <StatementCondition value={value} onComparisonChange={onComparisonChange} />
 
       default:
         return <DefaultCondition value={value} onComparisonChange={onComparisonChange} />

@@ -1672,6 +1672,7 @@
           "isBefore": "Je prěd",
           "isAfter": "Je poslě",
           "isEmpty": "Je prazno",
+          "always": "Vsegda",
           "isNotEmpty": "Ne je prazno",
           "addition": "Dodati (+)",
           "subtraction": "Odnjeti (-)",

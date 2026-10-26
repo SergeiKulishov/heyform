@@ -7,8 +7,7 @@ import {
   Logic,
   LogicCondition,
   LogicPayload,
-  OTHER_ITEM_ID,
-  UNSELECTABLE_FIELD_KINDS
+  OTHER_ITEM_ID
 } from '@voxly/shared-types-enums'
 import * as dagre from 'dagre'
 import { Edge, Node } from 'react-flow-renderer'
@@ -20,6 +19,16 @@ import { FormFieldType } from '@/types'
 
 const nodeWidth = 224
 const nodeHeight = 112
+
+const LOGIC_UNSELECTABLE_FIELD_KINDS = [
+  FieldKindEnum.WELCOME,
+  FieldKindEnum.THANK_YOU,
+  FieldKindEnum.GROUP
+]
+
+export function isLogicSelectableKind(kind: FieldKindEnum): boolean {
+  return !LOGIC_UNSELECTABLE_FIELD_KINDS.includes(kind)
+}
 
 export function getLayoutedElements(nodes: Node[], edges: Edge[], direction = 'LR') {
   const dagreGraph = new dagre.graphlib.Graph()
@@ -92,6 +101,10 @@ export function getDefaultCondition(
     case FieldKindEnum.RATING:
     case FieldKindEnum.OPINION_SCALE:
       comparison = ComparisonEnum.EQUAL
+      break
+
+    case FieldKindEnum.STATEMENT:
+      comparison = ComparisonEnum.IS_EMPTY
       break
 
     default:
@@ -448,7 +461,7 @@ export function fieldLogicToNodesEdges(
         y: 0
       },
       connectable: true,
-      selectable: !UNSELECTABLE_FIELD_KINDS.includes(field.kind)
+      selectable: isLogicSelectableKind(field.kind)
     })
 
     if (index < fields.length - 1) {

@@ -1592,6 +1592,7 @@
           "isBefore": "Jest przed",
           "isAfter": "Jest po",
           "isEmpty": "Jest pusty",
+          "always": "Zawsze",
           "isNotEmpty": "Nie jest pusty",
           "addition": "Dodaj (+)",
           "subtraction": "Odejmij (-)",

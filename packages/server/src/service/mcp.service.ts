@@ -499,10 +499,13 @@ const LOGIC_REFERENCE = {
       'less_or_equal_than'
     ],
     other: ['is_empty', 'is_not_empty'],
-    note: 'is_empty/is_not_empty (no expected) are allowed for any question kind'
+    statement: ['is_empty'],
+    note: 'is_empty/is_not_empty (no expected) are allowed for any question kind; statement fields accept ONLY is_empty, which means ALWAYS'
   },
+  statementRule:
+    'statement has no answer: its rule must use condition { fieldId: <statement id>, comparison: "is_empty" } meaning ALWAYS (the jump happens right after the screen is shown). is_not_empty and any other comparison are rejected, and no expected value is used or stored. A statement is also a valid navigate destination (it is shown, then flow continues).',
   navigateRules:
-    'Destination must be an EXISTING question or thank_you field. Jumps may go backward, forward, or to a parallel branch, but the logic graph MUST stay acyclic: a cycle (q1 → q2 → q1) or a self-loop (q1 → q1) is rejected with an error. thank_you is a valid terminator destination. Skipped fields are excluded from submissions.',
+    'Destination must be an EXISTING question, statement, or thank_you field. statement is a display-only screen (no answer): it is a valid navigation destination and a valid rule SOURCE. A statement rule is an unconditional jump: its condition MUST be { fieldId: <statement id>, comparison: "is_empty" } which means ALWAYS; is_not_empty and every other comparison are rejected. statement navigation is evaluated after the screen is shown. Jumps may go backward, forward, or to a parallel branch, but the logic graph MUST stay acyclic: a cycle (q1 → q2 → q1, including through a statement) or a self-loop (q1 → q1) is rejected with an error. thank_you is a valid terminator destination. welcome, group and thank_you are never valid rule sources. Skipped fields are excluded from submissions.',
   hiddenFields:
     'Hidden fields are not visible to respondents: values are captured from URL query params (?utm_source=newsletter) and saved to submission.hiddenFields. Insert them in texts via <span data-hiddenfield="<name>"> — the attribute is the hidden field NAME, not its id. Manage them via update_form_hidden_fields.',
   variables: {
@@ -1675,6 +1678,19 @@ export class McpService {
     }
 
     const kind = conditionFieldInfo.field.kind as FieldKindEnum
+
+    if (kind === FieldKindEnum.STATEMENT) {
+      if (condition.comparison !== ComparisonEnum.IS_EMPTY) {
+        throw new BadRequestException(
+          `statement fields have no answer: only 'is_empty' ('always') is supported (field ${condition.fieldId}, got comparison '${condition.comparison}')`
+        )
+      }
+
+      delete condition.expected
+
+      return
+    }
+
     if (!this.isQuestionKind(kind)) {
       throw new BadRequestException(`Logic conditions are not supported for field kind ${kind}`)
     }
@@ -2241,6 +2257,10 @@ export class McpService {
   }
 
   private getAllowedComparisons(kind: FieldKindEnum): ComparisonEnum[] {
+    if (kind === FieldKindEnum.STATEMENT) {
+      return [ComparisonEnum.IS_EMPTY]
+    }
+
     if (this.isTextKind(kind)) {
       return [
         ComparisonEnum.IS,
@@ -2320,9 +2340,13 @@ export class McpService {
     }
 
     const targetKind = targetInfo.field?.kind
-    if (targetKind !== FieldKindEnum.THANK_YOU && !this.isQuestionKind(targetKind)) {
+    if (
+      targetKind !== FieldKindEnum.THANK_YOU &&
+      targetKind !== FieldKindEnum.STATEMENT &&
+      !this.isQuestionKind(targetKind)
+    ) {
       throw new BadRequestException(
-        `Navigate from ${sourceFieldId} to ${targetId}: destination must be a question or thank_you field`
+        `Navigate from ${sourceFieldId} to ${targetId}: destination must be a question, statement or thank_you field`
       )
     }
   }

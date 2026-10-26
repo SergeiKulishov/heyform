@@ -1,5 +1,5 @@
 import { flattenFieldsWithGroups } from '@voxly/form-renderer'
-import { ActionEnum, FieldKindEnum, UNSELECTABLE_FIELD_KINDS } from '@voxly/shared-types-enums'
+import { ActionEnum, FieldKindEnum } from '@voxly/shared-types-enums'
 import { useEffect, useMemo } from 'react'
 import ReactFlow, {
   Connection,
@@ -19,6 +19,7 @@ import {
   formatCyclePath,
   getLogicPayload,
   hasCycleLogics,
+  isLogicSelectableKind,
   removePayloadFromLogics
 } from '../utils'
 
@@ -60,7 +61,7 @@ export const Flow = () => {
   function handleNodeClick(_: unknown, node: Node) {
     const { field } = node.data
 
-    if (!UNSELECTABLE_FIELD_KINDS.includes(field.kind)) {
+    if (isLogicSelectableKind(field.kind)) {
       openModal('LogicModal')
       dispatch({
         type: 'selectField',
@@ -196,7 +197,9 @@ export const Flow = () => {
       p => p.action.kind === ActionEnum.NAVIGATE
     )
 
-    if (!hasNavigatePayloads) {
+    const isStatement = sourceField.kind === FieldKindEnum.STATEMENT
+
+    if (!hasNavigatePayloads && !isStatement) {
       dispatch({
         type: 'setLogic',
         payload: {

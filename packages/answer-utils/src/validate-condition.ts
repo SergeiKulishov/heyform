@@ -7,7 +7,6 @@ import {
   LogicCondition,
   LogicPayload,
   OTHER_ITEM_ID,
-  STATEMENT_FIELD_KINDS,
   TextCondition
 } from '@voxly/shared-types-enums'
 
@@ -27,7 +26,7 @@ import {
   isStartsWith
 } from './helper'
 
-const NO_LOGIC_FIELD_KINDS = [...STATEMENT_FIELD_KINDS, FieldKindEnum.GROUP]
+const NO_LOGIC_FIELD_KINDS = [FieldKindEnum.WELCOME, FieldKindEnum.THANK_YOU, FieldKindEnum.GROUP]
 
 export function evaluatePayloadCondition(
   field: FormField,

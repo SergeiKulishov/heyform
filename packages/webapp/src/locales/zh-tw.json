@@ -1588,6 +1588,7 @@
           "isBefore": "在...之前",
           "isAfter": "在...之後",
           "isEmpty": "為空",
+          "always": "始終",
           "isNotEmpty": "不為空",
           "addition": "加 (+)",
           "subtraction": "減 (-)",

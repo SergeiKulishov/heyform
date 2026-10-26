@@ -1,6 +1,6 @@
 {
   "name": "@voxly/form-renderer",
-  "version": "0.8.5",
+  "version": "0.8.6",
   "publishConfig": {
     "registry": "https://nexus.nlnano.ru/repository/npm-hosted/"
   },
@@ -30,7 +30,7 @@
     "type-check": "tsc --pretty --noEmit"
   },
   "peerDependencies": {
-    "@voxly/answer-utils": "^1.4.3",
+    "@voxly/answer-utils": "^1.4.4",
     "@voxly/shared-types-enums": "^1.4.2",
     "@voxly/utils": "^1.2.6",
     "@popperjs/core": "^2.11.8",
@@ -51,7 +51,7 @@
     "store2": "^2.13.2"
   },
   "dependencies": {
-    "@voxly/answer-utils": "^1.4.3",
+    "@voxly/answer-utils": "^1.4.4",
     "@voxly/shared-types-enums": "^1.4.2",
     "@voxly/utils": "^1.2.6",
     "@popperjs/core": "^2.11.8",

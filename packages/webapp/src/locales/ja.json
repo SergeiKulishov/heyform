@@ -1588,6 +1588,7 @@
           "isBefore": "の前にある",
           "isAfter": "の後にある",
           "isEmpty": "空である",
+          "always": "常に",
           "isNotEmpty": "空ではない",
           "addition": "加算 (+)",
           "subtraction": "減算 (-)",

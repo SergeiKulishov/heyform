@@ -6,6 +6,8 @@ import {
   IconX
 } from '@tabler/icons-react'
 import {
+  ComparisonEnum,
+  FieldKindEnum,
   LogicAction,
   LogicCondition,
   LogicConnector,
@@ -96,7 +98,10 @@ export const PayloadItem: FC<PayloadItemProps> = ({
 
   function handleConditionChange(index: number, condition: LogicCondition) {
     const nextConds = [...conds]
-    nextConds[index] = condition
+    nextConds[index] =
+      currentField?.kind === FieldKindEnum.STATEMENT
+        ? ({ comparison: ComparisonEnum.IS_EMPTY } as LogicCondition)
+        : condition
     updateConditions(nextConds, value?.connector)
   }
 

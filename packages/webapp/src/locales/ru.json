@@ -1697,6 +1697,7 @@
           "isBefore": "До",
           "isAfter": "После",
           "isEmpty": "Пусто",
+          "always": "Всегда",
           "isNotEmpty": "Не пусто",
           "addition": "Сложение (+)",
           "subtraction": "Вычитание (-)",
