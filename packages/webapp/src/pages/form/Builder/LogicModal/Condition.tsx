@@ -2,12 +2,15 @@ import {
   ComparisonEnum,
   FieldKindEnum,
   LogicCondition,
-  OTHER_ITEM_ID
+  OTHER_ITEM_ID,
+  Variable
 } from '@voxly/shared-types-enums'
 import dayjs, { type Dayjs } from 'dayjs'
 import { type FC, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
+import { getDefaultCondition, getVariableCondition } from '../utils'
+import { htmlUtils } from '@voxly/answer-utils'
 import { helper } from '@voxly/utils'
 
 import { DatePicker, Input, Select } from '@/components'
@@ -18,19 +21,23 @@ import {
   NUMBER_CONDITIONS,
   SINGLE_CHOICE_CONDITIONS,
   TEXT_CONDITIONS,
-  TRUE_FALSE_CONDITIONS
+  TRUE_FALSE_CONDITIONS,
+  VARIABLE_NUMBER_CONDITIONS
 } from '@/consts'
 import { FormFieldType } from '@/types'
 
 interface ConditionFieldsProps {
   field: FormFieldType
+  variables?: Variable[]
   value?: LogicCondition
   onComparisonChange: (value: any) => void
   onExpectedChange?: (value: any) => void
+  onSubjectChange?: (fieldId?: string) => void
 }
 
 interface ConditionProps {
   field: FormFieldType
+  variables?: Variable[]
   value?: LogicCondition
   onChange?: (value: LogicCondition) => void
 }
@@ -39,6 +46,17 @@ interface DefaultProps {
   value?: any
   onComparisonChange: (value: any) => void
   onExpectedChange?: (value: any) => void
+}
+
+interface NumberConditionProps extends DefaultProps {
+  options?: AnyMap[]
+}
+
+interface SubjectSelectProps {
+  field: FormFieldType
+  variables: Variable[]
+  value?: LogicCondition
+  onChange?: (fieldId?: string) => void
 }
 
 const DefaultCondition: FC<DefaultProps> = ({ value, onComparisonChange }) => {
@@ -263,12 +281,42 @@ const DateCondition: FC<DefaultProps & { field: FormFieldType }> = ({
   )
 }
 
-const NumberCondition: FC<DefaultProps> = ({ value, onComparisonChange, onExpectedChange }) => {
+const SubjectSelect: FC<SubjectSelectProps> = ({ field, variables, value, onChange }) => {
+  const { t } = useTranslation()
+
+  const options = useMemo(() => {
+    const title = htmlUtils.plain((field.title as string) || '')
+
+    return [
+      {
+        value: field.id,
+        label: title || t('form.builder.logic.rule.subjectCurrentField')
+      },
+      ...variables.map(variable => ({
+        value: variable.id,
+        label: `${t('form.builder.logic.rule.subjectVariable')}: ${variable.name}`
+      }))
+    ]
+  }, [field.id, field.title, variables, t])
+
+  const subject = (value as AnyMap)?.fieldId || field.id
+
+  return (
+    <Select className="w-auto shrink-0" options={options} value={subject} onChange={onChange} />
+  )
+}
+
+const NumberCondition: FC<NumberConditionProps> = ({
+  value,
+  options = NUMBER_CONDITIONS,
+  onComparisonChange,
+  onExpectedChange
+}) => {
   return (
     <>
       <Select
         className="w-auto flex-1"
-        options={NUMBER_CONDITIONS}
+        options={options}
         value={value?.comparison}
         multiLanguage
         onChange={onComparisonChange}
@@ -286,12 +334,31 @@ const NumberCondition: FC<DefaultProps> = ({ value, onComparisonChange, onExpect
 
 export const ConditionFields: FC<ConditionFieldsProps> = ({
   field,
+  variables = [],
   value,
   onComparisonChange,
-  onExpectedChange
+  onExpectedChange,
+  onSubjectChange
 }) => {
+  const subjectVariable = useMemo(
+    () => variables.find(variable => variable.id === (value as AnyMap)?.fieldId),
+    [variables, value]
+  )
+
+  const subjectField = useMemo<FormFieldType>(() => {
+    if (!subjectVariable) {
+      return field
+    }
+
+    return {
+      id: subjectVariable.id,
+      title: subjectVariable.name,
+      kind: subjectVariable.kind === 'number' ? FieldKindEnum.NUMBER : FieldKindEnum.SHORT_TEXT
+    } as FormFieldType
+  }, [field, subjectVariable])
+
   const Element = useMemo(() => {
-    switch (field.kind) {
+    switch (subjectField.kind) {
       case FieldKindEnum.SHORT_TEXT:
       case FieldKindEnum.LONG_TEXT:
       case FieldKindEnum.EMAIL:
@@ -351,6 +418,9 @@ export const ConditionFields: FC<ConditionFieldsProps> = ({
         return (
           <NumberCondition
             value={value}
+            options={
+              subjectVariable?.kind === 'number' ? VARIABLE_NUMBER_CONDITIONS : NUMBER_CONDITIONS
+            }
             onComparisonChange={onComparisonChange}
             onExpectedChange={onExpectedChange}
           />
@@ -362,12 +432,29 @@ export const ConditionFields: FC<ConditionFieldsProps> = ({
       default:
         return <DefaultCondition value={value} onComparisonChange={onComparisonChange} />
     }
-  }, [field, onComparisonChange, onExpectedChange, value])
+  }, [subjectField, subjectVariable, field, onComparisonChange, onExpectedChange, value])
 
-  return <>{Element}</>
+  return (
+    <div className="flex flex-1 items-center gap-2">
+      {variables.length > 0 && (
+        <SubjectSelect
+          field={field}
+          variables={variables}
+          value={value}
+          onChange={onSubjectChange}
+        />
+      )}
+      {Element}
+    </div>
+  )
 }
 
-export default function Condition({ field, value: rawValue, onChange }: ConditionProps) {
+export default function Condition({
+  field,
+  variables = [],
+  value: rawValue,
+  onChange
+}: ConditionProps) {
   const { t } = useTranslation()
   const [value, setValue] = useState<LogicCondition>(rawValue!)
 
@@ -393,14 +480,33 @@ export default function Condition({ field, value: rawValue, onChange }: Conditio
     [handleChange, value]
   )
 
+  const handleSubjectChange = useCallback(
+    (fieldId?: string) => {
+      const variable = fieldId ? variables.find(variable => variable.id === fieldId) : undefined
+
+      if (variable) {
+        handleChange(getVariableCondition(variable))
+
+        return
+      }
+
+      handleChange(
+        getDefaultCondition(field.kind, field.properties?.choices, field.properties?.allowMultiple)
+      )
+    },
+    [field, handleChange, variables]
+  )
+
   return (
     <div className="rule-condition">
       <div className="text-sm leading-10">{t('form.builder.logic.rule.when')}</div>
       <ConditionFields
         field={field}
+        variables={variables}
         value={value}
         onComparisonChange={handleComparisonChange}
         onExpectedChange={handleExpectedChange}
+        onSubjectChange={handleSubjectChange}
       />
     </div>
   )

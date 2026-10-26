@@ -7,7 +7,8 @@ import {
   Logic,
   LogicCondition,
   LogicPayload,
-  OTHER_ITEM_ID
+  OTHER_ITEM_ID,
+  Variable
 } from '@voxly/shared-types-enums'
 import * as dagre from 'dagre'
 import { Edge, Node } from 'react-flow-renderer'
@@ -121,6 +122,35 @@ export function getDefaultCondition(
   }
 
   return { comparison: comparison as ComparisonEnum, expected } as LogicCondition
+}
+
+export function getVariableCondition(variable: Variable): LogicCondition {
+  if (variable.kind === 'number') {
+    return {
+      fieldId: variable.id,
+      comparison: ComparisonEnum.EQUAL,
+      expected: 0
+    } as LogicCondition
+  }
+
+  return {
+    fieldId: variable.id,
+    comparison: ComparisonEnum.IS,
+    expected: ''
+  } as LogicCondition
+}
+
+export function getConditionFieldId(condition?: LogicCondition): string | undefined {
+  return (condition as AnyMap)?.['fieldId']
+}
+
+export function getConditionSubjectVariable(
+  condition: LogicCondition | undefined,
+  variables: Variable[] = []
+): Variable | undefined {
+  const fieldId = getConditionFieldId(condition)
+
+  return fieldId ? variables.find(variable => variable.id === fieldId) : undefined
 }
 
 export function getLogicPayload(

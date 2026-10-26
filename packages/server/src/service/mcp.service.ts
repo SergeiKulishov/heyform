@@ -465,7 +465,7 @@ const LOGIC_REFERENCE = {
   payloadStructure:
     '{ id (auto-generated), condition: { fieldId, comparison, expected }, conditions?: LogicCondition[] (multi-condition, connector "and"|"or"), action: { kind: "navigate", fieldId: destination } }',
   conditionSourceNote:
-    'condition.fieldId MUST be the rule source field itself: conditions are always evaluated against the SOURCE field answer at runtime, any other value is ignored (a warning is returned). Answer values format: see answerValueFormat in get_field_kinds_reference',
+    'The subject of a condition is either a question or a variable. Question subject: condition.fieldId MUST be the rule source field itself (a warning is returned when it differs); the answer of the source field is compared. Variable subject: set condition.fieldId to the id of a form variable (see update_form_variables) — the CURRENT computed variable value is compared, and no source-field warning is produced. Answer values format: see answerValueFormat in get_field_kinds_reference',
   expectedByKind: {
     multiple_choice:
       'choice id OR choice label (auto-resolved to id, case-insensitive); string or string[] for contains/is_not comparisons',
@@ -500,7 +500,16 @@ const LOGIC_REFERENCE = {
     ],
     other: ['is_empty', 'is_not_empty'],
     statement: ['is_empty'],
-    note: 'is_empty/is_not_empty (no expected) are allowed for any question kind; statement fields accept ONLY is_empty, which means ALWAYS'
+    variableNumber: [
+      'equal',
+      'not_equal',
+      'greater_than',
+      'less_than',
+      'greater_or_equal_than',
+      'less_or_equal_than'
+    ],
+    variableString: ['is', 'is_not', 'contains', 'does_not_contain', 'starts_with', 'ends_with'],
+    note: 'is_empty/is_not_empty (no expected) are allowed for any question kind; statement fields accept ONLY is_empty, which means ALWAYS. Variables do NOT support is_empty/is_not_empty (a variable always has a value): comparisons are chosen by variable kind (number → variableNumber, string → variableString)'
   },
   statementRule:
     'statement has no answer: its rule must use condition { fieldId: <statement id>, comparison: "is_empty" } meaning ALWAYS (the jump happens right after the screen is shown). is_not_empty and any other comparison are rejected, and no expected value is used or stored. A statement is also a valid navigate destination (it is shown, then flow continues).',
@@ -524,7 +533,7 @@ const LOGIC_REFERENCE = {
     logics:
       'variable.logics are stored for round-trip fidelity but are NOT executed: calculations must be defined in form.logics as field rules with calculate actions (update_form_logic). Calculate payloads inside variable.logics produce a warning.',
     conditions:
-      'Conditions use the same syntax as navigate rules; condition.fieldId must be a question field (not a variable or hidden field); it must equal the rule source field'
+      'A condition subject can be a question OR a variable. Question subject: condition.fieldId must equal the rule source field (the source field answer is compared). Variable subject: condition.fieldId = variable id, compared against the CURRENT computed variable value; comparisons by variable kind (number: equal/not_equal/greater_than/less_than/greater_or_equal_than/less_or_equal_than with a numeric expected; string: is/is_not/contains/does_not_contain/starts_with/ends_with with a string expected). is_empty/is_not_empty are NOT supported for variables. Evaluation order per field: calculate payloads run first, then navigate payloads — so a rule on the same field sees the value already updated by its calculate actions.'
   },
   example: {
     fieldId: 'q1',
@@ -1578,11 +1587,18 @@ export class McpService {
           connector = undefined
         }
 
-        this.validateLogicCondition(condition, sourceIndex, fieldMap, warnings, rule.fieldId)
+        this.validateLogicCondition(
+          condition,
+          sourceIndex,
+          fieldMap,
+          warnings,
+          rule.fieldId,
+          variables
+        )
 
         if (conditions) {
           for (const c of conditions) {
-            this.validateLogicCondition(c, sourceIndex, fieldMap, warnings, rule.fieldId)
+            this.validateLogicCondition(c, sourceIndex, fieldMap, warnings, rule.fieldId, variables)
           }
         }
 
@@ -1653,10 +1669,22 @@ export class McpService {
     sourceIndex: number,
     fieldMap: Map<string, { field: any; index: number }>,
     warnings: string[],
-    sourceFieldId?: string
+    sourceFieldId?: string,
+    variables: any[] = []
   ): void {
     if (!condition || typeof condition !== 'object') {
       throw new BadRequestException('Logic condition is required')
+    }
+
+    const variable =
+      condition.fieldId && Array.isArray(variables)
+        ? variables.find(variable => variable.id === condition.fieldId)
+        : undefined
+
+    if (variable) {
+      this.validateVariableCondition(condition, variable)
+
+      return
     }
 
     const conditionFieldInfo = fieldMap.get(condition.fieldId)
@@ -1827,6 +1855,62 @@ export class McpService {
     }
   }
 
+  private validateVariableCondition(condition: any, variable: any): void {
+    const allowedComparisons = this.getAllowedVariableComparisons(variable.kind)
+
+    if (!allowedComparisons.includes(condition.comparison)) {
+      throw new BadRequestException(
+        `Invalid comparison '${condition.comparison}' for ${variable.kind} variable ${variable.id}. Allowed: ${allowedComparisons.join(', ')}`
+      )
+    }
+
+    const expected = condition.expected
+
+    if (expected === undefined || expected === null) {
+      throw new BadRequestException(
+        `Expected value is required for ${variable.kind} variable ${variable.id}`
+      )
+    }
+
+    if (variable.kind === 'number') {
+      if (typeof expected !== 'number' || !isFinite(expected)) {
+        throw new BadRequestException(
+          `Expected value for number variable ${variable.id} must be a finite number`
+        )
+      }
+
+      return
+    }
+
+    if (typeof expected !== 'string') {
+      throw new BadRequestException(
+        `Expected value for string variable ${variable.id} must be a string`
+      )
+    }
+  }
+
+  private getAllowedVariableComparisons(kind: string): ComparisonEnum[] {
+    if (kind === 'number') {
+      return [
+        ComparisonEnum.EQUAL,
+        ComparisonEnum.NOT_EQUAL,
+        ComparisonEnum.GREATER_THAN,
+        ComparisonEnum.LESS_THAN,
+        ComparisonEnum.GREATER_OR_EQUAL_THAN,
+        ComparisonEnum.LESS_OR_EQUAL_THAN
+      ]
+    }
+
+    return [
+      ComparisonEnum.IS,
+      ComparisonEnum.IS_NOT,
+      ComparisonEnum.CONTAINS,
+      ComparisonEnum.DOES_NOT_CONTAIN,
+      ComparisonEnum.STARTS_WITH,
+      ComparisonEnum.ENDS_WITH
+    ]
+  }
+
   private resolveChoice(
     field: any,
     value: string
@@ -1976,11 +2060,11 @@ export class McpService {
       }
 
       const maxIndex = fieldMap.size
-      this.validateLogicCondition(condition, maxIndex, fieldMap, warnings)
+      this.validateLogicCondition(condition, maxIndex, fieldMap, warnings, undefined, variables)
 
       if (conditions) {
         for (const c of conditions) {
-          this.validateLogicCondition(c, maxIndex, fieldMap, warnings)
+          this.validateLogicCondition(c, maxIndex, fieldMap, warnings, undefined, variables)
         }
       }
 

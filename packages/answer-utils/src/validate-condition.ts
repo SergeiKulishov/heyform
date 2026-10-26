@@ -7,7 +7,8 @@ import {
   LogicCondition,
   LogicPayload,
   OTHER_ITEM_ID,
-  TextCondition
+  TextCondition,
+  Variable
 } from '@voxly/shared-types-enums'
 
 import { helper } from '@voxly/utils'
@@ -28,14 +29,55 @@ import {
 
 const NO_LOGIC_FIELD_KINDS = [FieldKindEnum.WELCOME, FieldKindEnum.THANK_YOU, FieldKindEnum.GROUP]
 
+type ConditionWithFieldId = LogicCondition & { fieldId?: string }
+
+interface ConditionSubject {
+  field: FormField
+  values?: Record<string, AnswerValue>
+}
+
+function resolveSubject(
+  condition: LogicCondition,
+  fallbackField: FormField,
+  values?: Record<string, AnswerValue>,
+  parameters?: Variable[],
+  variableValues?: Record<string, any>
+): ConditionSubject {
+  const conditionFieldId = (condition as ConditionWithFieldId)?.fieldId
+  const variable = conditionFieldId
+    ? parameters?.find(parameter => parameter.id === conditionFieldId)
+    : undefined
+
+  if (
+    variable &&
+    variableValues &&
+    Object.prototype.hasOwnProperty.call(variableValues, variable.id)
+  ) {
+    return {
+      field: {
+        id: variable.id,
+        kind: variable.kind === 'number' ? FieldKindEnum.NUMBER : FieldKindEnum.SHORT_TEXT
+      } as FormField,
+      values: variableValues
+    }
+  }
+
+  return {
+    field: fallbackField,
+    values
+  }
+}
+
 export function evaluatePayloadCondition(
   field: FormField,
   payload: Pick<LogicPayload, 'condition' | 'conditions' | 'connector'>,
-  values?: Record<string, AnswerValue>
+  values?: Record<string, AnswerValue>,
+  parameters?: Variable[],
+  variableValues?: Record<string, any>
 ): boolean {
   if (helper.isValid(payload.conditions)) {
     const results = payload.conditions!.map(condition =>
-      validateCondition(field, condition, values)
+      validateCondition(field, condition, values, parameters, variableValues)
     )
 
     if (payload.connector === 'or') {
@@ -45,10 +87,22 @@ export function evaluatePayloadCondition(
     return results.every(Boolean)
   }
 
-  return validateCondition(field, payload.condition, values)
+  return validateCondition(field, payload.condition, values, parameters, variableValues)
 }
 
 export function validateCondition(
+  field: FormField,
+  condition: LogicCondition,
+  values?: Record<string, AnswerValue>,
+  parameters?: Variable[],
+  variableValues?: Record<string, any>
+): boolean {
+  const subject = resolveSubject(condition, field, values, parameters, variableValues)
+
+  return validateConditionOnField(subject.field, condition, subject.values)
+}
+
+function validateConditionOnField(
   field: FormField,
   condition: LogicCondition,
   values?: Record<string, AnswerValue>

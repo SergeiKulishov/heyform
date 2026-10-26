@@ -19,8 +19,8 @@ allowBuilds:
   utf-8-validate: true
 
 minimumReleaseAgeExclude:
-  - '@voxly/answer-utils@1.4.4'
-  - '@voxly/form-renderer@0.8.6'
+  - '@voxly/answer-utils@1.4.5'
+  - '@voxly/form-renderer@0.8.7'
 
 overrides:
   apollo-upload-client: 17.0.0

@@ -1177,6 +1177,33 @@ export const NUMBER_CONDITIONS = [
   }
 ]
 
+export const VARIABLE_NUMBER_CONDITIONS = [
+  {
+    value: 'equal',
+    label: 'form.builder.logic.rule.equal'
+  },
+  {
+    value: 'not_equal',
+    label: 'form.builder.logic.rule.notEqual'
+  },
+  {
+    value: 'greater_than',
+    label: 'form.builder.logic.rule.greaterThan'
+  },
+  {
+    value: 'less_than',
+    label: 'form.builder.logic.rule.lessThan'
+  },
+  {
+    value: 'greater_or_equal_than',
+    label: 'form.builder.logic.rule.greaterOrEqualThan'
+  },
+  {
+    value: 'less_or_equal_than',
+    label: 'form.builder.logic.rule.lessOrEqualThan'
+  }
+]
+
 export const DEFAULT_COMPARISONS = [
   {
     value: 'is_empty',

@@ -86,8 +86,8 @@ importers:
         specifier: 1.0.2
         version: 1.0.2(@nestjs/common@7.4.4(debug@4.4.3(supports-color@7.2.0))(reflect-metadata@0.1.13)(rxjs@6.6.3))(@nestjs/core@7.4.4(@nestjs/common@7.4.4(debug@4.4.3(supports-color@7.2.0))(reflect-metadata@0.1.13)(rxjs@6.6.3))(encoding@0.1.13)(reflect-metadata@0.1.13)(rxjs@6.6.3))(ioredis@4.17.3(supports-color@7.2.0))
       '@voxly/answer-utils':
-        specifier: ^1.4.4
-        version: 1.4.4(@voxly/shared-types-enums@1.4.2)(@voxly/utils@1.2.6)(big.js@6.2.2)(dayjs@1.11.23)(html5parser@2.0.2)(libphonenumber-js@1.13.15)(validator@13.15.35)
+        specifier: ^1.4.5
+        version: 1.4.5(@voxly/shared-types-enums@1.4.2)(@voxly/utils@1.2.6)(big.js@6.2.2)(dayjs@1.11.23)(html5parser@2.0.2)(libphonenumber-js@1.13.15)(validator@13.15.35)
       '@voxly/shared-types-enums':
         specifier: ^1.4.2
         version: 1.4.2
@@ -345,11 +345,11 @@ importers:
         specifier: ^3.20.0
         version: 3.49.0(react@19.3.1)
       '@voxly/answer-utils':
-        specifier: ^1.4.4
-        version: 1.4.4(@voxly/shared-types-enums@1.4.2)(@voxly/utils@1.2.6)(big.js@6.2.2)(dayjs@1.11.23)(html5parser@2.0.2)(libphonenumber-js@1.13.15)(validator@13.15.35)
+        specifier: ^1.4.5
+        version: 1.4.5(@voxly/shared-types-enums@1.4.2)(@voxly/utils@1.2.6)(big.js@6.2.2)(dayjs@1.11.23)(html5parser@2.0.2)(libphonenumber-js@1.13.15)(validator@13.15.35)
       '@voxly/form-renderer':
-        specifier: ^0.8.6
-        version: 0.8.6(@popperjs/core@2.11.8)(@radix-ui/react-tooltip@1.4.1(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1))(@tabler/icons-react@3.49.0(react@19.3.1))(@voxly/answer-utils@1.4.4(@voxly/shared-types-enums@1.4.2)(@voxly/utils@1.2.6)(big.js@6.2.2)(dayjs@1.11.23)(html5parser@2.0.2)(libphonenumber-js@1.13.15)(validator@13.15.35))(@voxly/shared-types-enums@1.4.2)(@voxly/utils@1.2.6)(big.js@6.2.2)(clsx@2.1.1)(flag-icons@7.6.0)(i18next@21.10.0)(libphonenumber-js@1.13.15)(rc-field-form@2.7.1(react-dom@19.3.1(react@19.3.1))(react@19.3.1))(react-dom@19.3.1(react@19.3.1))(react-i18next@11.18.6(i18next@21.10.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1))(react-popper@2.3.0(@popperjs/core@2.11.8)(react-dom@19.3.1(react@19.3.1))(react@19.3.1))(react-transition-state@2.4.1(react-dom@19.3.1(react@19.3.1))(react@19.3.1))(react@19.3.1)(signature_pad@5.1.4)(store2@2.14.4)
+        specifier: ^0.8.7
+        version: 0.8.7(@popperjs/core@2.11.8)(@radix-ui/react-tooltip@1.4.1(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1))(@tabler/icons-react@3.49.0(react@19.3.1))(@voxly/answer-utils@1.4.5(@voxly/shared-types-enums@1.4.2)(@voxly/utils@1.2.6)(big.js@6.2.2)(dayjs@1.11.23)(html5parser@2.0.2)(libphonenumber-js@1.13.15)(validator@13.15.35))(@voxly/shared-types-enums@1.4.2)(@voxly/utils@1.2.6)(big.js@6.2.2)(clsx@2.1.1)(flag-icons@7.6.0)(i18next@21.10.0)(libphonenumber-js@1.13.15)(rc-field-form@2.7.1(react-dom@19.3.1(react@19.3.1))(react@19.3.1))(react-dom@19.3.1(react@19.3.1))(react-i18next@11.18.6(i18next@21.10.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1))(react-popper@2.3.0(@popperjs/core@2.11.8)(react-dom@19.3.1(react@19.3.1))(react@19.3.1))(react-transition-state@2.4.1(react-dom@19.3.1(react@19.3.1))(react@19.3.1))(react@19.3.1)(signature_pad@5.1.4)(store2@2.14.4)
       '@voxly/shared-types-enums':
         specifier: ^1.4.2
         version: 1.4.2
@@ -3173,8 +3173,8 @@ packages:
     peerDependencies:
       vite: ^4 || ^5 || ^6 || ^7
 
-  '@voxly/answer-utils@1.4.4':
-    resolution: {integrity: sha512-RYwMo1r1d8QbPjkDT09m8v2JArJH7Qn7cLq3LxDO/cRdhxS0sTANqSNlq44LByeuggwTkzkzyRnu4WPGPpFzGw==, tarball: https://nexus.nlnano.ru/repository/npm-hosted/@voxly/answer-utils/-/answer-utils-1.4.4.tgz}
+  '@voxly/answer-utils@1.4.5':
+    resolution: {integrity: sha512-WmxVG62w74U4lst39s2yCYj+hCVJBd0Pwmp4yznwOK2u3cdinp2MFtaG65mC3VmPTIoRDMF0BHzOx4G1C97dmA==, tarball: https://nexus.nlnano.ru/repository/npm-hosted/@voxly/answer-utils/-/answer-utils-1.4.5.tgz}
     peerDependencies:
       '@voxly/shared-types-enums': ^1.4.0
       '@voxly/utils': ^1.2.0
@@ -3184,13 +3184,13 @@ packages:
       libphonenumber-js: ^1.10.7
       validator: ^13.7.0
 
-  '@voxly/form-renderer@0.8.6':
-    resolution: {integrity: sha512-hU+lEOF1DD/l1wlxcUt+bwWLf3cORAiDfVmCVy5Wx66EIXL5Qzbk4/T0O966MW+MMD/HZoOczN8ckI+hXN1Q5g==, tarball: https://nexus.nlnano.ru/repository/npm-hosted/@voxly/form-renderer/-/form-renderer-0.8.6.tgz}
+  '@voxly/form-renderer@0.8.7':
+    resolution: {integrity: sha512-1+v1SDD7HMJaTDHdQHdiSvk12NOQ/KJuf2+fplJEfiMZgXIlKIKCqGiJ9UkASEO7SY2DM5exuOPFpn03SvBKBA==, tarball: https://nexus.nlnano.ru/repository/npm-hosted/@voxly/form-renderer/-/form-renderer-0.8.7.tgz}
     peerDependencies:
       '@popperjs/core': ^2.11.8
       '@radix-ui/react-tooltip': ^1.1.2
       '@tabler/icons-react': ^3.11.0
-      '@voxly/answer-utils': ^1.4.4
+      '@voxly/answer-utils': ^1.4.5
       '@voxly/shared-types-enums': ^1.4.2
       '@voxly/utils': ^1.2.6
       big.js: ^6.2.1
@@ -12270,7 +12270,7 @@ snapshots:
     transitivePeerDependencies:
       - '@swc/helpers'
 
-  '@voxly/answer-utils@1.4.4(@voxly/shared-types-enums@1.4.2)(@voxly/utils@1.2.6)(big.js@6.2.2)(dayjs@1.11.23)(html5parser@2.0.2)(libphonenumber-js@1.13.15)(validator@13.15.35)':
+  '@voxly/answer-utils@1.4.5(@voxly/shared-types-enums@1.4.2)(@voxly/utils@1.2.6)(big.js@6.2.2)(dayjs@1.11.23)(html5parser@2.0.2)(libphonenumber-js@1.13.15)(validator@13.15.35)':
     dependencies:
       '@voxly/shared-types-enums': 1.4.2
       '@voxly/utils': 1.2.6
@@ -12280,12 +12280,12 @@ snapshots:
       libphonenumber-js: 1.13.15
       validator: 13.15.35
 
-  '@voxly/form-renderer@0.8.6(@popperjs/core@2.11.8)(@radix-ui/react-tooltip@1.4.1(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1))(@tabler/icons-react@3.49.0(react@19.3.1))(@voxly/answer-utils@1.4.4(@voxly/shared-types-enums@1.4.2)(@voxly/utils@1.2.6)(big.js@6.2.2)(dayjs@1.11.23)(html5parser@2.0.2)(libphonenumber-js@1.13.15)(validator@13.15.35))(@voxly/shared-types-enums@1.4.2)(@voxly/utils@1.2.6)(big.js@6.2.2)(clsx@2.1.1)(flag-icons@7.6.0)(i18next@21.10.0)(libphonenumber-js@1.13.15)(rc-field-form@2.7.1(react-dom@19.3.1(react@19.3.1))(react@19.3.1))(react-dom@19.3.1(react@19.3.1))(react-i18next@11.18.6(i18next@21.10.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1))(react-popper@2.3.0(@popperjs/core@2.11.8)(react-dom@19.3.1(react@19.3.1))(react@19.3.1))(react-transition-state@2.4.1(react-dom@19.3.1(react@19.3.1))(react@19.3.1))(react@19.3.1)(signature_pad@5.1.4)(store2@2.14.4)':
+  '@voxly/form-renderer@0.8.7(@popperjs/core@2.11.8)(@radix-ui/react-tooltip@1.4.1(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1))(@tabler/icons-react@3.49.0(react@19.3.1))(@voxly/answer-utils@1.4.5(@voxly/shared-types-enums@1.4.2)(@voxly/utils@1.2.6)(big.js@6.2.2)(dayjs@1.11.23)(html5parser@2.0.2)(libphonenumber-js@1.13.15)(validator@13.15.35))(@voxly/shared-types-enums@1.4.2)(@voxly/utils@1.2.6)(big.js@6.2.2)(clsx@2.1.1)(flag-icons@7.6.0)(i18next@21.10.0)(libphonenumber-js@1.13.15)(rc-field-form@2.7.1(react-dom@19.3.1(react@19.3.1))(react@19.3.1))(react-dom@19.3.1(react@19.3.1))(react-i18next@11.18.6(i18next@21.10.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1))(react-popper@2.3.0(@popperjs/core@2.11.8)(react-dom@19.3.1(react@19.3.1))(react@19.3.1))(react-transition-state@2.4.1(react-dom@19.3.1(react@19.3.1))(react@19.3.1))(react@19.3.1)(signature_pad@5.1.4)(store2@2.14.4)':
     dependencies:
       '@popperjs/core': 2.11.8
       '@radix-ui/react-tooltip': 1.4.1(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
       '@tabler/icons-react': 3.49.0(react@19.3.1)
-      '@voxly/answer-utils': 1.4.4(@voxly/shared-types-enums@1.4.2)(@voxly/utils@1.2.6)(big.js@6.2.2)(dayjs@1.11.23)(html5parser@2.0.2)(libphonenumber-js@1.13.15)(validator@13.15.35)
+      '@voxly/answer-utils': 1.4.5(@voxly/shared-types-enums@1.4.2)(@voxly/utils@1.2.6)(big.js@6.2.2)(dayjs@1.11.23)(html5parser@2.0.2)(libphonenumber-js@1.13.15)(validator@13.15.35)
       '@voxly/shared-types-enums': 1.4.2
       '@voxly/utils': 1.2.6
       big.js: 6.2.2

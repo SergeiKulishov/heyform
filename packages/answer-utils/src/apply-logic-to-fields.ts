@@ -141,7 +141,13 @@ export function applyLogicToFields(
 
       for (const calculate of calculates) {
         const { action } = calculate
-        const isValidated = evaluatePayloadCondition(field, calculate, values)
+        const isValidated = evaluatePayloadCondition(
+          field,
+          calculate,
+          values,
+          parameters,
+          result.variables
+        )
 
         if (isValidated) {
           result.variables = calculateAction(
@@ -158,7 +164,13 @@ export function applyLogicToFields(
       for (const navigate of navigates) {
         const { action } = navigate
 
-        field.isTouched = evaluatePayloadCondition(field, navigate, values)
+        field.isTouched = evaluatePayloadCondition(
+          field,
+          navigate,
+          values,
+          parameters,
+          result.variables
+        )
 
         if (field.isTouched) {
           const index = jumpIndex((action as NavigateAction).fieldId)

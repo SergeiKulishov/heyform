@@ -18,7 +18,7 @@ import { type FC, type ReactNode, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ReactSortable } from 'react-sortablejs'
 
-import { getDefaultCondition, getLogicPayload } from '../utils'
+import { getDefaultCondition, getLogicPayload, getVariableCondition } from '../utils'
 import { validatePayload } from '@voxly/answer-utils'
 import { excludeObject } from '@voxly/utils'
 
@@ -98,11 +98,31 @@ export const PayloadItem: FC<PayloadItemProps> = ({
 
   function handleConditionChange(index: number, condition: LogicCondition) {
     const nextConds = [...conds]
+    const hasSubjectRef = !!(condition as AnyMap).fieldId
     nextConds[index] =
-      currentField?.kind === FieldKindEnum.STATEMENT
+      currentField?.kind === FieldKindEnum.STATEMENT && !hasSubjectRef
         ? ({ comparison: ComparisonEnum.IS_EMPTY } as LogicCondition)
         : condition
     updateConditions(nextConds, value?.connector)
+  }
+
+  function handleSubjectChange(index: number, fieldId?: string) {
+    const variable = fieldId ? variables.find(variable => variable.id === fieldId) : undefined
+
+    if (variable) {
+      handleConditionChange(index, getVariableCondition(variable))
+
+      return
+    }
+
+    handleConditionChange(
+      index,
+      getDefaultCondition(
+        currentField?.kind,
+        currentField?.properties?.choices,
+        currentField?.properties?.allowMultiple
+      )
+    )
   }
 
   function handleConnectorChange(connector: LogicConnector) {
@@ -160,7 +180,9 @@ export const PayloadItem: FC<PayloadItemProps> = ({
                 <div className="flex-1">
                   <ConditionFields
                     field={currentField!}
+                    variables={variables}
                     value={condition}
+                    onSubjectChange={fieldId => handleSubjectChange(index, fieldId)}
                     onComparisonChange={comparison =>
                       handleConditionChange(index, { ...condition, comparison })
                     }
