@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1
 
-FROM node:18.20.0-alpine3.19 AS base
+FROM node:24.22.2-alpine AS base
 ARG APP_PATH=/app
 WORKDIR $APP_PATH
 RUN apk add --no-cache python3 make g++ \
@@ -27,7 +27,7 @@ COPY scripts ./scripts
 RUN pnpm build:webapp \
  && node scripts/update-index.html.js
 
-FROM node:18.20.0-alpine3.19 AS runner
+FROM node:24.22.2-alpine AS runner
 ARG APP_PATH=/app
 WORKDIR $APP_PATH
 ENV NODE_ENV=production

@@ -6,7 +6,7 @@
   "private": true,
   "engines": {
     "pnpm": ">=8",
-    "node": ">=16"
+    "node": ">=22"
   },
   "scripts": {
     "dev": "run-p dev:webapp dev:server",

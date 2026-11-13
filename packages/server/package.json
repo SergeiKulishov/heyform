@@ -6,6 +6,9 @@
   "license": "AGPL-3.0",
   "private": true,
   "type": "commonjs",
+  "engines": {
+    "node": ">=22"
+  },
   "scripts": {
     "dev": "cross-env NODE_OPTIONS=--enable-source-maps nest start --watch",
     "debug": "nest start --debug --watch",
